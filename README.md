@@ -11,3 +11,12 @@ A WebView wrapper around the game (`app/src/main/assets/index.html`). Works offl
 
 ## Or with Android Studio
 Open this folder → let Gradle sync → **Build ▸ Build APK(s)**.
+
+---
+
+# Nexa System — story game
+
+`nexa-system/index.html` is a separate, standalone story game (open it in any browser; it saves automatically).
+Peter Parker, planet Nexa, a Solo Leveling–style System: daily and situational quests, Basic and Special cards,
+stats, turn-based fights, mini-games and scene art drawn live for every part of the story. Arc 1 runs from the
+Prologue to the night before the school Power Competition.

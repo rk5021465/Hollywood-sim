@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nexa System</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Nunito+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: one centered column — live scene art on top, story box under it, System tabs at the bottom. Deliberately dark: it is the System's screen. */
+:root{
+  --void:#04060d; --deep:#0a1226; --panel:rgba(8,18,40,.94); --panel2:#0d1a36;
+  --line:rgba(95,208,255,.38); --cyan:#5fd0ff; --ice:#d6f1ff; --text:#dbe5f3; --muted:#8597b6;
+  --red:#ff4d63; --gold:#ffc94a; --violet:#b07bff; --green:#5fe08a;
+  --sys:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  --body:"Nunito Sans","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--void);color:var(--text);font-family:var(--body);font-size:16px;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--void)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+#app{max-width:820px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;gap:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px 84px}
+
+/* HUD */
+#hud{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font-family:var(--sys);position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:linear-gradient(var(--void) 70%,transparent);padding-block:4px 8px}
+.brand{font-weight:700;letter-spacing:.18em;font-size:13px;color:var(--cyan);text-shadow:0 0 12px rgba(95,208,255,.6);line-height:1.1}
+.brand small{display:block;color:var(--muted);letter-spacing:.12em;font-size:10px;font-weight:600}
+.bars{display:grid;gap:4px;min-width:0}
+.bar{height:8px;border:1px solid var(--line);background:#071026;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#d23a4f,#ff6b7d);transition:width .3s}
+.bar.mp i{background:linear-gradient(90deg,#2b6fe0,#5fd0ff)}
+.bar.xp i{background:linear-gradient(90deg,#c99a2a,#ffd86b)}
+.hudr{text-align:right;font-size:12px;line-height:1.35;font-variant-numeric:tabular-nums}
+.hudr b{color:var(--ice);font-size:15px}
+.coin{color:var(--gold)}
+
+/* Stage */
+#stage{position:relative;aspect-ratio:16/9;max-width:100%;border:1px solid var(--line);background:#000;overflow:hidden;box-shadow:0 0 30px rgba(40,120,255,.12)}
+#art{display:block;width:100%;height:100%}
+#cap{position:absolute;left:10px;top:8px;font-family:var(--sys);font-size:11px;letter-spacing:.16em;color:var(--ice);background:rgba(4,8,20,.55);padding:3px 8px;border-left:2px solid var(--cyan);pointer-events:none;max-width:calc(100% - 20px)}
+#stage.shake{animation:shake .35s}
+#stage.flash::after{content:"";position:absolute;inset:0;background:#fff;animation:flash .35s forwards;pointer-events:none}
+@keyframes shake{20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,2px)}80%{transform:translate(3px,-1px)}}
+@keyframes flash{from{opacity:.7}to{opacity:0}}
+
+/* Story box */
+#box{position:relative;min-height:190px;background:var(--panel);border:1px solid var(--line);padding:14px 16px 18px;display:flex;flex-direction:column;gap:10px}
+#speaker{font-family:var(--sys);font-weight:700;letter-spacing:.08em;font-size:14px;color:var(--cyan);min-height:1em}
+#text{font-size:17px;line-height:1.6;max-width:65ch;min-height:3.2em;white-space:pre-wrap}
+#text.sysline{font-family:var(--sys);color:var(--ice);text-shadow:0 0 10px rgba(95,208,255,.55)}
+#text.thought{font-style:italic;color:#b9c6dc}
+#text.big{font-family:var(--sys);font-size:22px;letter-spacing:.06em;color:var(--ice);text-align:center;max-width:none}
+#hint{position:absolute;right:14px;bottom:8px;color:var(--cyan);font-size:12px;animation:bob 1s infinite;font-family:var(--sys)}
+@keyframes bob{50%{transform:translateY(3px)}}
+#choices{display:grid;gap:8px}
+.choice{text-align:left;background:linear-gradient(90deg,rgba(95,208,255,.14),rgba(95,208,255,.03));border:1px solid var(--line);padding:11px 14px;font-weight:600;transition:background .15s,transform .1s}
+.choice:hover{background:rgba(95,208,255,.22)}
+.choice:active{transform:scale(.99)}
+.choice::before{content:"▸ ";color:var(--cyan)}
+
+/* Tabs */
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:rgba(4,7,16,.96);border-top:1px solid var(--line);display:flex;justify-content:center;
+  padding:6px max(10px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
+#tabs .in{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;width:100%;max-width:820px}
+#tabs button{background:none;border:1px solid transparent;font-family:var(--sys);font-size:11px;letter-spacing:.08em;padding:6px 2px;color:var(--muted);display:grid;gap:2px;justify-items:center}
+#tabs button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6}
+#tabs button:hover,#tabs button.on{color:var(--cyan);border-color:var(--line)}
+#tabs button .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 6px var(--gold)}
+
+/* System window (modal) */
+#modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:rgba(1,3,10,.72);backdrop-filter:blur(2px);
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.win{width:min(520px,100%);max-height:calc(100dvh - 40px);overflow:auto;background:linear-gradient(180deg,rgba(10,26,58,.97),rgba(5,12,30,.97));border:1px solid var(--cyan);
+  box-shadow:0 0 0 1px rgba(95,208,255,.15),0 0 34px rgba(95,208,255,.38),inset 0 0 30px rgba(95,208,255,.10);font-family:var(--sys);animation:winIn .28s ease-out;position:relative}
+.win.red{border-color:var(--red);box-shadow:0 0 34px rgba(255,77,99,.45),inset 0 0 30px rgba(255,77,99,.12)}
+.win.gold{border-color:var(--gold);box-shadow:0 0 34px rgba(255,201,74,.4),inset 0 0 30px rgba(255,201,74,.1)}
+@keyframes winIn{from{transform:scaleY(.04);opacity:.2}to{transform:none;opacity:1}}
+.win .hd{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);letter-spacing:.2em;font-weight:700;color:var(--ice);font-size:15px}
+.win.red .hd{color:#ffd0d6;border-color:rgba(255,77,99,.4)}
+.win .hd .ex{width:22px;height:22px;border:1.5px solid currentColor;display:grid;place-items:center;font-size:13px;border-radius:3px}
+.win .bd{padding:16px 18px;font-size:15px;line-height:1.55;color:var(--text)}
+.win .bd p{margin:0 0 8px}
+.win .bd .em{color:var(--ice);text-shadow:0 0 8px rgba(95,208,255,.5)}
+.win .ft{display:flex;gap:10px;justify-content:center;padding:0 18px 16px;flex-wrap:wrap}
+.btn{background:rgba(95,208,255,.1);border:1px solid var(--cyan);color:var(--ice);font-family:var(--sys);font-weight:700;letter-spacing:.14em;padding:9px 22px;min-width:110px}
+.btn:hover{background:rgba(95,208,255,.25)}
+.btn.red{border-color:var(--red);background:rgba(255,77,99,.12);color:#ffd0d6}
+.btn.ghost{border-color:var(--line);color:var(--muted)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.qt{display:inline-block;font-size:11px;letter-spacing:.14em;padding:2px 8px;border:1px solid currentColor;margin-bottom:8px}
+.qt.Daily{color:var(--cyan)}.qt.Basic{color:var(--green)}.qt.Special{color:var(--gold)}.qt.Emergency{color:var(--red)}.qt.Hidden{color:var(--violet)}
+.goal{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed rgba(95,208,255,.18);padding:5px 0;font-variant-numeric:tabular-nums}
+.goal span:last-child{color:var(--ice)}
+.lbl{font-size:11px;letter-spacing:.16em;color:var(--muted);margin:12px 0 4px}
+.rw{color:var(--ice)}
+.rw .r-Special,.rw .hidden{color:var(--gold)}
+.warn{color:#ff9aa8;font-size:13px;margin-top:10px}
+
+/* Status window */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;font-variant-numeric:tabular-nums}
+.kv{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid rgba(95,208,255,.14);padding:4px 0;min-width:0}
+.kv b{color:var(--ice);font-weight:600;text-align:right}
+.statrow{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(95,208,255,.12)}
+.statrow b{color:var(--ice);font-variant-numeric:tabular-nums}
+.statrow .k{letter-spacing:.12em;color:var(--cyan)}
+.plus{width:30px;height:28px;border:1px solid var(--cyan);background:rgba(95,208,255,.12);color:var(--ice);font-weight:700}
+.plus[disabled]{opacity:.25}
+.sheet{width:min(640px,100%)}
+.tabsx{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabsx button{border:1px solid var(--line);background:none;padding:5px 10px;font-family:var(--sys);font-size:12px;letter-spacing:.08em;color:var(--muted)}
+.tabsx button.on{color:var(--ice);border-color:var(--cyan);background:rgba(95,208,255,.12)}
+
+/* Cards */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+.ctile{border:1px solid var(--rc,#556);background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(0,0,0,.25));padding:10px;text-align:left;display:grid;gap:4px;min-height:110px;position:relative;box-shadow:inset 0 0 18px color-mix(in srgb,var(--rc,#556) 22%,transparent)}
+.ctile .rr{font-size:10px;letter-spacing:.14em;color:var(--rc)}
+.ctile .nm{font-weight:700;color:var(--ice);font-size:14px;line-height:1.25}
+.ctile .ty{font-size:11px;color:var(--muted)}
+.ctile.locked{--rc:#2a3550;opacity:.55}
+.ctile.locked .nm{color:var(--muted)}
+.r-Common{--rc:#b8c2cc}.r-Uncommon{--rc:#5fe08a}.r-Rare{--rc:#4aa8ff}.r-Epic{--rc:#b072ff}.r-Legendary{--rc:#ffb02e}.r-Mythic{--rc:#ff4d6a}.r-Beyond{--rc:#ffffff}
+.r-Beyond{border-image:linear-gradient(135deg,#ff4d6a,#ffc94a,#5fe08a,#5fd0ff,#b072ff) 1}
+
+/* Card reveal */
+.reveal{display:grid;justify-items:center;gap:14px;padding:18px}
+.c3{width:220px;height:310px;perspective:900px;cursor:pointer}
+.c3 .in{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.c3.flip .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:2px solid var(--rc,var(--cyan));display:grid;align-content:space-between;padding:16px;
+  background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--rc,#5fd0ff) 30%,transparent),transparent 60%),linear-gradient(180deg,#0d1b3a,#050a18);
+  box-shadow:0 0 30px color-mix(in srgb,var(--rc,#5fd0ff) 55%,transparent)}
+.face.back{--rc:var(--cyan);place-items:center;align-content:center;font-size:72px;color:var(--cyan);text-shadow:0 0 22px var(--cyan)}
+.face.back small{font-size:12px;letter-spacing:.2em;color:var(--muted)}
+.face.front{transform:rotateY(180deg)}
+.face .rr{letter-spacing:.2em;font-size:12px;color:var(--rc)}
+.face .nm{font-size:22px;font-weight:700;color:#fff;line-height:1.15;text-shadow:0 0 14px var(--rc)}
+.face .sig{font-size:44px;text-align:center;color:var(--rc);text-shadow:0 0 18px var(--rc)}
+.face .ds{font-size:13px;line-height:1.45;color:var(--text);font-family:var(--body)}
+.face .fx{font-size:12px;color:var(--ice)}
+
+/* Mini-games */
+.mg{display:grid;gap:12px}
+.mg h3{margin:0;font-family:var(--sys);letter-spacing:.12em;font-size:15px;color:var(--ice)}
+.trow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.tbar{height:14px;border:1px solid var(--line);background:#06102a;position:relative;overflow:hidden}
+.tbar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#2b6fe0,#5fd0ff);transition:width .12s}
+.tbar.ok i{background:linear-gradient(90deg,#2bb36a,#5fe08a)}
+.tlab{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.tap{min-width:118px;padding:12px 10px;border:1px solid var(--cyan);background:rgba(95,208,255,.12);font-family:var(--sys);font-weight:700;letter-spacing:.08em;color:var(--ice);touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.tap:active{background:rgba(95,208,255,.3)}
+.tap[disabled]{border-color:var(--green);color:var(--green);background:rgba(95,224,138,.08)}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qopts button{padding:12px;border:1px solid var(--line);background:rgba(95,208,255,.06);text-align:left}
+.qopts button.right{border-color:var(--green);background:rgba(95,224,138,.15)}
+.qopts button.wrong{border-color:var(--red);background:rgba(255,77,99,.15)}
+.small{font-size:13px;color:var(--muted)}
+
+/* Fight */
+.ftop{display:grid;gap:6px}
+.fname{display:flex;justify-content:space-between;font-family:var(--sys);letter-spacing:.06em;gap:10px}
+.fname b{color:#ffb3bd}
+.fname span{color:var(--muted);font-size:12px;text-align:right}
+.ebar{height:12px;border:1px solid rgba(255,77,99,.6);background:#1a0710;position:relative;overflow:hidden}
+.ebar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#a3172b,#ff4d63);transition:width .3s}
+.flog{font-size:14px;line-height:1.5;min-height:6em;display:flex;flex-direction:column;justify-content:flex-end;color:#c9d5e8}
+.flog div:last-child{color:var(--ice)}
+.flog .hit{color:#ffb3bd}.flog .good{color:var(--green)}.flog .sys{color:var(--cyan);font-family:var(--sys)}
+.acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.acts button{padding:10px 8px;border:1px solid var(--line);background:rgba(95,208,255,.08);font-family:var(--sys);font-size:13px;text-align:left;line-height:1.25}
+.acts button small{display:block;color:var(--muted);font-size:11px}
+.acts button.sk{border-color:rgba(255,201,74,.5);background:rgba(255,201,74,.07)}
+.acts button[disabled]{opacity:.35}
+.mine{display:flex;gap:12px;font-size:12px;color:var(--muted);font-family:var(--sys);flex-wrap:wrap;font-variant-numeric:tabular-nums}
+
+/* Overlays */
+#over{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:#000;text-align:center;font-family:var(--sys);padding:24px}
+#over .t1{font-size:13px;letter-spacing:.4em;color:var(--cyan)}
+#over .t2{font-size:clamp(28px,7vw,54px);font-weight:700;color:#fff;letter-spacing:.06em;text-shadow:0 0 30px rgba(95,208,255,.6);text-wrap:balance;margin-top:10px}
+#over .t3{color:var(--muted);margin-top:14px;font-size:13px;letter-spacing:.2em}
+#over.fade{animation:fadein .6s}
+@keyframes fadein{from{opacity:0}}
+.letter{background:#efe6d2;color:#2b2318;font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.7;padding:26px 24px;width:min(460px,100%);box-shadow:0 10px 40px rgba(0,0,0,.6);transform:rotate(-1deg);white-space:pre-line}
+#toasts{position:fixed;top:calc(64px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:25;display:grid;gap:6px;width:min(440px,calc(100% - 32px));pointer-events:none}
+.toast{background:rgba(6,16,38,.95);border:1px solid var(--cyan);padding:8px 12px;font-family:var(--sys);font-size:13px;color:var(--ice);box-shadow:0 0 18px rgba(95,208,255,.35);animation:tin .3s, tout .4s 2.6s forwards}
+.toast.gold{border-color:var(--gold);color:#ffe7a8}
+@keyframes tin{from{transform:translateY(-10px);opacity:0}}
+@keyframes tout{to{opacity:0;transform:translateY(-6px)}}
+.title-screen{display:grid;gap:16px;justify-items:center}
+.title-screen .logo{font-size:clamp(40px,11vw,86px);font-weight:700;letter-spacing:.12em;color:#fff;text-shadow:0 0 40px rgba(95,208,255,.8);line-height:1}
+.title-screen .logo span{color:var(--cyan)}
+.title-screen p{color:var(--muted);max-width:44ch;font-family:var(--body);line-height:1.6;margin:0}
+.crew{border:1px solid var(--line);padding:12px;display:grid;gap:6px;margin-bottom:10px;border-left:3px solid var(--cc)}
+.crew h4{margin:0;font-size:15px;letter-spacing:.1em;color:var(--cc)}
+.crew .pw{font-size:13px;color:var(--text);font-family:var(--body);line-height:1.5}
+.mono{font-variant-numeric:tabular-nums}
+@media (max-width:480px){#text{font-size:16px}.qopts{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr}#tabs button{font-size:10px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header id="hud">
+    <div class="brand">NEXA<small>SYSTEM</small></div>
+    <div class="bars">
+      <div class="bar" title="HP"><i id="hpb" style="width:100%"></i></div>
+      <div class="bar mp" title="MP"><i id="mpb" style="width:100%"></i></div>
+      <div class="bar xp" title="EXP"><i id="xpb" style="width:0%"></i></div>
+    </div>
+    <div class="hudr"><div><b id="lv">—</b> <span id="lvl">LV</span></div><div><span class="coin" id="coins">0</span> ◈ · <span id="day">Day 1</span></div></div>
+  </header>
+  <div id="stage"><canvas id="art" width="960" height="540" aria-label="Scene illustration"></canvas><div id="cap">NEXA</div></div>
+  <section id="box" aria-live="polite">
+    <div id="speaker"></div>
+    <div id="text"></div>
+    <div id="choices"></div>
+    <div id="hint" hidden>TAP ▼</div>
+  </section>
+</div>
+<nav id="tabs"><div class="in">
+  <button data-p="status" id="t-status"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>STATUS</button>
+  <button data-p="cards" id="t-cards"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="11" height="16" rx="1"/><path d="M9 21h10V7"/></svg>CARDS</button>
+  <button data-p="quests" id="t-quests"><svg viewBox="0 0 24 24"><path d="M12 3v12M12 19v1"/><circle cx="12" cy="12" r="10"/></svg>QUESTS</button>
+  <button data-p="crews" id="t-crews"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-4 8-8 9-4-1-8-4-8-9V7z"/></svg>CREWS</button>
+  <button data-p="shop" id="t-shop"><svg viewBox="0 0 24 24"><path d="M4 8h16l-1 12H5zM9 8V6a3 3 0 016 0v2"/></svg>SHOP</button>
+  <button data-p="menu" id="t-menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>SYSTEM</button>
+</div></nav>
+<div id="modal" hidden></div>
+<div id="over" hidden></div>
+<div id="toasts"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   NEXA SYSTEM — story engine, System, cards, fights, scene art
+   ============================================================ */
+const $=s=>document.querySelector(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const TAU=Math.PI*2, W=960, H=540;
+const SAVE_KEY='nexa-system-save-v1';
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+function rnd(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=(a,b)=>a+Math.random()*(b-a);
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+
+/* ---------------- CARDS ---------------- */
+const RAR=['Common','Uncommon','Rare','Epic','Legendary','Mythic','Beyond'];
+const CARDS={
+ // basic cards — from small quests
+ iron:{n:'Iron Lungs',r:'Common',k:'Basic',sig:'◎',d:'Your stamina stops betraying you. Breathing deepens, recovery speeds up.',fx:{vit:3},fxt:'VIT +3'},
+ focus:{n:"Scholar's Focus",r:'Common',k:'Basic',sig:'✎',d:'The mind sharpens. Mana grows with understanding.',fx:{int:3},fxt:'INT +3'},
+ charm1:{n:'Charm Glow I',r:'Common',k:'Basic',sig:'✧',d:'Skin clears, eyes brighten. People start looking twice.',fx:{looks:12},fxt:'Looks +12'},
+ grow1:{n:'Growth Spurt I',r:'Common',k:'Basic',sig:'↑',d:'Your bones stretch overnight.',fx:{height:2.54},fxt:'Height +1 inch'},
+ boxing:{n:'Boxing Fundamentals',r:'Common',k:'Basic',sig:'✊',d:'Stance, guard, jab, cross. Your fists finally know what to do.',fx:{str:3},fxt:'STR +3 · Skill: Jab-Cross · +10% damage'},
+ quick:{n:'Quickstep',r:'Uncommon',k:'Basic',sig:'≫',d:'Light feet. Faster reactions.',fx:{agi:4},fxt:'AGI +4'},
+ grow2:{n:'Growth Spurt II',r:'Uncommon',k:'Basic',sig:'⇈',d:'Another growth surge. Your old clothes are done.',fx:{height:5.08},fxt:'Height +2 inches'},
+ muscle1:{n:'Lean Muscle I',r:'Uncommon',k:'Basic',sig:'◆',d:'The skinny frame fills out with dense, real muscle.',fx:{str:4,vit:2,build:'Lean'},fxt:'STR +4 · VIT +2 · Build: Lean'},
+ charm2:{n:'Charm Glow II',r:'Uncommon',k:'Basic',sig:'✦',d:'A sharper jaw and a calm confidence. The mirror shows a stranger.',fx:{looks:18},fxt:'Looks +18'},
+ senses:{n:'Sharp Senses',r:'Uncommon',k:'Basic',sig:'◉',d:'Hear heartbeats. Feel footsteps. Notice everything.',fx:{per:4},fxt:'PER +4'},
+ appraisal:{n:'Eye of Appraisal',r:'Rare',k:'Basic',sig:'👁',d:"See anyone's level, stats and power. Nobody can hide from you now.",fx:{appraisal:1},fxt:'Unlocks enemy stats + crew stats'},
+ muscle2:{n:'Lean Muscle II',r:'Rare',k:'Basic',sig:'⬢',d:"A fighter's body. Broad shoulders, iron core.",fx:{str:6,vit:4,build:'Athletic'},fxt:'STR +6 · VIT +4 · Build: Athletic'},
+ // special cards — from serious quests
+ martial:{n:'Martial Sage',r:'Rare',k:'Special',sig:'☯',d:'Learn every martial art in existence. See a technique once, and your body knows it.',fx:{str:3,agi:3},fxt:'Skill: Thousand-Style Combo · +10% damage'},
+ mirror:{n:'Retribution Mirror',r:'Epic',k:'Special',sig:'⟲',d:'Every hit you take comes back to the attacker, stronger.',fx:{vit:3},fxt:'Reflect 40% of damage taken · Skill: Mirror Stance'},
+ ui:{n:'Ultra Instinct',r:'Legendary',k:'Special',sig:'✺',d:'Your body moves on its own. Thought is too slow; instinct is faster.',fx:{agi:6,per:4},fxt:'+25% dodge · Skill: Silver Flow'},
+ teleport:{n:'Void Step',r:'Rare',k:'Special',sig:'⌖',d:'Teleport anywhere. Any city. Any planet. Any universe.',fx:{agi:5},fxt:'Skill: Void Step Strike'},
+ regen:{n:'Undying Cells',r:'Epic',k:'Special',sig:'✚',d:'Wounds close in seconds. Bones mend as they break.',fx:{vit:10},fxt:'Heal 6% HP every turn · Skill: Regenerate'},
+ whitering:{n:'White Ring',r:'Mythic',k:'Special',sig:'◯',d:'The White Light of life itself, gifted on the Green Planet.',fx:{vit:40,int:40},fxt:'Skill: White Light (full heal + blast)'},
+ copy:{n:'Codex of Mimicry',r:'Epic',k:'Special',sig:'⧉',d:'Copy any power or technique you see, perfectly, forever.',fx:{int:30,per:20},fxt:'Skill: Mimic'},
+ drain:{n:'Mana Devourer',r:'Legendary',k:'Special',sig:'◐',d:'Absorb the power and life force of anything you touch.',fx:{int:40},fxt:'Skill: Devour (damage + heal)'},
+ light:{n:'Beyond Light',r:'Legendary',k:'Special',sig:'ϟ',d:'Move faster than light. Time itself looks frozen.',fx:{agi:120},fxt:'Skill: Lightspeed Barrage'},
+ arise:{n:'ARISE — Monarch’s Command',r:'Mythic',k:'Special',sig:'♛',d:'Raise the fallen as eternal soldiers of your Shadow Army.',fx:{int:60},fxt:'Skill: Shadow Legion'},
+ limit:{n:'Limit Breaker: One Beyond',r:'Mythic',k:'Special',sig:'✪',d:'Your limiter is gone. Stronger than Saitama. Stronger than anyone.',fx:{str:300,vit:150},fxt:'Skill: Serious Punch'},
+ aura:{n:'Prism Aura',r:'Beyond',k:'Special',sig:'❂',d:'Every color of aura at once — red, blue, gold, silver, black, white — mastered.',fx:{str:100,agi:100,vit:100,int:100,per:100},fxt:'All stats +100 · Presence crushes the weak'},
+};
+const CARD_ORDER=Object.keys(CARDS);
+
+/* ---------------- STATE ---------------- */
+function newState(){return{level:1,exp:0,coins:0,pts:0,st:{str:4,agi:5,vit:4,int:18,per:7},hp:100,mp:90,height:160,looks:12,build:'Skinny',title:'Powerless',job:'None',
+ cards:[],quests:[],day:1,items:{potion:1},flags:{},scene:'start',systemOn:false,army:'—',aura:'None',ring:'None',textSpeed:1,ended:false}}
+let S=newState();
+const expNext=L=>Math.round(60+40*L*L);
+const maxHP=()=>Math.round(50+S.st.vit*12+S.level*5);
+const maxMP=()=>Math.round(20+S.st.int*4);
+const has=id=>S.cards.includes(id);
+const atkPow=()=>(S.st.str*2.2+S.level*1.5)*(1+(has('boxing')?.1:0)+(has('martial')?.1:0));
+function fullHeal(){S.hp=maxHP();S.mp=maxMP()}
+function heightStr(cm){const t=Math.round(cm/2.54);return `${Math.floor(t/12)}'${t%12}" (${Math.round(cm)} cm)`}
+
+/* ---------------- HUD ---------------- */
+function hud(){
+  const on=S.systemOn;
+  $('#lv').textContent=on?S.level:'—';$('#lvl').textContent=on?'LV':'NO SYSTEM';
+  $('#hpb').style.width=Math.max(0,Math.min(100,S.hp/maxHP()*100))+'%';
+  $('#mpb').style.width=Math.max(0,Math.min(100,S.mp/maxMP()*100))+'%';
+  $('#xpb').style.width=on?Math.min(100,S.exp/expNext(S.level)*100)+'%':'0%';
+  $('#coins').textContent=fmt(S.coins);
+  $('#day').textContent=S.flags.yearsLabel||('Day '+S.day);
+  const st=$('#t-status');st.querySelector('.dot')?.remove();
+  if(on&&S.pts>0){const d=document.createElement('span');d.className='dot';st.appendChild(d)}
+}
+function toast(msg,cls=''){const t=document.createElement('div');t.className='toast '+cls;t.textContent=msg;$('#toasts').appendChild(t);setTimeout(()=>t.remove(),3200)}
+
+/* ---------------- REWARDS ---------------- */
+function applyCardFx(id){const f=CARDS[id].fx||{};
+  for(const k of ['str','agi','vit','int','per'])if(f[k])S.st[k]+=f[k];
+  if(f.looks)S.looks=Math.min(100,S.looks+f.looks);
+  if(f.height)S.height+=f.height;
+  if(f.build)S.build=f.build;
+  if(f.appraisal)S.flags.appraisal=true;
+}
+function gainExp(n){if(!n)return;S.exp+=n;let ups=0;while(S.exp>=expNext(S.level)){S.exp-=expNext(S.level);S.level++;S.pts+=5;ups++}
+  if(ups){fullHeal();toast(`LEVEL UP!  Lv.${S.level}  (+${ups*5} stat points)`,'gold')}hud()}
+function gainLevels(n,statEach){S.level+=n;S.exp=0;if(statEach)for(const k in S.st)S.st[k]+=statEach*n;fullHeal();hud()}
+async function giveCard(id,silent){if(has(id))return;S.cards.push(id);applyCardFx(id);fullHeal();hud();if(!silent)await revealCard(id)}
+
+/* ---------------- SCENE ART (procedural canvas) ---------------- */
+const cv=$('#art'),c=cv.getContext('2d');
+let artType='planet',artOpt={},artT0=performance.now();
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function setArt(type,opt){artType=type;artOpt=opt||{};artT0=performance.now()}
+function lg(y0,y1,stops,x0=0,x1=0){const g=c.createLinearGradient(x0,y0,x1,y1);stops.forEach((s,i)=>g.addColorStop(i/(stops.length-1),s));return g}
+function bg(stops){c.fillStyle=lg(0,H,stops);c.fillRect(0,0,W,H)}
+function glow(x,y,r,col,a=1){c.save();c.globalCompositeOperation='lighter';c.globalAlpha=a;const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,col);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,TAU);c.fill();c.restore()}
+function stars(t,n,seed,maxY=H){const r=rnd(seed);c.fillStyle='#fff';for(let i=0;i<n;i++){const x=r()*W,y=r()*maxY,s=r()*1.7+.3,sp=.5+r()*2;c.globalAlpha=.35+.65*Math.abs(Math.sin(t*sp+i));c.fillRect(x,y,s,s)}c.globalAlpha=1}
+function skyline(base,col,seed,minW,maxW,minH,maxH,lights){const r=rnd(seed);let x=-10;while(x<W+10){const w=minW+r()*(maxW-minW),h=minH+r()*(maxH-minH);c.fillStyle=col;c.fillRect(x,base-h,w,h+2);
+  if(lights){c.fillStyle=lights;for(let wy=base-h+8;wy<base-6;wy+=12)for(let wx=x+5;wx<x+w-5;wx+=9)if(r()<.33)c.fillRect(wx,wy,3,5)}x+=w+r()*5}}
+function trees(base,col,seed,n,sz,xs){const r=rnd(seed);c.fillStyle=col;for(let i=0;i<n;i++){const x=xs?xs[i]:r()*W,h=sz*(.6+r()*.8);c.fillRect(x-h*.04,base-h*.55,h*.08,h*.55);c.beginPath();c.arc(x,base-h*.62,h*.27,0,TAU);c.arc(x-h*.19,base-h*.5,h*.2,0,TAU);c.arc(x+h*.19,base-h*.52,h*.21,0,TAU);c.fill()}}
+function ground(y,stops){c.fillStyle=lg(y,H,stops);c.fillRect(0,y,W,H-y)}
+function vignette(a=.55){const g=c.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,H*.95);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,`rgba(0,0,0,${a})`);c.fillStyle=g;c.fillRect(0,0,W,H)}
+function particles(t,n,seed,col,{vy=-20,vx=0,size=2,area=[0,0,W,H],tw=true}={}){const r=rnd(seed);c.save();c.globalCompositeOperation='lighter';
+  for(let i=0;i<n;i++){const [ax,ay,aw,ah]=area;let x=ax+((r()*aw+t*vx*(.5+r()))%aw+aw)%aw,y=ay+((r()*ah+t*vy*(.5+r()))%ah+ah)%ah;const s=size*(.5+r());c.globalAlpha=tw?.3+.7*Math.abs(Math.sin(t*2+i)):.8;c.fillStyle=typeof col==='function'?col(i,t):col;c.beginPath();c.arc(x,y,s,0,TAU);c.fill()}c.restore()}
+function auraFx(col,t,col2){c.save();c.globalCompositeOperation='lighter';
+  const pick=(i,x)=>col==='rainbow'?`hsl(${(t*90+i*28)%360},100%,60%)`:(col2&&x>0?col2:col);
+  for(let i=0;i<16;i++){const a=i/16*TAU,fl=Math.sin(t*7+i*1.9)*.5+.5,x=Math.cos(a)*26,y=-50+Math.sin(a)*48-fl*14;const cc=pick(i,x);c.globalAlpha=.22;
+    const g=c.createRadialGradient(x,y,0,x,y,24+fl*16);g.addColorStop(0,cc);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,24+fl*16,0,TAU);c.fill()}
+  c.globalAlpha=.3;const g=c.createRadialGradient(0,-50,0,0,-50,85);g.addColorStop(0,col==='rainbow'?`hsl(${t*90%360},100%,70%)`:col);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(0,-50,85,0,TAU);c.fill();c.restore()}
+/* person silhouette: (x, feet y, height px, color, options) */
+function person(x,y,h,col,o={}){const s=h/100,t=o.t||0;c.save();c.translate(x,y);if(o.lie)c.rotate(-Math.PI/2);c.scale(o.flip?-s:s,s);
+  if(o.float)c.translate(0,Math.sin(t*2)*3);
+  if(o.aura)auraFx(o.aura,t,o.aura2);
+  const bw=o.big?1.3:o.thin?.72:o.broad?1.12:1;
+  c.fillStyle=col;c.strokeStyle=col;c.lineCap='round';c.lineJoin='round';
+  if(o.cape){c.beginPath();c.moveTo(-12*bw,-77);c.quadraticCurveTo(-26+Math.sin(t*3)*4,-30,-30+Math.sin(t*2.4)*6,-4);c.lineTo(22+Math.sin(t*2.2)*5,-6);c.quadraticCurveTo(20,-40,12*bw,-77);c.fill()}
+  c.beginPath();c.arc(0,-89,o.big?10:9,0,TAU);c.fill();
+  if(o.spiky){c.beginPath();for(let i=-3;i<=3;i++){c.moveTo(i*3-2,-95);c.lineTo(i*3.5,-106-Math.abs(i)*-1);c.lineTo(i*3+2,-95)}c.fill()}
+  c.beginPath();c.moveTo(-13*bw,-78);c.quadraticCurveTo(0,-81,13*bw,-78);c.lineTo(9*bw,-44);c.lineTo(-9*bw,-44);c.closePath();c.fill();
+  c.lineWidth=7*bw;const L=p=>{c.beginPath();c.moveTo(p[0],p[1]);for(let i=2;i<p.length;i+=2)c.lineTo(p[i],p[i+1]);c.stroke()};
+  const P=o.pose||'stand',k=Math.sin(t*11)*10;
+  const legsStand=()=>{L([-5,-46,-7,-23,-8,0]);L([5,-46,7,-23,8,0])};
+  if(P==='fight'){L([-5,-46,-14,-24,-20,0]);L([5,-46,12,-22,17,0]);L([-12*bw,-74,-22,-64,-12,-76]);L([12*bw,-74,26,-70,24,-84])}
+  else if(P==='run'){L([-4,-46,-8+k,-22,-12+k*1.5,0]);L([4,-46,8-k,-22,12-k*1.5,0]);L([-12,-74,-16-k,-58,-10-k*1.3,-48]);L([12,-74,16+k,-58,10+k*1.3,-48])}
+  else if(P==='cast'){legsStand();L([-12*bw,-74,-17,-58,-18,-44]);L([12*bw,-74,32,-76,50,-78])}
+  else if(P==='arms'){legsStand();L([-12*bw,-74,-30,-70,-46,-72]);L([12*bw,-74,30,-70,46,-72])}
+  else if(P==='cross'){legsStand();L([-12*bw,-74,0,-62,12,-66]);L([12*bw,-74,0,-60,-12,-64])}
+  else if(P==='kneel'){L([-5,-46,-16,-26,-2,-6]);L([5,-46,16,-20,14,0]);L([-12,-74,-16,-58,-14,-44]);L([12,-74,16,-58,14,-44])}
+  else if(P==='hug'){legsStand();L([-12*bw,-74,4,-66,16,-70]);L([12*bw,-74,22,-66,14,-58])}
+  else if(P==='phone'){legsStand();L([-12*bw,-74,-17,-58,-18,-44]);L([12*bw,-74,18,-62,6,-86])}
+  else if(P==='laugh'){const b=Math.sin(t*8)*2;c.translate(0,b);legsStand();L([-12*bw,-74,-14,-56,-4,-52]);L([12*bw,-74,22,-84,18,-98])}
+  else {legsStand();L([-12*bw,-74,-17,-58,-18,-44]);L([12*bw,-74,17,-58,18,-44])}
+  if(o.eyes){c.fillStyle=o.eyes;c.shadowColor=o.eyes;c.shadowBlur=10;c.fillRect(-5,-91,3,2);c.fillRect(2,-91,3,2);c.shadowBlur=0}
+  if(o.ring){glowRawLocal(18,-44,10,o.ring)}
+  c.restore()}
+function glowRawLocal(x,y,r,col){c.save();c.globalCompositeOperation='lighter';const g=c.createRadialGradient(x,y,0,x,y,r*3);g.addColorStop(0,col);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,r*3,0,TAU);c.fill();c.restore()}
+function moon(x,y,r,col,shade){c.fillStyle=col;c.beginPath();c.arc(x,y,r,0,TAU);c.fill();if(shade){c.fillStyle=shade;c.beginPath();c.arc(x+r*.35,y-r*.1,r*.95,0,TAU);c.fill()}}
+function textGlow(txt,x,y,size,col,a=1){c.save();c.globalAlpha=a;c.font=`700 ${size}px "Chakra Petch",sans-serif`;c.textAlign='center';c.textBaseline='middle';c.shadowColor=col;c.shadowBlur=24;c.fillStyle=col;c.fillText(txt,x,y);c.shadowBlur=0;c.fillStyle='#fff';c.globalAlpha=a*.85;c.fillText(txt,x,y);c.restore()}
+function lightning(seed,x0,y0,x1,y1,col,w=3){const r=rnd(seed);c.save();c.globalCompositeOperation='lighter';c.strokeStyle=col;c.lineWidth=w;c.shadowColor=col;c.shadowBlur=16;c.beginPath();c.moveTo(x0,y0);const n=10;for(let i=1;i<=n;i++){const f=i/n;c.lineTo(x0+(x1-x0)*f+(i<n?(r()-.5)*40:0),y0+(y1-y0)*f+(i<n?(r()-.5)*20:0))}c.stroke();c.restore()}
+function sysPanel(x,y,w,h,t,label='SYSTEM'){c.save();const a=.75+.25*Math.sin(t*3);c.globalAlpha=a;c.fillStyle='rgba(20,60,130,.35)';c.fillRect(x,y,w,h);c.strokeStyle='#5fd0ff';c.lineWidth=2;c.shadowColor='#5fd0ff';c.shadowBlur=18;c.strokeRect(x,y,w,h);c.shadowBlur=0;
+  c.fillStyle='#d6f1ff';c.font='700 18px "Chakra Petch",sans-serif';c.textAlign='center';c.fillText('[ '+label+' ]',x+w/2,y+30);c.globalAlpha=a*.6;c.fillRect(x+20,y+48,w-40,2);c.font='14px "Chakra Petch",sans-serif';
+  const lines=artOpt.lines||['Do you want to','start the System?'];lines.forEach((l,i)=>c.fillText(l,x+w/2,y+76+i*22));c.restore()}
+
+const ART={
+ void(t){bg(['#02030a','#060b1c'])},
+ planet(t){bg(['#02030a','#090a22','#0b0718']);stars(t,260,7);glow(220,130,260,'rgba(140,60,220,.5)',.5);glow(800,440,260,'rgba(30,180,200,.45)',.45);
+  const px=520,py=300,pr=185;glow(px,py,pr*1.35,'rgba(70,200,255,.6)',.5);
+  c.save();c.beginPath();c.arc(px,py,pr,0,TAU);c.clip();c.fillStyle=lg(py-pr,py+pr,['#3fd6c0','#1b6aa0','#0d2450'],px-pr,px+pr);c.fillRect(px-pr,py-pr,pr*2,pr*2);
+  const r=rnd(4);c.fillStyle='rgba(10,40,40,.55)';for(let i=0;i<16;i++){const x=px-pr+((r()*pr*3+t*10)%(pr*3))-pr*.4,y=py-pr+r()*pr*2;c.beginPath();c.ellipse(x,y,30+r()*60,12+r()*26,r()*3,0,TAU);c.fill()}
+  const sh=c.createLinearGradient(px-pr,0,px+pr,0);sh.addColorStop(0,'rgba(0,0,0,0)');sh.addColorStop(.55,'rgba(0,0,10,.25)');sh.addColorStop(1,'rgba(0,0,12,.9)');c.fillStyle=sh;c.fillRect(px-pr,py-pr,pr*2,pr*2);
+  const r2=rnd(9);c.fillStyle='#ffd27a';for(let i=0;i<140;i++){const a=r2()*TAU,d=Math.sqrt(r2())*pr,x=px+Math.cos(a)*d,y=py+Math.sin(a)*d;if(x>px+pr*.25){c.globalAlpha=.4+.6*Math.abs(Math.sin(t+i));c.fillRect(x,y,2,2)}}c.globalAlpha=1;
+  glow(px+60,py-30,30,'rgba(255,40,60,.9)',.6+.4*Math.sin(t*2));c.restore();
+  c.strokeStyle='rgba(150,220,255,.35)';c.lineWidth=2;c.beginPath();c.ellipse(px,py,pr*1.55,pr*.32,-.25,0,TAU);c.stroke();
+  const m1=t*.3,m2=t*.18+2;moon(px+Math.cos(m1)*300,py+Math.sin(m1)*90,22,'#c9c3e0','rgba(5,6,20,.7)');moon(px+Math.cos(m2)*380,py+Math.sin(m2)*120,13,'#e8b48a','rgba(5,6,20,.7)');
+  textGlow('NEXA',px,py+pr+40,30,'#5fd0ff',.85);vignette(.5)},
+ city(t){const night=artOpt.night;bg(night?['#03040e','#0b0d26','#1d1638']:['#170c2c','#4d1d44','#c75a3a','#f0a050']);if(night)stars(t,120,3,260);else glow(480,420,260,'rgba(255,170,90,.8)',.6);
+  skyline(400,night?'#140f2a':'#3a1e3e',11,30,70,60,190,null);
+  c.fillStyle=night?'#0a0712':'#1a0b1c';c.beginPath();c.moveTo(450,440);c.lineTo(472,40);c.lineTo(488,40);c.lineTo(510,440);c.fill();
+  c.strokeStyle='rgba(255,40,60,.7)';c.lineWidth=2;for(let i=0;i<6;i++){c.beginPath();c.moveTo(480,60+i*60);c.lineTo(468-i*3,100+i*60);c.stroke()}
+  glow(480,46,60+10*Math.sin(t*2),'rgba(255,40,60,.95)',.9);
+  c.fillStyle='#2b1a14';for(let i=0;i<3;i++){c.fillRect(70+i*90,210-i*20,60,240)}c.fillStyle='rgba(255,210,110,.9)';const r=rnd(5);for(let i=0;i<3;i++)for(let y=230-i*20;y<440;y+=14)for(let x=78+i*90;x<124+i*90;x+=10)if(r()<.6)c.fillRect(x,y,4,6);
+  skyline(450,night?'#07050f':'#12081a',21,24,60,40,140,night?'rgba(255,200,120,.75)':'rgba(255,190,120,.5)');
+  for(let i=0;i<7;i++){const y=120+i*35,x=((t*(60+i*18)+i*170)%1120)-80;glow(x,y,10,i%2?'rgba(95,208,255,.9)':'rgba(255,90,90,.9)',.9);c.fillStyle='#000';c.fillRect(x-8,y-2,16,4)}
+  ground(450,['#0a0610','#040208']);for(let i=0;i<7;i++){const x=((t*14+i*140)%1040)-40;person(x,500,46,'#000',{pose:'stand',t:t+i});c.fillStyle='#000';c.fillRect(x-10,460-8,20,12)}
+  vignette(.55)},
+ legend(t){bg(['#07060c','#1b1626','#2e2236']);const fl=Math.floor(t*2.5);const r=rnd(fl);if(r()<.35){c.fillStyle='rgba(220,230,255,.18)';c.fillRect(0,0,W,H);lightning(fl,r()*W,0,r()*W,300,'rgba(220,230,255,.9)',2)}
+  ground(420,['#141018','#050407']);c.strokeStyle='rgba(255,180,60,.45)';c.lineWidth=2;for(let i=0;i<9;i++){c.beginPath();c.moveTo(480,430);c.lineTo(480+Math.cos(i*.7)*(200+i*30),430+Math.abs(Math.sin(i*1.3))*110);c.stroke()}
+  glow(480,290,170+20*Math.sin(t*6),'rgba(255,255,255,.95)',.55);
+  person(300,430,220,'#08080c',{cape:true,aura:'rgba(225,235,255,1)',t,pose:'fight'});
+  person(670,430,250,'#06040a',{big:true,aura:'rgba(255,190,40,1)',aura2:'rgba(255,60,40,1)',eyes:'#ff2a3a',t,pose:'cast',flip:true,spiky:true});
+  particles(t,60,2,'rgba(255,200,120,.9)',{vy:-40,size:2});vignette(.6)},
+ home(t){bg(['#161c2e','#0c1020']);c.save();c.beginPath();c.rect(560,80,320,230);c.clip();c.fillStyle=lg(80,310,['#050818','#141a3a']);c.fillRect(560,80,320,230);stars(t,60,8,300);moon(820,130,18,'#d9d4f0','rgba(10,12,30,.6)');moon(760,110,9,'#e8b48a');skyline(310,'#0a0d1c',4,14,34,40,150,'rgba(255,210,120,.7)');c.restore();
+  c.strokeStyle='#2a3150';c.lineWidth=8;c.strokeRect(560,80,320,230);c.beginPath();c.moveTo(720,80);c.lineTo(720,310);c.stroke();
+  ground(440,['#0b0e18','#06070c']);glow(190,180,200,'rgba(255,190,110,.5)',.55);c.fillStyle='#1d1a22';c.fillRect(170,180,40,12);c.fillRect(186,192,8,140);
+  c.fillStyle='#151826';c.fillRect(230,380,240,14);c.fillRect(250,394,10,60);c.fillRect(440,394,10,60);
+  const mom=artOpt.momOnly;person(560,450,230,'#05060c',{aura:'rgba(120,180,255,.7)',t,pose:artOpt.hug?'hug':'stand',flip:true});
+  if(!mom)person(320,452,150,'#05060c',{thin:true,t,pose:'stand'});vignette(.55)},
+ school(t){const crews=artOpt.crews;bg(crews?['#28304a','#5d6a8a','#b9a68a']:['#5aa8f0','#a9d4ff','#e6f3ff']);
+  const r=rnd(3);c.fillStyle='rgba(255,255,255,.7)';for(let i=0;i<6;i++){const x=((r()*W+t*12*(.5+r()))%(W+200))-100,y=40+r()*120;c.beginPath();c.ellipse(x,y,60,16,0,0,TAU);c.ellipse(x+30,y-10,40,16,0,0,TAU);c.fill()}
+  c.fillStyle=crews?'#3c3a45':'#c8b8a4';c.fillRect(150,170,660,280);c.fillStyle=crews?'#2a2832':'#8a6e5a';c.beginPath();c.moveTo(130,175);c.lineTo(480,120);c.lineTo(830,175);c.fill();
+  c.fillStyle=crews?'#3c3a45':'#d8c8b4';c.fillRect(430,60,100,120);c.fillStyle=crews?'#2a2832':'#8a6e5a';c.beginPath();c.moveTo(420,64);c.lineTo(480,20);c.lineTo(540,64);c.fill();
+  c.fillStyle='#f4efe6';c.beginPath();c.arc(480,108,22,0,TAU);c.fill();c.strokeStyle='#222';c.lineWidth=3;c.beginPath();c.moveTo(480,108);c.lineTo(480+Math.cos(t*.5)*16,108+Math.sin(t*.5)*16);c.moveTo(480,108);c.lineTo(492,100);c.stroke();
+  c.fillStyle=crews?'rgba(255,200,120,.55)':'#5d7a96';for(let y=200;y<410;y+=52)for(let x=175;x<790;x+=58)if(!(x>420&&x<540&&y>340))c.fillRect(x,y,34,30);
+  c.fillStyle='#3a2a20';c.fillRect(440,350,80,100);
+  [['#c0283a',190],['#e8c547',300],['#8a94a6',650],['#8b4bd8',760]].forEach(([col,x],i)=>{c.fillStyle=col;const sw=Math.sin(t*2+i)*4;c.beginPath();c.moveTo(x,190);c.lineTo(x+40,190);c.lineTo(x+40+sw,290);c.lineTo(x+20+sw,275);c.lineTo(x+sw,290);c.fill()});
+  ground(450,crews?['#4a4a52','#2a2a30']:['#9aa59a','#6d7a6d']);
+  const sil=crews?'#08090e':'#1c2230';
+  if(artOpt.bully){person(480,515,112,sil,{thin:true,t,pose:'stand'});[[360,1],[410,0],[560,1],[610,0],[520,0]].forEach(([x,f],i)=>person(x,515+(i%2)*6,130,sil,{t:t+i,pose:i%2?'laugh':'cross',flip:x>480}))}
+  else if(crews){const L=[[230,'rgba(255,90,60,1)','rgba(110,200,255,1)'],[390,'rgba(255,220,60,1)'],[580,'rgba(170,180,200,1)'],[740,'rgba(170,90,255,1)']];L.forEach(([x,a,b],i)=>person(x,520,170,sil,{aura:a,aura2:b,t:t+i,pose:'laugh',big:i===2,spiky:i===0,flip:x>480}))}
+  else{for(let i=0;i<9;i++){const x=(i*113+t*(i%2?10:-8))%1000-20;person(x,500+(i%3)*8,80,sil,{t:t+i,pose:'stand'})}}
+  vignette(crews?.5:.25)},
+ cafeteria(t){bg(['#2c3242','#1a1e29']);for(let i=0;i<4;i++){const x=150+i*220;c.fillStyle='#e8f0ff';c.fillRect(x-40,40,80,8);glow(x,60,110,'rgba(220,235,255,.6)',.35)}
+  ground(330,['#252a35','#14171e']);c.fillStyle='#3a404e';[[120,360,240],[600,370,260],[260,450,300]].forEach(([x,y,w])=>{c.fillRect(x,y,w,18);c.fillRect(x+10,y+18,8,40);c.fillRect(x+w-18,y+18,8,40)});
+  particles(t,40,4,'rgba(170,230,255,.9)',{vy:-12,area:[560,180,120,260],size:2.4});particles(t,40,5,'rgba(255,140,60,.95)',{vy:-30,area:[700,180,120,260],size:2.2});
+  person(690,470,260,'#07080d',{big:true,aura:'rgba(100,200,255,1)',aura2:'rgba(255,90,50,1)',t,pose:'fight',flip:true,spiky:true,eyes:'#ffd0a0'});
+  person(570,478,90,'#07080d',{lie:true,t});person(390,476,175,'#07080d',{thin:true,t,pose:'arms'});vignette(.5)},
+ classroom(t){bg(['#2e3a36','#1e2724']);c.fillStyle='#173326';c.fillRect(140,50,680,200);c.strokeStyle='#6b5434';c.lineWidth=10;c.strokeRect(140,50,680,200);
+  c.fillStyle='rgba(240,240,230,.85)';c.font='26px "Chakra Petch",sans-serif';c.fillText('∫ x² dx = x³⁄3 + C',180,110);c.fillText('F = m·a',580,100);c.fillText('E = mc²',200,190);c.fillText('Mana ∝ Quirk²',520,200);
+  glow(60,150,240,'rgba(255,230,160,.6)',.4);ground(300,['#3a2e24','#1c1611']);c.fillStyle='#4a3a2c';for(let row=0;row<3;row++)for(let i=0;i<5;i++){const w=110-row*-10,x=110+i*160-row*10,y=340+row*60;c.fillRect(x,y,w,14);c.fillRect(x+8,y+14,6,40);c.fillRect(x+w-14,y+14,6,40)}
+  person(480,410,150,'#0a0c10',{t,pose:'stand',thin:!has('muscle1')});
+  if(artOpt.panel)sysPanel(580,250,300,120,t,'QUEST');vignette(.5)},
+ jungle(t){bg(['#2f4a1e','#6c8f3a','#c8d880']);c.save();c.globalCompositeOperation='lighter';for(let i=0;i<5;i++){c.globalAlpha=.08+.04*Math.sin(t+i);c.fillStyle='#fff7c0';c.beginPath();c.moveTo(300+i*120,0);c.lineTo(360+i*120,0);c.lineTo(160+i*150,H);c.lineTo(80+i*150,H);c.fill()}c.restore();
+  trees(380,'#3f5e24',2,14,220);trees(430,'#26401a',5,14,260);ground(430,['#2b3a18','#141c0b']);
+  if(artOpt.picnic){c.fillStyle='#e8b923';c.fillRect(40,330,230,90);c.fillStyle='#9fd4ff';for(let i=0;i<5;i++)c.fillRect(56+i*42,346,30,26);c.fillStyle='#111';c.beginPath();c.arc(90,422,16,0,TAU);c.arc(220,422,16,0,TAU);c.fill();
+   for(let i=0;i<6;i++)person(300+i*50,470,70,'#11180a',{t:t+i,pose:i%2?'laugh':'stand'});person(720,470,95,'#0c1206',{t,pose:'stand',thin:true});person(650,470,95,'#0c1206',{t,pose:'stand',flip:true})}
+  else{const x=Math.min(560,380+t*14);person(x,480,95,'#0a1005',{t,pose:'run',thin:true})}
+  trees(600,'#0e1a07',9,2,420,[-70,1020]);particles(t,30,6,'rgba(255,250,170,.9)',{vy:-6,vx:8,size:2});vignette(.5)},
+ caveEntrance(t){bg(['#0e1a10','#1d2c18']);trees(360,'#0f1a0c',3,12,240);c.fillStyle='#2b2f2a';c.beginPath();c.moveTo(200,460);c.lineTo(260,200);c.lineTo(400,120);c.lineTo(600,140);c.lineTo(740,240);c.lineTo(790,460);c.fill();
+  c.fillStyle='#000';c.beginPath();c.ellipse(490,400,110,140,0,Math.PI,0);c.lineTo(600,460);c.lineTo(380,460);c.fill();glow(490,370,140,'rgba(60,140,255,.85)',.35+.2*Math.sin(t*1.6));
+  c.strokeStyle='#1a2a12';c.lineWidth=4;for(let i=0;i<8;i++){c.beginPath();c.moveTo(300+i*50,150);c.quadraticCurveTo(310+i*50+Math.sin(t+i)*6,230,300+i*52,260+i*8);c.stroke()}
+  ground(460,['#141a10','#070a05']);person(490,480,70,'#030503',{t,pose:'stand',thin:true});vignette(.6)},
+ cave(t){bg(['#030406','#0c0f16']);const close=artOpt.close?Math.min(1,t/6):0;
+  for(let i=0;i<6;i++){const x=80+i*160;c.fillStyle='#14171e';c.fillRect(x-18,40,36,380);glow(x,70,40,'rgba(60,140,255,.8)',.5+.3*Math.sin(t*3+i))}
+  ground(400,['#11141b','#05060a']);
+  c.fillStyle='#262931';c.fillRect(380,120,200,180);c.beginPath();c.arc(480,96,46,0,TAU);c.fill();c.fillRect(350,250,260,40);
+  const eye=artOpt.giant?1:.25+.15*Math.sin(t*2);c.fillStyle=`rgba(255,40,40,${eye})`;c.shadowColor='#ff2020';c.shadowBlur=20;c.fillRect(458,90,12,5);c.fillRect(490,90,12,5);c.shadowBlur=0;
+  c.strokeStyle=`rgba(255,60,60,${eye*.8})`;c.lineWidth=3;c.beginPath();c.arc(480,108,18,.2,Math.PI-.2);c.stroke();
+  const n=9;for(let i=0;i<n;i++){const a=Math.PI*(.08+.84*i/(n-1));const rad=360-close*180;const x=480-Math.cos(a)*rad,y=440+Math.sin(a)*40*(1-close*.4);const h=120+close*60+(Math.sin(a)*30);person(x,y,h,'#3a3d46',{t:t*.2+i,pose:i%3===0?'cast':'stand',eyes:'#ff3030',flip:x>480});if(i%3===1){c.strokeStyle='#4a4d55';c.lineWidth=4;c.beginPath();c.moveTo(x+12,y-h*.95);c.lineTo(x+12,y-h*.1);c.stroke()}}
+  person(480,470,110,'#0b0d12',{thin:true,t,pose:'stand'});particles(t,40,7,'rgba(140,170,220,.5)',{vy:-8,size:1.6});
+  if(artOpt.giant){c.fillStyle=`rgba(255,0,0,${.1+.1*Math.sin(t*8)})`;c.fillRect(0,0,W,H)}vignette(.75)},
+ blood(t){bg(['#000','#090002']);const r=rnd(2);for(let i=0;i<40;i++){const x=r()*W,sp=40+r()*120,y=(r()*H+t*sp)%(H+40)-20;c.fillStyle='rgba(170,0,20,.8)';c.fillRect(x,y,2,10+r()*14)}
+  const g=c.createRadialGradient(W/2,H/2,40,W/2,H/2,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,`rgba(140,0,15,${.6+.2*Math.sin(t*3)})`);c.fillStyle=g;c.fillRect(0,0,W,H);
+  if(artOpt.lie)person(550,330,140,'#120004',{lie:true,t})},
+ hospital(t){const night=artOpt.night;bg(night?['#0b1222','#060a14']:['#e3edf5','#b9cad9']);c.save();c.beginPath();c.rect(620,70,240,170);c.clip();c.fillStyle=lg(70,240,night?['#02040c','#0d1430']:['#7fc0ff','#d8eeff']);c.fillRect(620,70,240,170);if(night){stars(t,40,5,240);moon(800,110,16,'#dcd7f2','rgba(5,8,20,.6)')}else{skyline(240,'rgba(90,120,160,.6)',2,14,30,30,110,null)}c.restore();
+  c.strokeStyle=night?'#1a2238':'#f6fbff';c.lineWidth=8;c.strokeRect(620,70,240,170);ground(400,night?['#0a0f1c','#05070d']:['#c7d3de','#a5b4c2']);
+  if(night)glow(700,300,240,'rgba(120,150,255,.35)',.4);
+  const bed=(x,who)=>{c.fillStyle=night?'#1a2236':'#f5f8fb';c.fillRect(x,330,300,40);c.fillStyle=night?'#111827':'#d5dee8';c.fillRect(x,370,300,10);c.fillRect(x+10,380,8,40);c.fillRect(x+282,380,8,40);c.fillStyle=night?'#2a3550':'#fff';c.fillRect(x+10,310,70,24);
+   person(x+196,326,170,night?'#04060c':'#3a4658',{lie:true,t,thin:!has('muscle1')});c.fillStyle=night?'#223050':'#9fb7d4';c.fillRect(x+80,314,150,20)};
+  if(night&&artOpt.two){bed(80,'p');bed(500,'j');c.fillStyle='#efe6d2';c.fillRect(420,300,40,30)}else{bed(200,'p')}
+  c.fillStyle='#0c1418';c.fillRect(70,190,120,80);c.strokeStyle='#5fe08a';c.lineWidth=2;c.beginPath();for(let x=0;x<110;x++){const ph=(x+t*60)%110;const y=ph>50&&ph<56?(ph-50)*-6:ph>=56&&ph<60?20:0;c.lineTo(75+x,235+y)}c.stroke();c.fillStyle='#1a2a3a';c.fillRect(126,270,6,130);
+  if(artOpt.panel)sysPanel(330,90,300,150,t);if(artOpt.panel)glow(480,165,240,'rgba(95,208,255,.6)',.3);vignette(night?.6:.3)},
+ system(t){bg(['#020614','#061433']);c.strokeStyle='rgba(95,208,255,.18)';c.lineWidth=1;for(let i=0;i<20;i++){const y=300+i*i*1.2+((t*20)%12);c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}for(let i=-12;i<=12;i++){c.beginPath();c.moveTo(480+i*12,300);c.lineTo(480+i*90,H);c.stroke()}
+  particles(t,70,3,'rgba(95,208,255,.9)',{vy:-30,size:1.8});sysPanel(300,110,360,170,t,artOpt.label||'SYSTEM');glow(480,195,300,'rgba(95,208,255,.5)',.35);vignette(.5)},
+ training(t){bg(['#030614','#0b1430','#162248']);stars(t,140,12,300);moon(780,110,34,'#e6e2f6','rgba(5,10,30,.5)');glow(780,110,120,'rgba(200,210,255,.5)',.3);
+  trees(380,'#060a16',8,12,200);ground(380,['#0d1426','#05070f']);c.strokeStyle='rgba(200,80,60,.6)';c.lineWidth=18;c.beginPath();c.ellipse(480,450,420,60,0,0,TAU);c.stroke();c.strokeStyle='rgba(255,255,255,.25)';c.lineWidth=1;c.beginPath();c.ellipse(480,450,420,60,0,0,TAU);c.stroke();
+  c.fillStyle='#111827';c.fillRect(150,250,6,150);glow(153,250,90,'rgba(255,220,150,.8)',.5);
+  const a=t*.6;const x=480+Math.cos(a)*420,y=450+Math.sin(a)*60;person(x,y,90+Math.sin(a)*10,'#000',{pose:'run',t,thin:!has('muscle1'),flip:Math.sin(a)<0,aura:artOpt.aura});
+  particles(t,30,9,'rgba(95,208,255,.8)',{vy:-12,size:1.5});vignette(.5)},
+ street(t){bg(['#1b1030','#4b2140','#a2443e']);skyline(380,'#1a0f22',6,40,90,80,220,'rgba(255,200,140,.6)');
+  [['RAMEN',140,'#ff5fa2'],['MANA MART',420,'#5fd0ff'],['24H',740,'#ffd36b']].forEach(([s,x,col],i)=>{c.fillStyle='#120a18';c.fillRect(x-20,250,140,50);c.save();c.globalAlpha=.75+.25*Math.sin(t*5+i*2);c.font='700 22px "Chakra Petch",sans-serif';c.fillStyle=col;c.shadowColor=col;c.shadowBlur=18;c.fillText(s,x-8,283);c.restore()});
+  ground(430,['#1a1420','#08060b']);for(let i=0;i<4;i++){c.fillStyle='#0d0a12';c.fillRect(100+i*250,300,5,130);glow(102+i*250,300,70,'rgba(255,200,120,.7)',.5)}
+  const won=artOpt.won;person(640,480,won?100:230,'#07060a',{big:true,aura:won?null:'rgba(170,160,140,1)',t,pose:won?'kneel':'fight',flip:true,lie:won});
+  person(800,480,105,'#07060a',{t,pose:'kneel',flip:true});person(360,480,180,'#07060a',{t,pose:'fight',aura:'rgba(95,208,255,1)',thin:!has('muscle1')});
+  particles(t,40,6,'rgba(255,255,255,.2)',{vy:260,vx:-40,size:1,tw:false});vignette(.55)},
+ arena(t){const tour=artOpt.tournament;bg(tour?['#04050c','#121a36']:['#0e1222','#1e2640']);
+  for(let row=0;row<5;row++){const y=120+row*40;const r=rnd(row+1);for(let x=0;x<W;x+=9){c.fillStyle=`hsla(${r()*360},40%,${30+r()*30}%,${.4+Math.sin(t*4+x)*.1})`;c.fillRect(x,y+Math.sin(t*6+x*.3)*1.5,6,8)}}
+  c.save();c.globalCompositeOperation='lighter';for(let i=0;i<4;i++){c.globalAlpha=.1;c.fillStyle='#bfe8ff';c.beginPath();const bx=120+i*240;c.moveTo(bx,0);c.lineTo(bx+30,0);c.lineTo(bx+120*Math.sin(t*.5+i),H);c.lineTo(bx-120+120*Math.sin(t*.5+i),H);c.fill()}c.restore();
+  ground(330,['#2a2f45','#141826']);c.strokeStyle='rgba(95,208,255,.6)';c.lineWidth=3;c.beginPath();c.ellipse(480,430,340,70,0,0,TAU);c.stroke();
+  if(tour){textGlow('NEXA ACADEMY',480,50,28,'#ffc94a');textGlow('POWER COMPETITION',480,88,22,'#5fd0ff')}
+  if(artOpt.enemy==='dex'){person(650,460,190,'#05060a',{aura:'rgba(255,230,60,1)',t,pose:'fight',flip:true,eyes:'#fff59a'});const f=Math.floor(t*6);lightning(f,610,300,700,420,'rgba(255,240,120,.9)',2);lightning(f+9,680,280,640,400,'rgba(255,240,120,.8)',2);
+   person(330,460,180,'#05060a',{t,pose:'fight',aura:has('ui')?'rgba(220,235,255,1)':'rgba(95,208,255,1)'})}
+  else if(artOpt.enemy==='titan'){c.save();c.globalCompositeOperation='lighter';c.strokeStyle='rgba(80,255,140,.9)';c.lineWidth=5;c.shadowColor='#50ff8c';c.shadowBlur=20;c.strokeRect(560,140,160,280);c.beginPath();c.arc(640,110,40,0,TAU);c.stroke();c.restore();person(330,460,180,'#05060a',{t,pose:'fight',aura:'rgba(255,255,255,1)'})}
+  else if(tour){person(480,450,150,'#05060a',{t,pose:'stand',broad:true,aura:'rainbow'})}
+  vignette(.55)},
+ ambush(t){const beaten=artOpt.beaten;bg(beaten?['#1a0408','#0a0204']:['#1d1424','#3a2236','#6a3a3a']);
+  c.fillStyle='#120c16';c.beginPath();c.moveTo(0,0);c.lineTo(300,120);c.lineTo(300,430);c.lineTo(0,H);c.fill();c.beginPath();c.moveTo(W,0);c.lineTo(660,120);c.lineTo(660,430);c.lineTo(W,H);c.fill();
+  c.fillStyle='rgba(255,170,120,.12)';c.fillRect(300,120,360,310);ground(430,['#120c14','#050307']);
+  const crew=[[360,400,150,'rgba(255,90,60,1)','rgba(110,200,255,1)',1],[600,400,150,'rgba(255,230,60,1)',null,0],[210,500,210,'rgba(170,180,200,1)',null,0],[760,500,210,'rgba(170,90,255,1)',null,0]];
+  crew.forEach(([x,y,h,a,b,sp],i)=>person(x,y,h,'#030205',{aura:a,aura2:b,t:t+i,pose:beaten?'cross':'fight',flip:x>480,big:i===2,spiky:!!sp,eyes:i===0?'#ffd0a0':null}));
+  if(beaten){person(450,500,150,'#030205',{lie:true,t});person(560,505,140,'#030205',{lie:true,t});c.fillStyle=`rgba(160,0,20,${.25+.1*Math.sin(t*2)})`;c.fillRect(0,0,W,H)}
+  else{person(440,480,160,'#030205',{t,pose:'fight',aura:has('ui')?'rgba(225,235,255,1)':'rgba(95,208,255,1)',broad:has('muscle1')});person(530,482,150,'#030205',{t,pose:'fight',flip:true,aura:'rgba(140,255,200,.8)'});
+   const f=Math.floor(t*5);lightning(f,600,260,500,380,'rgba(255,240,120,.7)',2)}
+  vignette(.65)},
+ portal(t){bg(['#000','#05021a']);stars(t,120,2);c.save();c.translate(480,270);c.globalCompositeOperation='lighter';for(let i=0;i<420;i++){const a=i*.21+t*1.6,d=i*.75;c.fillStyle=`hsla(${190+i*.4+t*40},100%,${55+i%20}%,.7)`;c.beginPath();c.arc(Math.cos(a)*d,Math.sin(a)*d*.6,1.5+i/180,0,TAU);c.fill()}c.restore();
+  glow(480,270,140,'rgba(200,240,255,1)',.7);const s=Math.max(.2,1-t*.15);person(480,270+60*s,120*s,'#000',{t,pose:'arms',float:true});vignette(.5)},
+ lantern(t){bg(['#02150b','#0a4a29','#1c9a56']);glow(760,110,140,'rgba(140,255,170,1)',.55);stars(t,60,4,200);
+  for(let i=0;i<9;i++){const x=40+i*110,h=180+((i*73)%160);c.fillStyle='#04200f';c.beginPath();c.moveTo(x,440);c.lineTo(x+18,440-h);c.lineTo(x+36,440);c.fill();c.strokeStyle='rgba(120,255,160,.5)';c.lineWidth=1.5;c.beginPath();c.moveTo(x+18,440-h);c.lineTo(x+18,440);c.stroke();glow(x+18,440-h,26,'rgba(140,255,170,1)',.7)}
+  c.save();c.globalCompositeOperation='lighter';c.strokeStyle='rgba(120,255,160,.55)';c.lineWidth=3;for(let i=0;i<4;i++){c.beginPath();c.ellipse(480,230,160+i*60,30+i*12,Math.sin(t*.3+i)*.2,0,TAU);c.stroke()}c.restore();
+  ground(440,['#05301a','#021208']);for(let i=0;i<5;i++){const x=120+i*180,y=180+Math.sin(t+i)*14;person(x,y,70,'#021a0c',{aura:'rgba(90,255,140,1)',t:t+i,pose:'arms',float:true})}
+  const white=artOpt.white;person(480,470,170,'#010a05',{t,pose:white?'cast':'stand',aura:white?'rgba(255,255,255,1)':'rgba(90,255,140,.8)',ring:white?'rgba(255,255,255,1)':'rgba(120,255,160,1)',broad:has('muscle1')});
+  particles(t,50,8,'rgba(150,255,180,.9)',{vy:-25,size:1.8});vignette(.5)},
+ multiverse(t){bg(['#010108','#070418','#0c0626']);stars(t,240,13);const hue=artOpt.hue??200;
+  const gals=[[160,130,'#ff6a5f'],[800,120,'#5fd0ff'],[150,420,'#ffd36b'],[820,420,'#b07bff'],[480,70,'#5fe08a']];gals.forEach(([x,y,col],i)=>{c.save();c.translate(x,y);c.rotate(t*.2+i);c.globalCompositeOperation='lighter';for(let k=0;k<120;k++){const a=k*.3,d=k*.5;c.fillStyle=col;c.globalAlpha=.5;c.fillRect(Math.cos(a)*d,Math.sin(a)*d*.5,1.6,1.6)}c.restore();
+   c.save();c.globalCompositeOperation='lighter';c.strokeStyle=col;c.globalAlpha=.6;c.lineWidth=3;c.shadowColor=col;c.shadowBlur=18;c.beginPath();c.ellipse(x,y,46,46,0,0,TAU);c.stroke();c.restore()});
+  person(480,380,170,'#000',{t,pose:artOpt.pose||'fight',float:true,aura:`hsl(${(hue+t*20)%360},100%,62%)`,broad:true});
+  if(artOpt.label)textGlow(artOpt.label,480,470,26,`hsl(${hue},100%,70%)`,.95);vignette(.5)},
+ shadow(t){bg(['#05030b','#120a24','#1e0f36']);for(let i=0;i<4;i++){c.fillStyle=`rgba(120,80,200,${.05})`;c.fillRect(0,300+i*40+Math.sin(t+i)*6,W,30)}
+  for(let row=0;row<6;row++){const y=250+row*40,h=50+row*22,n=14-row;for(let i=0;i<n;i++){const x=(i+.5)*W/n+(row%2?20:-20);person(x,y,h,'#030106',{t:t*.5+i+row,pose:'stand',eyes:row%2?'#7aa8ff':'#b07bff'})}}
+  person(480,520,230,'#000',{t,pose:artOpt.arise?'cast':'stand',aura:'rgba(140,80,255,1)',aura2:'rgba(60,120,255,1)',eyes:'#6fc8ff',broad:true});
+  particles(t,60,5,'rgba(150,100,255,.9)',{vy:-30,size:2});if(artOpt.arise)textGlow('ARISE',480,90,64,'#9a7bff',.7+.3*Math.sin(t*3));vignette(.6)},
+ aura(t){bg(['#000','#04030a']);c.save();c.translate(480,300);c.globalCompositeOperation='lighter';for(let i=0;i<7;i++){c.strokeStyle=`hsla(${(i*51+t*60)%360},100%,60%,.55)`;c.lineWidth=4;c.shadowColor=c.strokeStyle;c.shadowBlur=20;c.beginPath();c.ellipse(0,0,80+i*36,30+i*14,t*(i%2?.4:-.4)+i,0,TAU);c.stroke()}c.restore();
+  person(480,400,200,'#000',{t,pose:'arms',float:true,aura:'rainbow',broad:true,eyes:'#fff'});particles(t,80,4,(i,tt)=>`hsl(${(i*13+tt*80)%360},100%,65%)`,{vy:-40,size:2});vignette(.4)},
+ returnHome(t){bg(['#02040c','#0b1024','#141a36']);stars(t,160,6,300);moon(150,90,24,'#e2ddf5','rgba(4,8,24,.5)');
+  c.fillStyle='#0d1020';c.fillRect(470,170,360,280);c.beginPath();c.moveTo(450,175);c.lineTo(650,80);c.lineTo(850,175);c.fill();c.fillStyle='rgba(255,200,120,.85)';c.fillRect(520,220,60,50);c.fillRect(720,220,60,50);
+  glow(650,380,160,'rgba(255,200,120,.9)',.5);c.fillStyle='#ffcf8a';c.fillRect(620,330,60,120);ground(450,['#0a0d18','#04050a']);
+  person(650,450,160,'#05060c',{t,pose:artOpt.hug?'hug':'stand',flip:true,aura:'rgba(120,180,255,.6)'});
+  person(artOpt.hug?600:420,452,205,'#020308',{t,pose:artOpt.hug?'hug':'stand',broad:true,aura:'rainbow'});particles(t,40,3,'rgba(255,255,255,.5)',{vx:30,vy:-6,size:1.4});vignette(.55)},
+ room(t){bg(['#070a16','#0c1124']);c.save();c.beginPath();c.rect(90,90,220,180);c.clip();c.fillStyle='#050818';c.fillRect(90,90,220,180);stars(t,40,3,270);moon(250,140,16,'#dcd7f2','rgba(5,8,20,.6)');c.restore();c.strokeStyle='#1f2744';c.lineWidth=8;c.strokeRect(90,90,220,180);
+  c.fillStyle='#1a1430';c.fillRect(620,90,180,240);c.fillStyle='#ffc94a';c.font='700 18px "Chakra Petch",sans-serif';c.fillText('POWER',660,150);c.fillText('COMPETITION',635,175);c.fillStyle='#5fd0ff';c.font='14px "Chakra Petch",sans-serif';c.fillText('Nexa Academy',655,300);
+  person(710,280,90,'#2a2040',{pose:'fight',t});ground(430,['#0a0d1a','#04060c']);c.fillStyle='#141a30';c.fillRect(300,380,300,40);
+  person(460,450,200,'#020308',{t,pose:'phone',broad:true,aura:'rainbow'});glow(468,282,40,'rgba(95,208,255,1)',.6);vignette(.55)},
+};
+function frame(now){const t=reduceMotion?2:(now-artT0)/1000;c.save();c.clearRect(0,0,W,H);try{(ART[artType]||ART.void)(t)}catch(e){console.error(e)}c.restore();requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+function shake(){const s=$('#stage');s.classList.remove('shake','flash');void s.offsetWidth;s.classList.add('shake','flash')}
+
+/* ---------------- TEXT / DIALOGUE ---------------- */
+let waiting=null,typing=null;
+function setCap(ch,loc){$('#cap').textContent=[ch,loc].filter(Boolean).join('  ·  ')}
+function say(raw){return new Promise(res=>{
+  let sp='',cls='',txt=raw;
+  if(raw.startsWith('@')){const i=raw.indexOf('|');sp=raw.slice(1,i);txt=raw.slice(i+1)}
+  else if(raw.startsWith('!')){cls='sysline';txt=raw.slice(1);sp='SYSTEM'}
+  else if(raw.startsWith('~')){cls='thought';txt=raw.slice(1);sp='PETER (thinking)'}
+  else if(raw.startsWith('#')){cls='big';txt=raw.slice(1)}
+  $('#speaker').textContent=sp;const el=$('#text');el.className=cls;el.textContent='';$('#choices').innerHTML='';$('#hint').hidden=true;
+  let i=0;const speed=[30,16,6][S.textSpeed??1];
+  const done=()=>{clearInterval(typing.iv);typing=null;el.textContent=txt;$('#hint').hidden=false;waiting=()=>{waiting=null;$('#hint').hidden=true;res()}};
+  typing={iv:setInterval(()=>{i+=2;el.textContent=txt.slice(0,i);if(i>=txt.length)done()},speed),done};
+})}
+function advance(){if(!$('#modal').hidden||!$('#over').hidden&&!overWait)return;if(typing){typing.done();return}if(waiting)waiting()}
+let overWait=null;
+$('#box').addEventListener('click',e=>{if(e.target.closest('button'))return;advance()});
+$('#stage').addEventListener('click',advance);
+document.addEventListener('keydown',e=>{if((e.key===' '||e.key==='Enter')&&!e.target.closest('button,input')){e.preventDefault();if(overWait){overWait();return}advance()}});
+function choose(opts){return new Promise(res=>{$('#hint').hidden=true;const box=$('#choices');box.innerHTML='';opts.forEach((o,i)=>{const b=document.createElement('button');b.className='choice';b.textContent=o.t;b.onclick=e=>{e.stopPropagation();box.innerHTML='';res(o)};box.appendChild(b)})})}
+function clearBox(){$('#speaker').textContent='';$('#text').textContent='';$('#text').className='';$('#choices').innerHTML='';$('#hint').hidden=true}
+
+/* ---------------- SYSTEM WINDOWS ---------------- */
+function win({title='NOTIFICATION',body='',buttons=[{t:'OK',v:true}],tone='',cls=''}){return new Promise(res=>{
+  const m=$('#modal');m.hidden=false;m.innerHTML=`<div class="win ${tone} ${cls}" role="dialog" aria-modal="true"><div class="hd"><span class="ex">!</span>${title}</div><div class="bd">${body}</div><div class="ft"></div></div>`;
+  const ft=m.querySelector('.ft');buttons.forEach(b=>{const el=document.createElement('button');el.className='btn '+(b.cls||'');el.textContent=b.t;if(b.disabled)el.disabled=true;el.onclick=()=>{if(b.keep){b.onClick&&b.onClick(m);return}m.hidden=true;m.innerHTML='';res(b.v)};ft.appendChild(el)});
+  ft.querySelector('button')?.focus();
+})}
+function rewardsHTML(rw,hideSpecial=true){const out=[];if(rw.exp)out.push(`EXP +${fmt(rw.exp)}`);if(rw.coins)out.push(`<span class="coin">◈ ${fmt(rw.coins)} Coins</span>`);if(rw.pts)out.push(`Stat Points +${rw.pts}`);
+  (rw.cards||[]).forEach(id=>{const cd=CARDS[id];out.push(cd.k==='Special'&&hideSpecial?`<span class="hidden">[Special Card] ??? — reveals on completion</span>`:`<span class="r-${cd.k}">[${cd.k} Card · ${cd.r}] ${cd.n}</span>`)});return out.map(s=>`<div class="goal"><span>${s}</span><span>✓</span></div>`).join('')}
+function questBody(q){return `<div class="qt ${q.type}">${q.type.toUpperCase()} QUEST</div><p class="em" style="font-size:17px">${q.title}</p>${q.desc?`<p>${q.desc}</p>`:''}
+ <div class="lbl">GOALS</div>${q.goals.map(g=>`<div class="goal"><span>${g[0]}</span><span>${g[1]}</span></div>`).join('')}
+ <div class="lbl">REWARDS</div><div class="rw">${rewardsHTML(q.rw)}</div>${q.penalty?`<div class="warn">⚠ ${q.penalty}</div>`:''}`}
+async function questOffer(q){S.quests=S.quests.filter(x=>x.id!==q.id);S.quests.push({...q,status:'active'});hud();
+  await win({title:q.type==='Emergency'?'EMERGENCY QUEST':'QUEST',tone:q.type==='Emergency'?'red':q.type==='Special'?'gold':'',body:questBody(q),buttons:[{t:'ACCEPT',v:1,cls:q.type==='Emergency'?'red':''}]})}
+async function questDone(id){const q=S.quests.find(x=>x.id===id);if(!q)return;q.status='done';const rw=q.rw;
+  await win({title:'QUEST COMPLETE',tone:'gold',body:`<p class="em" style="font-size:17px">${q.title}</p><div class="lbl">REWARDS RECEIVED</div><div class="rw">${rewardsHTML(rw,false).replace(/\[Special Card\] \?\?\?.*?</g,'<')}</div>`,buttons:[{t:'CLAIM',v:1}]});
+  S.coins+=rw.coins||0;S.pts+=rw.pts||0;gainExp(rw.exp||0);for(const id2 of rw.cards||[])await giveCard(id2);if(rw.title){S.title=rw.title;toast('New title: '+rw.title,'gold')}hud();save()}
+function revealCard(id){return new Promise(res=>{const cd=CARDS[id];const m=$('#modal');m.hidden=false;
+  m.innerHTML=`<div class="win ${cd.k==='Special'?'gold':''}"><div class="hd"><span class="ex">!</span>${cd.k==='Special'?'SPECIAL CARD ACQUIRED':'CARD ACQUIRED'}</div><div class="reveal">
+   <div class="c3 r-${cd.r}" tabindex="0" aria-label="Tap to reveal card"><div class="in"><div class="face back">?<small>TAP TO REVEAL</small></div>
+   <div class="face front"><div><div class="rr">${cd.r.toUpperCase()} · ${cd.k.toUpperCase()}</div><div class="nm">${cd.n}</div></div><div class="sig">${cd.sig}</div><div><div class="ds">${cd.d}</div><div class="fx" style="margin-top:8px">▸ ${cd.fxt}</div></div></div></div></div>
+   <button class="btn" disabled>ACCEPT</button></div></div>`;
+  const c3=m.querySelector('.c3'),b=m.querySelector('.btn');const flip=()=>{c3.classList.add('flip');b.disabled=false;b.focus()};c3.onclick=flip;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip()}};
+  b.onclick=()=>{m.hidden=true;m.innerHTML='';toast(`${cd.n} — ${cd.fxt}`,cd.k==='Special'?'gold':'');res()}})}
+function statusHTML(){const s=S.st,p=S.pts;const row=(k,lab)=>`<div class="statrow"><span class="k">${lab}</span><b>${fmt(s[k])}</b><button class="plus" data-k="${k}" ${p<=0?'disabled':''} aria-label="Add point to ${lab}">+</button></div>`;
+ return `<div class="stat-grid"><div class="kv"><span>NAME</span><b>Peter Parker</b></div><div class="kv"><span>LEVEL</span><b>${fmt(S.level)}</b></div>
+ <div class="kv"><span>JOB</span><b>${S.job}</b></div><div class="kv"><span>TITLE</span><b>${S.title}</b></div>
+ <div class="kv"><span>HP</span><b>${fmt(S.hp)} / ${fmt(maxHP())}</b></div><div class="kv"><span>MP</span><b>${fmt(S.mp)} / ${fmt(maxMP())}</b></div>
+ <div class="kv"><span>EXP</span><b>${fmt(S.exp)} / ${fmt(expNext(S.level))}</b></div><div class="kv"><span>AGE</span><b>${S.flags.age||16}</b></div>
+ <div class="kv"><span>HEIGHT</span><b>${heightStr(S.height)}</b></div><div class="kv"><span>LOOKS</span><b>${S.looks} / 100</b></div>
+ <div class="kv"><span>BUILD</span><b>${S.build}</b></div><div class="kv"><span>CARDS</span><b>${S.cards.length} / ${CARD_ORDER.length}</b></div>
+ ${S.ring!=='None'?`<div class="kv"><span>RING</span><b>${S.ring}</b></div>`:''}${S.aura!=='None'?`<div class="kv"><span>AURA</span><b>${S.aura}</b></div>`:''}${S.army!=='—'?`<div class="kv"><span>SHADOW ARMY</span><b>${S.army}</b></div>`:''}</div>
+ <div class="lbl">STATS ${p>0?`<span style="color:var(--gold)">· ${p} POINTS AVAILABLE</span>`:''}</div>
+ ${row('str','STR')}${row('agi','AGI')}${row('vit','VIT')}${row('int','INT')}${row('per','PER')}
+ <p class="small" style="margin-top:8px">STR = damage · AGI = dodge · VIT = HP · INT = MP · PER = senses & crits</p>`}
+
+/* ---------------- MINI-GAMES ---------------- */
+function training(cfg){return new Promise(res=>{clearBox();const box=$('#choices');$('#speaker').textContent=cfg.title;$('#text').className='sysline';$('#text').textContent=cfg.sub||'Tap — or hold — the buttons.';
+  const prog=cfg.items.map(()=>0);box.innerHTML=`<div class="mg">${cfg.items.map((it,i)=>`<div class="trow"><div><div class="tlab"><span>${it.label}</span><span id="tl${i}">0 / ${it.goal} ${it.unit}</span></div><div class="tbar" id="tb${i}"><i style="width:0"></i></div></div><button class="tap" id="tt${i}">${it.btn}</button></div>`).join('')}
+   <button class="btn" id="tdone" disabled>COMPLETE QUEST</button></div>`;
+  cfg.items.forEach((it,i)=>{const b=$('#tt'+i);let iv=null;const step=()=>{if(prog[i]>=it.goal){stop();return}prog[i]=Math.min(it.goal,+(prog[i]+it.per()).toFixed(1));upd(i)};
+   const stop=()=>{clearInterval(iv);iv=null};b.addEventListener('pointerdown',e=>{e.preventDefault();step();stop();iv=setInterval(step,110)});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,stop));
+   b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();step()}})});
+  function upd(i){const it=cfg.items[i];$('#tl'+i).textContent=`${prog[i]} / ${it.goal} ${it.unit}`;$('#tb'+i).firstElementChild.style.width=(prog[i]/it.goal*100)+'%';if(prog[i]>=it.goal){$('#tb'+i).classList.add('ok');$('#tt'+i).disabled=true;$('#tt'+i).textContent='DONE ✓'}
+   if(prog.every((p,k)=>p>=cfg.items[k].goal)){$('#tdone').disabled=false}}
+  $('#tdone').onclick=e=>{e.stopPropagation();box.innerHTML='';res()}})}
+const QUIZ=[
+ ['What is the derivative of x²?',['2x','x','x³/3','2'],0],['Which gas do plants absorb for photosynthesis?',['Oxygen','Carbon dioxide','Nitrogen','Helium'],1],
+ ['Light travels at about how many km per second?',['3,000','30,000','300,000','3,000,000'],2],['What is 17 × 6?',['96','102','108','112'],1],
+ ['What is the chemical symbol for gold?',['Gd','Go','Ag','Au'],3],['Newton’s 2nd law: F = ?',['m/a','m·a','m+a','a²'],1],
+ ['What is the powerhouse of the cell?',['Nucleus','Ribosome','Mitochondria','Membrane'],2],['Solve: 3x + 5 = 20',['x = 3','x = 5','x = 15','x = 25'],1],
+ ['What is √144?',['11','12','14','72'],1],['Water boils at sea level at…',['90 °C','100 °C','110 °C','120 °C'],1],
+ ['Which planet is known as the Red Planet in Earth’s solar system?',['Venus','Jupiter','Mars','Saturn'],2],['What is 2⁵?',['10','16','25','32'],3],
+ ['What is the main organ of the nervous system?',['Heart','Brain','Liver','Lungs'],1],['Area of a circle?',['2πr','πr²','πd','r²'],1],
+];
+function quiz(){return new Promise(async res=>{let score=0;const qs=[...QUIZ].sort(()=>Math.random()-.5).slice(0,3);
+  for(let qi=0;qi<3;qi++){const [q,opts,ans]=qs[qi];clearBox();$('#speaker').textContent=`QUESTION ${qi+1} / 3`;$('#text').textContent=q;
+   await new Promise(r2=>{const box=$('#choices');box.innerHTML=`<div class="qopts">${opts.map((o,i)=>`<button data-i="${i}">${o}</button>`).join('')}</div>`;
+    box.querySelectorAll('button').forEach(b=>b.onclick=async e=>{e.stopPropagation();const i=+b.dataset.i;box.querySelectorAll('button').forEach(x=>x.disabled=true);b.classList.add(i===ans?'right':'wrong');box.querySelector(`[data-i="${ans}"]`).classList.add('right');if(i===ans)score++;await sleep(750);r2()})})}
+  clearBox();res(score)})}
+async function caveSurvival(){const dirs=[['LEFT','Dodge right'],['RIGHT','Dodge left'],['ABOVE','Roll forward'],['LOW','Jump']];let hp=100;
+  for(let r=0;r<4;r++){const d=dirs[Math.floor(Math.random()*4)];setArt('cave',{close:true});await say(`!A stone statue swings at you from the ${d[0]}!`);
+   const opts=[...dirs].sort(()=>Math.random()-.5).map(x=>({t:x[1],ok:x===d}));const ch=await choose(opts);shake();
+   if(ch.ok)await say(r<3?'I threw myself aside. Stone smashed the floor where I had been standing.':'Somehow... I dodged again. My lungs were on fire.');
+   else{hp-=24;await say(`It clipped me. Something cracked inside my chest. (HP ${Math.max(5,hp)}%)`)}}
+}
+
+/* ---------------- FIGHT ---------------- */
+const SK={
+ boxing:{n:'Jab-Cross',mp:4,d:'1.6× hit'},martial:{n:'Thousand-Style Combo',mp:10,d:'3 hits'},mirror:{n:'Mirror Stance',mp:8,d:'Reflect next hit ×1.5'},
+ ui:{n:'Silver Flow',mp:14,d:'Auto-dodge + counter, 2 turns'},teleport:{n:'Void Step Strike',mp:10,d:'Blink behind · 2.2×'},regen:{n:'Regenerate',mp:10,d:'Heal 40%'},
+ copy:{n:'Mimic',mp:12,d:'Copy enemy move ×2'},drain:{n:'Devour',mp:14,d:'Damage + heal'},light:{n:'Lightspeed Barrage',mp:20,d:'8 hits'},
+ whitering:{n:'White Light',mp:25,d:'Full heal + 3× blast'},arise:{n:'Shadow Legion',mp:30,d:'Army strikes ×6'},limit:{n:'Serious Punch',mp:40,d:'×25 — one punch'},
+};
+function fight(def){return new Promise(res=>{
+  const E={name:def.name,title:def.title||'',max:typeof def.hp==='function'?def.hp():def.hp,atk:typeof def.atk==='function'?def.atk():def.atk,def:def.def||0};E.hp=E.max;
+  if(def.art)setArt(def.art,def.artOpt);fullHeal();hud();
+  const F={turn:0,mirror:false,silver:0,guard:false,log:[]};const box=$('#choices');clearBox();
+  const lv=def.lv?` · Lv.${def.lv}`:'';
+  function render(){box.innerHTML=`<div class="mg"><div class="ftop"><div class="fname"><b>${E.name}</b><span>${S.flags.appraisal||def.showStats?`ATK ${fmt(E.atk)} · HP ${fmt(Math.max(0,E.hp))}/${fmt(E.max)}${lv}`:'Stats: ??? (needs Eye of Appraisal)'}</span></div><div class="ebar"><i style="width:${Math.max(0,E.hp/E.max*100)}%"></i></div></div>
+   <div class="flog">${F.log.slice(-5).map(l=>`<div class="${l[1]||''}">${l[0]}</div>`).join('')}</div>
+   <div class="mine"><span>HP ${fmt(S.hp)}/${fmt(maxHP())}</span><span>MP ${fmt(S.mp)}/${fmt(maxMP())}</span>${def.turns?`<span>TURN ${F.turn+1}${def.scripted==='survive'?' / '+def.turns:''}</span>`:''}${S.items.potion?`<span>Potions ${S.items.potion}</span>`:''}</div>
+   <div class="acts"><button data-a="atk">⚔ Attack<small>${fmt(atkPow())} dmg</small></button><button data-a="guard">🛡 Guard<small>-60% dmg · +MP</small></button>
+   ${S.items.potion?'<button data-a="potion">✚ Potion<small>Heal 50%</small></button>':''}
+   ${S.cards.filter(id=>SK[id]).map(id=>`<button class="sk" data-a="${id}" ${S.mp<SK[id].mp?'disabled':''}>${SK[id].n}<small>${SK[id].d} · ${SK[id].mp} MP</small></button>`).join('')}</div></div>`;
+   box.querySelectorAll('[data-a]').forEach(b=>b.onclick=e=>{e.stopPropagation();act(b.dataset.a)});hud()}
+  const log=(s,c)=>F.log.push([s,c]);
+  const hit=(mult)=>{const d=Math.max(1,atkPow()*mult*R(.88,1.12)-E.def);const crit=Math.random()<Math.min(.4,S.st.per*.004);const dd=Math.round(crit?d*1.8:d);E.hp-=dd;return [dd,crit]};
+  function act(a){let busy=box.querySelectorAll('button');busy.forEach(b=>b.disabled=true);F.guard=false;
+   if(a!=='atk'&&a!=='guard'&&a!=='potion')S.mp-=SK[a].mp;
+   const sayHit=(name,m,n=1)=>{let tot=0,crit=false;for(let i=0;i<n;i++){const [d,c2]=hit(m);tot+=d;crit=crit||c2}log(`${name} → ${fmt(tot)} damage${crit?' · CRITICAL!':''}`,'good');shake()};
+   switch(a){case'atk':sayHit('You strike',1);break;case'guard':F.guard=true;S.mp=Math.min(maxMP(),S.mp+maxMP()*.25);log('You raise your guard and steady your breath.');break;
+    case'potion':S.items.potion--;S.hp=Math.min(maxHP(),S.hp+maxHP()*.5);log('Potion — HP restored.','good');break;
+    case'boxing':sayHit('Jab-Cross',1.6);break;case'martial':sayHit('Thousand-Style Combo',.95,3);break;case'mirror':F.mirror=true;log('Mirror Stance — the next blow will come back to them.','sys');break;
+    case'ui':F.silver=2;log('Silver Flow — your body moves on its own.','sys');break;case'teleport':sayHit('Void Step Strike',2.2);break;case'regen':S.hp=Math.min(maxHP(),S.hp+maxHP()*.4);log('Undying Cells — wounds close.','good');break;
+    case'copy':{const d=Math.round(E.atk*2);E.hp-=d;log(`Mimic — you copy their technique → ${fmt(d)} damage`,'good');shake();break}
+    case'drain':{const [d]=hit(1.8);S.hp=Math.min(maxHP(),S.hp+d*.5);log(`Devour → ${fmt(d)} damage, life absorbed`,'good');shake();break}
+    case'light':sayHit('Lightspeed Barrage',.8,8);break;case'whitering':S.hp=maxHP();sayHit('White Light',3);break;case'arise':sayHit('Shadow Legion',1.4,6);break;case'limit':sayHit('SERIOUS PUNCH',25);break}
+   render();setTimeout(enemyTurn,520)}
+  function enemyTurn(){if(E.hp<=0)return end('win');
+   const att=def.attackers?def.attackers[F.turn%def.attackers.length]:{name:E.name,moves:def.moves||['Strike']};const mv=att.moves[Math.floor(Math.random()*att.moves.length)];
+   let dmg=Math.max(1,E.atk*R(.85,1.15)-S.st.vit*.5);const dodge=Math.min(.6,S.st.agi*.008+S.st.per*.003+(has('ui')?.25:0));
+   if(F.silver>0){F.silver--;const [d]=hit(1.2);log(`${att.name} uses ${mv} — Silver Flow dodges and counters → ${fmt(d)}`,'good');shake()}
+   else if(F.mirror){F.mirror=false;const d=Math.round(dmg*1.5);E.hp-=d;log(`${att.name} uses ${mv} — MIRROR! ${fmt(d)} damage reflected!`,'good');shake()}
+   else if(Math.random()<dodge&&!def.noDodge){log(`${att.name} uses ${mv} — you dodge!`)}
+   else{if(F.guard)dmg*=.4;dmg=Math.round(dmg);S.hp-=dmg;log(`${att.name} uses ${mv} → you take ${fmt(dmg)}`,'hit');shake();
+    if(has('mirror')){const rf=Math.round(dmg*.4);E.hp-=rf;log(`Retribution Mirror reflects ${fmt(rf)}.`,'sys')}}
+   if(has('regen')&&S.hp>0)S.hp=Math.min(maxHP(),S.hp+maxHP()*.06);
+   F.turn++;
+   if(def.scripted==='lose'&&(F.turn>=def.turns||S.hp<=0)){S.hp=Math.max(1,S.hp);render();return setTimeout(()=>end('scripted'),700)}
+   if(E.hp<=0)return end('win');
+   if(S.hp<=0){S.hp=0;render();return setTimeout(()=>end('lose'),600)}
+   if(def.scripted==='survive'&&F.turn>=def.turns)return end('win');
+   render()}
+  function end(r){box.innerHTML='';hud();res(r)}
+  log(def.intro||`${E.name} attacks!`,'sys');render()})}
+async function runFight(def){let tries=0;for(;;){const r=await fight(def);if(r!=='lose'){fullHeal();hud();return r}tries++;
+  const v=await win({title:'YOU HAVE FALLEN',tone:'red',body:`<p>Your HP reached zero.</p><p class="em">The System refuses to let you die here.</p>${tries>=2?'<p>Tip: spend stat points in STATUS, use skills, and Guard to refill MP.</p>':''}`,buttons:[{t:'RETRY',v:'retry'},...(tries>=2?[{t:'PUSH PAST THE LIMIT',v:'force',cls:'ghost'}]:[])]});
+  if(v==='force'){await say('![Limit Override] Your body moves on its own. The enemy collapses.');fullHeal();return 'win'}}}
+
+/* ---------------- OVERLAYS ---------------- */
+function overlay(html,ms){return new Promise(res=>{const o=$('#over');o.hidden=false;o.className='fade';o.innerHTML=html;let t;const close=()=>{clearTimeout(t);o.hidden=true;o.onclick=null;overWait=null;res()};o.onclick=close;overWait=close;if(ms)t=setTimeout(close,ms)})}
+const titleCard=(a,b)=>overlay(`<div><div class="t1">${a}</div><div class="t2">${b}</div><div class="t3">TAP TO CONTINUE</div></div>`,3200);
+function letter(text){return new Promise(res=>{const m=$('#modal');m.hidden=false;m.innerHTML=`<div style="display:grid;gap:16px;justify-items:center"><div class="letter">${text}</div><button class="btn">FOLD THE LETTER</button></div>`;m.querySelector('.btn').onclick=()=>{m.hidden=true;m.innerHTML='';res()}})}
+
+/* ---------------- STORY ---------------- */
+const Q={
+ daily:n=>({id:'daily'+n,type:'Daily',title:'Preparation to Become Strong',desc:n===1?'Complete the daily training.':`Daily training · Day ${n}.`,goals:[['Push-ups','0 / 100'],['Pull-ups','0 / 100'],['Running','0 / 10 km']],penalty:'Failure to complete the daily quest sends you to the Penalty Zone.',
+   rw:n===1?{exp:400,coins:500,cards:['martial']}:{exp:400,coins:500,cards:['grow2','muscle1','charm2']}}),
+};
+const DAILY_TRAIN=()=>({title:'DAILY QUEST',sub:'Tap or hold the buttons. Stronger stats = faster sets.',items:[
+  {label:'Push-ups',goal:100,unit:'',btn:'PUSH-UP',per:()=>5+Math.floor(S.st.str/4)},
+  {label:'Pull-ups',goal:100,unit:'',btn:'PULL-UP',per:()=>5+Math.floor(S.st.str/4)},
+  {label:'Running',goal:10,unit:'km',btn:'RUN',per:()=>+(0.5+S.st.agi/40).toFixed(1)}]});
+
+const SCENES={
+ start:{ch:'PROLOGUE',loc:'PLANET NEXA',art:'planet',steps:[
+  {title:['PROLOGUE','The Powerless One']},
+  'In a distant corner of the universe spins a planet called Nexa.',
+  'On Nexa, every single person is born with a power — a quirk. Fire. Lightning. Gravity. Some people can split mountains with a look.',
+  {art:'city'},
+  'Here, strength is everything. The strongest get it all: respect, luxury towers, free markets, free food. The whole planet bows to them.',
+  'And the weak... the weak work.',
+  '#My name is Peter Parker.',
+  '#And I was born with nothing.'],next:'father'},
+ father:{ch:'PROLOGUE',loc:'THE LEGEND',art:'legend',steps:[
+  'My father was the No. 1 hero of Nexa — one of the Top 10 strongest heroes ever known.',
+  'His power was ridiculous. One punch ended any fight, just like Saitama. And in battle, his body moved on its own — Ultra Instinct.',
+  'Then Zero came.',
+  'Zero — a monster out of the Dragon Ball universe. They say no one can even touch him. Not heroes. Not gods. Not any anime character from any world.',
+  'My father fought him anyway... and beat him, right to the edge of death.',
+  'But at the very end, Zero used his power. He absorbed everything — my father\'s strength, his instinct, his punch.',
+  'Then he took my father to his own planet and threw him into a prison.',
+  'People say Zero killed him. Only whispers say he\'s still alive, locked away somewhere.',
+  {art:'city',opt:{night:true}},
+  'That day, Zero conquered Nexa. Now he rules it from his tower — and people without powers work as laborers beneath it.'],next:'home'},
+ home:{ch:'PROLOGUE',loc:'PARKER HOUSE',art:'home',steps:[
+  'My mother is the second strongest hero on Nexa. Because of her, the government lets us keep a place to live.',
+  '@Mom|Eat your breakfast, Peter. And don\'t let them get to you today. You hear me?',
+  '~Easy for her to say.',
+  {win:{title:'NEXA CITIZEN REGISTRY',tone:'red',body:`<div class="kv"><span>NAME</span><b>Peter Parker</b></div><div class="kv"><span>AGE</span><b>16</b></div><div class="kv"><span>BUILD</span><b>Very skinny</b></div><div class="kv"><span>APPEARANCE</span><b>“Ugly” (classmates’ vote)</b></div><div class="kv"><span>ACADEMICS</span><b>Rank #1</b></div><div class="kv"><span>QUIRK</span><b style="color:var(--red)">NONE — POWERLESS</b></div><div class="kv"><span>PHYSICAL TESTS</span><b>Last place, every time</b></div>`,buttons:[{t:'CLOSE',v:1,cls:'red'}]}},
+  'Best grades in the whole school. But on Nexa, grades don\'t matter. Every physical or power competition, I lose. Every single time.'],next:'school1'},
+ school1:{ch:'CHAPTER 1 · POWERLESS',loc:'NEXA ACADEMY',art:'school',opt:{bully:true},steps:[
+  {title:['CHAPTER 1','Powerless']},
+  '@Student|Look who it is! Powerless Parker!',
+  '@Student|Hey, no-quirk! Carry my bag. That\'s the only thing you\'re good for.',
+  'Nexa Academy is ruled by four crews — the strongest students in the school.',
+  '!CRIMSON THRONE — led by Bruce Kane. Rank #1 in the school.',
+  '!STORM FANG — led by Kira Voss, the Lightning Queen.',
+  '!IRON VEIL — led by Magnus Drake, a walking fortress.',
+  '!PHANTOM LOTUS — led by Sera Nyx, master of illusions.',
+  'All four crews have one hobby in common: making my life hell.'],next:'lunch'},
+ lunch:{ch:'CHAPTER 1 · POWERLESS',loc:'CAFETERIA · LUNCH',art:'cafeteria',steps:[
+  'Lunchtime. The whole cafeteria went silent.',
+  '@Bruce|New kid, right? On Nexa, new kids pay tax. Your lunch. Your money. Your pride.',
+  'A thin boy with messy hair was on the floor. His tray was half frozen solid... and half on fire.',
+  'Bruce Kane. He can teleport anywhere. His right side burns, his left side freezes — just like Shoto Todoroki. And he\'s trained personally by Garou, the Hero Hunter.',
+  'People say Bruce\'s father works directly for Zero.',
+  '~Nobody is going to help that kid. Nobody ever helped me either.',
+  {choice:[{t:'Step in front of the new kid',steps:['@Peter|Leave him alone, Bruce.','The cafeteria gasped. Somebody dropped a fork.']},{t:'Grab the kid’s arm and pull him behind you',steps:['I pulled the kid behind me before I could think.','@Peter|He said he doesn\'t have money. Leave him alone.']}]},
+  '@Bruce|...Powerless Parker? You want to die today?',
+  'His fist caught fire. He hit me. I flew across two tables.',
+  'I got back up. He hit me again. I got back up again.',
+  '@Peter|The cafeteria cameras are recording, Bruce. Keep going and your father has to explain to the principal why his son beat a hero\'s kid on video.',
+  '~A bluff. Mostly.',
+  '@Bruce|...Tch. You\'re not worth the trouble. Today.',
+  'He teleported away in a burst of frost and smoke.',
+  '@John|You\'re bleeding... why did you do that? You don\'t even have a power.',
+  '@Peter|Because nobody ever did it for me.',
+  '@John|I\'m John. My power is Copy — I can copy anyone\'s power.',
+  'He touched my shoulder. His eyes went blank for a second.',
+  '@John|That\'s weird. There\'s nothing to copy. It feels like... a locked door.',
+  '@John|Well, powerless or not — you\'re my friend now. Deal?',
+  'That was the day I got my first real friend.'],next:'picnic'},
+ picnic:{ch:'CHAPTER 2 · THE CAVE',loc:'VERDANT WILDS · SCHOOL PICNIC',art:'jungle',opt:{picnic:true},steps:[
+  {day:5},{title:['CHAPTER 2','The Cave']},
+  'A few days later, the school organized a picnic in the Verdant Wilds — a jungle outside the capital.',
+  '@Teacher|Everyone keep your tracking watches ON! If anyone gets lost, we find you by GPS. No exceptions!',
+  'Everyone was laughing, swimming, showing off their powers.',
+  'But I wanted to see the place. Explore it.',
+  '@Peter|John, I\'ll be back in a minute.',
+  '@John|Don\'t get eaten by anything!',
+  {art:'jungle'},
+  'The deeper I walked, the quieter it got. No birds. No wind.',
+  {art:'caveEntrance'},
+  'Then I saw it. A cave — with a strange blue light breathing inside it.',
+  {choice:[{t:'Enter the cave'}]},
+  'I stepped inside.'],next:'cave'},
+ cave:{ch:'CHAPTER 2 · THE CAVE',loc:'???',art:'cave',steps:[
+  'Statues. Dozens of them, carved from grey stone, standing in a huge circle.',
+  'At the far end sat a colossal statue on a throne. Its stone face was smiling.',
+  {fx:()=>shake()},'BOOM. The entrance slammed shut behind me.',
+  '@Peter|No... no, no, no—',
+  'Then the statues turned their heads. Toward me.',
+  {cave:true},
+  {art:'cave',opt:{giant:true,close:true}},
+  'The giant statue\'s eyes opened. Red. Burning.',
+  'A stone sword came down.',
+  {art:'blood',opt:{lie:true}},{fx:()=>shake()},
+  'I felt it go through me.',
+  'Cold.',
+  '~...Am I... dying?',
+  '#. . .',
+  {art:'jungle'},
+  'When it was time to go home, Peter Parker was missing.',
+  'The teacher tracked his GPS watch to the middle of the jungle.',
+  'They found him on the cave floor, covered in blood.',
+  'Strangely, the cave was empty. No statues. No throne. No door. Just Peter.',
+  'They rushed him to the hospital.'],next:'hospital'},
+ hospital:{ch:'CHAPTER 3 · THE SYSTEM',loc:'NEXA CENTRAL HOSPITAL',art:'hospital',steps:[
+  {day:6},{title:['CHAPTER 3','The System']},
+  'I woke up the next day.',
+  'White ceiling. Beeping. Pain everywhere — but I was alive.',
+  {art:'hospital',opt:{panel:true}},
+  'Then, right in front of my eyes, a screen appeared.',
+  {yesno:true},
+  {fx:()=>{S.systemOn=true;fullHeal();hud()}},
+  {win:{title:'NOTIFICATION',body:'<p class="em" style="font-size:18px;text-align:center">The System has been installed.</p><p style="text-align:center">Welcome, Player.</p>'}},
+  {status:true},
+  {art:'hospital'},
+  '@Mom|PETER!',
+  'Mom crashed through the door and hugged me so hard my ribs screamed.',
+  '@Mom|What happened in that jungle?! They said you were covered in blood!',
+  {choice:[{t:'Lie: “I don’t remember anything.”',steps:['@Peter|I... I don\'t know, Mom. I don\'t remember.']},{t:'Lie: “I think I fell somewhere.”',steps:['@Peter|I think I fell... I don\'t really remember.']}]},
+  '@Mom|...As long as you\'re alive. I brought food. Eat all of it. I\'ll come back tonight.',
+  'She left the food and went to talk to the doctors.',
+  '@John|BRO! You scared everyone half to death! What happened in there?',
+  '@Peter|I don\'t know. I don\'t remember anything.',
+  '@John|Seriously? ...Okay. Rest up. Bruce has been asking about you. In a bad way.',
+  'He talked for a while, then left.',
+  {art:'hospital',opt:{panel:true,lines:['Do you want to','start the Quest?']}},
+  'And immediately — another screen.',
+  '@Peter|...What?',
+  '@Peter|...Okay.',
+  {quest:Q.daily(1)},
+  '~A hundred push-ups? A hundred pull-ups? Ten kilometers? I can barely do five push-ups...',
+  '~And a Special Card? What does it even do?',
+  {art:'hospital'},
+  {day:7},
+  'The next morning, the doctors were stunned. Wounds that should have taken months had closed overnight.',
+  'They discharged me that evening.'],next:'park1'},
+ park1:{ch:'CHAPTER 3 · THE SYSTEM',loc:'RIVERSIDE PARK · NIGHT',art:'training',steps:[
+  'That night, I went to the park alone.',
+  '~Okay, System. Let\'s see if you\'re real.',
+  {train:'daily'},
+  'My arms were shaking. My lungs were burning. But I finished. All of it.',
+  {done:'daily1'},
+  '~...This is real. This is actually real.',
+  {win:{title:'NOTIFICATION',body:'<p>You have unspent <span class="em">stat points</span>.</p><p>Open <b class="em">STATUS</b> (bottom bar) any time to spend them. STR boosts damage, AGI dodging, VIT health.</p>'}}],next:'school2'},
+ school2:{ch:'CHAPTER 4 · QUESTS EVERYWHERE',loc:'NEXA CAPITAL · MORNING',art:'city',steps:[
+  {day:8},{title:['CHAPTER 4','Quests Everywhere']},
+  'Back to school. I was halfway out the door when the screen popped up.',
+  {quest:{id:'run1',type:'Basic',title:'Morning Run',desc:'Run all the way to school without being late.',goals:[['Distance','3 km'],['Time limit','15 min']],rw:{exp:60,coins:50,cards:['iron']}}},
+  {choice:[{t:'Run!'}]},
+  'My legs burned the whole way. I made it with thirty seconds to spare.',
+  {done:'run1'},
+  {art:'classroom',opt:{panel:true}},
+  '@Teacher|Pop quiz. Three questions. Phones away, eyes up.',
+  {quest:{id:'lesson1',type:'Basic',title:'Ace the Lesson',desc:'Answer the teacher’s questions. Get at least 2 of 3 right.',goals:[['Correct answers','2 / 3']],rw:{exp:120,coins:80,cards:['charm1','grow1']}}},
+  {quiz:true},
+  {done:'lesson1'},
+  '~Did my face just... get a little better? And why do my pants suddenly feel short?',
+  {art:'school',opt:{bully:true}},
+  '@Iron Veil Grunt|Parker. Heard you crawled out of a cave. Let\'s see you crawl out of this.',
+  {quest:{id:'bully1',type:'Hidden',title:'Don’t Fall',desc:'A hidden quest has appeared. Stay on your feet.',goals:[['Stay standing','✓']],rw:{exp:80,coins:60,cards:['boxing']}}},
+  {choice:[{t:'Block and fire back a jab',steps:['He swung. I blocked — and hit him back, right on the jaw.','@Iron Veil Grunt|Wh— did Powerless just HIT me?!']},{t:'Take the hit and stay standing',steps:['He hit me in the stomach. I bent... but I didn\'t fall.','@Iron Veil Grunt|Tch. Weird. Since when can you take a punch?']}]},
+  'For the first time ever, a bully walked away rubbing his own hand.',
+  {done:'bully1'},
+  {art:'arena'},
+  '@Coach|Physical test! 400-meter sprint. Powers OFF. Line up!',
+  {quest:{id:'race1',type:'Basic',title:'Not Last Anymore',desc:'Finish in the top 5.',goals:[['Placement','Top 5 / 40']],rw:{exp:100,coins:80,cards:['quick']}}},
+  {choice:[{t:'Sprint with everything you have'}]},
+  'I finished third. Third — out of forty.',
+  'The whole class stared at me like I\'d grown a second head.',
+  {done:'race1'},
+  'Across the field, Bruce Kane was watching me. He wasn\'t smiling.'],next:'street'},
+ street:{ch:'CHAPTER 4 · QUESTS EVERYWHERE',loc:'MARKET STREET · EVENING',art:'street',steps:[
+  'On my way home, I heard a scream.',
+  '@Old Woman|Help! Somebody! He took my ration card!',
+  '@Thug|Shut it, granny. Nobody helps the weak on Nexa.',
+  'His skin turned to stone. Everyone on the street looked away.',
+  {art:'system',opt:{label:'SPECIAL QUEST'}},
+  {quest:{id:'save1',type:'Special',title:'Protect the Weak',desc:'A civilian is in danger. Defeat the stone-skin thug.',goals:[['Defeat the thug','0 / 1'],['Civilian safe','✓']],rw:{exp:500,coins:800,cards:['mirror','appraisal']}}},
+  {art:'street'},
+  '@Peter|Hey. Give it back.',
+  '@Thug|Ha! A skinny kid with no quirk? I\'ll break you like a twig.',
+  {fight:{name:'Stone-Skin Thug',lv:7,hp:180,atk:16,def:2,art:'street',moves:['Stone Fist','Boulder Kick','Rock Headbutt'],intro:'The thug cracks his stone knuckles.'}},
+  {art:'street',opt:{won:true}},
+  'He hit the ground hard. The ration card slid across the pavement.',
+  {done:'save1'},
+  '@Old Woman|Bless you, boy. You\'ve got your father\'s eyes.',
+  '~...She knew my father?',
+  'Before I could ask, she was gone into the crowd.'],next:'park2'},
+ park2:{ch:'CHAPTER 4 · QUESTS EVERYWHERE',loc:'RIVERSIDE PARK · NIGHT',art:'training',steps:[
+  {quest:Q.daily(2)},
+  {train:'daily'},
+  {done:'daily2'},
+  {art:'home',opt:{}},
+  'At home, I caught myself in the bathroom mirror.',
+  'A stranger looked back. Taller. Sharper jaw. Real muscle on my arms.',
+  '@Mom|Peter? ...Did you grow? You look different.',
+  '@Peter|Growth spurt, I guess.',
+  '~Technically not a lie.'],next:'spar'},
+ spar:{ch:'CHAPTER 4 · QUESTS EVERYWHERE',loc:'ACADEMY ARENA · COMBAT PRACTICAL',art:'arena',opt:{enemy:'dex'},steps:[
+  {day:9},
+  '@Coach|Combat practicals! First match: Peter Parker versus Dex Holt of Storm Fang!',
+  '@Dex|Coach, is this a joke? I\'ll fry him in one second.',
+  'The whole arena laughed.',
+  {appraise:{name:'Dex Holt',crew:'Storm Fang',lv:14,power:'Lightning Body — 10,000 volts per strike',st:'STR 22 · AGI 30 · VIT 18'}},
+  {quest:{id:'spar1',type:'Special',title:'The First Victory',desc:'Win the sparring match against Dex Holt of Storm Fang.',goals:[['Defeat Dex Holt','0 / 1']],rw:{exp:700,coins:1000,cards:['ui']}}},
+  {fight:{name:'Dex Holt — Storm Fang',lv:14,hp:300,atk:24,def:4,art:'arena',artOpt:{enemy:'dex'},moves:['Volt Jab','Thunder Kick','Static Burst','Lightning Step'],intro:'Dex crackles with lightning.'}},
+  'Dex hit the arena floor and didn\'t get up.',
+  'Silence. Then the whole arena exploded.',
+  {done:'spar1'},
+  '~Ultra Instinct... my father\'s power.',
+  {art:'school',opt:{crews:true}},
+  'That afternoon, on the academy rooftop, four shadows met.',
+  '@Kira|Did you SEE that? Dex couldn\'t even touch him.',
+  '@Magnus|A month ago he couldn\'t do one push-up.',
+  '@Sera|Something happened to him in that cave.',
+  '@Bruce|My father got a call last night. From Lord Zero\'s envoy. They want to know why a Parker is getting stronger.',
+  '@Bruce|So we end it. Today. Before he becomes a problem.'],next:'ambush'},
+ ambush:{ch:'CHAPTER 5 · THE AMBUSH',loc:'BACK ALLEY · SUNSET',art:'ambush',steps:[
+  {title:['CHAPTER 5','The Ambush']},
+  '@John|Bro, you were INSANE today! Dex\'s face when you dodged—',
+  'John stopped walking.',
+  'Four figures blocked the alley. Behind us, more crew members sealed the exit.',
+  '@Bruce|Hey, Powerless. You\'ve been having a really good week.',
+  '@Kira|Too good.',
+  {quest:{id:'em1',type:'Emergency',title:'Survive',desc:'All four crews are attacking at once.',goals:[['Hostiles','Bruce · Kira · Magnus · Sera'],['Survive','???']],penalty:'Death.',rw:{exp:300}}},
+  {fight:{name:'The Four Crews',lv:'40+',hp:6000,atk:40,def:8,art:'ambush',scripted:'lose',turns:5,noDodge:false,intro:'Bruce, Kira, Magnus and Sera surround you.',
+    attackers:[{name:'Kira Voss',moves:['Thunder Lance','Storm Cage']},{name:'Magnus Drake',moves:['Iron Crush','Gravity Slam']},{name:'Sera Nyx',moves:['Phantom Blades','Mirage Strike']},{name:'Bruce Kane',moves:['Hellflame Fist','Glacier Spike','Garou Style: Flowing Water']},{name:'All Four',moves:['Combined Assault']}]}},
+  'My cards worked. The Mirror threw Kira\'s lightning back at her. Ultra Instinct slid me past Magnus\'s fist. For a moment — just a moment — I was actually winning.',
+  'Then Bruce teleported behind me.',
+  {fx:()=>shake()},
+  'Fire. Ice. Garou\'s martial arts. Again and again and again.',
+  '@John|PETER!',
+  'John copied Kira\'s lightning and threw himself between us. He tried everything. He fought with all he had.',
+  'They broke him too.',
+  {art:'ambush',opt:{beaten:true}},{fx:()=>shake()},
+  'I heard my bones snap. Arms. Legs. Ribs. Every part of me.',
+  '@Bruce|Stay powerless, Parker. It suits you.',
+  {done:'em1'},
+  'Then everything went dark.'],next:'hnight'},
+ hnight:{ch:'CHAPTER 5 · THE AMBUSH',loc:'NEXA CENTRAL HOSPITAL · NIGHT',art:'hospital',opt:{night:true,two:true},steps:[
+  {fx:()=>{S.hp=1;hud()}},
+  'I woke up in the hospital. Almost dead. Nearly every bone in my body was broken.',
+  'In the next bed, John lay wrapped in bandages, breathing slowly.',
+  '~If I had been stronger... I could have saved him.',
+  '~He got hurt protecting me. Because I was weak.',
+  'That night, I made a decision.',
+  '~I have to disappear from this world. Become strong somewhere they can\'t reach me.',
+  {letter:'Mom, John —\n\nI\'m leaving this world for a while. Please don\'t look for me. I can\'t tell you where I\'m going.\n\nI love you both more than anything.\n\nI\'ll come back. I promise.\n\n— Peter'},
+  'I left the letter on the table between our beds.',
+  '@Peter|System. Teleport me to any planet.',
+  {quest:{id:'hid1',type:'Hidden',title:'Beyond the Stars',desc:'Leave this world to grow stronger.',goals:[['Destination','Random planet']],rw:{exp:300,cards:['teleport']}}},
+  {done:'hid1'},
+  {art:'portal'},
+  '!Destination: random. Teleporting...'],next:'oa'},
+ oa:{ch:'CHAPTER 6 · THE GREEN PLANET',loc:'OA',art:'lantern',steps:[
+  {title:['CHAPTER 6','The Green Planet']},
+  'I crashed onto a world made of emerald light.',
+  'Rings of green energy streaked through the sky. Crystal towers hummed with power.',
+  '@Lantern Elder Veyra|A boy? Broken in a hundred places... how is he even alive?',
+  'This was Oa — home of the Green Lantern Corps.',
+  'They raised their rings. Green light wrapped around me.',
+  'In one second, every bone in my body snapped back into place.',
+  {fx:()=>{fullHeal();hud()}},
+  {quest:{id:'oa1',type:'Hidden',title:'Survive Your Wounds',desc:'Your body has studied the healing.',goals:[['Recovered','100%']],rw:{exp:800,coins:1000,cards:['regen']}}},
+  {done:'oa1'},
+  '@Veyra|Your body is strange, child. It learns. It adapts. Stay, and we will train you.',
+  {train:'lantern'},
+  {quest:{id:'oa2',type:'Special',title:'The Lantern Trial',desc:'Defeat the Construct Titan of the Corps.',goals:[['Defeat the Construct Titan','0 / 1']],rw:{exp:3000,coins:3000,cards:['whitering'],title:'White Lantern'}}},
+  {fight:{name:'Construct Titan',lv:120,hp:()=>Math.round(atkPow()*14),atk:()=>Math.round(maxHP()*.09),def:0,art:'arena',artOpt:{enemy:'titan'},moves:['Emerald Hammer','Construct Barrage','Willpower Beam'],intro:'A giant of solid green light rises.',showStats:true}},
+  {art:'lantern',opt:{white:true}},
+  'When I won, the rings in the sky stopped. Then one came down to me.',
+  'It wasn\'t green. It was white.',
+  {done:'oa2'},
+  {fx:()=>{S.ring='White Ring';hud()}},
+  '@Veyra|The White Light. The light of life itself. In ten thousand years I have seen it only twice.',
+  '@Peter|Thank you. All of you.',
+  '@Veyra|Where will you go now?',
+  '@Peter|Everywhere.'],next:'multi'},
+ multi:{ch:'CHAPTER 7 · EVERY UNIVERSE',loc:'THE MULTIVERSE',art:'multiverse',steps:[
+  {title:['CHAPTER 7','Every Universe']},
+  'With the White Ring and the System, I opened doors no one had ever opened.',
+  'Anime. DC. Marvel. I trained under every single one of them.',
+  {montage:true},
+  {win:{title:'SYSTEM',tone:'gold',body:'<p class="em" style="font-size:17px;text-align:center">All cards mastered.</p><p style="text-align:center">Basic · Special · and a new tier beyond them: <b style="color:var(--gold)">BEYOND</b>.</p>'}},
+  {quest:{id:'mv1',type:'Special',title:'The System’s Final Trial',desc:'Defeat the Echo of Zero — a perfect simulation of the strongest being.',goals:[['Defeat the Echo','0 / 1']],rw:{exp:0,coins:99999}}},
+  {fight:{name:'Echo of Zero',lv:'???',hp:()=>Math.round(atkPow()*40),atk:()=>Math.round(maxHP()*.12),def:0,art:'legend',moves:['Absorb','God Ki Blast','Untouchable','Void Crush'],intro:'A perfect copy of Zero stares at you. It smiles.',showStats:true}},
+  'The Echo shattered like glass.',
+  {done:'mv1'},
+  '~Not yet. The real one is still out there. But I\'m ready to get ready.'],next:'arise'},
+ arise:{ch:'CHAPTER 7 · EVERY UNIVERSE',loc:'THE SHADOW REALM',art:'shadow',steps:[
+  'Then I stood at the center of everything and spoke one word.',
+  {art:'shadow',opt:{arise:true}},{fx:()=>shake()},
+  '@Peter|...ARISE.',
+  'Shadows rose from every universe. Anime. DC. Marvel. Every master, every hero, every monster — kneeling in my Shadow Army.',
+  {fx:()=>{S.army='Every character · Anime, DC, Marvel';S.title='Monarch of Shadows';hud();toast('Shadow Army: every universe','gold')}},
+  'And I trained them. All of them. Until the army moved like one body.',
+  {art:'aura'},
+  'My aura changed. Red. Blue. Gold. Silver. Black. White. Every color at once.',
+  {card:'aura'},
+  {fx:()=>{S.aura='Prism — every color';hud()}},
+  {timeskip:true}],next:'rumor'},
+ rumor:{ch:'CHAPTER 8 · THE RETURN',loc:'NEXA ACADEMY',art:'school',opt:{crews:true},steps:[
+  {title:['CHAPTER 8','The Return']},
+  'On Nexa, the rumors had spread long ago.',
+  '!“Powerless Parker was weak. He got scared and ran. He\'s probably dead.”',
+  '@Bruce|Remember Parker? Bet he\'s rotting in a ditch somewhere.',
+  '@Kira|Aww, don\'t say that. ...He\'s probably rotting in two ditches.',
+  'The four crews laughed. The whole courtyard laughed with them.',
+  'They had no idea.'],next:'returnHome'},
+ returnHome:{ch:'CHAPTER 8 · THE RETURN',loc:'PARKER HOUSE · NIGHT',art:'portal',steps:[
+  '@Peter|System. Take me home. Planet Nexa.',
+  {art:'returnHome'},
+  'The same door. The same porch light.',
+  'The door opened before I could knock.',
+  '@Mom|...Peter?',
+  'She froze. Her hand shook. She could feel it — the weight of my aura, pressing on the whole street.',
+  '@Mom|What... what happened to you? Where have you been all this time?',
+  {choice:[{t:'Lie: “I was here on Nexa, Mom. In the jungle.”',steps:['@Peter|I was here on Nexa, Mom. In the jungle. Training.']},{t:'Lie: “Just the jungle. I needed to get stronger.”',steps:['@Peter|In the jungle. On Nexa. I needed to get stronger.']}]},
+  '@Mom|...You\'re lying. I can always tell when you lie.',
+  {art:'returnHome',opt:{hug:true}},
+  '@Mom|But you\'re home. You\'re home.',
+  'She hugged me, and for the first time in a long time, I let myself breathe.',
+  {art:'room'},
+  'Later that night, I picked up the phone and called Professor Hale.',
+  '@Professor Hale|...Parker? Peter Parker? We all thought—',
+  '@Peter|Professor. The school power competition is tomorrow, right? Register my name.',
+  '@Professor Hale|You? In the power competition? Peter, those crews will—',
+  '@Peter|Please. Keep it quiet. Don\'t tell anyone.',
+  '@Professor Hale|...Alright. You\'re registered.',
+  {art:'arena',opt:{tournament:true}},
+  {quest:{id:'arc2',type:'Special',title:'The Silent Return',desc:'Enter the Nexa Academy Power Competition. Win it.',goals:[['Register','✓ done'],['Win the competition','0 / 1']],rw:{exp:99999,cards:[]}}},
+  'Tomorrow, Nexa Academy finds out what happened to Powerless Parker.',
+  {end:true}]},
+};
+
+const MONTAGE=[
+ {who:'Goku & Whis',w:'Dragon Ball',l:'Ultra Instinct — not just a sign anymore. Mastered.',hue:200,st:{agi:300}},
+ {who:'Kakashi & Itachi',w:'Naruto',l:'See a technique once, copy it forever.',hue:0,card:'copy'},
+ {who:'Naruto & Jiraiya',w:'Naruto',l:'Sage Mode, shadow clones, and never giving up.',hue:30,st:{vit:300}},
+ {who:'Gojo Satoru',w:'Jujutsu Kaisen',l:'Infinity. Cursed energy control. Absorbing power.',hue:190,card:'drain'},
+ {who:'The Flash',w:'DC',l:'The Speed Force. Faster than light.',hue:50,card:'light'},
+ {who:'Superman & Wonder Woman',w:'DC',l:'Strength of a god, and a warrior\'s heart.',hue:0,st:{str:500,vit:300}},
+ {who:'Batman',w:'DC',l:'Strategy. Preparation. Never be surprised again.',hue:240,st:{per:400,int:200}},
+ {who:'Doctor Strange',w:'Marvel',l:'Mystic arts, portals, and seeing every outcome.',hue:30,st:{int:500}},
+ {who:'Thor & Hulk',w:'Marvel',l:'Thunder. Rage. Power without limits.',hue:210,st:{str:600}},
+ {who:'Luffy, Zoro & the Haki masters',w:'One Piece',l:'Conqueror\'s Haki and three-sword style.',hue:350,st:{str:300,per:300}},
+ {who:'Tanjiro & Rengoku',w:'Demon Slayer',l:'Total Concentration Breathing. Set your heart ablaze.',hue:15,st:{vit:300,agi:200}},
+ {who:'Sung Jin-Woo',w:'Solo Leveling',l:'The Shadow Monarch taught me the command.',hue:270,card:'arise'},
+ {who:'Saitama',w:'One Punch Man',l:'100 push-ups, 100 sit-ups, 100 squats, 10 km. Every day. Until my limiter broke — and then I punched harder than him.',hue:55,card:'limit'},
+];
+async function montage(){for(const m of MONTAGE){setArt('multiverse',{hue:m.hue,label:m.who.toUpperCase()});await say(`@${m.who} · ${m.w}|${m.l}`);
+  if(m.st){for(const k in m.st)S.st[k]+=m.st[k];toast(Object.entries(m.st).map(([k,v])=>`${k.toUpperCase()} +${v}`).join(' · '))}
+  gainLevels(70,0);if(m.card)await giveCard(m.card);hud()}
+ for(const id of CARD_ORDER)if(!has(id)&&id!=='aura')await giveCard(id,true);hud();setArt('multiverse',{hue:280})}
+
+/* ---------------- ENGINE ---------------- */
+async function step(st){
+ if(typeof st==='string')return say(st);
+ if(st.art)setArt(st.art,st.opt);
+ if(st.title)return titleCard(st.title[0],st.title[1]);
+ if(st.day){S.day=st.day;hud();return}
+ if(st.fx)return st.fx();
+ if(st.win)return win(st.win);
+ if(st.quest)return questOffer(st.quest);
+ if(st.done)return questDone(st.done);
+ if(st.card)return giveCard(st.card);
+ if(st.quiz){for(;;){const sc=await quiz();if(sc>=2){await say(`!Score: ${sc} / 3. Quest goal met.`);return}await say(`!Score: ${sc} / 3. Not enough. The teacher hands you a second sheet...`)}}
+ if(st.train){if(st.train==='daily')return training(DAILY_TRAIN());
+   return training({title:'LANTERN TRAINING',sub:'Train with the Corps. Tap or hold.',items:[{label:'Willpower constructs',goal:100,unit:'',btn:'FORGE',per:()=>8},{label:'Orbital flight laps',goal:50,unit:'laps',btn:'FLY',per:()=>4},{label:'Ring meditation',goal:60,unit:'min',btn:'FOCUS',per:()=>5}]}).then(()=>{gainLevels(25,6);toast('Lantern training: +25 levels, all stats +150','gold')})}
+ if(st.fight){const r=await runFight(st.fight);return}
+ if(st.cave)return caveSurvival();
+ if(st.yesno){const v=await win({title:'NOTIFICATION',body:'<p class="em" style="font-size:18px;text-align:center">Do you want to start the System?</p>',buttons:[{t:'YES',v:'yes'},{t:'NO',v:'no',cls:'ghost'}]});
+   await say('~What is this? What\'s going on with me?');await say('Footsteps in the corridor. Someone was coming.');
+   await say(v==='no'?'I panicked — my hand jerked — and instead of NO, my finger hit YES.':'I panicked — and my finger slipped straight onto YES.');return}
+ if(st.status){await win({title:'STATUS',cls:'sheet',body:statusHTML().replace(/<button class="plus"[^>]*>\+<\/button>/g,'')});return}
+ if(st.appraise){const a=st.appraise;if(!S.flags.appraisal)return;await win({title:'EYE OF APPRAISAL',body:`<div class="kv"><span>NAME</span><b>${a.name}</b></div><div class="kv"><span>CREW</span><b>${a.crew}</b></div><div class="kv"><span>LEVEL</span><b>${a.lv}</b></div><div class="kv"><span>POWER</span><b>${a.power}</b></div><div class="kv"><span>STATS</span><b>${a.st}</b></div><p class="small" style="margin-top:10px">Your level: ${S.level}. Spend your points before the fight.</p>`});return}
+ if(st.letter)return letter(st.letter);
+ if(st.choice){const ch=await choose(st.choice);if(ch.steps)for(const s2 of ch.steps)await step(s2);return}
+ if(st.montage)return montage();
+ if(st.timeskip){S.flags.age=26;S.flags.yearsLabel='10 years later';gainLevels(Math.max(0,1000-S.level),0);S.title='The One Beyond';S.height=188;S.looks=100;S.build='Perfect';hud();
+   return overlay(`<div><div class="t1">TIME PASSES</div><div class="t2">10 YEARS LATER</div><div class="t3">LEVEL ${fmt(S.level)} · ALL CARDS · EVERY AURA</div></div>`,4200)}
+ if(st.end)return ending();
+}
+async function run(id){const sc=SCENES[id];if(!sc)return;S.scene=id;save();setCap(sc.ch,sc.loc);if(sc.art)setArt(sc.art,sc.opt);
+ for(const st of sc.steps)await step(st);
+ if(sc.next)return run(sc.next)}
+async function ending(){S.ended=true;save();await overlay(`<div class="title-screen"><div class="t1">END OF ARC 1</div><div class="t2">The Silent Return</div><p>Next arc: <b style="color:var(--gold)">The Power Competition</b> — the four crews, Bruce Kane, and the first step toward Zero.</p><div class="t3">TAP TO CONTINUE</div></div>`);
+ clearBox();$('#speaker').textContent='SYSTEM';$('#text').className='sysline';$('#text').textContent='Arc 1 complete. Your save is kept. Replay from the start, or keep checking your Status and Cards.';
+ for(;;){const ch=await choose([{t:'Replay Arc 1 from the beginning',v:'re'},{t:'View my Status',v:'st'},{t:'View my Cards',v:'cards'}]);if(ch.v==='re'){S=newState();fullHeal();hud();return run('start')}openPanel(ch.v==='st'?'status':'cards')}}
+
+/* ---------------- SAVE ---------------- */
+function save(){store.set(SAVE_KEY,JSON.stringify(S))}
+function load(){const raw=store.get(SAVE_KEY);if(!raw)return null;try{return JSON.parse(raw)}catch(e){return null}}
+
+/* ---------------- PANELS ---------------- */
+let panelTab='all';
+function openPanel(p){document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));const close=()=>document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('on'));
+ const need=['status','cards','quests'].includes(p)&&!S.systemOn;
+ if(need)return win({title:'LOCKED',body:'<p style="text-align:center">You don\'t have a System... yet.</p><p class="small" style="text-align:center">Keep reading the story.</p>'}).then(close);
+ const m=$('#modal');m.hidden=false;let html='',title='';
+ const render=()=>{
+  if(p==='status'){title='STATUS';html=statusHTML()+`<div class="ft" style="padding:12px 0 0"><button class="btn ghost" id="auto" ${S.pts<=0?'disabled':''}>AUTO-SPEND</button></div>`}
+  if(p==='cards'){title='CARD COLLECTION';const list=CARD_ORDER.filter(id=>panelTab==='all'||CARDS[id].k.toLowerCase()===panelTab);
+   html=`<div class="tabsx">${['all','special','basic'].map(k=>`<button data-t="${k}" class="${panelTab===k?'on':''}">${k.toUpperCase()}</button>`).join('')}<span class="small" style="margin-left:auto;align-self:center">${S.cards.length} / ${CARD_ORDER.length} collected</span></div>
+   <div class="cgrid">${list.map(id=>{const cd=CARDS[id],own=has(id);return own?`<button class="ctile r-${cd.r}" data-c="${id}"><span class="rr">${cd.r.toUpperCase()}</span><span class="nm">${cd.n}</span><span class="ty">${cd.k} · ${cd.fxt}</span></button>`:`<div class="ctile locked"><span class="rr">${cd.k==='Special'?'SPECIAL':'BASIC'}</span><span class="nm">???</span><span class="ty">Locked</span></div>`}).join('')}</div>`}
+  if(p==='quests'){title='QUEST LOG';const act=S.quests.filter(q=>q.status==='active'),dn=S.quests.filter(q=>q.status==='done');
+   html=`<div class="lbl">ACTIVE</div>${act.length?act.map(q=>`<div class="goal"><span><span class="qt ${q.type}" style="margin:0 6px 0 0">${q.type.toUpperCase()}</span>${q.title}</span><span>…</span></div>`).join(''):'<p class="small">No active quests.</p>'}
+   <div class="lbl">COMPLETED (${dn.length})</div>${dn.slice().reverse().map(q=>`<div class="goal"><span><span class="qt ${q.type}" style="margin:0 6px 0 0">${q.type.toUpperCase()}</span>${q.title}</span><span style="color:var(--green)">✓</span></div>`).join('')}`}
+  if(p==='crews'){title='NEXA ACADEMY CREWS';const ap=S.flags.appraisal;const back=S.flags.age;
+   const crews=[['Crimson Throne','#ff5a4a','Bruce Kane','Rank #1. Teleports anywhere. Right side fire, left side ice (like Shoto Todoroki). Trained by Garou. Father linked to Zero.',48,'STR 140 · AGI 165 · VIT 120 · INT 60'],
+    ['Storm Fang','#ffd84a','Kira Voss','Rank #2. Lightning body; can become a bolt of electricity. Member: Dex Holt.',42,'STR 90 · AGI 180 · VIT 85 · INT 70'],
+    ['Iron Veil','#aab4c6','Magnus Drake','Rank #3. Living-metal skin and gravity crushing. Nearly impossible to hurt.',41,'STR 170 · AGI 60 · VIT 200 · INT 40'],
+    ['Phantom Lotus','#b07bff','Sera Nyx','Rank #4. Illusions and shadow blades. You never know which Sera is real.',40,'STR 70 · AGI 150 · VIT 75 · INT 160']];
+   html=crews.map(([n,cc,l,pw,lv,st])=>`<div class="crew" style="--cc:${cc}"><h4>${n.toUpperCase()}</h4><div class="kv"><span>Leader</span><b>${l}</b></div><div class="pw">${pw}</div><div class="kv"><span>Appraisal</span><b class="mono">${ap?`Lv.${lv} · ${st}`:'??? — needs Eye of Appraisal'}</b></div>${back?`<div class="small">Compared to you: an ant next to a galaxy.</div>`:''}</div>`).join('')+
+    `<div class="crew" style="--cc:var(--cyan)"><h4>YOUR CREW</h4><div class="pw">${back?'Locked until the Power Competition. Your Shadow Army is waiting.':'Locked. Become the strongest first.'}</div></div>`}
+  if(p==='shop'){title='SYSTEM SHOP';const items=[['elixir','Stat Elixir','+1 stat point',150],['potion','Healing Potion','Heals 50% HP in battle',60],['pack','Basic Card Pack','A random basic card you don’t own',400]];
+   html=`<p>Coins: <b class="coin">◈ ${fmt(S.coins)}</b> · Potions: ${S.items.potion||0}</p>`+items.map(([id,n,d,cost])=>`<div class="goal" style="align-items:center"><span><b class="em">${n}</b><br><span class="small">${d}</span></span><button class="btn" data-buy="${id}" data-cost="${cost}" ${S.coins<cost||!S.systemOn?'disabled':''}>◈ ${cost}</button></div>`).join('')+(S.systemOn?'':'<p class="small">The shop opens once you have a System.</p>')}
+  if(p==='menu'){title='SYSTEM MENU';html=`<p>Your progress saves automatically at the start of every scene.</p>
+   <div class="lbl">TEXT SPEED</div><div class="tabsx">${['SLOW','NORMAL','FAST'].map((k,i)=>`<button data-sp="${i}" class="${(S.textSpeed??1)===i?'on':''}">${k}</button>`).join('')}</div>
+   <div class="lbl">STORY</div><p class="small">Planet Nexa · Peter Parker · Arc 1: The Powerless One → The Silent Return.</p>
+   <div class="lbl">DANGER ZONE</div><button class="btn red" id="reset">START A NEW GAME</button>`}
+  m.innerHTML=`<div class="win sheet"><div class="hd"><span class="ex">!</span>${title}</div><div class="bd">${html}</div><div class="ft"><button class="btn" id="pclose">CLOSE</button></div></div>`;
+  m.querySelector('#pclose').onclick=()=>{m.hidden=true;m.innerHTML='';close()};
+  m.querySelectorAll('.plus').forEach(b=>b.onclick=()=>{if(S.pts>0){S.st[b.dataset.k]++;S.pts--;hud();save();render()}});
+  m.querySelector('#auto')?.addEventListener('click',()=>{const ks=['str','agi','vit','str','vit'];let i=0;while(S.pts>0){S.st[ks[i++%ks.length]]++;S.pts--}fullHeal();hud();save();render()});
+  m.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{panelTab=b.dataset.t;render()});
+  m.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{const cd=CARDS[b.dataset.c];m.innerHTML=`<div class="win"><div class="hd"><span class="ex">!</span>${cd.k.toUpperCase()} CARD</div><div class="reveal"><div class="c3 flip r-${cd.r}"><div class="in"><div class="face back"></div><div class="face front"><div><div class="rr">${cd.r.toUpperCase()} · ${cd.k.toUpperCase()}</div><div class="nm">${cd.n}</div></div><div class="sig">${cd.sig}</div><div><div class="ds">${cd.d}</div><div class="fx" style="margin-top:8px">▸ ${cd.fxt}</div></div></div></div></div><button class="btn" id="bk">BACK</button></div></div>`;m.querySelector('#bk').onclick=render});
+  m.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{const cost=+b.dataset.cost;if(S.coins<cost)return;const id=b.dataset.buy;
+   if(id==='pack'){const pool=CARD_ORDER.filter(k=>CARDS[k].k==='Basic'&&!has(k));if(!pool.length){S.pts+=2;S.coins-=cost;toast('All basic cards owned — +2 stat points instead');hud();save();render();return}
+    S.coins-=cost;const pick=pool[Math.floor(Math.random()*pool.length)];hud();m.hidden=true;giveCard(pick).then(()=>{save();openPanel('shop')});return}
+   S.coins-=cost;if(id==='elixir'){S.pts++;toast('+1 stat point')}if(id==='potion'){S.items.potion=(S.items.potion||0)+1;toast('Potion added')}hud();save();render()});
+  m.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{S.textSpeed=+b.dataset.sp;save();render()});
+  m.querySelector('#reset')?.addEventListener('click',()=>{m.innerHTML=`<div class="win red"><div class="hd"><span class="ex">!</span>NEW GAME</div><div class="bd"><p>Erase this save and start again from the Prologue?</p></div><div class="ft"><button class="btn red" id="yes">ERASE & RESTART</button><button class="btn ghost" id="no">CANCEL</button></div></div>`;
+   m.querySelector('#no').onclick=render;m.querySelector('#yes').onclick=()=>{store.del(SAVE_KEY);location.reload()}});
+ };render()}
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>openPanel(b.dataset.p));
+
+/* ---------------- BOOT ---------------- */
+async function boot(){const saved=load();fullHeal();hud();setArt('planet');
+ const o=$('#over');o.hidden=false;o.className='fade';
+ o.innerHTML=`<div class="title-screen"><div class="t1">A STORY GAME</div><div class="logo">NEXA <span>SYSTEM</span></div><p>Planet Nexa. Everyone has a power — except Peter Parker. Then a cave, a death, and a screen only he can see.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">${saved?'<button class="btn" id="cont">CONTINUE</button>':''}<button class="btn ${saved?'ghost':''}" id="newg">${saved?'NEW GAME':'START'}</button></div>
+  ${saved?`<p class="small">Saved: ${SCENES[saved.scene]?.ch||''} · Lv.${saved.systemOn?saved.level:'—'}</p>`:''}</div>`;
+ const pick=await new Promise(r=>{o.querySelector('#newg').onclick=()=>r('new');o.querySelector('#cont')?.addEventListener('click',()=>r('cont'))});o.hidden=true;
+ if(pick==='cont'&&saved){S=Object.assign(newState(),saved);hud();S.ended?ending():run(S.scene)}else{S=newState();fullHeal();hud();run('start')}}
+window.claude?.hot?.snapshot?.(()=>({}));
+boot();
+</script>
+</body>
+</html>
