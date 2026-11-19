@@ -206,6 +206,92 @@ body:not(.light) .cgrid span.has{background:#4a2a20;color:#ffb39a}
 .cgrid.pick span{cursor:default;opacity:.55}.cgrid.pick span.ok{opacity:1;cursor:pointer;border:1.5px solid var(--gold);background:var(--card)}.cgrid.pick span.hol{background:#fff1c9}.cgrid.pick span.sel{background:var(--gold)!important;color:#fff;border-color:var(--gold)}
 .cgrid.pick span.clash{border-color:var(--red)}.cgrid span.hol{font-size:9px}
 body:not(.light) .cgrid.pick span.hol{background:#4a3a10}
+/* ===================== v8 DESIGN SYSTEM ===================== */
+body.light{--bg:#F7F4EE;--card:#FFFFFF;--card2:#F3EEE5;--gold:#B5821C;--gold2:#E8B84A;--text:#1F1A14;--muted:#6B6156;--red:#D63A3F;--green:#1F9D5C;--blue:#2F6FD6;--line:#E6DFD3;--ink:#1F1A14;--soft:#EBE5DA;background:#F7F4EE}
+body:not(.light){--bg:#121014;--card:#1D1A21;--card2:#27222D;--gold:#E8B84A;--gold2:#FFD77A;--text:#F3ECE0;--muted:#AFA596;--red:#FF6B6F;--green:#45D48F;--blue:#78B0FF;--line:#332C3B;--ink:#0B0A0D;--soft:#2A2430;background:#121014}
+body{font-size:15px}
+#app{padding:0 14px 96px}
+.page{animation:pagein .28s ease both}@keyframes pagein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h2{font-family:'Bebas Neue',Impact,sans-serif;font-size:26px;letter-spacing:1px;color:var(--text);margin:18px 0 8px;line-height:1}
+h3{font-size:22px;line-height:1.05}
+small,.lbl{font-size:11px;font-weight:700;letter-spacing:.6px}
+.card{border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 1px 2px rgba(60,40,10,.04)}
+body.light .card{box-shadow:0 1px 3px rgba(60,40,10,.06)}
+.btn{border-radius:14px;min-height:50px;font-size:15px;transition:transform .1s,filter .15s}
+.btn:active{transform:scale(.97)}
+.btn.gold{background:var(--gold2);color:#1F1A14;box-shadow:0 4px 14px rgba(232,184,74,.35)}
+.btn.ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
+.btn.sm{min-height:40px;border-radius:11px}
+.tag{border-radius:9px;padding:4px 9px;font-size:12px;font-weight:700}
+.hud{display:none}
+/* top bar */
+.topbar{position:sticky;top:0;z-index:6;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0 10px;background:var(--bg)}
+.tb-l{display:flex;align-items:center;gap:10px;min-width:0}.tb-logo{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;flex:0 0 auto}
+.tb-t{display:flex;flex-direction:column;min-width:0}.tb-t b{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;font-weight:400;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tb-t span{font-size:12px;color:var(--muted)}
+.tb-r{display:flex;align-items:center;gap:8px}.tb-cash{font-weight:800;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:7px 9px}
+.tb-ib{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);position:relative;display:flex;align-items:center;justify-content:center}
+.tb-ib i{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-style:normal;font-size:11px;font-weight:800;border-radius:9px;padding:1px 6px}
+/* tab bar */
+.tabbar{background:var(--card)!important;border-top:1px solid var(--line)}
+.tabbar button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 12px;font-size:11px;color:var(--muted)}
+.tabbar button svg{transition:transform .15s}.tabbar button.on{color:var(--gold);font-weight:800}.tabbar button.on svg{transform:translateY(-2px)}
+/* hero */
+.hero{background:var(--ink);color:#fff;border-radius:20px;padding:16px;margin-top:4px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px rgba(31,26,20,.18);position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(232,184,74,.28),transparent 70%);pointer-events:none}
+.hero-s{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.hero-s div{display:flex;flex-direction:column}.hero-s small{color:#CFC6B8}.hero-s b{font-size:20px;font-weight:800}.hero-s .gold{color:#E8B84A}
+.hero-go{height:52px;border:0;border-radius:14px;background:#E8B84A;color:#1F1A14;font-family:inherit;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;z-index:1;box-shadow:0 6px 18px rgba(232,184,74,.35)}
+.hero-go:active{transform:scale(.98)}
+.hero-sub{display:flex;gap:6px;position:relative;z-index:1}.hero-sub button{flex:1;min-height:38px;border-radius:10px;border:1px solid #ffffff2e;background:#ffffff14;color:#fff;font-family:inherit;font-size:12px;font-weight:700}
+.sec{display:flex;justify-content:space-between;align-items:baseline}.sec h2{margin:20px 0 8px}
+.link{background:none;border:0;color:var(--gold);font-weight:800;font-family:inherit;font-size:13px;min-height:40px}
+.list{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.lrow{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;padding:10px 12px;border:0;border-bottom:1px solid var(--line);background:none;color:var(--text);font-family:inherit;font-size:14px;text-align:left}.lrow:last-child{border-bottom:0}
+.lrow i{width:9px;height:9px;border-radius:50%;flex:0 0 auto}.lrow span{flex:1}.lrow>b{color:var(--gold);font-size:18px}
+.empty{padding:16px;color:var(--muted);font-size:14px;text-align:center}.empty.big{background:var(--card);border:1.5px dashed var(--line);border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:6px}.empty.big b{color:var(--text);font-size:16px}
+.hscroll{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory}.hscroll::-webkit-scrollbar{display:none}
+.pc{flex:0 0 auto;width:250px;display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:9px;text-align:left;font-family:inherit;color:var(--text);scroll-snap-align:start}
+.pc svg{border-radius:6px;flex:0 0 auto}.pc-b{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}.pc-b b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pc-b span{font-size:12px;font-weight:800}.pc-n{color:var(--text)!important;font-size:16px!important}
+.pbar{height:6px;border-radius:3px;background:var(--soft);overflow:hidden}.pbar i{display:block;height:100%;border-radius:3px}
+.qgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0 4px}.tgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.qt{position:relative;min-height:76px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--text);font-family:inherit;font-size:12px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px 4px;transition:transform .1s}.qt:active{transform:scale(.96)}
+.qt i{position:absolute;top:6px;right:8px;background:var(--red);color:#fff;font-style:normal;font-size:10px;border-radius:8px;padding:0 5px}
+.paper2{background:#F4ECDD;color:#1F1A14;border-radius:16px;padding:6px 14px;font-family:'Playfair Display',Georgia,serif;border:1px solid #E2D6BF}.paper2 p{font-size:14px;font-weight:700;padding:8px 0;border-bottom:1px solid #1F1A1418;line-height:1.35}.paper2 p:last-child{border-bottom:0}
+body:not(.light) .paper2{background:#2a2418;color:#f3ece0;border-color:#3a3020}
+/* segmented */
+.segbar{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;background:var(--soft);border-radius:12px;padding:4px;margin:6px 0 12px}
+.segbar button{min-height:40px;border:0;border-radius:9px;background:transparent;font-family:inherit;font-size:13px;font-weight:600;color:var(--muted)}.segbar button.on{background:var(--card);color:var(--text);font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+/* sheets */
+.modal.sheet{background:var(--bg)!important;align-items:stretch;flex-direction:column;animation:sheetin .26s cubic-bezier(.2,.8,.2,1) both}
+@keyframes sheetin{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+.modal.sheet>div{max-width:540px;width:100%;margin:0 auto;max-height:none;flex:1;overflow:auto;background:var(--bg);border:0;border-radius:0;padding:4px 14px 110px}
+.shead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;max-width:540px;width:100%;margin:0 auto;background:var(--bg);border-bottom:1px solid var(--line)}
+.sback{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);display:flex;align-items:center;justify-content:center}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sticky2{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;gap:8px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);max-width:540px;margin:0 auto}.sticky2 .btn{margin:0}
+/* project hero */
+.phero{display:flex;gap:14px;align-items:flex-end;background:var(--pc);border-radius:20px;padding:16px;margin:6px 0 4px;color:#fff;position:relative;overflow:hidden}
+.phero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 85% 0%,var(--pa),transparent 60%);opacity:.35}
+.ph-p,.ph-b{position:relative}.ph-p svg{border-radius:8px;box-shadow:0 8px 24px #0008}.ph-b{display:flex;flex-direction:column;gap:6px;min-width:0}.ph-b small{color:#ffffffcc}.ph-b h3{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;font-weight:400;line-height:.95;color:#fff}.ph-b>span{font-size:13px;color:#ffffffd9}
+.faces{display:flex}.faces svg{border-radius:50%;border:2px solid var(--pc);margin-right:-8px;background:#fff}.faces i{width:34px;height:34px;border-radius:50%;background:#ffffff26;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px;font-weight:800;margin-left:8px}
+.stat3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.stat3>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:2px}.stat3 b{font-size:20px;font-weight:800}
+.stat3.dark>div{background:#ffffff1a;border-color:#ffffff22}.stat3.dark small{color:#cfe3ec}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}.kv:last-child{border-bottom:0}.kv span{color:var(--muted)}
+.track{border:2px solid var(--blue)!important;display:flex;flex-direction:column;gap:3px}.track small{color:var(--blue)}.track b{font-size:20px}
+.actions .btn{margin-top:8px}
+/* talent hero */
+.thero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:8px 0 4px}.thero .ring{border-radius:50%;padding:4px;background:conic-gradient(var(--gold2),#fff3cf,var(--gold2));box-shadow:0 8px 24px rgba(181,130,28,.3)}.thero .ring svg{border-radius:50%;display:block}
+.thero h2{margin:8px 0 0;font-size:32px}.thero>span{font-size:13px;color:var(--muted)}
+.trait{padding:10px 0;border-bottom:1px solid var(--line)}.trait b{font-size:15px}.trait span{font-size:11px;font-weight:800;margin-left:6px;padding:2px 7px;border-radius:7px}.trait.g span{background:#D6F2E1;color:#11753F}.trait.b span{background:#FDE0E0;color:#B3232B}.trait p{font-size:13px;color:var(--muted);margin-top:3px}
+/* box office + tv heroes */
+.bohero{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 12px}.bohero>div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:2px}.bohero b{font-size:26px;font-weight:800}.bohero span{font-size:12px;font-weight:700}
+.bohero .dark{background:var(--ink);color:#fff;border:0}.bohero .dark small{color:#CFC6B8}.bohero .dark b{color:#E8B84A}
+.tvhero{background:#12303F;color:#fff;border-radius:20px;padding:16px;margin:6px 0 12px;display:flex;flex-direction:column;gap:4px}.tvhero small{color:#CFE3EC}.tvhero h2{color:#fff;margin:2px 0;font-size:34px}.tvhero>span{font-size:13px;color:#CFE3EC}
+/* world */
+.rv{display:flex;align-items:center;gap:10px;width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:8px;font-family:inherit;color:var(--text);text-align:left}.rv-l{width:40px;height:40px;border-radius:10px;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:18px}.rv-b{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}.rv-b b{font-size:15px}
+/* flip */
+.flip{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:flipf .7s ease both}.flip div{background:#1F1A14;color:#fff;border-radius:18px;padding:16px 22px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 10px 40px #0007}.flip b{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;color:#E8B84A}.flip span{font-size:12px;color:#CFC6B8}
+@keyframes flipf{0%{opacity:0;transform:scale(.9)}25%{opacity:1;transform:scale(1)}75%{opacity:1}100%{opacity:0;transform:scale(1.04)}}
+body.sheet-open .tabbar{display:none}
 </style>
 </head>
 <body>
@@ -2677,6 +2763,121 @@ const _set7=settings;settings=function(){_set7();const box=document.querySelecto
 function ensureV7(){if(!S)return;if(!S.rel)seedRels();if(!S.heat){S.heat={};GENRES.forEach(g=>S.heat[g]=+R(.85,1.15).toFixed(3))}if(!S.goals)newGoals();if(!S.inbox)S.inbox=[];if(!S.ach)S.ach={};if(!S.v7){S.v7=1;S.films.forEach(f=>f.battleDone=1)}
  S.rivalFilms.forEach(r=>{if(r.relDay===undefined&&!r.relDate&&r.decor===undefined){r.decor=1;decorateRelease(r)}})}
 const _ens7=ensureV5;ensureV5=function(){if(!S)return;_ens7();ensureV7()};
+
+/* ===================== v8 — redesign: navigation, sheets, pages ===================== */
+const IC={home:'<path d="M3 10l9-6 9 6v10H3z"/>',film:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9h4M3 15h4M17 9h4M17 15h4"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/>',inbox:'<path d="M4 4h16v12H4z"/><path d="M4 13h5l1 2h4l1-2h5"/>',
+ back:'<path d="M15 5l-7 7 7 7"/>',clap:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M3 8l3-4h4l-3 4M10 4h4l-3 4M15 4h4l-3 4"/>',tv:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 21h8M9 3l3 3 3-3"/>',
+ mega:'<path d="M3 10v4h3l6 4V6L6 10z"/><path d="M16 9a4 4 0 010 6M19 6a8 8 0 010 12"/>',mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ build:'<path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c.8-3.5 3.5-5 7-5s6.2 1.5 7 5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4.3 1.3 5 4"/>',
+ trophy:'<path d="M8 4h8v5a4 4 0 01-8 0z"/><path d="M8 6H5a3 3 0 003 4M16 6h3a3 3 0 01-3 4M12 13v4M8 21h8M9 17h6"/>',fire:'<path d="M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',medal:'<circle cx="12" cy="15" r="5"/><path d="M8 3l4 7 4-7"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
+ stream:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M10 9l5 2-5 2z"/><path d="M8 21h8"/>',crown:'<path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z"/>',bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 00-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0012 3z"/>',
+ ticket:'<path d="M3 8a2 2 0 002-2h14a2 2 0 002 2v2a2 2 0 000 4v2a2 2 0 00-2 2H5a2 2 0 00-2-2v-2a2 2 0 000-4z"/><path d="M13 6v12" stroke-dasharray="2 2"/>',skip:'<path d="M5 5l8 7-8 7zM14 5l6 7-6 7"/>',
+ chat:'<path d="M4 5h16v10H9l-5 4z"/>',phone:'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',money:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>'};
+function ic(n,c,s){return `<svg width="${s||22}" height="${s||22}" viewBox="0 0 24 24" fill="none" stroke="${c||'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`}
+
+/* ---------- navigation ---------- */
+let WTAB='empire',PMT='ov',PTAB='career';
+tabbar=function(){const t=[['hq','home','Studio'],['slate','film','Projects'],['cal','cal','Calendar'],['talent','star','Talent'],['world','globe','World']];
+ return `<nav class="tabbar"><div>${t.map(x=>`<button class="${TAB===x[0]||(x[0]==='world'&&['empire','money','world'].includes(TAB))?'on':''}" onclick="TAB='${x[0]}';render()">${ic(x[1])}<span>${x[2]}</span></button>`).join('')}</div></nav>`};
+function topbar(){const L=S.logo||{c1:'#E8B84A',c2:'#1F1A14',icon:S.name[0]};
+ return `<header class="topbar"><div class="tb-l"><div class="tb-logo" style="background:${L.c1};color:${L.c2}">${esc((L.icon||S.name[0]).slice(0,2))}</div><div class="tb-t"><b>${esc(S.name)}</b><span>Prestige ${Math.round(S.rep)} · ${fmtShort(curDate())} · wk ${(S.wk||0)+1}</span></div></div>
+ <div class="tb-r"><span class="tb-cash ${S.cash<0?'neg':''}">${M(S.cash)}</span><button class="tb-ib" aria-label="Inbox" onclick="inboxModal()">${ic('inbox')}${unread()?`<i>${unread()}</i>`:''}</button></div></header>`}
+hud=function(){return topbar()};
+render=(function(){const views=()=>({hq:hq8,slate:viewSlate,cal:viewCal,talent:viewTalent,world:viewWorld,empire:viewWorld,money:viewWorld});
+ return function(){if(!S)return title();if(S.over)return gameOver();ensureV5();if(MWANT!=='awards')musicTrack('hq');applyTheme();
+  const v=views()[TAB]||viewHQ;$('#app').innerHTML=`<div class="page">${topbar()}${v()}</div>${tabbar()}`;window.scrollTo(0,0);firstTip(TAB)}})();
+modal=function(html){const m=$('#modal');if(!html){m.innerHTML='';document.body&&document.body.classList&&document.body.classList.remove('sheet-open');return}
+ const tm=html.match(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/);const t=tm?tm[1].replace(/<[^>]+>/g,'').trim():'';
+ m.innerHTML=`<div class="modal sheet"><header class="shead"><button class="sback" aria-label="Back" onclick="modal()">${ic('back')}</button><span class="stitle">${t.length>34?t.slice(0,32)+'…':t}</span><span style="width:44px"></span></header><div class="sbody">${html}</div></div>`;
+ if(document.body&&document.body.classList)document.body.classList.add('sheet-open')};
+const TIPS={hq:'Tap “Next week” to move time forward. Messages land in your inbox.',slate:'Every project you are making, with its live stage and release date.',cal:'Two years of releases. Tap a studio badge to see its history.',talent:'Search by name or country. Tap anyone to see their career.',world:'Your empire, finances, rivals and industry trends.'};
+function firstTip(t){PREFS.seen=PREFS.seen||{};if(PREFS.seen[t]||!TIPS[t])return;PREFS.seen[t]=1;savePrefs();setTimeout(()=>toast('💡 '+TIPS[t]),500)}
+const _nw8=nextWeek;nextWeek=function(){flipCard();_nw8()};
+function flipCard(){if(typeof document==='undefined'||!document.body||!document.body.insertAdjacentHTML||!document.getElementById)return;const d=addDays(curDate(),7);document.body.insertAdjacentHTML('beforeend',`<div class="flip" id="flip"><div>${ic('clap','#E8B84A',40)}<b>${fmtDay(d)}</b><span>Week ${((S.wk||0)+1)%4+1}</span></div></div>`);setTimeout(()=>{const e=document.getElementById('flip');if(e)e.remove()},700)}
+
+/* ---------- HQ ---------- */
+function weekRows(){const t=tNow();const rows=[];const rel=S.projects.filter(p=>p.releaseT===t&&(p.relWk||0)===(S.wk||0));
+ rel.forEach(p=>rows.push(['#D9822B',`<b>${esc(p.title)}</b> opens this week${p.track?` · tracking ${M(p.track[0])}–${M(p.track[1])}`:''}`,`projectModal(${p.id})`]));
+ (S.invites||[]).filter(i=>!i.done).slice(0,2).forEach(i=>rows.push(['#2F6FD6',`${esc(i.o[2])} wants <b>${esc(i.who==='ceo'?'you':pname(i.who))}</b>`,`openInvite(${i.id})`]));
+ if(unread())rows.push(['#D63A3F',`<b>${unread()}</b> unread message${unread()>1?'s':''} in your inbox`,'inboxModal()']);
+ const tr=topTrend();if(tr)rows.push(['#1F9D5C',`${tr[0]} is <b>hot</b> · ×${tr[1].toFixed(2)} at the box office`,'trendsModal()']);
+ S.films.filter(f=>!f.ended&&f.shown&&f.weeks&&f.dist!=='stream'&&f.dist!=='sell').slice(0,2).forEach(f=>rows.push(['#B5821C',`<b>${esc(f.title)}</b> · week ${boShown(f).n} · ${M(boShown(f).ww)} so far`,`filmModal(${f.id})`]));
+ const hs=hashtags();if(hs[0])rows.push(['#E1306C',`Trending: <b>${hs.slice(0,2).join(' ')}</b>`,'fansModal()']);
+ return rows}
+function prodCard(it){if(it.p){const p=it.p;const s=stageInfo(p);const st=STG[s.i];return `<button class="pc" onclick="projectModal(${p.id})">${posterSVG(p,64,p.poster||defaultPoster(p))}<div class="pc-b"><b>${esc(p.title)}</b><span style="color:${st[3]}">${s.ph==='ready'?'Out '+fmtDay(relD(p)):st[1]+' · '+s.pct+'%'}</span><div class="pbar"><i style="width:${s.ph==='ready'?100:Math.max(4,s.pct)}%;background:${st[3]}"></i></div></div></button>`}
+ if(it.f){const f=it.f;const so=boShown(f);return `<button class="pc" onclick="filmModal(${f.id})">${posterSVG(f,64)}<div class="pc-b"><b>${esc(f.title)}</b><span style="color:#B5821C">${so.done?'Run complete':'In theaters · wk '+so.n}</span><span class="pc-n">${M(so.ww)}</span></div></button>`}
+ const s=it.s;return `<button class="pc" onclick="showModal(${s.id})"><div class="tvthumb" style="width:64px;height:96px;font-size:28px">${TV_GENRES[s.genre].icon}</div><div class="pc-b"><b>${esc(s.title)}</b><span style="color:#2F6FD6">${s.status==='airing'?'On air · ep '+(s.aired||0)+'/'+s.eps:'TV · in production'}</span></div></button>`}
+function hq8(){const t=tNow();const g=S.goals;const gDone=g?g.list.filter(x=>goalProg(x)>=x.n).length:0;const inTh=S.films.filter(f=>!f.ended&&f.shown&&f.dist!=='stream'&&f.dist!=='sell').length;
+ const items=S.projects.map(p=>({p})).concat(S.films.filter(f=>!f.ended&&f.shown&&f.dist!=='stream'&&f.dist!=='sell').map(f=>({f})),S.shows.filter(s=>s.status==='prod'||s.status==='airing').map(s=>({s})));
+ const rows=weekRows();const tasks=studioTasks();const news=S.news.slice(0,4);
+ const tile=(i,l,a,b)=>`<button class="qt" onclick="${a}">${ic(i,'#B5821C')}<span>${l}</span>${b?`<i>${b}</i>`:''}</button>`;
+ return `<section class="hero"><div class="hero-s"><div><small>Cash</small><b class="${S.cash<0?'neg':''}">${M(S.cash)}</b></div><div><small>In theaters</small><b>${inTh} film${inTh===1?'':'s'}</b></div><div><small>Goals</small><b class="gold">${gDone} / ${g?g.list.length:3}</b></div></div>
+ <button class="hero-go" onclick="nextWeek()">${ic('skip','#1F1A14',20)} Next week · ${fmtDay(addDays(curDate(),7))}</button>
+ <div class="hero-sub"><button onclick="skipMonth()">Skip to ${tLabel(t+1)}</button><button onclick="boxOfficeModal()">Weekend box office</button><button onclick="tasksModal()">Tasks${tasks.length?` (${tasks.length})`:''}</button></div></section>
+ <div class="sec"><h2>This week</h2></div><div class="list">${rows.length?rows.map(r=>`<button class="lrow" onclick="${r[2]}"><i style="background:${r[0]}"></i><span>${r[1]}</span><b>›</b></button>`).join(''):'<div class="empty">A quiet week. Plan your next move.</div>'}</div>
+ <div class="sec"><h2>On the slate</h2><button class="link" onclick="TAB='slate';render()">See all</button></div>
+ ${items.length?`<div class="hscroll">${items.map(prodCard).join('')}</div>`:`<div class="empty big">${ic('clap','#B5821C',40)}<b>No projects yet</b><span>Make your first movie or TV show.</span><button class="btn gold sm" onclick="startFilm()">Make a movie</button></div>`}
+ <div class="qgrid">${tile('clap','Movie','startFilm()')}${tile('tv','TV show','startShow()')}${tile('phone','Promote','socialPick()')}${tile('mic','Media','mediaModal()',(S.invites||[]).filter(i=>!i.done).length||'')}</div>
+ ${weekendStrip()}
+ <div class="sec"><h2>Studio</h2></div><div class="tgrid">${tile('build','Studio lot','lotView()')}${tile('stream','Streaming','TAB=\'world\';WTAB=\'empire\';render()')}${tile('star','Franchises','franchiseView()')}${tile('film','Released','TAB=\'slate\';render()')}${tile('target','Goals','goalsModal()')}${tile('medal','Awards & trophies','achModal()')}</div>
+ <div class="sec"><h2>Industry</h2></div><div class="tgrid">${tile('users','Rival studios','rivalsModal()')}${tile('chart','Trends','trendsModal()')}${tile('trophy','Top charts','leaderboard()')}${tile('chat','Fan buzz','fansModal()')}${tile('mega','Social media','socialPick()')}${tile('gear','Settings','settings()')}</div>
+ <div class="sec"><h2>The Hollywood Ledger</h2><button class="link" onclick="newsModal()">All news</button></div><div class="paper2" onclick="newsModal()">${news.map(n=>`<p>${n.s||n}</p>`).join('')||'<p>No news yet.</p>'}</div>`}
+
+/* ---------- World tab ---------- */
+function viewWorld(){const seg=[['empire','Empire'],['money','Money'],['rivals','Rivals'],['trends','Trends']];let body='';
+ if(WTAB==='empire')body=viewEmpire();else if(WTAB==='money')body=viewMoney();
+ else if(WTAB==='rivals')body=`<h2>Rival studios</h2>${S.rivals.map(r=>{const st=rivalStats(r);return `<button class="rv" onclick="rivalPage('${esc(r.n)}')"><span class="rv-l" style="background:${r.c}">${esc(r.n[0])}</span><span class="rv-b"><b>${esc(r.n)}</b><small style="text-transform:none">${KIND_L[r.kind]||'Studio'} · ${r.alive?st.films.length+' films · '+st.awards+' Best Pictures':'Acquired'}</small></span><b>${M(st.gross)}</b></button>`}).join('')}`;
+ else{const e=Object.entries(S.heat||{}).sort((a,b)=>b[1]-a[1]);body=`<h2>Industry trends</h2><p class="muted" style="font-size:13px;margin-bottom:8px">Audience appetite by genre right now.</p>${e.map(([g,h])=>`<div class="card"><div class="row"><b>${GEN[g].icon} ${g}</b><b class="${h>=1.05?'pos':h<=.95?'neg':''}">${h>=1.15?'Hot':h>=1.05?'Rising':h<=.85?'Cold':h<=.95?'Cooling':'Steady'} ×${h.toFixed(2)}</b></div><div class="meter"><i style="width:${(h-.7)/.7*100}%;background:${h>=1.05?'var(--green)':h<=.95?'var(--red)':'var(--gold)'}"></i></div></div>`).join('')}`}
+ return `<div class="segbar">${seg.map(s=>`<button class="${WTAB===s[0]?'on':''}" onclick="WTAB='${s[0]}';render()">${s[1]}</button>`).join('')}</div>${body}`}
+
+/* ---------- Project page ---------- */
+function newProjectModal(id){const p=S.projects.find(x=>x.id===id);if(!p)return;const ph=phaseOf(p),t=tNow();const P=P_PALS[(p.poster||defaultPoster(p)).pal]||P_PALS.noir;
+ const canRe=(ph==='post'||ph==='ready')&&!p.reshot&&!p.acquired&&p.dist!=='sell';const reC=+(p.spend*.08).toFixed(1);const canTour=!p.tour&&p.releaseT-t<=2&&p.dist!=='sell'&&!ev('sag');
+ const cast=allCast(p.cast).map(person).filter(Boolean);const left=(p.releaseT*4+(p.relWk||0))-wIdx();if(left<=8&&left>=0&&!p.track&&p.dist!=='sell'&&p.dist!=='stream')p.track=trackFor(p);
+ const tier=(TIERS.find(x=>x.k===p.tier)||{}).l;
+ let body='';
+ if(PMT==='ov'){body=`${p.track&&p.dist!=='sell'&&p.dist!=='stream'?`<div class="card track"><small>Box office tracking</small><b>${M(p.track[0])} – ${M(p.track[1])} opening</b><span class="muted" style="font-size:13px">More buzz before release can push it higher.</span></div>`:''}
+  <div class="card">${[['Release',p.dist==='stream'?'Streaming · '+fmtLong(relD(p)):p.dist==='sell'?'Sold to a streamer':fmtLong(relD(p))+' · '+(p.dist==='platform'?'Platform':'Wide')+(p.holL?' · '+p.holL:'')],['Budget',M(p.spend)],['Marketing',M(p.mkt)],['Spent so far',M(p.paid)],p.test?['Test screening',p.test+'/100']:null,p.poster?['Poster score',posterScore(p,p.poster).score]:null].filter(Boolean).map(r=>`<div class="kv"><span>${r[0]}</span><b>${r[1]}</b></div>`).join('')}</div>
+  ${p.acts&&p.acts.length?`<div class="card"><small>Story</small>${p.acts.map((a,i)=>`<div style="font-size:14px;margin-top:5px"><span class="muted">${ACTS[i].split(' · ')[1]}:</span> ${esc(a)}</div>`).join('')}</div>`:''}
+  ${(ph==='post'||ph==='ready')&&p.dist!=='sell'?`<div class="card"><small>The final cut</small><div class="segbar" style="margin-top:6px">${[['director',"Director's"],['balanced','Balanced'],['studio','Studio']].map(c=>`<button class="${p.cut===c[0]?'on':''}" onclick="S.projects.find(x=>x.id===${id}).cut='${c[0]}';save();projectModal(${id})">${c[1]}</button>`).join('')}</div><p class="muted" style="font-size:12px;margin-top:6px">Director's cut pleases critics; studio cut pleases audiences.</p></div>`:''}
+  <div class="actions">${(ph==='post'||ph==='ready')&&p.dist!=='sell'?`<button class="btn ghost" onclick="posterDesigner(${id})">${p.poster?'Edit':'Design'} the poster</button>`:''}${canTour?`<button class="btn ghost" onclick="pressTour(${id})">Press tour (${M(1.5*I())})</button>`:''}${canRe?`<button class="btn ghost" onclick="reshoot(${id})">Reshoots (${M(reC)}, +1 month)</button>`:''}${svcLive()&&p.dist!=='stream'&&p.dist!=='sell'?`<button class="btn ghost" onclick="toStream(${id})">Premiere on ${esc(S.streaming.name)}</button>`:''}${p.dist!=='sell'?`<button class="btn ghost" onclick="auctionView(${id})">Streaming auction</button>`:''}</div>`}
+ else if(PMT==='mk')body=marketingCard(p)+`<button class="btn ghost" onclick="promo('p',${id})">Post on social media</button>${p.trailer?`<button class="btn ghost" onclick="showTrailer(S.projects.find(x=>x.id===${id}))">Latest trailer stats</button>`:''}`;
+ else if(PMT==='cast'){const crew=[['Director',p.dir],['Writer',p.writer],['Composer',p.comp],['Cinematographer',p.dp]].filter(x=>x[1]);const ids=allCast(p.cast).concat([p.dir]).filter(Boolean);
+  body=`<div class="card">${allCast(p.cast).map(id2=>{const a=person(id2);if(!a)return '';const role=roleIn({lead:p.cast.lead,leads2:p.cast.leads2,co:p.cast.co,cos2:p.cast.cos2,sup:p.cast.sup},id2);return `<button class="crow" style="width:100%;background:none;border:0;text-align:left;font-family:inherit;color:inherit" onclick="openPerson('${id2}')">${portrait(a,44)}<div style="flex:1;min-width:0"><b style="font-size:15px">${natOf(a.nat)[1]} ${esc(a.n)}</b><div class="muted" style="font-size:12px">${role} · ⭐ ${a.skill} · 💜 ${a.star}</div><div class="tags" style="margin-top:3px">${relTags(a,ids)}</div></div></button>`}).join('')}${p.cast.extras?`<div class="muted" style="font-size:13px;margin-top:6px">+ ${p.cast.extras} extras</div>`:''}</div>
+  <div class="card">${crew.map(([r,id2])=>{const a=person(id2);return a?`<button class="crow" style="width:100%;background:none;border:0;text-align:left;font-family:inherit;color:inherit" onclick="openPerson('${id2}')">${portrait(a,40)}<div style="flex:1"><b style="font-size:14px">${esc(a.n)}</b><div class="muted" style="font-size:12px">${r}</div></div></button>`:''}).join('')}</div>`}
+ else body=commentsCard(fanComments(p.title,clamp(40+p.hype,20,95),60,6,p.genre),'Fan reactions')+(hashtags().length?`<div class="tags">${hashtags().map(h=>`<span class="tag hot">${h}</span>`).join('')}</div>`:'');
+ modal(`<div class="phero" style="--pc:${P[0]};--pa:${P[2]}"><div class="ph-p">${posterSVG(p,104,p.poster||defaultPoster(p))}</div><div class="ph-b"><small>${p.genre.toUpperCase()}${tier?' · '+tier.replace(/^[^ ]+ /,'').toUpperCase():''}</small><h3>${esc(p.title)}</h3><span>${p.rating} · ${p.rt||120} min · ${p.dist==='sell'?'Sold':'Out '+fmtDay(relD(p))}</span><div class="faces">${cast.slice(0,4).map(a=>portrait(a,34)).join('')}${cast.length>4?`<i>+${cast.length-4}</i>`:''}</div></div></div>
+ ${stageBar(p)}
+ <div class="stat3"><div><small>Buzz</small><b>${Math.round(p.hype)}</b></div><div><small>Spent</small><b>${M(p.paid)}</b></div><div><small>${p.test?'Test':'Budget'}</small><b class="${p.test>=70?'pos':''}">${p.test||M(p.spend)}</b></div></div>
+ <div class="segbar">${[['ov','Overview'],['mk','Marketing'],['cast','Cast'],['fans','Fans']].map(x=>`<button class="${PMT===x[0]?'on':''}" onclick="PMT='${x[0]}';projectModal(${id})">${x[1]}</button>`).join('')}</div>${body}
+ <div class="sticky2">${p.dist!=='sell'?`<button class="btn ghost" onclick="moveDate(${id})">Change date</button>`:''}<button class="btn gold" onclick="PMT='mk';projectModal(${id})">Promote</button></div>`)}
+
+/* ---------- Talent profile ---------- */
+function newOpenPerson(id){const p=person(id);if(!p)return;const role=roleOf(p);const isA=role==='actors';const nat=natOf(p.nat);const fee=isA?actorFee(p):crewFee(p,role);const car=careerOf(id);
+ const aw=careerAwards(id)+sum(S.films.filter(f=>allCast(f.cast).includes(id)||f.dir===id),f=>f.awards.filter(a=>(a.includes('Act')&&f.cast.lead===id)||(a==='Best Director'&&f.dir===id)).length);
+ const rels=Object.entries(S.rel||{}).filter(([k])=>k.split('|').includes(id));let body='';
+ if(PTAB==='career'){const shown=CAREER_ALL===id?car:car.slice(0,12);body=`<div class="card">${car.length?shown.map(careerRow).join('')+(car.length>shown.length?`<button class="btn sm ghost" onclick="CAREER_ALL='${id}';openPerson('${id}')">Show all ${car.length}</button>`:''):'<div class="empty">New to the industry — no screen credits yet. Cheap, hungry and unproven.</div>'}</div>`}
+ else if(PTAB==='traits')body=`<div class="card">${(p.traits||[]).length?(p.traits||[]).map(t=>{const T=TRAITS[t];return `<div class="trait ${T.good?'g':'b'}"><b>${T.i} ${T.l}</b><span>${T.good?'Strength':'Bad habit'}</span><p>${T.d}</p></div>`}).join(''):'<div class="empty">No notable traits.</div>'}
+  <div class="kv"><span>Best genre</span><b>${GEN[p.spec].icon} ${p.spec}</b></div><div class="kv"><span>Hits</span><b>${p.hits||0}</b></div>${isA?`<div class="kv"><span>Versatility</span><b>${Math.round(clamp(p.skill*.6+(hasT(p,'method')?20:0)+(p.age>40?10:0),5,99))}</b></div>`:`<div class="kv"><span>Creativity</span><b>${Math.round(clamp(p.skill*.8+(hasT(p,'visionary')?20:0),5,99))}</b></div>`}</div>`;
+ else body=`<div class="card">${rels.length?rels.map(([k,v])=>{const o=k.split('|').find(z=>z!==id);const P=person(o);return P?`<button class="crow" style="width:100%;background:none;border:0;text-align:left;font-family:inherit;color:inherit" onclick="openPerson('${o}')">${portrait(P,40)}<div style="flex:1"><b style="font-size:14px">${esc(P.n)}</b><div class="muted" style="font-size:12px">${v.type==='friend'?'🤝 Close friends':v.type==='romance'?'💕 Dating':'⚡ Feuding'}</div></div></button>`:''}).join(''):'<div class="empty">No known friendships, romances or feuds.</div>'}</div>`;
+ modal(`<h3 style="display:none">${esc(p.n)}</h3><div class="thero"><div class="ring">${portrait(p,112)}</div><h2>${esc(p.n)}</h2><span>${nat[1]} ${nat[0]} · ${p.age} · ${ROLE_LBL[role].replace(/s$/,'')}${p.g?(p.g==='F'?' · Female':' · Male'):''}</span>
+ <div class="tags" style="justify-content:center">${busy(p)?`<span class="tag bad">Busy for ${p.busy-tNow()+1} months</span>`:'<span class="tag good">Available now</span>'}${car.length?`<span class="tag">${car.length} credits</span>`:'<span class="tag blue">🌱 Newcomer</span>'}${aw?`<span class="tag hot">🏆 ${aw} award${aw>1?'s':''}</span>`:''}</div></div>
+ <div class="stat3"><div><small>${isA?'Acting':'Craft'}</small><b>${p.skill}</b></div><div><small>${isA?'Star power':'Fame'}</small><b style="color:#7B4FC4">${isA?p.star:p.fame}</b></div><div><small>Fee</small><b>${M(fee)}</b></div></div>
+ <div class="tags" style="margin:0 0 10px">${(p.traits||[]).map(t=>`<span class="tag ${TRAITS[t].good?'good':'bad'}">${TRAITS[t].i} ${TRAITS[t].l}</span>`).join('')}${rels.slice(0,2).map(([k,v])=>{const o=k.split('|').find(z=>z!==id);return `<span class="tag ${v.type==='feud'?'bad':v.type==='romance'?'hot':'good'}">${v.type==='friend'?'🤝 Friends with':v.type==='romance'?'💕 Dating':'⚡ Feuding with'} ${esc(pname(o).split(' ')[0])}</span>`}).join('')}</div>
+ <div class="segbar">${[['career','Career'],['traits','Traits'],['rel','Relations']].map(x=>`<button class="${PTAB===x[0]?'on':''}" onclick="PTAB='${x[0]}';openPerson('${id}')">${x[1]}</button>`).join('')}</div>${body}
+ <div class="sticky2"><button class="btn ghost" onclick="openRename('${id}')">Rename</button><button class="btn gold" onclick="modal()">Done</button></div>`)}
+
+/* ---------- Box office & TV page heroes ---------- */
+const _fm8=filmModal;filmModal=function(id){_fm8(id);const f=S.films.find(x=>x.id===id);const box=document.querySelector('#modal .modal>div');if(!f||!box||!box.insertAdjacentHTML||f.dist==='stream'||f.dist==='sell'||!f.weeks)return;const so=boShown(f);const k=so.n-1;const ch=k>0?Math.round((f.weeks[k]/f.weeks[k-1]-1)*100):null;
+ box.insertAdjacentHTML('afterbegin',`<div class="bohero"><div class="dark"><small>${so.done?'Final domestic':'This week'}</small><b>${M(so.done?f.dom:f.weeks[k])}</b><span>${so.done?f.weeks.length+'-week run':ch==null?'Opening weekend':(ch>=0?'+':'')+ch+'% vs last week'}</span></div><div><small>Worldwide ${so.done?'':'so far'}</small><b>${M(so.ww)}</b><span class="${so.done?(f.profit>=0?'pos':'neg'):''}">${so.done?(f.profit>=0?'Profit '+M(f.profit):'Loss '+M(-f.profit)):'Profit when the run ends'}</span></div></div>`)};
+const _sm8=showModal;showModal=function(id){_sm8(id);const s=S.shows.find(x=>x.id===id);const box=document.querySelector('#modal .modal>div');if(!s||!box||!box.insertAdjacentHTML)return;const last=s.seasons[s.seasons.length-1];const rs=last?epRatings(s,last):[];const avg=rs.length?(sum(rs,x=>x)/rs.length).toFixed(1):'—';
+ box.insertAdjacentHTML('afterbegin',`<div class="tvhero"><small>${s.genre.toUpperCase()} · ${s.mode==='weekly'?'WEEKLY · '+DOW[s.day==null?5:s.day].toUpperCase():'BINGE'}</small><h2>${esc(s.title)}</h2><span>${s.status==='airing'?'On air · episode '+(s.aired||0)+' of '+s.eps:s.status==='prod'?'In production · season '+s.season:s.renew?'Season '+s.season+' finale aired':'Season '+s.season}</span><div class="stat3 dark"><div><small>Avg rating</small><b>${avg}</b></div><div><small>Views</small><b>${last?last.views+'M':'—'}</b></div><div><small>Critics</small><b>${last?last.critic+'%':'—'}</b></div></div></div>`)};
+
+/* ---------- install final versions (after all wrappers) ---------- */
+projectModal=newProjectModal;openPerson=newOpenPerson;viewHQ=hq8;
+const _gl8=greenlight;greenlight=function(){PMT='ov';_gl8()};
 
 
 applyTheme();title();
