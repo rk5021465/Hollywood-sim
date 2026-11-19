@@ -1,0 +1,7 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- clapperboard -->
+    <path android:fillColor="#E8B84A" android:pathData="M32,50h44v26a4,4 0 0 1 -4,4h-36a4,4 0 0 1 -4,-4z"/>
+    <path android:fillColor="#E8B84A" android:pathData="M30.5,40.5l42,-9.5l2.2,9.8l-42,9.5z"/>
+    <path android:fillColor="#0D0B10" android:pathData="M38,39.5l5,-1.1l-3,9.6l-5,1.1zM49,37l5,-1.1l-3,9.6l-5,1.1zM60,34.5l5,-1.1l-3,9.6l-5,1.1z"/>
+    <path android:fillColor="#0D0B10" android:pathData="M54,58l2.4,5.2l5.6,0.5l-4.2,3.7l1.3,5.5l-5.1,-2.9l-5.1,2.9l1.3,-5.5l-4.2,-3.7l5.6,-0.5z"/>
+</vector>
