@@ -687,6 +687,24 @@ body.prephone .tb-ib[aria-label="Open phone"]{display:none}
 .wk2 .wk2bg+*{position:relative}
 body.retrophone .pscreen.home{background:linear-gradient(180deg,#1d2a24,#0f1713)!important}
 body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3px}
+/* ===== retro cell phone ===== */
+.phone2.cell{width:min(300px,92%)!important;height:min(640px,calc(100vh - 24px))!important;border-radius:38px 38px 56px 56px!important;background:linear-gradient(180deg,#3a3d44,#1d1f24 40%,#16181c)!important;padding:34px 22px 0!important;display:flex;flex-direction:column;box-shadow:0 30px 70px #000c,inset 0 2px 0 #ffffff22,inset 0 0 0 2px #0008!important}
+.phone2.cell::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:54px;height:6px;border-radius:4px;background:#0b0c0e;box-shadow:inset 0 1px 2px #000}
+.phone2.cell .pscreen,.phone2.cell .cscreen{height:46%!important;flex:0 0 46%;border-radius:10px!important;border:6px solid #0b0c0e;box-shadow:inset 0 0 18px #0006}
+.cscreen{background:linear-gradient(180deg,#b7c99a,#9fb37f);color:#1f2a14;font-family:'Courier New',monospace;font-weight:700;overflow:auto;display:flex;flex-direction:column}
+.cbar{display:flex;justify-content:space-between;padding:6px 8px;font-size:11px;border-bottom:2px solid #1f2a1433}
+.clock{display:flex;flex-direction:column;height:100%}.ctime{font-size:46px;text-align:center;margin-top:16px;letter-spacing:2px}.cdate{text-align:center;font-size:13px}
+.cnew{margin:12px auto 0;padding:4px 10px;border:2px solid #1f2a14;font-size:13px}.cunlock{margin-top:auto;border:0;background:#1f2a14;color:#b7c99a;font:inherit;font-size:12px;padding:6px}
+.clist{display:flex;flex-direction:column}.clist button{display:flex;align-items:center;gap:10px;text-align:left;border:0;border-bottom:1px solid #1f2a1422;background:none;color:#1f2a14;font:inherit;font-size:15px;padding:8px 10px}.clist button:active,.clist button:focus{background:#1f2a14;color:#b7c99a}
+.clist em{font-style:normal;width:18px;height:18px;display:inline-grid;place-items:center;border:2px solid currentColor;font-size:11px}.clist u{text-decoration:none;margin-left:auto;background:#1f2a14;color:#b7c99a;padding:0 6px;font-size:12px}
+.phone2.cell .capp{filter:grayscale(1) sepia(.55) hue-rotate(40deg) saturate(1.4) contrast(1.05);font-family:'Courier New',monospace}
+.phone2.cell .capp .pnav{display:none}
+.ckeys{flex:1;display:flex;flex-direction:column;gap:8px;padding:12px 4px 18px}
+.cnav{display:flex;justify-content:center;gap:10px}.cnav button{width:56px;height:32px;border-radius:16px;border:0;background:linear-gradient(180deg,#5a5e66,#33363c);color:#e8e8ea;font-weight:800;box-shadow:0 2px 0 #000}.cnav .cok{width:70px;background:linear-gradient(180deg,#8a8f99,#5a5e66)}
+.ccall{display:flex;justify-content:space-between;padding:0 14px}.ccall button{width:64px;height:30px;border-radius:15px;border:0;font-size:15px;box-shadow:0 2px 0 #000}.ccall .cg{background:linear-gradient(180deg,#4cd07a,#239b4e)}.ccall .cr{background:linear-gradient(180deg,#ff6b6b,#c2302f);color:#fff}
+.cpad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px 10px;flex:1}.cpad button{border:0;border-radius:12px;background:linear-gradient(180deg,#4a4e56,#2b2e33);color:#eee;box-shadow:0 2px 0 #000;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}.cpad b{font-size:16px}.cpad i{font-style:normal;font-size:8px;color:#aab;letter-spacing:1px;margin-top:2px}
+.phone2.cell .capp::after{content:"";position:absolute;inset:0;background:#a9bf87;mix-blend-mode:multiply;pointer-events:none;z-index:60}
+.phone2.cell .capp *{font-family:'Courier New',monospace!important}
 </style>
 </head>
 <body>
@@ -4619,6 +4637,24 @@ openPhone=(function(o){return function(a){if(a&&appsHidden().includes(a)){return
 weekRows=(function(o){return function(){let r=o();try{if(S.year<2009)r=r.filter(x=>!/Trending:/.test(x[1]))}catch(e){}return r}})(weekRows);
 hq8=(function(o){return function(){let h=o();try{if(S.year<2009)h=h.replace(/<button class="qt" onclick="fansModal\(\)">[\s\S]*?<\/button>/,'').replace(/<button class="qt" onclick="openPhone\(\)">[\s\S]*?<span>Social apps<\/span>[\s\S]*?<\/button>/,`<button class="qt" onclick="openPhone()">${ic('chat','#B5821C')}<span>Cell phone</span></button>`)}catch(e){}return h}})(hq8);
 phGo=(function(o){return function(app,sub){if(app&&appsHidden().includes(app))return toast(app==='mail'?'Email isn’t around yet. It arrives in the mid-90s.':'Social media doesn’t exist yet. It takes off in 2009.');return o(app,sub)}})(phGo);
+/* ---------- a real cell phone before 2009 ---------- */
+const CELLNAME=y=>y<1984?'Car phone':y<1996?'Brick phone':'Cell phone';
+const CELLAPPS=[['msg','Messages'],['call','Calls'],['news','Headlines'],['bank','Bank'],['stocks','Stocks'],['cal','Calendar'],['mail','E-mail'],['set','Settings']];
+function cellKeys(){return `<div class="ckeys"><div class="cnav"><button onclick="phoneHome()">◀</button><button class="cok" onclick="cellOk()">OK</button><button onclick="phoneClose()">✕</button></div><div class="ccall"><button class="cg" onclick="phGo('call')">📞</button><button class="cr" onclick="phoneClose()">⏻</button></div><div class="cpad">${['1','2 abc','3 def','4 ghi','5 jkl','6 mno','7 pqrs','8 tuv','9 wxyz','*','0 +','#'].map(k=>`<button><b>${k.split(' ')[0]}</b><i>${k.split(' ')[1]||''}</i></button>`).join('')}</div></div>`}
+function cellOk(){if(PHN.locked){PHN.locked=false;phoneRender()}}
+function cellHome(){const y=S.year,d=curDate();const hid=appsHidden();const unread=(S.dms||[]).filter(m=>!m.read).length+(S.inbox||[]).filter(m=>!m.read).length;
+ const items=CELLAPPS.filter(a=>!hid.includes(a[0]));
+ return `<div class="cscreen">${PHN.locked?`<div class="clock"><div class="cbar"><span>▂▄▆█</span><span>${CELLNAME(y).toUpperCase()}</span><span>▮▮▮</span></div><div class="ctime">${clock()}</div><div class="cdate">${DOW[d.getDay()]} ${d.getDate()} ${MON[d.getMonth()]} ${y}</div>${unread?`<div class="cnew">✉ ${unread} new message${unread>1?'s':''}</div>`:''}<button class="cunlock" onclick="PHN.locked=false;phoneRender()">Press OK to unlock</button></div>`
+  :`<div class="cbar"><span>▂▄▆█</span><span>MENU</span><span>${clock()}</span></div><div class="clist">${items.map((a,i)=>`<button onclick="phGo('${a[0]}')"><em>${i+1}</em>${a[1]}${a[0]==='msg'&&unread?` <u>${unread}</u>`:''}</button>`).join('')}</div>`}</div>`}
+phoneRender=(function(o){return function(){o();try{const ph=document.querySelector('.phone2');if(!ph)return;const cell=S&&S.year<2009;ph.classList.toggle('cell',cell);if(!cell)return;
+ const scr=ph.querySelector('.pscreen');if(scr&&(!PHN.app||PHN.locked)){scr.outerHTML=cellHome()}else if(scr){scr.classList.add('capp')}
+ const n=ph.querySelector('.pnotch');if(n)n.remove();if(!ph.querySelector('.ckeys'))ph.insertAdjacentHTML('beforeend',cellKeys())}catch(e){}}})(phoneRender);
+/* ---------- 2009: your first smartphone ---------- */
+const _nm171=nextMonth;nextMonth=function(){const r=_nm171.apply(this,arguments);try{if(S&&!S.over&&S.year>=2009&&!S.smart&&(S.y0||2026)<2009){S.smart=1;addNews('📱 Smartphones take over. Studios now live and die by what trends on social media.');diary('📱','Your first smartphone','Social media arrives: Chirp, Clipz, VidStream and Snapgram.');
+ setTimeout(()=>{try{playScene({bg:'office',tag:'New technology',who:teamM('asst'),lines:['Boss, I got you something.','It’s a <b>smartphone</b>. Everyone in town has one now: stars post to fans directly, trailers go viral overnight, and one bad review can trend worldwide.'],choices:[{l:'Show me the social apps',f:()=>{setTimeout(()=>{openPhone();PHN.locked=false;PHN.app=null;phoneRender()},400);return null}},{l:'Later'}]},()=>{})}catch(e){}},500)}}catch(e){}return r};
+/* period-correct opening headlines in era mode */
+finishSetup=(function(o){return function(){o.apply(this,arguments);try{if(S&&S.y0&&S.y0<2000){S.news=(S.news||[]).filter(n=>!/20[0-9]{2}|stream|pandemic|social|AI\b|online/i.test(typeof n==='string'?n:n.s||''));
+ ['🎬 Young directors are taking over Hollywood. Critics call it a “New Hollywood”.','📺 TV networks are paying record sums to air finished movies.','🎟️ Studios gamble on bold, gritty pictures as audiences tire of old-fashioned musicals.'].reverse().forEach(s=>addNews(s));save();render()}}catch(e){}}})(finishSetup);
 
 
 applyTheme();title();
