@@ -1,0 +1,297 @@
+HOLLYWOOD SIM — 250 CAST PORTRAIT PROMPTS (for Google Gemini or Leonardo)
+
+HOW TO USE
+1. Open Gemini and start ONE new chat.
+2. Paste the STYLE MESSAGE first.
+3. Then paste one numbered line at a time.
+4. Long-press each image > Download. Rename it to its number if you can (e.g. 17.png).
+5. Send the images to Claude in batches and say which numbers they are.
+Tip: if Gemini drifts from the style, paste the STYLE MESSAGE again.
+
+------------------------------------------------------------
+STYLE MESSAGE (paste this first)
+------------------------------------------------------------
+For every person I describe next, create one image in exactly this style: minimalist flat vector portrait, head and shoulders, centered, facing slightly to one side, simple flat color shapes with no outlines, very few facial details (eyes as simple shapes, small nose, defined lips), subtle canvas paper texture, elegant luxury fashion illustration, solid single-color background in the color I name, square image, no text, no logos. All people are fictional. Children are shown in a friendly, wholesome way. Reply only with the image. Confirm you understand by saying OK.
+
+
+------------------------------------------------------------
+ACTRESSES
+------------------------------------------------------------
+1. Celeste Prescott — Actress. Caucasian American woman, age 45, blonde hair in sleek bob, pale skin, brown eyes, red lips, plum velvet jacket, gold hoop earrings, 2000s style. Background: terracotta.
+2. Marisol Montoya — Actress. Mexican woman, age 69, white hair in neat bun, warm tan skin with soft wrinkles, brown eyes, red lips, emerald velvet gown, a jade pendant, 1990s style. Background: charcoal.
+3. Marisela Marrero — Actress. Puerto Rican woman, age 50, salt-and-pepper hair in side-swept waves, olive skin, brown eyes, champagne slip dress, statement earrings, 2000s style. Background: deep emerald.
+4. Nour Mansour — Actress. Middle Eastern woman, age 70, silver hair in short elegant bob, light olive skin with soft wrinkles, hazel eyes, red lips, teal cocktail dress, a silver choker, 1970s style. Background: deep purple.
+5. Nandini Deshmukh — Actress. Indian woman, age 82, silver hair in chin-length waves, deep brown skin with soft wrinkles, hazel eyes, red lips, white silk blouse, a silver choker, 1980s style. Background: forest green.
+6. Chiamaka Adeyemi — Actress. Nigerian woman, age 37, black hair in natural afro, dark skin, dark brown eyes, red lips, ivory pantsuit, diamond stud earrings, 1980s style. Background: rich amber gold.
+7. Giulia Marchetti — Actress. Italian woman, age 58, dark brown hair in elegant updo, light olive skin, brown eyes, red lips, cream turtleneck and gold necklace, a jade pendant, modern style. Background: dusty rose.
+8. Ishita Bhatia — Actress. Indian woman, age 64, black hair in short elegant bob, warm brown skin with soft wrinkles, hazel eyes, red lips, cream turtleneck and gold necklace, gold hoop earrings, 1990s style. Background: olive green.
+9. Dorothy Thorne — Actress. Caucasian American woman, age 22, dark brown hair in high ponytail, light rosy skin, hazel eyes, navy wrap dress, pearl earrings, 1990s style. Background: deep purple.
+10. Dorothy Winslow — Actress. Caucasian American woman, age 43, blonde hair in long straight hair, fair skin, green eyes, red lips, gold sequin gown, a silver choker, 1990s style. Background: mustard yellow.
+11. Siobhan Brennan — Actress. Irish woman, age 42, auburn hair in soft bangs and long hair, fair skin, green eyes, off-shoulder black dress, a thin gold necklace, 2000s style. Background: mustard yellow.
+12. Coretta Ramsey — Actress. African-American woman, age 46, dark brown hair in soft bangs and long hair, deep brown skin, dark brown eyes, navy wrap dress, gold drop earrings, 1980s style. Background: soft coral.
+13. Valentina Arreola — Actress. Mexican woman, age 47, brown hair in soft bangs and long hair, tan skin, hazel eyes, cream turtleneck and gold necklace, gold hoop earrings, modern style. Background: charcoal.
+14. Luana Albuquerque — Actress. Brazilian woman, age 69, white hair in short elegant bob, light brown skin with soft wrinkles, hazel eyes, black satin evening gown, statement earrings, 1980s style. Background: burnt orange.
+15. Defne Yılmaz — Actress. Turkish woman, age 62, salt-and-pepper hair in soft short curls, light olive skin with soft wrinkles, green eyes, red lips, red silk dress, pearl earrings, 2000s style. Background: terracotta.
+16. Parisa Farahani — Actress. Persian woman, age 71, silver hair in soft short curls, olive skin with soft wrinkles, dark brown eyes, cream turtleneck and gold necklace, a silver choker, 1980s style. Background: lavender.
+17. Greta Danforth — Actress. Caucasian American woman, age 74, silver hair in chin-length waves, light rosy skin with soft wrinkles, blue eyes, white silk blouse, a jade pendant, 1990s style. Background: soft coral.
+18. Layla Mansour — Actress. Middle Eastern woman, age 45, dark brown hair in side-swept waves, light olive skin, brown eyes, plum velvet jacket, 1980s style. Background: mustard yellow.
+19. Greta Fairbanks — Actress. Caucasian American woman, age 78, grey hair in soft short curls, lightly tanned skin with soft wrinkles, green eyes, red lips, plum velvet jacket, gold drop earrings, modern style. Background: crimson.
+20. Sigrid Halvorsen — Actress. Scandinavian woman, age 57, salt-and-pepper hair in elegant updo, fair skin, pale blue eyes, red lips, white silk blouse, gold hoop earrings, 1990s style. Background: rust orange.
+21. Ishita Iyer — Actress. Indian woman, age 41, black hair in side-swept waves, deep brown skin, dark brown eyes, red lips, emerald velvet gown, a silver choker, 1970s style. Background: ocean blue.
+22. Dionne Haynes — Actress. African-American woman, age 22, dark brown hair in sleek bob, warm brown skin, hazel eyes, red lips, ivory pantsuit, modern style. Background: rust orange.
+23. Monique Jefferies — Actress. African-American woman, age 78, silver hair in neat bun, warm brown skin with soft wrinkles, hazel eyes, gold sequin gown, a jade pendant, 1970s style. Background: crimson.
+24. Zora Pruitt — Actress. African-American woman, age 36, dark brown hair in long straight hair, medium brown skin, dark brown eyes, emerald velvet gown, diamond stud earrings, 1980s style. Background: forest green.
+25. Tala Silvermoon — Actress. Native American woman, age 60, grey-streaked black hair in short elegant bob, tan skin with soft wrinkles, dark brown eyes, red silk dress, gold drop earrings, 2000s style. Background: lavender.
+26. Meera Iyer — Actress. Indian woman, age 80, white hair in neat bun, light brown skin with soft wrinkles, dark brown eyes, navy wrap dress, a thin gold necklace, 1980s style. Background: midnight navy.
+27. Rocío Cárdenas — Actress. Mexican woman, age 65, silver hair in neat bun, tan skin with soft wrinkles, hazel eyes, teal cocktail dress, gold drop earrings, 2000s style. Background: mustard yellow.
+28. Claire Thorne — Actress. Caucasian American woman, age 78, white hair in soft short curls, fair skin with soft wrinkles, green eyes, red lips, gold sequin gown, gold drop earrings, 1990s style. Background: rich amber gold.
+29. Lillian Halvorsen — Actress. Caucasian American woman, age 78, silver hair in short elegant bob, pale skin with soft wrinkles, blue eyes, emerald velvet gown, modern style. Background: mustard yellow.
+30. Juliette Lefèvre — Actress. French woman, age 80, grey hair in short elegant bob, light skin with soft wrinkles, brown eyes, emerald velvet gown, 2000s style. Background: rich amber gold.
+31. Simone Gaines — Actress. African-American woman, age 52, dark brown hair in sleek bob, deep brown skin, dark brown eyes, navy wrap dress, pearl earrings, 1990s style. Background: olive green.
+32. Audrey Lockwood — Actress. Caucasian American woman, age 38, black hair in long waves, pale skin, grey eyes, white silk blouse, diamond stud earrings, 2000s style. Background: deep purple.
+33. Margaret Holloway — Actress. Caucasian American woman, age 28, auburn hair in long waves, fair skin, grey eyes, champagne slip dress, a thin gold necklace, 1980s style. Background: mustard yellow.
+34. Freya Sørensen — Actress. Scandinavian woman, age 79, silver hair in short elegant bob, fair skin with soft wrinkles, blue eyes, red lips, champagne slip dress, a silver choker, 1970s style. Background: olive green.
+35. Nour Aziz — Actress. Middle Eastern woman, age 76, grey hair in soft short curls, light olive skin with soft wrinkles, brown eyes, gold sequin gown, gold drop earrings, 1970s style. Background: burnt orange.
+36. Nora Calloway — Actress. Caucasian American woman, age 82, grey hair in neat bun, lightly tanned skin with soft wrinkles, brown eyes, red silk dress, diamond stud earrings, 1990s style. Background: deep purple.
+37. Yetunde Adeyemi — Actress. Nigerian woman, age 61, black hair in soft short curls, dark skin with soft wrinkles, dark brown eyes, emerald velvet gown, gold drop earrings, 1970s style. Background: deep sapphire blue.
+38. Paloma Salazar — Actress. Mexican woman, age 77, white hair in chin-length waves, tan skin with soft wrinkles, hazel eyes, red lips, cream turtleneck and gold necklace, a silver choker, 1980s style. Background: soft coral.
+39. Claire Danforth — Actress. Caucasian American woman, age 62, strawberry blonde hair in soft short curls, pale skin with soft wrinkles, hazel eyes, red silk dress, a silver choker, 1980s style. Background: lavender.
+40. Shuang Guo — Actress. Chinese woman, age 54, grey-streaked black hair in long waves, light skin, dark brown eyes, red lips, white silk blouse, statement earrings, modern style. Background: terracotta.
+41. Siobhan Gallagher — Actress. Irish woman, age 71, white hair in chin-length waves, fair skin with soft wrinkles, blue eyes, red lips, gold sequin gown, statement earrings, 1980s style. Background: mustard yellow.
+42. Coretta Gaines — Actress. African-American woman, age 24, black hair in shoulder-length curls, dark skin, dark brown eyes, red lips, navy wrap dress, a jade pendant, 2000s style. Background: dusty rose.
+43. Mei Tang — Actress. Chinese woman, age 24, black hair in long straight hair, light warm skin, dark brown eyes, black satin evening gown, pearl earrings, 2000s style. Background: midnight navy.
+44. Lian Shen — Actress. Chinese woman, age 44, black hair in pixie cut, fair skin, dark brown eyes, navy wrap dress, statement earrings, 1980s style. Background: charcoal.
+45. Abena Owusu — Actress. Ghanaian woman, age 25, black hair in pixie cut, very dark skin, dark brown eyes, gold sequin gown, gold hoop earrings, modern style. Background: ocean blue.
+46. Simone Pruitt — Actress. African-American woman, age 35, dark brown hair in sleek bob, deep brown skin, hazel eyes, white silk blouse, a thin gold necklace, 1990s style. Background: rust orange.
+47. Nayeli Figueroa — Actress. Puerto Rican woman, age 77, grey hair in short elegant bob, caramel skin with soft wrinkles, brown eyes, red lips, ivory pantsuit, gold hoop earrings, modern style. Background: deep emerald.
+48. Bea Dimaculangan — Actress. Filipino woman, age 46, black hair in elegant updo, light brown skin, dark brown eyes, red lips, white silk blouse, a thin gold necklace, 1980s style. Background: deep sapphire blue.
+49. Funmilayo Chukwu — Actress. Nigerian woman, age 75, white hair in soft short curls, dark skin with soft wrinkles, dark brown eyes, red lips, navy wrap dress, 1980s style. Background: burgundy.
+50. Marisa Dimaculangan — Actress. Filipino woman, age 66, white hair in short elegant bob, tan skin with soft wrinkles, dark brown eyes, white silk blouse, a jade pendant, 1980s style. Background: dusty rose.
+51. Evelyn Hartley — Actress. Caucasian American woman, age 24, blonde hair in high ponytail, pale skin, blue eyes, gold sequin gown, 1980s style. Background: deep sapphire blue.
+52. Malai Chaiyaporn — Actress. Thai woman, age 51, salt-and-pepper hair in long waves, tan skin, dark brown eyes, red lips, red silk dress, gold drop earrings, modern style. Background: rich amber gold.
+53. Ruth Ashby — Actress. Caucasian American woman, age 81, silver hair in soft short curls, fair skin with soft wrinkles, grey eyes, navy wrap dress, statement earrings, 2000s style. Background: crimson.
+54. Lucia Caruso — Actress. Italian woman, age 75, white hair in neat bun, light olive skin with soft wrinkles, brown eyes, red lips, plum velvet jacket, gold drop earrings, 1970s style. Background: dusty rose.
+55. Yetunde Balogun — Actress. Nigerian woman, age 31, black hair in natural afro, very dark skin, dark brown eyes, red lips, white silk blouse, diamond stud earrings, 1970s style. Background: dusty rose.
+56. Mariam Aziz — Actress. Middle Eastern woman, age 76, grey hair in neat bun, light olive skin with soft wrinkles, green eyes, plum velvet jacket, diamond stud earrings, 1990s style. Background: deep sapphire blue.
+57. Da-eun Baek — Actress. Korean woman, age 59, black hair in long waves, fair skin, dark brown eyes, navy wrap dress, a jade pendant, 1970s style. Background: olive green.
+58. Sigrid Sørensen — Actress. Scandinavian woman, age 21, blonde hair in long waves, fair skin, grey eyes, black satin evening gown, a thin gold necklace, 2000s style. Background: deep plum.
+59. Riya Bhatia — Actress. Indian woman, age 62, salt-and-pepper hair in short elegant bob, warm brown skin with soft wrinkles, dark brown eyes, red lips, teal cocktail dress, diamond stud earrings, 1970s style. Background: deep sapphire blue.
+60. Rania Saleh — Actress. Middle Eastern woman, age 49, dark brown hair in high ponytail, olive skin, hazel eyes, emerald velvet gown, gold drop earrings, modern style. Background: terracotta.
+61. Ifeoma Adeyemi — Actress. Nigerian woman, age 34, black hair in long waves, deep brown skin, dark brown eyes, red lips, cream turtleneck and gold necklace, pearl earrings, 1970s style. Background: burgundy.
+62. Siobhan O'Sullivan — Actress. Irish woman, age 39, dark brown hair in long waves, fair skin, green eyes, off-shoulder black dress, statement earrings, 1980s style. Background: olive green.
+63. Ivy Holloway — Actress. Caucasian American woman, age 59, salt-and-pepper hair in long straight hair, light rosy skin, green eyes, cream turtleneck and gold necklace, diamond stud earrings, 1990s style. Background: olive green.
+64. Meera Bhatia — Actress. Indian woman, age 28, dark brown hair in shoulder-length curls, medium brown skin, dark brown eyes, red lips, plum velvet jacket, modern style. Background: deep purple.
+65. Kendra Coleman — Actress. African-American woman, age 70, white hair in soft short curls, dark skin with soft wrinkles, hazel eyes, red lips, white silk blouse, a silver choker, 1990s style. Background: soft coral.
+66. Audrey Hartley — Actress. Caucasian American woman, age 44, strawberry blonde hair in pixie cut, fair skin, green eyes, cream turtleneck and gold necklace, a thin gold necklace, 1980s style. Background: burnt orange.
+67. Adaeze Nwosu — Actress. Nigerian woman, age 33, black hair in soft bangs and long hair, very dark skin, dark brown eyes, navy wrap dress, a jade pendant, 2000s style. Background: midnight navy.
+68. Seo-yeon Baek — Actress. Korean woman, age 28, black hair in side-swept waves, light skin, dark brown eyes, cream turtleneck and gold necklace, statement earrings, 1980s style. Background: deep teal.
+69. Ingrid Sørensen — Actress. Scandinavian woman, age 58, salt-and-pepper hair in sleek bob, fair skin, blue eyes, red lips, ivory pantsuit, statement earrings, 1980s style. Background: deep emerald.
+70. Valentina Villaseñor — Actress. Mexican woman, age 27, black hair in side-swept waves, tan skin, hazel eyes, gold sequin gown, gold hoop earrings, 2000s style. Background: forest green.
+
+------------------------------------------------------------
+ACTORS
+------------------------------------------------------------
+71. Vikram Kapoor — Actor. Indian man, age 39, black wavy swept hair, deep brown skin, dark brown eyes, mustache, navy suit and white shirt, 1980s style. Background: midnight navy.
+72. Zhiwei Feng — Actor. Chinese man, age 21, black short curls, light warm skin, dark brown eyes, mustache, open-collar white shirt, 2000s style. Background: forest green.
+73. Dawit Tesfaye — Actor. Ethiopian man, age 67, silver short curls, deep brown skin with soft wrinkles, dark brown eyes, light stubble, grey three-piece suit, 1980s style. Background: deep emerald.
+74. Joaquín Salazar — Actor. Mexican man, age 79, white short neat hair, light olive skin with soft wrinkles, brown eyes, trimmed beard, camel overcoat, 2000s style. Background: rich amber gold.
+75. Wei Lin — Actor. Chinese man, age 48, black side-parted hair, light warm skin, dark brown eyes, trimmed beard, black turtleneck and blazer, 2000s style. Background: rust orange.
+76. Zhiwei Xu — Actor. Chinese man, age 36, black short neat hair, light warm skin, dark brown eyes, charcoal suit with thin tie, 2000s style. Background: deep purple.
+77. Cedric Pruitt — Actor. African-American man, age 44, black man bun, warm brown skin, hazel eyes, trimmed beard, burgundy velvet blazer, 2000s style. Background: ocean blue.
+78. Clarence Dawson — Actor. African-American man, age 74, bald with silver sides, warm brown skin with soft wrinkles, hazel eyes, burgundy velvet blazer, 1990s style. Background: deep plum.
+79. Rajesh Malhotra — Actor. Indian man, age 56, black longer tousled hair, deep brown skin, dark brown eyes, denim jacket over white t-shirt, modern style. Background: rust orange.
+80. Karan Deshmukh — Actor. Indian man, age 45, dark brown short neat hair, medium brown skin, hazel eyes, grey three-piece suit, modern style. Background: deep emerald.
+81. Sami Haddad — Actor. Middle Eastern man, age 72, silver wavy swept hair, tan skin with soft wrinkles, dark brown eyes, goatee, navy suit and white shirt, 2000s style. Background: dusty rose.
+82. Rémy Lefèvre — Actor. French man, age 38, brown short curls, fair skin, green eyes, burgundy velvet blazer, 2000s style. Background: lavender.
+83. Calvin Ashby — Actor. Caucasian American man, age 34, light brown short curls, pale skin, brown eyes, cream linen suit, 2000s style. Background: soft coral.
+84. Miles Lockwood — Actor. Caucasian American man, age 39, light brown short curls, lightly tanned skin, blue eyes, brown leather jacket, modern style. Background: crimson.
+85. Marco Benedetti — Actor. Italian man, age 36, black side-parted hair, olive skin, brown eyes, cream linen suit, 1990s style. Background: ocean blue.
+86. Minh Vo — Actor. Vietnamese man, age 40, black longer tousled hair, light skin, dark brown eyes, cream linen suit, 1970s style. Background: ocean blue.
+87. Étienne Delacroix — Actor. French man, age 74, white side-parted hair, light skin with soft wrinkles, green eyes, trimmed beard, charcoal suit with thin tie, 1990s style. Background: rich amber gold.
+88. Laurent Garnier — Actor. French man, age 29, brown man bun, fair skin, green eyes, navy suit and white shirt, 1970s style. Background: deep emerald.
+89. Jun Guo — Actor. Chinese man, age 22, black slicked-back hair, fair skin, dark brown eyes, trimmed beard, navy suit and white shirt, 1990s style. Background: rust orange.
+90. Lars Sørensen — Actor. Scandinavian man, age 50, grey-streaked light brown buzz cut, fair skin, pale blue eyes, light stubble, black tuxedo with bow tie, 1980s style. Background: crimson.
+91. Marco Marchetti — Actor. Italian man, age 27, black longer tousled hair, light olive skin, hazel eyes, mustache, brown leather jacket, 1990s style. Background: deep teal.
+92. Laurent Moreau — Actor. French man, age 49, blonde buzz cut, fair skin, blue eyes, tweed jacket, modern style. Background: olive green.
+93. Miles Pembroke — Actor. Caucasian American man, age 84, silver side-parted hair, pale skin with soft wrinkles, brown eyes, trimmed beard, navy suit and white shirt, 1980s style. Background: rust orange.
+94. Enzo Caruso — Actor. Italian man, age 78, balding with silver hair, light olive skin with soft wrinkles, brown eyes, mustache, tweed jacket, 2000s style. Background: deep plum.
+95. Vikram Menon — Actor. Indian man, age 81, silver short neat hair, deep brown skin with soft wrinkles, hazel eyes, denim jacket over white t-shirt, 1970s style. Background: burnt orange.
+96. Clarence Holloway — Actor. African-American man, age 23, dark brown longer tousled hair, medium brown skin, hazel eyes, open-collar white shirt, 2000s style. Background: dusty rose.
+97. Karan Kapoor — Actor. Indian man, age 63, grey-streaked dark brown side-parted hair, warm brown skin with soft wrinkles, hazel eyes, trimmed beard, camel overcoat, 2000s style. Background: deep sapphire blue.
+98. Yonas Bekele — Actor. Ethiopian man, age 50, grey-streaked black slicked-back hair, deep brown skin, dark brown eyes, navy suit and white shirt, 1970s style. Background: lavender.
+99. Graham Fairbanks — Actor. Caucasian American man, age 22, auburn short neat hair, light rosy skin, hazel eyes, cream linen suit, 1980s style. Background: deep teal.
+100. Aditya Malhotra — Actor. Indian man, age 21, black man bun, warm brown skin, dark brown eyes, black tuxedo with bow tie, 1990s style. Background: rich amber gold.
+101. Obinna Adeyemi — Actor. Nigerian man, age 84, silver short neat hair, dark skin with soft wrinkles, brown eyes, mustache, denim jacket over white t-shirt, 1980s style. Background: deep plum.
+102. Declan Brennan — Actor. Irish man, age 44, dark brown longer tousled hair, very fair, freckled skin, blue eyes, light stubble, denim jacket over white t-shirt, 1970s style. Background: rich amber gold.
+103. Andre Coleman — Actor. African-American man, age 58, black short curls, dark skin, brown eyes, trimmed beard, navy suit and white shirt, modern style. Background: burnt orange.
+104. Hiroshi Kobayashi — Actor. Japanese man, age 76, silver slicked-back hair, fair skin with soft wrinkles, dark brown eyes, charcoal suit with thin tie, 1970s style. Background: crimson.
+105. Kerem Yılmaz — Actor. Turkish man, age 73, white wavy swept hair, light olive skin with soft wrinkles, green eyes, mustache, cream linen suit, 1970s style. Background: rich amber gold.
+106. Vittorio Caruso — Actor. Italian man, age 19, dark brown side-parted hair, light olive skin, brown eyes, trimmed beard, open-collar white shirt, modern style. Background: deep sapphire blue.
+107. Elliot Fairbanks — Actor. Caucasian American man, age 37, strawberry blonde slicked-back hair, lightly tanned skin, green eyes, light stubble, camel overcoat, modern style. Background: midnight navy.
+108. Arturo Montoya — Actor. Mexican man, age 55, black buzz cut, olive skin, hazel eyes, burgundy velvet blazer, modern style. Background: rust orange.
+109. Desmond Dawson — Actor. African-American man, age 28, black side-parted hair, dark skin, brown eyes, trimmed beard, camel overcoat, 1990s style. Background: soft coral.
+110. Vikram Sinha — Actor. Indian man, age 50, black short neat hair, light brown skin, dark brown eyes, cream linen suit, 1990s style. Background: mustard yellow.
+111. Karim Khoury — Actor. Middle Eastern man, age 69, silver wavy swept hair, light olive skin with soft wrinkles, green eyes, black turtleneck and blazer, 2000s style. Background: charcoal.
+112. Siddharth Iyer — Actor. Indian man, age 45, dark brown short neat hair, medium brown skin, dark brown eyes, mustache, black tuxedo with bow tie, 2000s style. Background: forest green.
+113. Dean Ashby — Actor. Caucasian American man, age 61, grey-streaked black short neat hair, light rosy skin with soft wrinkles, grey eyes, trimmed beard, cream linen suit, modern style. Background: deep purple.
+114. Quang Tran — Actor. Vietnamese man, age 63, bald with grey-streaked black sides, light skin with soft wrinkles, dark brown eyes, goatee, charcoal suit with thin tie, 2000s style. Background: mustard yellow.
+115. Arjun Chatterjee — Actor. Indian man, age 75, bald with grey sides, light brown skin with soft wrinkles, dark brown eyes, goatee, black tuxedo with bow tie, 1970s style. Background: burnt orange.
+116. Yusuf Rahimi — Actor. Middle Eastern man, age 23, black short neat hair, olive skin, brown eyes, trimmed beard, navy suit and white shirt, 2000s style. Background: rich amber gold.
+117. Quang Pham — Actor. Vietnamese man, age 63, grey-streaked black wavy swept hair, light tan skin with soft wrinkles, dark brown eyes, grey three-piece suit, 1990s style. Background: deep emerald.
+118. Erik Halvorsen — Actor. Scandinavian man, age 24, light brown short neat hair, fair skin, grey eyes, cream linen suit, 1970s style. Background: mustard yellow.
+119. Rami Rahimi — Actor. Middle Eastern man, age 53, dark brown slicked-back hair, olive skin, green eyes, goatee, brown leather jacket, modern style. Background: olive green.
+120. Minh Tran — Actor. Vietnamese man, age 66, silver man bun, light tan skin with soft wrinkles, dark brown eyes, denim jacket over white t-shirt, 1970s style. Background: soft coral.
+121. Tae-yang Han — Actor. Korean man, age 54, grey-streaked black short neat hair, light skin, dark brown eyes, trimmed beard, burgundy velvet blazer, 2000s style. Background: deep teal.
+122. Rhett Marlowe — Actor. Caucasian American man, age 41, black short curls, light rosy skin, green eyes, denim jacket over white t-shirt, 2000s style. Background: deep purple.
+123. Darnell Coleman — Actor. African-American man, age 33, black side-parted hair, dark skin, hazel eyes, light stubble, denim jacket over white t-shirt, 2000s style. Background: deep purple.
+124. Krit Srisuk — Actor. Thai man, age 43, black short neat hair, tan skin, dark brown eyes, black turtleneck and blazer, 1970s style. Background: deep sapphire blue.
+125. Ismael Colón — Actor. Puerto Rican man, age 48, dark brown longer tousled hair, caramel skin, brown eyes, black turtleneck and blazer, 1970s style. Background: mustard yellow.
+126. Elliot Halvorsen — Actor. Caucasian American man, age 24, strawberry blonde wavy swept hair, fair skin, hazel eyes, burgundy velvet blazer, modern style. Background: ocean blue.
+127. Marco Lombardi — Actor. Italian man, age 30, brown side-parted hair, olive skin, brown eyes, denim jacket over white t-shirt, 1990s style. Background: charcoal.
+128. Lorenzo Castañeda — Actor. Mexican man, age 83, bald with white sides, olive skin with soft wrinkles, brown eyes, charcoal suit with thin tie, 1970s style. Background: burnt orange.
+129. Rhett Kensington — Actor. Caucasian American man, age 53, red wavy swept hair, light rosy skin, hazel eyes, grey three-piece suit, modern style. Background: terracotta.
+130. Rhett Ashby — Actor. Caucasian American man, age 28, dark brown short curls, fair skin, hazel eyes, mustache, black turtleneck and blazer, modern style. Background: charcoal.
+131. Emiliano Montoya — Actor. Mexican man, age 69, silver man bun, warm tan skin with soft wrinkles, dark brown eyes, mustache, burgundy velvet blazer, 1970s style. Background: forest green.
+132. Paolo Villanueva — Actor. Filipino man, age 35, black short neat hair, tan skin, dark brown eyes, black turtleneck and blazer, 1990s style. Background: rust orange.
+133. Olumide Adebayo — Actor. Nigerian man, age 21, black wavy swept hair, deep brown skin, dark brown eyes, light stubble, tweed jacket, 1980s style. Background: midnight navy.
+134. Mathis Moreau — Actor. French man, age 33, brown short neat hair, fair skin, green eyes, light stubble, brown leather jacket, 1990s style. Background: rust orange.
+135. Arthur Pembroke — Actor. Caucasian American man, age 47, red short neat hair, light rosy skin, brown eyes, charcoal suit with thin tie, 1990s style. Background: charcoal.
+136. Daisuke Hayashi — Actor. Japanese man, age 52, black longer tousled hair, fair skin, dark brown eyes, mustache, camel overcoat, 1970s style. Background: burnt orange.
+137. Henrik Sørensen — Actor. Scandinavian man, age 34, light brown longer tousled hair, fair skin, grey eyes, goatee, brown leather jacket, 1980s style. Background: dusty rose.
+138. Jericho Santos-Reyes — Actor. Filipino man, age 32, black short neat hair, light brown skin, dark brown eyes, burgundy velvet blazer, 1970s style. Background: terracotta.
+139. Erik Berglund — Actor. Scandinavian man, age 19, white-blonde longer tousled hair, fair skin, pale blue eyes, tweed jacket, modern style. Background: rust orange.
+140. Luca Benedetti — Actor. Italian man, age 60, balding with salt-and-pepper hair, light olive skin with soft wrinkles, hazel eyes, charcoal suit with thin tie, 2000s style. Background: deep purple.
+
+------------------------------------------------------------
+CHILD ACTORS
+------------------------------------------------------------
+141. Ruoxi Xu — Child actress. Chinese girl, age 7, black hair in a ponytail with a ribbon, fair skin, dark brown eyes, big friendly smile, no makeup, red dress with white collar. Background: coral.
+142. Thaís Albuquerque — Child actress. Brazilian girl, age 9, black hair in pigtails, golden tan skin, brown eyes, big friendly smile, no makeup, floral dress. Background: sunny yellow.
+143. Simone Fairley — Child actress. African-American girl, age 7, black hair in two braids, medium brown skin, dark brown eyes, big friendly smile, no makeup, yellow sweater. Background: coral.
+144. Liza Santos-Reyes — Child actress. Filipino girl, age 8, black hair in two braids, light brown skin, dark brown eyes, big friendly smile, no makeup, blue school uniform. Background: pale pink.
+145. Imani Fairley — Child actress. African-American girl, age 6, black hair in pigtails, dark skin, dark brown eyes, big friendly smile, no makeup, green hoodie. Background: tomato red.
+146. Céline Lefèvre — Child actress. French girl, age 8, blonde hair in a ponytail with a ribbon, fair skin, green eyes, big friendly smile, no makeup, yellow sweater. Background: coral.
+147. Yuting Feng — Child actress. Chinese girl, age 7, black hair in loose curls with a hair clip, light warm skin, dark brown eyes, big friendly smile, no makeup, red dress with white collar. Background: sunny yellow.
+148. Rin Nakamura — Child actress. Japanese girl, age 9, dark brown hair in a ponytail with a ribbon, light skin, dark brown eyes, big friendly smile, no makeup, blue school uniform. Background: soft lavender.
+149. Freya Lindqvist — Child actress. Scandinavian girl, age 7, white-blonde hair in two braids, very fair skin, pale blue eyes, big friendly smile, no makeup, denim overalls. Background: sky blue.
+150. Élodie Moreau — Child actress. French girl, age 8, brown hair in loose curls with a hair clip, fair skin, blue eyes, big friendly smile, no makeup, striped t-shirt. Background: peach.
+151. Yaritza Colón — Child actress. Puerto Rican girl, age 9, dark curly hair in a short bob, tan skin, dark brown eyes, big friendly smile, no makeup, denim overalls. Background: pale pink.
+152. Imani Jefferies — Child actress. African-American girl, age 6, dark brown hair in a ponytail with a ribbon, dark skin, hazel eyes, big friendly smile, no makeup, red dress with white collar. Background: pale pink.
+153. Rodrigo Albuquerque — Child actor. Brazilian boy, age 6, black neat side part, golden tan skin, hazel eyes, big friendly smile, no makeup, yellow raincoat. Background: mint green.
+154. Emre Aksoy — Child actor. Turkish boy, age 12, black messy short hair, olive skin, brown eyes, big friendly smile, no makeup, baseball t-shirt. Background: coral.
+155. Ikenna Balogun — Child actor. Nigerian boy, age 6, black bowl cut, dark skin, brown eyes, big friendly smile, no makeup, plaid shirt. Background: peach.
+156. Henry Winslow — Child actor. Caucasian American boy, age 8, strawberry blonde messy short hair, lightly tanned skin, grey eyes, big friendly smile, no makeup, denim overalls. Background: mint green.
+157. Étienne Garnier — Child actor. French boy, age 11, brown short curls, light skin, green eyes, big friendly smile, no makeup, green sweater. Background: light orange.
+158. Rodrigo Bittencourt — Child actor. Brazilian boy, age 10, caramel highlighted bowl cut, olive skin, green eyes, big friendly smile, no makeup, denim overalls. Background: sunny yellow.
+159. Xavier Whitfield — Child actor. African-American boy, age 10, dark brown bowl cut, deep brown skin, dark brown eyes, big friendly smile, no makeup, plaid shirt. Background: pale pink.
+160. Kwame Owusu — Child actor. Ghanaian boy, age 8, black messy short hair, deep brown skin, dark brown eyes, big friendly smile, no makeup, red hoodie. Background: turquoise.
+161. Ji-hoon Seo — Child actor. Korean boy, age 9, black bowl cut, light skin, dark brown eyes, big friendly smile, no makeup, yellow raincoat. Background: light orange.
+162. Ikenna Nwosu — Child actor. Nigerian boy, age 10, black messy short hair, very dark skin, brown eyes, big friendly smile, no makeup, striped t-shirt. Background: soft lavender.
+163. Arturo Villaseñor — Child actor. Mexican boy, age 10, brown bowl cut, tan skin, brown eyes, big friendly smile, no makeup, plaid shirt. Background: peach.
+164. Kabir Bhatia — Child actor. Indian boy, age 7, black short curls, light brown skin, dark brown eyes, big friendly smile, no makeup, red hoodie. Background: turquoise.
+
+------------------------------------------------------------
+TEEN ACTORS
+------------------------------------------------------------
+165. Funmilayo Okonkwo — Teen actress. Nigerian teen girl, age 16, black hair in pixie cut, deep brown skin, dark brown eyes, no makeup, pastel hoodie. Background: ocean blue.
+166. Winona Running Water — Teen actress. Native American teen girl, age 16, black hair in elegant updo, tan skin, dark brown eyes, no makeup, floral top. Background: crimson.
+167. Min-ji Baek — Teen actress. Korean teen girl, age 17, dark brown hair in soft bangs and long hair, fair skin, dark brown eyes, no makeup, varsity sweater. Background: ocean blue.
+168. Rin Okada — Teen actress. Japanese teen girl, age 15, black hair in high ponytail, fair skin, dark brown eyes, no makeup, denim jacket. Background: terracotta.
+169. Astrid Berglund — Teen actress. Scandinavian teen girl, age 13, white-blonde hair in elegant updo, fair skin, grey eyes, no makeup, white blouse. Background: midnight navy.
+170. Nia Sutton — Teen actress. African-American teen girl, age 14, black hair in long straight hair, warm brown skin, brown eyes, no makeup, white blouse. Background: deep teal.
+171. Nia Ellison — Teen actress. African-American teen girl, age 17, dark brown hair in soft bangs and long hair, medium brown skin, hazel eyes, no makeup, denim jacket. Background: deep teal.
+172. Jasmine Bankston — Teen actress. African-American teen girl, age 16, black hair in soft bangs and long hair, dark skin, brown eyes, no makeup, varsity sweater. Background: burnt orange.
+173. Leandro Monteiro — Teen actor. Brazilian teen boy, age 17, black slicked-back hair, light brown skin, green eyes, no makeup, white t-shirt and bomber jacket. Background: deep plum.
+174. Siddharth Menon — Teen actor. Indian teen boy, age 17, black short neat hair, light brown skin, hazel eyes, no makeup, denim jacket. Background: deep plum.
+175. Aditya Chatterjee — Teen actor. Indian teen boy, age 16, black short curls, warm brown skin, brown eyes, no makeup, white t-shirt and bomber jacket. Background: terracotta.
+176. Vittorio Benedetti — Teen actor. Italian teen boy, age 14, brown short neat hair, olive skin, hazel eyes, no makeup, varsity jacket. Background: deep emerald.
+177. Malik Dawson — Teen actor. African-American teen boy, age 13, dark brown man bun, warm brown skin, dark brown eyes, no makeup, plaid shirt. Background: deep plum.
+178. Jericho Villanueva — Teen actor. Filipino teen boy, age 14, black short neat hair, tan skin, dark brown eyes, no makeup, plaid shirt. Background: charcoal.
+179. Héctor Figueroa — Teen actor. Puerto Rican teen boy, age 17, dark brown short curls, olive skin, brown eyes, no makeup, denim jacket. Background: rich amber gold.
+180. Omar Nasser — Teen actor. Middle Eastern teen boy, age 15, dark brown short neat hair, olive skin, hazel eyes, no makeup, varsity jacket. Background: ocean blue.
+
+------------------------------------------------------------
+DIRECTORS
+------------------------------------------------------------
+181. June Halvorsen — Director. Caucasian American woman, age 33, auburn hair in long waves, light rosy skin, green eyes, tweed jacket and round glasses, a jade pendant, 2000s style. Background: midnight navy.
+182. Rhett Lockwood — Director. Caucasian American man, age 60, balding with auburn hair, fair skin with soft wrinkles, brown eyes, leather jacket and sunglasses pushed up, 1990s style. Background: ocean blue.
+183. Yichen Guo — Director. Chinese man, age 77, bald with grey sides, light warm skin with soft wrinkles, dark brown eyes, leather jacket and sunglasses pushed up, 1970s style. Background: charcoal.
+184. Da-eun Seo — Director. Korean woman, age 53, black hair in sleek bob, light skin, dark brown eyes, black blazer and scarf, 2000s style. Background: deep purple.
+185. Tae-yang Seo — Director. Korean man, age 33, black short neat hair, light skin, dark brown eyes, linen shirt and director's viewfinder on a cord, 1970s style. Background: olive green.
+186. Vikram Deshmukh — Director. Indian man, age 77, grey longer tousled hair, light brown skin with soft wrinkles, dark brown eyes, white beard, denim shirt and baseball cap, 1990s style. Background: terracotta.
+187. Loretta Merriweather — Director. African-American woman, age 54, black hair in box braids, medium brown skin, dark brown eyes, black blazer and scarf, a jade pendant, 1980s style. Background: olive green.
+188. Walter Winslow — Director. Caucasian American man, age 43, red short neat hair, lightly tanned skin, green eyes, denim shirt and baseball cap, 1980s style. Background: deep purple.
+189. Warren Holloway — Director. Caucasian American man, age 75, bald with grey sides, fair skin with soft wrinkles, blue eyes, white beard, black turtleneck and beret, 1970s style. Background: midnight navy.
+190. Claire Prescott — Director. Caucasian American woman, age 42, light brown hair in long waves, pale skin, hazel eyes, black turtleneck and beret, 2000s style. Background: dusty rose.
+191. Joaquín Montoya — Director. Mexican man, age 30, brown short neat hair, light olive skin, brown eyes, tweed jacket and round glasses, 1980s style. Background: soft coral.
+192. Conrad Danforth — Director. Caucasian American man, age 47, light brown wavy swept hair, light rosy skin, brown eyes, linen shirt and director's viewfinder on a cord, 1980s style. Background: rust orange.
+193. Ruth Calloway — Director. Caucasian American woman, age 66, white hair in neat bun, lightly tanned skin with soft wrinkles, grey eyes, linen shirt and director's viewfinder on a cord, gold hoop earrings, 1970s style. Background: lavender.
+194. Héctor Rivera-Ortiz — Director. Puerto Rican man, age 59, salt-and-pepper slicked-back hair, tan skin, brown eyes, trimmed beard, linen shirt and director's viewfinder on a cord, 1970s style. Background: burnt orange.
+195. Zhiwei Tang — Director. Chinese man, age 47, black slicked-back hair, light warm skin, dark brown eyes, trimmed beard, denim shirt and baseball cap, 1970s style. Background: rust orange.
+196. Margaux Garnier — Director. French woman, age 62, salt-and-pepper hair in short elegant bob, light skin with soft wrinkles, green eyes, denim shirt and baseball cap, 1970s style. Background: charcoal.
+197. Rohan Chatterjee — Director. Indian man, age 43, black slicked-back hair, light brown skin, dark brown eyes, denim shirt and baseball cap, 1990s style. Background: forest green.
+198. Karan Nair — Director. Indian man, age 49, black longer tousled hair, light brown skin, dark brown eyes, black turtleneck and beret, 1990s style. Background: burnt orange.
+199. Ananya Deshmukh — Director. Indian woman, age 58, black hair in long waves, medium brown skin, hazel eyes, tweed jacket and round glasses, a jade pendant, 2000s style. Background: burgundy.
+200. Kenji Kobayashi — Director. Japanese man, age 71, grey short curls, fair skin with soft wrinkles, dark brown eyes, black turtleneck and beret, 1990s style. Background: dusty rose.
+201. Bowen Shen — Director. Chinese man, age 30, black slicked-back hair, fair skin, dark brown eyes, trimmed beard, linen shirt and director's viewfinder on a cord, 1980s style. Background: dusty rose.
+202. Devika Menon — Director. Indian woman, age 56, black hair in pixie cut, warm brown skin, hazel eyes, leather jacket and sunglasses pushed up, pearl earrings, 2000s style. Background: burgundy.
+
+------------------------------------------------------------
+CINEMATOGRAPHERS
+------------------------------------------------------------
+203. Tasha Coleman — Cinematographer. African-American woman, age 67, grey hair in short elegant bob, warm brown skin with soft wrinkles, brown eyes, utility vest and baseball cap, 2000s style. Background: mustard yellow.
+204. Yonas Tesfaye — Cinematographer. Ethiopian man, age 46, black longer tousled hair, deep brown skin, dark brown eyes, goatee, flannel shirt and light meter on a cord, modern style. Background: mustard yellow.
+205. Rajesh Deshmukh — Cinematographer. Indian man, age 72, silver short neat hair, light brown skin with soft wrinkles, dark brown eyes, mustache, utility vest and baseball cap, modern style. Background: forest green.
+206. Raven Haynes — Cinematographer. African-American woman, age 49, black hair in box braids, warm brown skin, hazel eyes, flannel shirt and light meter on a cord, diamond stud earrings, modern style. Background: terracotta.
+207. Silas Prescott — Cinematographer. Caucasian American man, age 45, auburn short neat hair, light rosy skin, grey eyes, black t-shirt with a camera viewfinder on a lanyard, 1970s style. Background: midnight navy.
+208. Silas Ashby — Cinematographer. Caucasian American man, age 51, grey-streaked blonde short neat hair, fair skin, brown eyes, goatee, black jacket and beanie, 1970s style. Background: charcoal.
+209. Yasmin Aziz — Cinematographer. Middle Eastern woman, age 53, salt-and-pepper hair in long straight hair, tan skin, brown eyes, flannel shirt and light meter on a cord, 1980s style. Background: midnight navy.
+210. Cedric Ellison — Cinematographer. African-American man, age 61, bald with grey-streaked black sides, medium brown skin with soft wrinkles, hazel eyes, trimmed beard, flannel shirt and light meter on a cord, 1980s style. Background: terracotta.
+211. Lars Lindqvist — Cinematographer. Scandinavian man, age 58, blonde slicked-back hair, very fair skin, blue eyes, utility vest and baseball cap, 1980s style. Background: ocean blue.
+212. Hae-won Yoon — Cinematographer. Korean woman, age 47, dark brown hair in long waves, fair skin, dark brown eyes, field jacket and headphones around neck, gold hoop earrings, 1990s style. Background: soft coral.
+213. Haruto Takahashi — Cinematographer. Japanese man, age 35, dark brown side-parted hair, light skin, dark brown eyes, light stubble, field jacket and headphones around neck, 2000s style. Background: crimson.
+214. Enzo Benedetti — Cinematographer. Italian man, age 69, bald with silver sides, light olive skin with soft wrinkles, green eyes, black t-shirt with a camera viewfinder on a lanyard, 2000s style. Background: rich amber gold.
+215. Defne Aksoy — Cinematographer. Turkish woman, age 45, dark brown hair in sleek bob, light olive skin, brown eyes, field jacket and headphones around neck, diamond stud earrings, 1970s style. Background: deep purple.
+216. Nikhil Reddy — Cinematographer. Indian man, age 28, black wavy swept hair, deep brown skin, hazel eyes, field jacket and headphones around neck, modern style. Background: forest green.
+217. Kerem Aksoy — Cinematographer. Turkish man, age 66, grey man bun, olive skin with soft wrinkles, green eyes, white beard, utility vest and baseball cap, 2000s style. Background: deep plum.
+218. June Fairbanks — Cinematographer. Caucasian American woman, age 43, dark brown hair in soft bangs and long hair, pale skin, green eyes, black jacket and beanie, diamond stud earrings, 1990s style. Background: deep plum.
+
+------------------------------------------------------------
+COMPOSERS
+------------------------------------------------------------
+219. Lian Zhao — Composer. Chinese woman, age 64, black hair in soft short curls, fair skin with soft wrinkles, dark brown eyes, black shirt with headphones around neck, a jade pendant, 1980s style. Background: rust orange.
+220. Jae-won Han — Composer. Korean man, age 65, balding with silver hair, fair skin with soft wrinkles, dark brown eyes, goatee, black conductor tailcoat and white bow tie, 1980s style. Background: crimson.
+221. Krit Chaiyaporn — Composer. Thai man, age 52, black longer tousled hair, light tan skin, dark brown eyes, black shirt with headphones around neck, modern style. Background: forest green.
+222. Meera Menon — Composer. Indian woman, age 65, white hair in soft short curls, deep brown skin with soft wrinkles, hazel eyes, velvet blazer and silk scarf, 2000s style. Background: forest green.
+223. Kabir Nair — Composer. Indian man, age 71, bald with grey sides, warm brown skin with soft wrinkles, dark brown eyes, black shirt with headphones around neck, 1980s style. Background: deep purple.
+224. Russell Whitmore — Composer. Caucasian American man, age 50, grey-streaked dark brown side-parted hair, pale skin, hazel eyes, mustache, black shirt with headphones around neck, 1990s style. Background: dusty rose.
+225. Natsumi Fujiwara — Composer. Japanese woman, age 48, dark brown hair in long waves, fair skin, dark brown eyes, tweed jacket with a pencil behind ear, modern style. Background: deep plum.
+226. Isaiah Fairley — Composer. African-American man, age 75, grey buzz cut, deep brown skin with soft wrinkles, brown eyes, mustache, dark sweater and round glasses, 1990s style. Background: deep emerald.
+227. Rubén Colón — Composer. Puerto Rican man, age 73, bald with silver sides, tan skin with soft wrinkles, brown eyes, velvet blazer and silk scarf, 1990s style. Background: midnight navy.
+228. Ximena Quintero — Composer. Mexican woman, age 30, brown hair in elegant updo, warm tan skin, hazel eyes, black conductor tailcoat and white bow tie, diamond stud earrings, 1980s style. Background: olive green.
+229. Ikenna Chukwu — Composer. Nigerian man, age 80, grey short neat hair, very dark skin with soft wrinkles, dark brown eyes, tweed jacket with a pencil behind ear, 1980s style. Background: olive green.
+230. Rubén Rivera-Ortiz — Composer. Puerto Rican man, age 28, dark curly short fade, olive skin, brown eyes, black shirt with headphones around neck, 2000s style. Background: rich amber gold.
+231. Kavya Menon — Composer. Indian woman, age 55, grey-streaked dark brown hair in elegant updo, medium brown skin, hazel eyes, velvet blazer and silk scarf, 1970s style. Background: midnight navy.
+232. Caio Monteiro — Composer. Brazilian man, age 38, dark brown short curls, golden tan skin, brown eyes, dark sweater and round glasses, 2000s style. Background: soft coral.
+233. Kian Farahani — Composer. Persian man, age 47, black short curls, olive skin, hazel eyes, tweed jacket with a pencil behind ear, modern style. Background: ocean blue.
+234. Celeste Holloway — Composer. Caucasian American woman, age 42, black hair in side-swept waves, pale skin, green eyes, tweed jacket with a pencil behind ear, 1980s style. Background: ocean blue.
+
+------------------------------------------------------------
+WRITERS
+------------------------------------------------------------
+235. Catalina Salazar — Writer. Mexican woman, age 68, white hair in soft short curls, tan skin with soft wrinkles, brown eyes, corduroy jacket, diamond stud earrings, 2000s style. Background: ocean blue.
+236. Kenji Takahashi — Writer. Japanese man, age 60, bald with dark brown sides, light skin with soft wrinkles, dark brown eyes, wool sweater and glasses, modern style. Background: mustard yellow.
+237. Lakshmi Deshmukh — Writer. Indian woman, age 46, dark brown hair in long waves, light brown skin, hazel eyes, corduroy jacket, pearl earrings, 1980s style. Background: deep purple.
+238. Yaw Mensah — Writer. Ghanaian man, age 34, black short fade, very dark skin, dark brown eyes, oversized hoodie, 1980s style. Background: dusty rose.
+239. Audrey Danforth — Writer. Caucasian American woman, age 70, grey hair in neat bun, pale skin with soft wrinkles, green eyes, cardigan and reading glasses, 2000s style. Background: ocean blue.
+240. Magnus Lindqvist — Writer. Scandinavian man, age 48, blonde short neat hair, very fair skin, blue eyes, goatee, denim shirt with pen in pocket, 2000s style. Background: deep teal.
+241. Selam Tesfaye — Writer. Ethiopian woman, age 41, black hair in side-swept waves, brown skin, dark brown eyes, cardigan and reading glasses, 1970s style. Background: deep sapphire blue.
+242. Keanu-Lani Kahananui — Writer. Pacific Islander man, age 56, black side-parted hair, brown skin, brown eyes, oversized hoodie, 1990s style. Background: burgundy.
+243. Coretta Haynes — Writer. African-American woman, age 71, silver hair in short elegant bob, deep brown skin with soft wrinkles, brown eyes, oversized hoodie, a jade pendant, modern style. Background: rust orange.
+244. Andre Holloway — Writer. African-American man, age 70, white buzz cut, dark skin with soft wrinkles, dark brown eyes, wool sweater and glasses, 1970s style. Background: terracotta.
+245. Natsumi Takahashi — Writer. Japanese woman, age 27, black hair in long waves, fair skin, dark brown eyes, turtleneck and tortoiseshell glasses, gold hoop earrings, 1990s style. Background: dusty rose.
+246. Hiroshi Morimoto — Writer. Japanese man, age 31, dark brown short neat hair, light skin, dark brown eyes, cardigan and reading glasses, modern style. Background: ocean blue.
+247. Paloma Villaseñor — Writer. Mexican woman, age 57, salt-and-pepper hair in long waves, light olive skin, dark brown eyes, turtleneck and tortoiseshell glasses, diamond stud earrings, 1970s style. Background: burnt orange.
+248. Takeshi Okada — Writer. Japanese man, age 26, black longer tousled hair, light skin, dark brown eyes, mustache, corduroy jacket, 1990s style. Background: soft coral.
+249. Yui Morimoto — Writer. Japanese woman, age 38, dark brown hair in soft bangs and long hair, fair skin, dark brown eyes, denim shirt with pen in pocket, pearl earrings, 1970s style. Background: ocean blue.
+250. Ismael Rivera-Ortiz — Writer. Puerto Rican man, age 62, grey-streaked dark brown slicked-back hair, olive skin with soft wrinkles, brown eyes, denim shirt with pen in pocket, 1970s style. Background: deep plum.

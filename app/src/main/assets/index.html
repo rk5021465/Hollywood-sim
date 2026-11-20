@@ -4712,13 +4712,25 @@ modal=(function(o){return function(h){const r=o.apply(this,arguments);try{if(!h&
 /* ===================== v18 — Stage 2: deco portraits, live opening weekend, week chart, film flow ===================== */
 
 /* ---------- Deco portraits: illustrated image when we have one, gold monogram otherwise ---------- */
-const PIMG=[{src:'media/p_f01.png',g:'F',maxAge:48}];
+const PIMG=[
+ {src:'media/p_f01.png',bg:'#186751',n:'Vivienne Hale',g:'F',a:[22,48],s:[0,2],nat:['USA','UK','Ireland','Canada']},
+ {src:'media/p/f001.jpg',bg:'#1f3f78',n:'Imani Whitfield',g:'F',a:[22,42],s:[4,5],nat:['USA','Nigeria','South Africa','UK']},
+ {src:'media/p/f002.jpg',bg:'#065341',n:'Claire Whitmore',g:'F',a:[22,45],s:[0,1],nat:['USA','UK','Sweden','Canada','Australia']},
+ {src:'media/p/f003.jpg',bg:'#731631',n:'Mei Shen',g:'F',a:[20,40],s:[0,2],nat:['China','South Korea','Japan']},
+ {src:'media/p/f004.jpg',bg:'#066173',n:'Ananya Iyer',g:'F',a:[22,42],s:[2,4],nat:['India']},
+ {src:'media/p/f005.jpg',bg:'#36533d',n:'Loretta Haynes',g:'F',a:[58,90],s:[3,5],nat:['USA','Nigeria','South Africa','UK']},
+ {src:'media/p/f006.jpg',bg:'#c7871b',n:'Coretta Ellison',g:'F',a:[33,56],s:[4,5],nat:['USA','Nigeria','South Africa','UK']},
+ {src:'media/p/f007.jpg',bg:'#c07f79',n:'Paloma Castañeda',g:'F',a:[28,52],s:[1,3],nat:['Mexico','Spain','Italy','Argentina','Brazil','France']},
+ {src:'media/p/f008.jpg',bg:'#706933',n:'Dionne Merriweather',g:'F',a:[48,66],s:[3,5],nat:['USA','India','Brazil','South Africa']},
+ {src:'media/p/f009.jpg',bg:'#582254',n:'Audrey Lockwood',g:'F',a:[20,38],s:[0,2],nat:['USA','UK','France','Germany','Italy','Canada']}];
 const JEWEL=[['#0b2e26','#1d6b55'],['#2e0b14','#7a2335'],['#0b1a33','#1f4f86'],['#2e2108','#8a6420'],['#200e2c','#5e2d7a'],['#08282c','#1d7480'],['#2e140a','#8a4220'],['#14142a','#3a3a6e']];
 function pHue(p){return JEWEL[hashStr(p.id||p.n||'x')%JEWEL.length]}
 function isFem(p){try{return p.g==='F'||lookOf(p).g==='F'}catch(e){return p.g==='F'}}
 function initials(n){const w=String(n||'?').replace(/[^A-Za-z\s'-]/g,'').trim().split(/\s+/).filter(Boolean);return ((w[0]||'?')[0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase()}
-function assignPImgs(){if(!S||!S.people||!S.people.actors)return;S.pimg=S.pimg||{};const used=new Set(Object.values(S.pimg));
- PIMG.forEach((im,i)=>{if(used.has(i))return;const pool=S.people.actors.filter(a=>isFem(a)===(im.g==='F')&&(a.age||35)<=im.maxAge&&S.pimg[a.id]==null).sort((a,b)=>b.star-a.star);if(pool[0])S.pimg[pool[0].id]=i})}
+function assignPImgs(){if(!S||!S.people)return;S.pimg=S.pimg||{};const used=new Set(Object.values(S.pimg));const pools=['actors','directors','writers','dps','comps'].map(k=>S.people[k]||[]);
+ PIMG.forEach((im,i)=>{if(used.has(i))return;const pool=(im.role?(S.people[im.role]||[]):S.people.actors||[]).filter(a=>S.pimg[a.id]==null&&isFem(a)===(im.g==='F')&&(a.age||35)>=im.a[0]&&(a.age||35)<=im.a[1]);
+  const sk=a=>{try{return lookOf(a).skin}catch(e){return 2}};const score=a=>(sk(a)>=im.s[0]&&sk(a)<=im.s[1]?100:0)+((im.nat||[]).includes(a.nat)?60:0)+(a.star||a.fame||0)*.5;
+  const best=pool.sort((x,y)=>score(y)-score(x))[0];if(best&&score(best)>=100){S.pimg[best.id]=i;used.add(i);try{const fresh=typeof credits!=='function'||!credits(best.id).length;if(fresh&&im.n&&!takenNames().has?.(im.n)){best.n=im.n;if(im.nat&&!im.nat.includes(best.nat))best.nat=im.nat[0]}}catch(e){}}})}
 function pImg(p){if(!S||!S.pimg||!p||S.pimg[p.id]==null)return null;return PIMG[S.pimg[p.id]]||null}
 const DECO_RAYS=(()=>{let s='';for(let i=0;i<16;i++){const a=i/16*Math.PI*2,b=(i+.45)/16*Math.PI*2;s+=`<polygon points="50,62 ${(50+Math.cos(a)*90).toFixed(1)},${(62+Math.sin(a)*90).toFixed(1)} ${(50+Math.cos(b)*90).toFixed(1)},${(62+Math.sin(b)*90).toFixed(1)}"/>`}return s})();
 portrait=(function(old){return function(p,size,opt){opt=opt||{};const s=size||64;if(!p)return old(p,size,opt);
@@ -4731,7 +4743,7 @@ portrait=(function(old){return function(p,size,opt){opt=opt||{};const s=size||64
  <text x="50" y="${two?61:63}" text-anchor="middle" font-family="'Playfair Display',Didot,Georgia,serif" font-style="italic" font-weight="700" font-size="${two?33:40}" fill="url(#${u}g)" letter-spacing="-1">${ini}</text>${opt.square?'':ring}</svg>`}})(portrait);
 
 /* ---------- Star card (arch frame) for the person detail view ---------- */
-function starCard(p,role){if(!p)return '';const [c1,c2]=pHue(p);const im=pImg(p);const isA=role==='actor'||(S.people.actors||[]).includes(p);
+function starCard(p,role){if(!p)return '';let [c1,c2]=pHue(p);const im=pImg(p);if(im&&im.bg){c2=im.bg;c1=mixc(im.bg,'#000000',.62)}const isA=role==='actor'||(S.people.actors||[]).includes(p);
  const tier=isA&&typeof tierOfA==='function'?({A:'A · LIST',B:'STAR',M:'WORKING ACTOR',R:'RISING',C:"CRITICS' DARLING"}[tierOfA(p)]||''):(role||'').toUpperCase();
  const st=isA?[[p.star,'STAR'],[p.skill,'TALENT'],[M(actorFee(p)),'FEE']]:[[p.skill,'CRAFT'],[p.fame,'FAME'],[p.age||'—','AGE']];
  return `<div class="sc25" style="--c1:${c1};--c2:${c2}"><div class="sc25r"></div><div class="sc25a">${im?`<img src="${im.src}" alt="">`:`<div class="sc25m">${portrait(p,150,{square:1})}</div>`}</div>${tier?`<div class="sc25t">${tier}</div>`:''}

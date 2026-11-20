@@ -1,0 +1,122 @@
+HOLLYWOOD SIM — CAST PORTRAIT PROMPTS (for Google Gemini)
+
+HOW TO USE
+1. Open Gemini and start ONE new chat.
+2. Paste the STYLE MESSAGE below first.
+3. Then paste one character line at a time (copy just the line, e.g. "1. Elegant American actress...").
+4. Long-press each image > Download. Keep the number in mind (or rename the file to the number).
+5. Send the images to Claude in batches. Tell Claude which numbers they are.
+If a face doesn't look right, just say "try again" in Gemini.
+
+------------------------------------------------------------
+STYLE MESSAGE (paste this first)
+------------------------------------------------------------
+For every person I describe next, create one image in exactly this style: minimalist flat vector portrait, head and shoulders, centered, facing slightly to one side, simple flat color shapes with no outlines, very few facial details (eyes as simple shapes, small nose, defined lips), subtle canvas paper texture, elegant luxury fashion illustration, solid single-color background in the color I name, square image, no text, no logos. All people are fictional. Reply only with the image. Confirm you understand by saying OK.
+
+------------------------------------------------------------
+LEADING ACTRESSES
+------------------------------------------------------------
+1. Elegant Caucasian actress, late 20s, platinum blonde wavy bob, pale skin, blue eyes, red lips, black satin evening dress, pearl earrings. Background: deep emerald.
+2. Glamorous African-American actress, 30s, voluminous afro, deep brown skin, brown eyes, gold hoop earrings, gold sequin gown. Background: deep sapphire blue.
+3. Graceful Indian actress, early 30s, long black wavy hair, warm brown skin, dark eyes, gold jhumka earrings, deep red silk saree. Background: deep teal.
+4. Chic Chinese actress, late 20s, sleek black bob with bangs, light skin, dark eyes, jade earrings, emerald qipao-inspired dress. Background: burgundy.
+5. Stylish Japanese actress, 20s, long straight black hair, light skin, dark eyes, minimal silver earrings, white silk blouse. Background: soft coral red.
+6. Fiery Hispanic actress, 30s, long dark curly hair, olive skin, brown eyes, red lips, off-shoulder red dress. Background: deep plum.
+7. Elegant Middle Eastern actress, 30s, long dark hair, olive skin, dark green eyes, gold necklace, black velvet gown. Background: rich amber gold.
+8. Bold Korean actress, mid 20s, chin-length black hair, light skin, dark eyes, silver drop earrings, lavender silk top. Background: midnight navy.
+9. Classic 1970s Caucasian actress, auburn feathered hair, fair skin, green eyes, gold earrings, emerald wrap dress. Background: burnt orange.
+10. Radiant Nigerian actress, late 20s, braided updo, very dark skin, brown eyes, gold earrings, orange and gold gown. Background: deep green.
+11. Brazilian actress, 20s, long caramel highlighted hair, tan skin, hazel eyes, gold choker, white slip dress. Background: turquoise.
+12. Filipino actress, 30s, shoulder-length black hair, tan skin, dark eyes, pearl earrings, soft pink dress. Background: deep maroon.
+
+------------------------------------------------------------
+LEADING ACTORS
+------------------------------------------------------------
+13. Handsome Caucasian actor, 30s, dark slicked-back hair, fair skin, blue eyes, black tuxedo, bow tie. Background: burgundy.
+14. Charismatic African-American actor, 30s, short fade haircut, trimmed beard, dark brown skin, brown eyes, navy suit, white shirt. Background: amber gold.
+15. Indian actor, 30s, thick wavy black hair, light stubble, brown skin, dark eyes, cream kurta with gold embroidery. Background: deep blue.
+16. Chinese actor, late 20s, short black textured hair, light skin, dark eyes, black turtleneck, grey blazer. Background: teal.
+17. Japanese actor, 30s, medium black hair swept to one side, light skin, dark eyes, charcoal suit, thin black tie. Background: soft red.
+18. Hispanic actor, 30s, dark wavy hair, mustache, olive skin, brown eyes, open-collar white shirt, tan jacket. Background: deep green.
+19. Middle Eastern actor, 30s, dark curly hair, full trimmed beard, olive skin, brown eyes, black suit, no tie. Background: sapphire blue.
+20. Korean actor, mid 20s, soft black fringe hair, light skin, dark eyes, cream knit sweater. Background: dusty pink.
+21. Rugged 1970s Caucasian actor, sandy brown shaggy hair, sideburns, fair skin, brown eyes, brown leather jacket. Background: mustard yellow.
+22. Ghanaian actor, late 20s, short hair, very dark skin, brown eyes, patterned kente-inspired shirt. Background: deep purple.
+23. Italian-American actor, 40s, salt-and-pepper hair, olive skin, brown eyes, pinstripe suit, red tie. Background: dark green.
+24. Australian actor, 30s, messy blond hair, tan skin, blue eyes, denim jacket, white t-shirt. Background: ocean blue.
+
+------------------------------------------------------------
+CHILD ACTORS (friendly, wholesome, no makeup)
+------------------------------------------------------------
+25. Caucasian girl, about 8, red pigtails, freckles, fair skin, green eyes, yellow sweater. Background: sky blue.
+26. African-American boy, about 9, short curly hair, brown skin, brown eyes, big smile, striped t-shirt. Background: orange.
+27. Indian girl, about 10, black braid, brown skin, dark eyes, bright pink kurta. Background: teal.
+28. Japanese boy, about 8, black bowl haircut, light skin, dark eyes, blue school uniform. Background: soft yellow.
+29. Hispanic girl, about 7, dark curly hair with a bow, tan skin, brown eyes, red dress. Background: mint green.
+30. Chinese boy, about 11, short black hair, light skin, dark eyes, green hoodie. Background: coral.
+31. Middle Eastern girl, about 9, long dark hair, olive skin, brown eyes, purple cardigan. Background: light gold.
+32. Caucasian boy, about 10, messy blond hair, fair skin, blue eyes, denim overalls. Background: tomato red.
+
+------------------------------------------------------------
+TEEN ACTORS (wholesome)
+------------------------------------------------------------
+33. Korean teen girl, about 16, long black hair with bangs, light skin, dark eyes, white blouse. Background: lavender.
+34. African-American teen boy, about 16, short twists hairstyle, dark brown skin, brown eyes, varsity jacket. Background: royal blue.
+35. Hispanic teen girl, about 15, wavy brown ponytail, tan skin, brown eyes, denim jacket. Background: peach.
+36. Indian teen boy, about 17, side-parted black hair, brown skin, dark eyes, plaid shirt. Background: forest green.
+
+------------------------------------------------------------
+CHARACTER ACTORS & VETERANS
+------------------------------------------------------------
+37. Elderly Caucasian actress, 70s, silver bob, fair skin with soft wrinkles, blue eyes, pearl necklace, lilac jacket. Background: deep teal.
+38. Elderly African-American actor, 70s, short white hair, white beard, dark brown skin, brown eyes, tweed jacket, bow tie. Background: burgundy.
+39. Elderly Indian actress, 60s, grey hair in a bun, brown skin, dark eyes, small bindi, cream silk saree. Background: deep purple.
+40. Elderly Japanese actor, 70s, bald with grey sides, light skin, round glasses, dark kimono-style jacket. Background: rust orange.
+41. Middle-aged Hispanic actress, 50s, short grey-streaked dark hair, olive skin, brown eyes, red cardigan. Background: navy.
+42. Middle-aged Caucasian actor, 50s, receding hairline, ginger beard, fair skin, green eyes, brown corduroy jacket. Background: mustard.
+43. Middle-aged Chinese actress, 50s, short black hair with grey streak, light skin, dark eyes, jade pendant, black blazer. Background: crimson.
+44. Middle-aged Middle Eastern actor, 50s, grey beard, olive skin, dark eyes, white shirt, black vest. Background: emerald.
+45. Elderly Caucasian actor, 80s, wild white hair, fair skin, pale blue eyes, grey cardigan. Background: dark sapphire.
+46. Middle-aged African actress, 50s, short natural grey hair, very dark skin, brown eyes, colorful head wrap, gold earrings. Background: deep orange.
+47. Middle-aged Korean actor, 40s, neat black hair, light skin, dark eyes, glasses, beige trench coat. Background: olive green.
+48. Character actor, Caucasian, 40s, bald, thick black mustache, fair skin, brown eyes, checkered shirt. Background: teal.
+
+------------------------------------------------------------
+DIRECTORS
+------------------------------------------------------------
+49. Caucasian male director, 50s, grey hair, beard, black-rimmed glasses, black turtleneck, beret. Background: deep red.
+50. African-American female director, 40s, short natural hair, dark brown skin, gold-rimmed glasses, black blazer. Background: amber.
+51. Indian male director, 40s, wavy black hair, beard, brown skin, dark eyes, white linen shirt, scarf. Background: deep teal.
+52. Japanese female director, 50s, sharp grey bob, light skin, dark eyes, black high-neck top. Background: sapphire blue.
+53. Hispanic male director, 60s, white hair, white mustache, olive skin, brown eyes, cream suit, panama hat. Background: forest green.
+54. Chinese female director, 30s, black hair in low bun, light skin, dark eyes, round glasses, grey jacket. Background: plum.
+55. Middle Eastern male director, 40s, short dark hair, stubble, olive skin, dark eyes, leather jacket. Background: burnt orange.
+56. Caucasian female director, 60s, curly grey hair, fair skin, blue eyes, red scarf, black coat. Background: navy.
+
+------------------------------------------------------------
+WRITERS
+------------------------------------------------------------
+57. Caucasian male writer, 30s, messy brown hair, fair skin, glasses, wool sweater. Background: mustard.
+58. African-American female writer, 30s, locs tied up, dark brown skin, brown eyes, denim shirt. Background: teal.
+59. Indian female writer, 40s, short black hair, brown skin, glasses, maroon cardigan. Background: soft gold.
+60. Korean male writer, 20s, black hair, light skin, dark eyes, oversized grey hoodie. Background: coral.
+61. Hispanic female writer, 50s, grey-streaked curly hair, olive skin, cat-eye glasses, green blouse. Background: burgundy.
+62. Elderly Caucasian male writer, 70s, white hair, fair skin, tweed jacket, reading glasses, warm smile. Background: forest green.
+
+------------------------------------------------------------
+PRODUCERS & EXECUTIVES
+------------------------------------------------------------
+63. Caucasian male producer, 50s, slicked silver hair, fair skin, navy pinstripe suit, gold tie. Background: deep sapphire.
+64. African-American female producer, 50s, sleek bob, dark brown skin, brown eyes, white power suit, gold earrings. Background: emerald.
+65. Chinese male producer, 40s, short black hair, light skin, dark eyes, black suit, red pocket square. Background: crimson.
+66. Indian female producer, 40s, long dark hair, brown skin, dark eyes, emerald silk blazer. Background: deep purple.
+67. Middle Eastern female producer, 40s, dark wavy hair, olive skin, dark eyes, camel coat, gold necklace. Background: navy.
+68. Hispanic male producer, 60s, bald, grey goatee, olive skin, brown eyes, cream suit. Background: rust orange.
+
+------------------------------------------------------------
+EXTRA VARIETY
+------------------------------------------------------------
+69. Southeast Asian (Thai) actress, 20s, long dark hair, tan skin, dark eyes, gold silk top. Background: deep teal.
+70. Vietnamese actor, 30s, short black hair, light tan skin, dark eyes, white shirt, thin black tie. Background: amber.
+71. Pacific Islander actor, 30s, long black hair tied back, brown skin, brown eyes, floral shirt. Background: ocean blue.
+72. Scandinavian actress, 40s, long straight white-blonde hair, very fair skin, pale blue eyes, grey knit sweater. Background: dusty rose.
