@@ -524,7 +524,26 @@ const ART={
   person(710,280,90,'#2a2040',{pose:'fight',t});ground(430,['#0a0d1a','#04060c']);c.fillStyle='#141a30';c.fillRect(300,380,300,40);
   person(460,450,200,'#020308',{t,pose:'phone',broad:true,aura:'rainbow'});glow(468,282,40,'rgba(95,208,255,1)',.6);vignette(.55)},
 };
-function frame(now){const t=reduceMotion?2:(now-artT0)/1000;c.save();c.clearRect(0,0,W,H);try{(ART[artType]||ART.void)(t)}catch(e){console.error(e)}c.restore();requestAnimationFrame(frame)}
+/* ---- scene pictures (images/*.jpg); any scene without one falls back to the drawn art above ---- */
+const PHOTO_NAMES=['planet','city','legend','home','bully','cafeteria','caveEntrance','cave','hospital','training','street','spar','ambush','hospitalNight','lantern','multiverse','shadow','aura','returnHome','tournament'];
+const PH={};PHOTO_NAMES.forEach(n=>{const im=new Image();im.src='images/'+n+'.jpg';PH[n]=im});
+function photoKey(){const o=artOpt;switch(artType){
+ case'planet':case'city':case'legend':case'home':case'cafeteria':case'caveEntrance':case'cave':case'training':case'street':case'ambush':case'lantern':case'multiverse':case'shadow':case'aura':case'returnHome':return artType;
+ case'school':return o.bully?'bully':null;case'hospital':return o.night?'hospitalNight':'hospital';case'arena':return o.enemy==='dex'?'spar':o.tournament?'tournament':null}return null}
+function drawPhoto(im,t){const s=Math.max(W/im.naturalWidth,H/im.naturalHeight)*(1.06+.04*Math.sin(t*.15));const dw=im.naturalWidth*s,dh=im.naturalHeight*s;
+ c.drawImage(im,(W-dw)/2+Math.sin(t*.12)*(dw-W)/2*.85,(H-dh)/2+Math.cos(t*.1)*(dh-H)/2*.6,dw,dh)}
+function photoFx(t){const o=artOpt;
+ if(artType==='cave'&&o.giant){c.fillStyle=`rgba(255,0,0,${.14+.1*Math.sin(t*8)})`;c.fillRect(0,0,W,H)}
+ if(artType==='ambush'&&o.beaten){c.fillStyle=`rgba(150,0,20,${.35+.1*Math.sin(t*2)})`;c.fillRect(0,0,W,H)}
+ if(artType==='street'&&o.won){c.fillStyle='rgba(95,208,255,.10)';c.fillRect(0,0,W,H)}
+ if(artType==='multiverse'&&o.label)textGlow(o.label,480,490,30,`hsl(${o.hue??200},100%,70%)`,.95);
+ if(artType==='shadow'&&o.arise)textGlow('ARISE',480,90,70,'#9a7bff',.75+.25*Math.sin(t*3));
+ if(artType==='lantern'&&o.white)glow(560,420,160,'rgba(255,255,255,1)',.35+.15*Math.sin(t*3));
+ const col={lantern:'rgba(150,255,180,.9)',shadow:'rgba(150,100,255,.9)',aura:'rgba(255,255,255,.9)',legend:'rgba(255,200,120,.9)',cafeteria:'rgba(255,170,90,.9)',training:'rgba(95,208,255,.8)'}[artType]||'rgba(255,255,255,.55)';
+ particles(t,26,11,col,{vy:-18,size:1.6});vignette(.45)}
+function frame(now){const t=reduceMotion?2:(now-artT0)/1000;c.save();c.clearRect(0,0,W,H);
+ try{const k=photoKey(),im=k&&PH[k];if(im&&im.complete&&im.naturalWidth){drawPhoto(im,t);photoFx(t)}else(ART[artType]||ART.void)(t)}catch(e){console.error(e)}
+ c.restore();requestAnimationFrame(frame)}
 requestAnimationFrame(frame);
 function shake(){const s=$('#stage');s.classList.remove('shake','flash');void s.offsetWidth;s.classList.add('shake','flash')}
 
