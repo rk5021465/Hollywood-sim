@@ -685,6 +685,8 @@ body.prephone .tb-ib[aria-label="Open phone"]{display:none}
 .hero13>*:not(.herobg){position:relative;z-index:1}.hero13 .herobg{z-index:0}
 .wk2bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.28;pointer-events:none}
 .wk2 .wk2bg+*{position:relative}
+body.retrophone .pscreen.home{background:linear-gradient(180deg,#1d2a24,#0f1713)!important}
+body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3px}
 </style>
 </head>
 <body>
@@ -4491,9 +4493,7 @@ function eraRivalStreamers(){if(!isEraMode())return;const y=S.year;S.rivals.forE
 // period-correct wording
 addNews=(function(o){return function(s){try{if(S&&S.year<2005)s=String(s).replace(/hits (\d+)M views in 24 hours \((\d+)% positive\)/,'plays before every big film; audiences react ($2% positive)').replace(/#\w+ trends\.?/g,'').replace(/streaming sign-ups/g,'video rentals')}catch(e){}return o(s)}})(addNews);
 // the phone and social apps arrive with smartphones
-render=(function(o){return function(){o();try{const pre=!!(S&&S.year<2008);document.body.classList.toggle('prephone',pre);if(S&&isEraMode())document.body.dataset.era=eraOf().k;else delete document.body.dataset.era}catch(e){}}})(render);
-openPhone=(function(o){return function(a){if(S&&S.year<2008)return toast('Smartphones haven’t been invented yet. Check the trades and your inbox instead.');return o(a)}})(openPhone);
-weekRows=(function(o){return function(){let r=o();try{if(S.year<2008)r=r.filter(x=>!/Trending:/.test(x[1]))}catch(e){}return r}})(weekRows);
+render=(function(o){return function(){o();try{if(S&&isEraMode())document.body.dataset.era=eraOf().k;else delete document.body.dataset.era}catch(e){}}})(render);
 
 /* ---------- a new decade: full-screen moment ---------- */
 function eraScreen(e,next){if(typeof document==='undefined'||!document.body||!document.getElementById)return next&&next();const old=document.getElementById('eras');if(old)old.remove();
@@ -4522,7 +4522,7 @@ hq8=function(){const t=tNow();const F=homeFocus();const rows=weekRows();const ta
  const items=S.projects.filter(p=>!p.vault).map(p=>({p})).concat(S.films.filter(f=>!f.ended&&f.shown&&f.dist!=='stream'&&f.dist!=='sell').map(f=>({f})),S.shows.filter(s=>s.status==='prod'||s.status==='airing').map(s=>({s})));
  let bo=[];try{bo=weekendList().sort((a,b)=>b.wkG-a.wkG).slice(0,5)}catch(x){}
  const T=(i,l,a,b)=>`<button class="qt" onclick="${a}">${ic(i,'#B5821C')}<span>${l}</span>${b?`<i>${b}</i>`:''}</button>`;
- const phone=S.year>=2008;
+ const phone=true;
  return `${e?`<div class="h2row">${eraChip()}<span class="muted" style="font-size:12px">${S.year}</span></div>`:''}
  <section class="wk2" ${e?`style="--e1:${e.c[0]};--e2:${e.c[1]}"`:''}><small>THIS WEEK</small><h3 onclick="${F.a}">${F.h}</h3><div class="wk2s">${F.s.map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
  ${F.cta?`<button class="wk2b alt" onclick="${F.a}">${F.cta}</button>`:''}<button class="wk2go" onclick="nextWeek()">Next week · ${fmtDay(addDays(curDate(),7))} ›</button>
@@ -4610,6 +4610,15 @@ title=(function(o){return function(){o();try{const m=document.querySelector('#ap
 render=(function(o){return function(){o();try{const w=document.querySelector('#app .wk2');if(w&&!w.querySelector('.wk2bg')){const e=isEraMode()?eraOf().k:'e20';w.insertAdjacentHTML('afterbegin',`<div class="wk2bg" style="background-image:url(${MED}bg_${ERA_BG[e]||'skyline'}.jpg)"></div>`)}}catch(e){}}})(render);
 // warm the cache for the first scenes
 if(typeof Image!=='undefined')setTimeout(()=>{['skyline','office_morning','office_day','set'].forEach(n=>{const i=new Image();i.src=MED+'bg_'+n+'.jpg'})},1500);
+
+/* ===================== v17.1 — the phone follows history: cell phone before 2009, social apps from 2009 ===================== */
+const SOCIAL_APPS=['chirp','clipz','snap','vid'];
+function appsHidden(){const y=(S&&S.year)||2026;const h=[];if(y<2009)h.push(...SOCIAL_APPS);if(y<1995)h.push('mail');return h}
+phoneRender=(function(o){return function(){const hid=appsHidden();const keep=PAPPS.slice();if(hid.length){const f=keep.filter(a=>!hid.includes(a[0]));PAPPS.length=0;PAPPS.push(...f)}try{o()}finally{PAPPS.length=0;PAPPS.push(...keep)}try{document.body.classList.toggle('retrophone',(S&&S.year<2009));if(hid.length)document.querySelectorAll('.hdock .happ, .hgrid .happ').forEach(b=>{const m=(b.getAttribute('onclick')||'').match(/(?:openPhone|phGo)[(].([a-z]+)./);if(m&&hid.includes(m[1]))b.remove()})}catch(e){}}})(phoneRender);
+openPhone=(function(o){return function(a){if(a&&appsHidden().includes(a)){return toast(a==='mail'?'Email isn’t around yet. It arrives in the mid-90s.':'Social media doesn’t exist yet. It takes off in 2009.')}return o(a)}})(openPhone);
+weekRows=(function(o){return function(){let r=o();try{if(S.year<2009)r=r.filter(x=>!/Trending:/.test(x[1]))}catch(e){}return r}})(weekRows);
+hq8=(function(o){return function(){let h=o();try{if(S.year<2009)h=h.replace(/<button class="qt" onclick="fansModal\(\)">[\s\S]*?<\/button>/,'').replace(/<button class="qt" onclick="openPhone\(\)">[\s\S]*?<span>Social apps<\/span>[\s\S]*?<\/button>/,`<button class="qt" onclick="openPhone()">${ic('chat','#B5821C')}<span>Cell phone</span></button>`)}catch(e){}return h}})(hq8);
+phGo=(function(o){return function(app,sub){if(app&&appsHidden().includes(app))return toast(app==='mail'?'Email isn’t around yet. It arrives in the mid-90s.':'Social media doesn’t exist yet. It takes off in 2009.');return o(app,sub)}})(phGo);
 
 
 applyTheme();title();
