@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
         web = new WebView(this);
         web.setBackgroundColor(Color.parseColor("#0d0b10"));
         WebSettings s = web.getSettings();
+        s.setMediaPlaybackRequiresUserGesture(false);
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);   // game saves use localStorage
         s.setDatabaseEnabled(true);
