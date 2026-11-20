@@ -959,6 +959,12 @@ const SCENES={
   {quest:{id:'oa1',type:'Hidden',title:'Survive Your Wounds',desc:'Your body has studied the healing.',goals:[['Recovered','100%']],rw:{exp:800,coins:1000,cards:['regen']}}},
   {done:'oa1'},
   '@Veyra|Your body is strange, child. It learns. It adapts. Stay, and we will train you.',
+  'And the whole Corps trained me.',
+  'Hal Jordan taught me to fly faster than thought. John Stewart taught me to build constructs like an architect. Guy Gardner taught me to never, ever back down.',
+  'Kilowog drilled me until I dropped — then drilled me again. Katma Tui and Arisia taught me control. Tomar-Re and Salakk taught me the Corps\' history and its laws.',
+  'Alan Scott showed me the light of the starheart. Abin Sur\'s old lessons, Kyle Rayner\'s imagination, Boodikka\'s fists, even little Ch\'p and G\'nort — every Lantern had something to teach.',
+  '@Sinestro|And I will teach you the one thing they cannot, boy. Fear. Learn it, and you will master it.',
+  {fx:()=>{S.flags.lanterns=true;toast(`Trained by ${ROSTER.lantern.length} Green Lanterns`,'gold')}},
   {train:'lantern'},
   {quest:{id:'oa2',type:'Special',title:'The Lantern Trial',desc:'Defeat the Construct Titan of the Corps.',goals:[['Defeat the Construct Titan','0 / 1']],rw:{exp:3000,coins:3000,cards:['whitering'],title:'White Lantern'}}},
   {fight:{name:'Construct Titan',lv:120,hp:()=>Math.round(atkPow()*14),atk:()=>Math.round(maxHP()*.09),def:0,art:'arena',artOpt:{enemy:'titan'},moves:['Emerald Hammer','Construct Barrage','Willpower Beam'],intro:'A giant of solid green light rises.',showStats:true}},
@@ -987,6 +993,8 @@ const SCENES={
   {art:'shadow',opt:{arise:true}},{fx:()=>shake()},
   '@Peter|...ARISE.',
   'Shadows rose from every universe. Anime. DC. Marvel. Every master, every hero, every monster — kneeling in my Shadow Army.',
+  'Lelouch. Levi. Gojo. Guts. Edward Elric. Killua. Saitama himself. A hundred of the strongest guys in all of anime — and the entire Green Lantern Corps, from Hal Jordan and Kilowog to Sinestro.',
+  '!Shadow Army roster updated. Open CREWS → YOUR SHADOW ARMY to see every soldier.',
   {fx:()=>{S.army='Every character · Anime, DC, Marvel';S.title='Monarch of Shadows';hud();toast('Shadow Army: every universe','gold')}},
   'And I trained them. All of them. Until the army moved like one body.',
   {art:'aura'},
@@ -1028,6 +1036,10 @@ const SCENES={
   {end:true}]},
 };
 
+const ROSTER={
+ anime:['Lelouch vi Britannia','Miyuki Shirogane','Shigeo Kageyama','Koyomi Araragi','Spike Spiegel','Rintaro Okabe','Edward Elric','Koro-sensei','Kazuma Sato','Arataka Reigen','Yu Ishigami','Roy Mustang','Levi Ackerman','Saitama','Satoru Gojo','Askeladd','Tanjiro Kamado','Kamina','Toshinori Yagi','Subaru Natsuki','Sakuta Azusagawa','Killua Zoldyck','Hachiman Hikigaya','Shoya Ishida','Alphonse Elric','Kiritsugu Emiya','Rimuru Tempest','Maes Hughes','Kento Nanami','Tengen Uzui','Iskandar','Alex Louis Armstrong','Lin Yao','Shoto Todoroki','L Lawliet','Light Yagami','Guts','Mumen Rider','Archer','Joseph Joestar','Izuku Midoriya','Mirio Togata','Gilgamesh','Gintoki Sakata','Otto Suwen','Kyojuro Rengoku','Soma Yukihira','Simon','Kyon','Meme Oshino','Genos','Scar','Jotaro Kujo','Shota Aizawa','Hotaro Oreki','Hisoka Morow','Deishu Kaiki','Yato','Kraft Lawrence','Taki Tachibana','Ryuji Takasu','Erwin Smith','Fumikage Tokoyami','Yuji Itadori','Senku Ishigami','Ruijerd Superdia','Thorkell','Musashi Goda','Rei Kiriyama','Panda','Kirei Kotomine','Gon Freecss','Ritsu Kageyama','Eren Yeager','James','Katsuki Bakugo','King Bradley','Shoyo Hinata','Sora','Kakashi Hatake','Thorfinn','Shinya Kogami','Giyu Tomioka','Thors','Inosuke Hashibira','Reg','Shinji Ikari','Ira Gamagoori','Shirou Emiya','Shizuo Heiwajima','Dio Brando','Leorio Paradinight','Kotaro Tatsumi','Senketsu','Greed','Jet Black','Diarmuid Ua Duibhne','Dimple','Fafnir','Cu Chulainn'],
+ lantern:['Alan Scott','Hal Jordan','John Stewart','Guy Gardner','Kyle Rayner','Jennie-Lynn Hayden','Cary Wren','Anya Savenlovich','Kreon','Abin Sur','Kilowog','Salakk','Olapet','Katma Tui','Sinestro','Brik','Tomar-Re','Tomar-Tu','Raker Qarrigat','Sool','Ash','Laira','Lysandra','Krista','Adam','Hammeroon','Boodikka','Arisia','Penelopian','Chaselon','Larvox',"G'nort","Ch'p",'Arkkis Chummuck',"Alisand'r",'Adara'],
+};
 const MONTAGE=[
  {who:'Goku & Whis',w:'Dragon Ball',l:'Ultra Instinct — not just a sign anymore. Mastered.',hue:200,st:{agi:300}},
  {who:'Kakashi & Itachi',w:'Naruto',l:'See a technique once, copy it forever.',hue:0,card:'copy'},
@@ -1107,7 +1119,8 @@ function openPanel(p){document.querySelectorAll('#tabs button').forEach(b=>b.cla
     ['Iron Veil','#aab4c6','Magnus Drake','Rank #3. Living-metal skin and gravity crushing. Nearly impossible to hurt.',41,'STR 170 · AGI 60 · VIT 200 · INT 40'],
     ['Phantom Lotus','#b07bff','Sera Nyx','Rank #4. Illusions and shadow blades. You never know which Sera is real.',40,'STR 70 · AGI 150 · VIT 75 · INT 160']];
    html=crews.map(([n,cc,l,pw,lv,st])=>`<div class="crew" style="--cc:${cc}"><h4>${n.toUpperCase()}</h4><div class="kv"><span>Leader</span><b>${l}</b></div><div class="pw">${pw}</div><div class="kv"><span>Appraisal</span><b class="mono">${ap?`Lv.${lv} · ${st}`:'??? — needs Eye of Appraisal'}</b></div>${back?`<div class="small">Compared to you: an ant next to a galaxy.</div>`:''}</div>`).join('')+
-    `<div class="crew" style="--cc:var(--cyan)"><h4>YOUR CREW</h4><div class="pw">${back?'Locked until the Power Competition. Your Shadow Army is waiting.':'Locked. Become the strongest first.'}</div></div>`}
+    `<div class="crew" style="--cc:var(--cyan)"><h4>YOUR CREW</h4><div class="pw">${back?'Locked until the Power Competition. Your Shadow Army is waiting.':'Locked. Become the strongest first.'}</div></div>`+
+    (S.army!=='—'?`<div class="crew" style="--cc:var(--violet)"><h4>YOUR SHADOW ARMY · ${ROSTER.anime.length+ROSTER.lantern.length}+ SOLDIERS</h4><div class="lbl" style="margin:4px 0 0">ANIME · TOP 100</div><div class="pw">${ROSTER.anime.join(' · ')}</div><div class="lbl" style="margin:8px 0 0">GREEN LANTERN CORPS</div><div class="pw">${ROSTER.lantern.join(' · ')}</div><div class="small">…plus every other character from every universe — Anime, DC and Marvel.</div></div>`:'')}
   if(p==='shop'){title='SYSTEM SHOP';const items=[['elixir','Stat Elixir','+1 stat point',150],['potion','Healing Potion','Heals 50% HP in battle',60],['pack','Basic Card Pack','A random basic card you don’t own',400]];
    html=`<p>Coins: <b class="coin">◈ ${fmt(S.coins)}</b> · Potions: ${S.items.potion||0}</p>`+items.map(([id,n,d,cost])=>`<div class="goal" style="align-items:center"><span><b class="em">${n}</b><br><span class="small">${d}</span></span><button class="btn" data-buy="${id}" data-cost="${cost}" ${S.coins<cost||!S.systemOn?'disabled':''}>◈ ${cost}</button></div>`).join('')+(S.systemOn?'':'<p class="small">The shop opens once you have a System.</p>')}
   if(p==='menu'){title='SYSTEM MENU';html=`<p>Your progress saves automatically at the start of every scene.</p>
