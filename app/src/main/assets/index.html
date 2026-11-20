@@ -608,6 +608,71 @@ body:not(.light) .nb-page{background:repeating-linear-gradient(180deg,#2a2520 0 
 .xhide{display:none!important}.moretg{display:block;margin:10px auto 0;padding:8px 16px;border-radius:20px;border:1px solid color-mix(in srgb,var(--line) 60%,#E8B84A);background:var(--card);color:var(--gold);font:inherit;font-weight:800;font-size:13px}
 .nb-row small,.rptbtn small,.nb-head small{text-transform:none!important;letter-spacing:0!important;font-weight:500!important}.nb-head small{letter-spacing:2px!important;font-weight:800!important;text-transform:uppercase!important}
 .nb-head div{padding-right:58px}
+/* ===================== v16 design language ===================== */
+body.light{background:#F7F5F1!important}
+h1,h2,.sec h2,.stitle,.tb-t b,.hh{font-family:Roboto,Inter,system-ui,sans-serif!important;letter-spacing:-.3px}
+h2{font-weight:800!important}.sec h2{font-weight:800!important;font-size:22px!important}.sec h2::before{display:none}.sec h2{padding-left:0!important}
+.tb-t b{font-weight:800!important;font-size:19px!important}
+body{--acc:#D9762B;--acc2:#F2B45A}
+body[data-era=e70]{--acc:#D9762B;--acc2:#F2B45A}body[data-era=e80]{--acc:#D6337A;--acc2:#9B6BFF}body[data-era=e90]{--acc:#119C9C;--acc2:#5FD3C4}body[data-era=e00]{--acc:#3B6FD6;--acc2:#8DB6FF}body[data-era=e10]{--acc:#D63A3F;--acc2:#FF8A6B}body[data-era=e20],body[data-era=e30]{--acc:#C9962E;--acc2:#FFD77A}
+body:not([data-era]){--acc:#C9962E;--acc2:#FFD77A}
+.h2row{display:flex;align-items:center;justify-content:space-between;margin:2px 0 8px}
+.erabadge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;padding:6px 11px;border-radius:20px;background:color-mix(in srgb,var(--e1) 14%,var(--card));color:color-mix(in srgb,var(--e1) 70%,#000)}
+body:not(.light) .erabadge{color:var(--e2)}
+.wk2{position:relative;overflow:hidden;border-radius:24px;padding:18px;background:linear-gradient(150deg,#2A1C10,#100b07);color:#fff;box-shadow:0 16px 34px rgba(31,22,12,.28)}
+.wk2::after{content:"";position:absolute;right:-50px;top:-60px;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,var(--e2,var(--acc2)),transparent 70%);opacity:.38;pointer-events:none}
+.wk2 small{position:relative;font-size:11px;letter-spacing:1.6px;font-weight:800;color:var(--e2,var(--acc2))}
+.wk2 h3{position:relative;font-size:21px;font-weight:800;line-height:1.2;margin:5px 0 12px;cursor:pointer}
+.wk2s{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}.wk2s div{background:#ffffff12;border-radius:14px;padding:9px 10px;min-width:0}.wk2s small{display:block;color:#CFC6B8;font-size:10px;letter-spacing:.8px;text-transform:uppercase}.wk2s b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk2go{position:relative;width:100%;height:54px;border:0;border-radius:16px;background:linear-gradient(180deg,var(--e2,var(--acc2)),var(--e1,var(--acc)));color:#fff;font:inherit;font-size:16px;font-weight:800;box-shadow:0 10px 22px rgba(0,0,0,.25);text-shadow:0 1px 2px #0003}
+.wk2go.sm{height:46px;width:auto;padding:0 20px;margin-top:10px}.wk2go:active{transform:scale(.98)}
+.wk2b{position:relative;width:100%;height:44px;margin-bottom:8px;border-radius:14px;border:1px solid #ffffff40;background:#ffffff14;color:#fff;font:inherit;font-weight:800}
+.wk2sub{position:relative;display:flex;gap:6px;margin-top:8px}.wk2sub button{flex:1;min-height:36px;border-radius:11px;border:0;background:#ffffff12;color:#EDE6DA;font:inherit;font-size:12px;font-weight:700}
+.hh{display:flex;justify-content:space-between;align-items:center;font-size:12.5px!important;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:22px 2px 9px}
+.hh .lk{border:0;background:none;color:var(--acc);font:inherit;font-size:12.5px;font-weight:800;letter-spacing:.3px;text-transform:none}
+.evl{display:flex;flex-direction:column;gap:8px}.evr{display:flex;align-items:center;gap:11px;width:100%;padding:11px 12px;border:0;border-radius:16px;background:var(--card);color:var(--text);font:inherit;text-align:left;box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 16px rgba(40,30,20,.05)}
+.evd{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:18px;background:color-mix(in srgb,var(--c) 14%,var(--card))}.evt{flex:1;font-size:14px;line-height:1.3}.evr i{font-style:normal;color:var(--acc);font-weight:800;font-size:18px}
+.empty2{display:flex;flex-direction:column;align-items:center;gap:2px;padding:22px;border-radius:20px;background:var(--card);text-align:center}.empty2 b{font-size:16px}.empty2 span{color:var(--muted);font-size:13px}
+.qrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.bo2{background:var(--card);border-radius:18px;padding:4px 14px;box-shadow:0 6px 16px rgba(40,30,20,.05)}.bo2r{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}.bo2r:last-child{border:0}.bo2r em{font-style:normal;font-weight:900;color:var(--muted);width:16px}.bo2r b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bo2r span{font-size:12px;color:var(--muted)}.bo2r strong{min-width:62px;text-align:right}.bo2r.me b,.bo2r.me strong{color:var(--acc)}
+.news2{background:var(--card);border-radius:18px;padding:4px 14px;box-shadow:0 6px 16px rgba(40,30,20,.05)}.news2 p{padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.4}.news2 p:last-child{border:0}
+.qt{background:var(--card)!important;border:1px solid var(--line)!important;box-shadow:0 1px 2px rgba(0,0,0,.03),0 6px 16px rgba(40,30,20,.05)!important;min-height:84px!important}
+.qt>svg{background:color-mix(in srgb,var(--acc) 14%,var(--card))!important;box-shadow:none!important}.qt>svg *{stroke:var(--acc)!important}
+.qt span{font-size:12px!important}
+/* event cards */
+.scn2{position:fixed;inset:0;z-index:60;background:rgba(20,16,12,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 14px) 14px calc(env(safe-area-inset-bottom,0px) + 14px);animation:scnIn .3s ease-out both;overflow:auto}
+.scn2.out{animation:scnOut .24s ease-in both}
+.scn2-top{display:flex;justify-content:center;margin-bottom:10px}.scn2-chip{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:20px;background:#ffffff22;color:#fff;border:1px solid #ffffff30}
+.scn2-card{margin:auto 0;border-radius:28px;background:var(--card);color:var(--text);overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35);animation:cardIn .4s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes cardIn{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:none}}
+.scn2-img{position:relative;height:200px}.scn2-img>svg{width:100%;height:100%;display:block}.scn2-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35))}
+.scn2-pt{position:absolute;right:16px;bottom:-40px;z-index:2;border-radius:50%;border:4px solid var(--card);box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.scn2.call .scn2-pt{animation:callPulse 1.6s ease-in-out infinite}
+.scn2-body{padding:16px 18px 18px}.scn2-body>small{display:block;padding-right:110px;font-size:11.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--acc)}
+.scn2-body h2{font-size:21px!important;line-height:1.25;margin:10px 0 6px!important;color:var(--text)!important}.scn2-body h2 .big{font-size:26px;color:var(--acc)}.scn2-body p{font-size:14.5px;line-height:1.45;color:var(--muted);margin-bottom:6px}
+.scn2-opt{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;margin-top:9px;padding:13px 15px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);color:var(--text);font:inherit;text-align:left}
+.scn2-opt b{display:block;font-size:15px}.scn2-opt small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;text-transform:none;letter-spacing:0}.scn2-opt i{font-style:normal;color:var(--acc);font-weight:800;font-size:18px}
+.scn2-opt.pri{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,var(--card))}.scn2-opt:active{transform:scale(.98)}
+.scn2-you{margin-top:10px;font-size:13px;font-weight:700;color:var(--muted)}.scn2-say{margin-top:8px;padding:12px 14px;border-radius:14px;background:var(--card2);font-size:14.5px;line-height:1.4}
+.scn2-fx{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;padding:6px 11px;border-radius:10px;background:color-mix(in srgb,var(--acc) 14%,var(--card));color:var(--acc)}
+/* era picker + era screen */
+.erapick{display:flex;flex-direction:column;gap:8px;margin:4px 0 14px}.erapick>small{font-weight:800;letter-spacing:.6px}
+.eropt{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px 16px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);color:var(--text);font:inherit;text-align:left}.eropt b{font-size:16px}.eropt span{font-size:13px;color:var(--muted)}.eropt i{position:absolute;right:12px;top:12px;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 8px;border-radius:8px;background:#E6F5EC;color:#1F7A47}
+.eropt.on{border-color:#D9762B;background:color-mix(in srgb,#D9762B 8%,var(--card))}
+.erascr{position:fixed;inset:0;z-index:70;color:#fff;overflow:auto;background:radial-gradient(120% 70% at 50% 10%,color-mix(in srgb,var(--e1) 55%,#000),var(--e3) 70%);animation:scnIn .45s ease-out both}
+.erascr.out{animation:scnOut .3s ease-in both}
+.eragrid{position:absolute;left:-20%;right:-20%;bottom:0;height:260px;background:linear-gradient(transparent,color-mix(in srgb,var(--e1) 30%,transparent)),repeating-linear-gradient(90deg,color-mix(in srgb,var(--e2) 30%,transparent) 0 1px,transparent 1px 44px),repeating-linear-gradient(0deg,color-mix(in srgb,var(--e2) 30%,transparent) 0 1px,transparent 1px 32px);transform:perspective(320px) rotateX(58deg);transform-origin:bottom;pointer-events:none}
+.erain{position:relative;padding:calc(env(safe-area-inset-top,0px) + 56px) 24px 40px}
+.erachip{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:20px;background:#ffffff1c;color:var(--e2)}
+.erayr{font-size:112px;font-weight:900;letter-spacing:-5px;line-height:.92;margin-top:14px;background:linear-gradient(180deg,#fff,var(--e2) 55%,var(--e1));-webkit-background-clip:text;background-clip:text;color:transparent;animation:yrIn .8s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes yrIn{from{opacity:0;transform:translateY(30px) scale(.9);letter-spacing:10px}to{opacity:1;transform:none}}
+.erain h2{font-size:30px!important;margin:10px 0 6px!important;color:#fff!important}.erain>p{color:#e4dbe9;font-size:15px;line-height:1.5}
+.eranw{display:flex;gap:12px;align-items:center;margin-top:12px;padding:12px 14px;border-radius:16px;background:#ffffff10;border:1px solid #ffffff1c;animation:pbIn .5s ease-out both}.eranw:nth-of-type(2){animation-delay:.15s}.eranw:nth-of-type(3){animation-delay:.3s}
+.eranw span{font-size:26px}.eranw b{display:block;font-size:15px}.eranw small{color:#e4dbe9;font-size:12.5px}
+.erago{width:100%;height:56px;margin-top:24px;border:0;border-radius:18px;background:linear-gradient(90deg,var(--e1),var(--e2));color:#fff;font:inherit;font-size:16px;font-weight:800;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+/* no phone before smartphones */
+body.prephone .tb-ib[aria-label="Open phone"]{display:none}
+.eranw small,.erachip,.scn2-opt small{text-transform:none!important;letter-spacing:0!important;font-weight:500!important}.erachip{letter-spacing:1px!important;font-weight:800!important;text-transform:uppercase!important}
 </style>
 </head>
 <body>
@@ -615,7 +680,7 @@ body:not(.light) .nb-page{background:repeating-linear-gradient(180deg,#2a2520 0 
 <div id="modal"></div>
 <script>
 /* ===================== DATA (grounded in real industry figures) ===================== */
-const START_YEAR=2026, END_YEAR=2050;
+let START_YEAR=2026, END_YEAR=2050;
 const INFL=0.025;                     // ~2.5%/yr cost & ticket growth (avg US ticket $11.31 in 2025)
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const CAL=[
@@ -816,7 +881,7 @@ function wipe(){try{localStorage.removeItem(KEY)}catch(e){}}
 const tNow=()=>(S.year-START_YEAR)*12+S.month;
 function tLabel(t){return MON[((t%12)+12)%12]+' '+(START_YEAR+Math.floor(t/12))}
 const yearOf=t=>START_YEAR+Math.floor(t/12);
-const inf=t=>Math.pow(1+INFL,yearOf(t==null?tNow():t)-2025);
+const inf=t=>{const y=yearOf(t==null?tNow():t);return y>=2000?Math.pow(1+INFL,y-2025):Math.pow(1+INFL,-25)*Math.pow(1.045,y-2000)};
 const I=()=>inf(tNow());
 const creditLimit=()=>Math.round((100+S.rep*3+(S.stock.public?S.stock.price*20:0))*I());
 const ev=k=>S.ev[k]&&S.ev[k].until>=tNow()?S.ev[k]:null;
@@ -2491,7 +2556,7 @@ function genHistory(){S.hist=[];const P=S.people;const yNow=S.year;
    const h={title:genTitle(g),g,studio:rv.n,y,t:(y-START_YEAR)*12+RI(0,11),dom,ww:+(dom*R(1.7,2.6)).toFixed(1),critic:RI(18,97),lead,co,sup,dir:pickAt('directors',y,26,[]),writer:pickAt('writers',y,22,[]),comp:pickAt('composers',y,22,[]),dp:pickAt('dps',y,24,[])};
    S.hist.push(h);yearFilms.push(h)}});
   const best=yearFilms.slice().sort((a,b)=>b.critic+GEN[b.g].award*8-a.critic-GEN[a.g].award*8)[0];if(best){best.awp=1;best.awd=1;best.awl=1}
-  if(y>=START_YEAR-16){const outs=[TECH_STREAMER.n].concat(S.rivals.filter(r=>r.svc).map(r=>r.svc),['Broadcast TV']);
+  if(y>=START_YEAR-16){const outs=(y>=2007?[TECH_STREAMER.n].concat(S.rivals.filter(r=>r.svc).map(r=>r.svc)):[]).concat(['Broadcast TV']);
    for(let i=0;i<4;i++){const g=pick(Object.keys(TV_GENRES));const ex=[];const lead=pickAt('actors',y,18,ex);ex.push(lead);
     S.hist.push({tv:1,title:pick(TVW[0])+' '+pick(TVW[1]),g,studio:pick(outs),y,t:(y-START_YEAR)*12+RI(0,11),critic:RI(25,96),views:+R(2,60).toFixed(1),lead,co:pickAt('actors',y,18,ex),writer:pickAt('writers',y,22,[])})}}}
  S.hist.sort((a,b)=>a.t-b.t);CAREER=null}
@@ -4375,6 +4440,111 @@ function counterProgram(){if(!S||S.cash<600)return;const t=tNow();const alive=S.
  S.projects.filter(p=>!p.vault&&p.dist==='wide'&&!p.cp&&p.releaseT>t+2&&p.releaseT<t+8&&(['big','tent'].includes(p.tier)||(p.prod||0)>90*I())).forEach(p=>{p.cp=1;if(Math.random()<.45){const r=pick(alive);const g=pick(GENRES);const title=genTitle(g);S.rivalFilms.push({t:p.releaseT,wk:p.relWk||0,lead:null,dir:null,studio:r.n,g,title,hype:RI(95,135),cp:1});addNews(`⚔️ ${esc(r.n)} dates its tentpole <i>${esc(title)}</i> against your <b>${esc(p.title)}</b>.`);try{diary('⚔️','Release-date war',`${esc(r.n)} moved <i>${esc(title)}</i> onto ${esc(p.title)}’s weekend.`)}catch(e){}}})}
 const _nm15=nextMonth;nextMonth=function(){const r=_nm15.apply(this,arguments);try{if(S&&!S.over)counterProgram()}catch(e){}return r};
 finalStage=(function(o){return function(f){o(f);try{if(f&&f.rpt){const a=document.getElementById('app');const btns=a?[...a.querySelectorAll('button.btn.gold')]:[];const last=btns[btns.length-1];if(last)last.insertAdjacentHTML('beforebegin',`<button class="rptbtn" onclick="studioReport(${f.id})"><span>📒</span><div><b>Studio report</b><small>Opening grades and projected financials</small></div><i>›</i></button>`)}}catch(e){}}})(finalStage);
+
+/* ===================== v16 — Eras: start in 1970, live through Hollywood history ===================== */
+const ERAS=[
+ {y:1970,k:'e70',n:'New Hollywood',tag:'Auteurs rule. Gritty dramas, paranoid thrillers and the first summer blockbusters.',c:['#D9762B','#F2B45A','#2A1C10'],
+  news:[['🎥','Directors are king','Bold auteurs get final cut, and critics matter more than ever'],['📺','Network TV licensing','Sell finished films to the three TV networks'],['🦈','The summer blockbuster','One shark movie just changed how studios think about June']],g:{Drama:1.15,Thriller:1.15,Horror:1.1,Superhero:.55,Animation:.8,'Sci-Fi':.9}},
+ {y:1980,k:'e80',n:'The Blockbuster Era',tag:'Summer is the battlefield. Studios bet everything on tentpoles and spectacle.',c:['#D6337A','#7B5CFF','#1c0a24'],
+  news:[['📼','Home video arrives','VHS rentals become a big new income stream'],['🦖','Effects revolution','Sci-fi and fantasy budgets double, and so does the upside'],['📺','Cable TV','Sell old films to new cable channels']],g:{Action:1.2,'Sci-Fi':1.2,Comedy:1.15,Horror:1.1,Drama:.92,Superhero:.75}},
+ {y:1990,k:'e90',n:'Indies & CGI',tag:'Sundance darlings, the animation renaissance and the first all-digital worlds.',c:['#14A3A3','#7FE0D0','#06201f'],
+  news:[['🎬','The indie boom','Festival hits can be bought cheap and sold big'],['🖥️','CGI arrives','Digital effects make the impossible affordable'],['🌏','Global box office','Overseas markets grow fast. China opens in 1994']],g:{Animation:1.25,Action:1.15,Thriller:1.1,Drama:1.05,Superhero:.8}},
+ {y:2000,k:'e00',n:'DVDs & Franchises',tag:'DVD money flows, sequels multiply and fantasy trilogies rule the world.',c:['#3B6FD6','#9CC2FF','#0b1530'],
+  news:[['💿','The DVD gold rush','Home entertainment becomes the biggest profit centre'],['🧙','Franchise fever','Sequels, trilogies and shared worlds dominate'],['🌐','The internet','Trailers go online. Buzz moves faster than ever']],g:{Superhero:1.1,Animation:1.15,Action:1.1,Comedy:1.1,Drama:.95}},
+ {y:2010,k:'e10',n:'Superheroes & Streaming',tag:'Cinematic universes dominate theatres while streamers rewrite the rules at home.',c:['#D63A3F','#FF8A6B','#250808'],
+  news:[['🦸','Cinematic universes','Interconnected superhero films earn billions'],['📡','The streaming wars','Tech giants pour money into originals'],['📱','Social media buzz','Hype now lives on phones and timelines']],g:{Superhero:1.4,Animation:1.1,Action:1.05,Drama:.88,Comedy:.9,Romance:.85}},
+ {y:2020,k:'e20',n:'The Streaming Age',tag:'Shorter windows, fewer screens, and a fight over every subscriber.',c:['#C9962E','#FFD77A','#1c140a'],
+  news:[['🏠','Shorter windows','Films reach home within weeks, not months'],['🎟️','Event cinema','Only big events and horror fill theatres'],['🤖','AI on the horizon','New tools promise cheaper effects, unions push back']],g:{Horror:1.2,Superhero:1.0,Animation:1.05,Drama:.9}},
+ {y:2030,k:'e30',n:'The Next Frontier',tag:'Virtual production, global audiences and whatever comes next.',c:['#8A5CF6','#C9B5FF','#120a24'],
+  news:[['🌍','Global first','Hits come from everywhere'],['🕶️','New screens','Immersive formats compete with cinema'],['🎞️','Old is gold','Libraries are worth more than ever']],g:{}}];
+function eraOf(y){y=y||(S&&S.year)||2026;let e=ERAS[0];ERAS.forEach(x=>{if(y>=x.y)e=x});return e}
+const isEraMode=()=>!!(S&&S.y0&&S.y0<2000);
+
+/* ---------- start year per save ---------- */
+load=(function(o){return function(){const s=o.apply(this,arguments);try{if(s){START_YEAR=s.y0||2026;END_YEAR=s.y1||2050}}catch(e){}return s}})(load);
+setupView=(function(o){return function(){o();try{if(SW&&SW.step===2){if(SW.era==null)SW.era=1970;const a=document.getElementById('app');const h=a&&a.querySelector('h2');if(h&&!a.querySelector('.erapick'))if(SW.era<2000)[...a.querySelectorAll('.card b, .opt b, b')].forEach(b=>{const m=b.textContent.match(/^\$(\d+)M$/);if(m)b.textContent=M(+m[1]*.144)});h.insertAdjacentHTML('afterend',`<div class="erapick"><small>When does your story start?</small><p class="muted" style="font-size:12px;margin:2px 0 6px">In 1970 a dollar goes about 7× further, so your starting cash is scaled to the era.</p>${[[1970,'1970 · Eras','Live through 60 years of Hollywood history','recommended'],[2026,'2026 · Modern','Start today: streaming, social media and AI']].map(([y,l,d,tag])=>`<button class="eropt ${SW.era===y?'on':''}" onclick="SW.era=${y};setupView()"><b>${l}</b><span>${d}</span>${tag?`<i>${tag}</i>`:''}</button>`).join('')}</div>`)}}catch(e){}}})(setupView);
+finishSetup=(function(o){return function(){const y0=(SW&&SW.era)||1970;START_YEAR=y0;END_YEAR=y0===1970?2030:2050;o.apply(this,arguments);try{if(S){S.y0=START_YEAR;S.y1=END_YEAR;if(y0<2000){S.cash=+(S.cash*inf(0)).toFixed(1);S.rivals.forEach(r=>{if(r.svc){r.svc0=r.svc;r.svc0subs=r.subs;r.svc=null;r.subs=0}});S.eraSeen=eraOf(y0).k}save();render()}}catch(e){}}})(finishSetup);
+
+/* ---------- era rules ---------- */
+// genre tastes by decade
+trendMult=(function(o){return function(g,p){let m=o(g,p);try{if(isEraMode()){const e=eraOf();m*=(e.g[g]||1)}}catch(e){}return m}})(trendMult);
+// home entertainment: TV only → VHS → DVD boom → digital
+function homeFactor(y){return y<1977?.45:y<1997?.8:y<2008?1.3:y<2020?.9:1}
+releaseFilm=(function(o){return function(p){const y=S.year;const cn=S.ev.china;if(isEraMode()&&y<1994)S.ev.china=-3;const f=o(p);S.ev.china=cn;
+ try{if(isEraMode()&&f&&f.ancillary&&f.dist!=='stream'&&f.dist!=='sell'){const k=homeFactor(y);if(k!==1){const own=1-(p.cofi||0);const d=+(f.ancillary*(k-1)).toFixed(1);f.ancillary=+(f.ancillary+d).toFixed(1);f.revenue=+(f.revenue+d*own).toFixed(1);f.profit=+(f.profit+d*own).toFixed(1);const t=tNow();const b=S.receivables.find(r=>r.label===f.title+' home & PVOD'&&r.t>t),c=S.receivables.find(r=>r.label===f.title+' TV licensing'&&r.t>t);if(b)b.amt+=d*.6*own;if(c)c.amt+=d*.4*own}}}catch(e){}return f}})(releaseFilm);
+// no streaming before it existed
+launchService=(function(o){return function(n){if(S.year<2007)return toast('Streaming doesn’t exist yet. Internet video arrives around 2007.');return o(n)}})(launchService);
+bidders=(function(o){return function(){return S.year<2007?['Atlantic Broadcasting','Continental TV Network','National Television Group','Premium cable','Home video label']:o()}})(bidders);
+function eraRivalStreamers(){if(!isEraMode())return;const y=S.year;S.rivals.forEach((r,i)=>{if(r.svc0&&!r.svc&&r.alive&&y>=2008+i*2){r.svc=r.svc0;r.subs=Math.max(5,(r.svc0subs||20)*.3);addNews(`📡 ${esc(r.n)} launches its own streaming service, ${esc(r.svc)}.`)}})}
+// period-correct wording
+addNews=(function(o){return function(s){try{if(S&&S.year<2005)s=String(s).replace(/hits (\d+)M views in 24 hours \((\d+)% positive\)/,'plays before every big film; audiences react ($2% positive)').replace(/#\w+ trends\.?/g,'').replace(/streaming sign-ups/g,'video rentals')}catch(e){}return o(s)}})(addNews);
+// the phone and social apps arrive with smartphones
+render=(function(o){return function(){o();try{const pre=!!(S&&S.year<2008);document.body.classList.toggle('prephone',pre);if(S&&isEraMode())document.body.dataset.era=eraOf().k;else delete document.body.dataset.era}catch(e){}}})(render);
+openPhone=(function(o){return function(a){if(S&&S.year<2008)return toast('Smartphones haven’t been invented yet. Check the trades and your inbox instead.');return o(a)}})(openPhone);
+weekRows=(function(o){return function(){let r=o();try{if(S.year<2008)r=r.filter(x=>!/Trending:/.test(x[1]))}catch(e){}return r}})(weekRows);
+
+/* ---------- a new decade: full-screen moment ---------- */
+function eraScreen(e,next){if(typeof document==='undefined'||!document.body||!document.getElementById)return next&&next();const old=document.getElementById('eras');if(old)old.remove();
+ document.body.insertAdjacentHTML('beforeend',`<div id="eras" class="erascr ${e.k}" style="--e1:${e.c[0]};--e2:${e.c[1]};--e3:${e.c[2]}"><div class="eragrid"></div><div class="erain"><span class="erachip">A new era begins</span><div class="erayr">${e.y}</div><h2>${e.n}</h2><p>${e.tag}</p>${e.news.map(n=>`<div class="eranw"><span>${n[0]}</span><div><b>${n[1]}</b><small>${n[2]}</small></div></div>`).join('')}<button class="erago" onclick="eraGo()">Enter the ${String(e.y).slice(2)}s ›</button></div></div>`);
+ window._eraNext=next;try{sfx('fanfare');hap('confirm');musicTrack('awards')}catch(x){}}
+function eraGo(){const e=document.getElementById('eras');if(e){e.classList.add('out');setTimeout(()=>e.remove(),300)}const n=window._eraNext;window._eraNext=null;try{musicTrack('hq')}catch(x){}if(n)n()}
+const _nm16=nextMonth;nextMonth=function(){const r=_nm16.apply(this,arguments);try{if(S&&!S.over&&isEraMode()){eraRivalStreamers();const e=eraOf();if(S.eraSeen!==e.k){S.eraSeen=e.k;addNews(`🎞️ A new era begins: <b>${e.n}</b>.`);try{diary('🎞️','A new era: '+e.n,e.tag)}catch(x){}setTimeout(()=>eraScreen(e,()=>{}),350)}}}catch(x){}return r};
+function eraChip(){if(!isEraMode())return '';const e=eraOf();return `<span class="erabadge" style="--e1:${e.c[0]};--e2:${e.c[1]}">🎞 ${e.n}</span>`}
+/* shareholders take their cut: big cash piles get paid out as dividends each year */
+yearEnd=(function(o){return function(){const r=o.apply(this,arguments);try{const thr=1500*I();if(S&&!S.over&&S.cash>thr){const pay=+((S.cash-thr)*.14).toFixed(1);S.cash-=pay;S.divPaid=(S.divPaid||0)+pay;addNews(`💼 The board pays shareholders ${M(pay)} in dividends and buybacks from ${esc(S.name)}’s cash pile.`)}}catch(e){}return r}})(yearEnd);
+/* fix: share sales were valued on your own cash (raise → more cash → bigger raise). Value the business, once a year */
+raiseCapital=function(){if(!S.stock||!S.stock.public)return;if(S.stock.lastRaise!=null&&tNow()-S.stock.lastRaise<12)return toast('Investors need 12 months between share sales');const V=Math.max(0,valuation()-S.cash*.8);const r=+(V*.1*.95).toFixed(1);if(r<=0)return toast('Investors aren’t interested right now');S.cash+=r;S.stock.price*=.94;S.stock.lastRaise=tNow();addNews(`💼 ${esc(S.name)} sells new shares, raising ${M(r)}.`);try{save();render()}catch(e){}};
+
+/* ===================== v16 — new home, event cards, one design language ===================== */
+
+/* ---------- home ---------- */
+function homeFocus(){const t=tNow();const rel=S.projects.find(p=>p.releaseT===t&&(p.relWk||0)===(S.wk||0)&&!p.vault);
+ if(rel)return {k:'rel',h:`${esc(rel.title)} opens this week`,s:[['Tracking',rel.track?`${M(rel.track[0])}–${M(rel.track[1])}`:'—'],['Buzz',Math.round(rel.hype||0)],['Budget',M(rel.prod||rel.spend||0)]],a:`projectModal(${rel.id})`};
+ const run=S.films.filter(f=>!f.ended&&f.shown&&f.weeks&&f.dist!=='stream'&&f.dist!=='sell').map(f=>({f,so:boShown(f)})).filter(x=>!x.so.done).sort((a,b)=>b.so.ww-a.so.ww)[0];
+ if(run){const k=run.so.n||1;return {k:'run',h:`${esc(run.f.title)} · week ${k} in cinemas`,s:[['Last weekend',M(run.f.weeks[Math.max(0,k-1)]||0)],['Worldwide',M(run.so.ww)],['Critics',run.f.critic+'%']],a:`filmModal(${run.f.id})`}}
+ const nx=S.projects.filter(p=>!p.vault&&p.releaseT<9999).sort((a,b)=>(a.releaseT*4+(a.relWk||0))-(b.releaseT*4+(b.relWk||0)))[0];
+ if(nx){const s=stageInfo(nx);return {k:'prod',h:`${esc(nx.title)} · ${s.ph==='ready'?'ready for release':STG[s.i][1].toLowerCase()}`,s:[['Progress',(s.ph==='ready'?100:s.pct)+'%'],['Release',fmtDay(relD(nx))],['Buzz',Math.round(nx.hype||0)]],a:`projectModal(${nx.id})`}}
+ return {k:'idle',h:'Your stages are empty',s:[['Cash',M(S.cash)],['Prestige',Math.round(S.rep)],['Films',S.films.length]],a:'startFilm()',cta:'Greenlight a film'}}
+function homeRowIcon(c,txt){const m=String(txt);return /opens this week/.test(m)?'🎟️':/pitch/i.test(m)?'📞':/report/i.test(m)?'📒':/wants/.test(m)?'🎙️':/unread/.test(m)?'✉️':/hot/.test(m)?'🔥':/week \d/.test(m)?'🎬':/Trending/.test(m)?'#️⃣':'•'}
+hq8=function(){const t=tNow();const F=homeFocus();const rows=weekRows();const tasks=typeof studioTasks==='function'?studioTasks():[];const e=typeof eraOf==='function'&&isEraMode()?eraOf():null;
+ const items=S.projects.filter(p=>!p.vault).map(p=>({p})).concat(S.films.filter(f=>!f.ended&&f.shown&&f.dist!=='stream'&&f.dist!=='sell').map(f=>({f})),S.shows.filter(s=>s.status==='prod'||s.status==='airing').map(s=>({s})));
+ let bo=[];try{bo=weekendList().sort((a,b)=>b.wkG-a.wkG).slice(0,5)}catch(x){}
+ const T=(i,l,a,b)=>`<button class="qt" onclick="${a}">${ic(i,'#B5821C')}<span>${l}</span>${b?`<i>${b}</i>`:''}</button>`;
+ const phone=S.year>=2008;
+ return `${e?`<div class="h2row">${eraChip()}<span class="muted" style="font-size:12px">${S.year}</span></div>`:''}
+ <section class="wk2" ${e?`style="--e1:${e.c[0]};--e2:${e.c[1]}"`:''}><small>THIS WEEK</small><h3 onclick="${F.a}">${F.h}</h3><div class="wk2s">${F.s.map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('')}</div>
+ ${F.cta?`<button class="wk2b alt" onclick="${F.a}">${F.cta}</button>`:''}<button class="wk2go" onclick="nextWeek()">Next week · ${fmtDay(addDays(curDate(),7))} ›</button>
+ <div class="wk2sub"><button onclick="skipMonth()">Skip to ${tLabel(t+1)}</button><button onclick="boxOfficeModal()">Box office</button><button onclick="tasksModal()">Tasks${tasks.length?` · ${tasks.length}`:''}</button></div></section>
+ <h4 class="hh">Needs you${rows.length?` · ${rows.length}`:''}</h4>
+ ${rows.length?`<div class="evl">${rows.slice(0,5).map(r=>`<button class="evr" onclick="${r[2]}"><span class="evd" style="--c:${r[0]}">${homeRowIcon(r[0],r[1])}</span><span class="evt">${r[1]}</span><i>›</i></button>`).join('')}</div>`:'<div class="evl"><div class="evr" style="justify-content:center;color:var(--muted)">All quiet. Plan your next move.</div></div>'}
+ <h4 class="hh">On the slate <button class="lk" onclick="TAB='slate';render()">See all</button></h4>
+ ${items.length?`<div class="hscroll">${items.map(prodCard).join('')}</div>`:`<div class="empty2"><b>No projects yet</b><span>Every empire starts with one film.</span><button class="wk2go sm" onclick="startFilm()">Make your first movie</button></div>`}
+ <div class="qrow">${T('clap','Movie','startFilm()')}${T('tv','TV series','startShow()')}${T('mic','Pitch room','pitchRoom()',pitchOpen().length||'')}${T('mega','Media','mediaModal()',(S.invites||[]).filter(i=>!i.done).length||'')}</div>
+ ${bo.length?`<h4 class="hh">Weekend box office <button class="lk" onclick="boxOfficeModal()">Full chart</button></h4><div class="bo2">${bo.map((x,i)=>`<div class="bo2r ${x.mine?'me':''}" onclick="${x.mine?`filmModal(${x.id})`:'boxOfficeModal()'}"><em>${i+1}</em><b>${esc(x.title)}</b><span>${esc((x.studio||'').split(' ')[0])}</span><strong>${M(x.wkG)}</strong></div>`).join('')}</div>`:''}
+ <h4 class="hh">Your studio</h4><div class="tgrid">${T('target','Diary & team','diaryView()')}${T('build','Studio lot','lotView()')}${T('film','Released','TAB=\'slate\';render()')}${T('star','Franchises','franchiseView()')}${T('target','Goals','goalsModal()')}${T('medal','Awards','achModal()')}${T('money','Vault','vaultView()')}${T('ticket','Rights market','marketView()')}${S.year>=2007?T('stream','Streaming','TAB=\'world\';WTAB=\'empire\';render()'):''}<button class="qt" onclick="studioPage()">${logoMini(S.logo,26)}<span>My studio</span></button></div>
+ <h4 class="hh">Industry</h4><div class="tgrid">${T('users','Rivals','rivalsModal()')}${T('chart','Trends','trendsModal()')}${T('trophy','Top charts','leaderboard()')}${phone?T('chat','Fan buzz','fansModal()'):''}${phone?T('mega','Social apps','openPhone()'):''}${T('gear','Settings','settings()')}</div>
+ <h4 class="hh">The Ledger <button class="lk" onclick="TAB='world';render()">All news</button></h4><div class="news2">${S.news.slice(0,4).map(n=>`<p>${typeof n==='string'?n:(n.s||'')}</p>`).join('')}</div>`};
+
+/* ---------- event cards (replaces the chat-style scene) ---------- */
+playScene=function(sc,next){
+ if(!scnDOM()){const c=sc.choices&&sc.choices.length?pick(sc.choices):null;try{if(c&&c.f)c.f()}catch(e){}if(sc.log)diary(sc.log[0],sc.log[1],(c&&c.l)||'');return next&&next()}
+ const pre=S&&S.year<2008;let tag=sc.tag||'Studio';if(pre&&tag==='Text message')tag='Phone call';
+ let L=(sc.lines||[]).map(x=>pre?String(x).replace(/hit (\d+) million views overnight/,'is playing before every big release, and audiences are buzzing').replace(/the trades are calling/i,'the trades are calling'):x);
+ let hi=L.findIndex(x=>/class="big"/.test(x));if(hi<0)hi=L.length-1;const head=L[hi]||'';const body=L.filter((_,i)=>i!==hi);
+ SC={sc,next,chShown:true};const old=document.getElementById('scn');if(old)old.remove();
+ const ch=(sc.choices&&sc.choices.length?sc.choices:[{l:'Continue'}]).map(x=>pre?Object.assign({},x,{l:String(x.l).replace('Take a selfie for socials','Pose for the trade photographers').replace('Leak it to the press','Leak it to the gossip columns'),sub:x.sub&&String(x.sub).replace('Hype for your studio','Good press for your studio')}):x);if(pre&&sc.choices)sc.choices=ch;
+ document.body.insertAdjacentHTML('beforeend',`<div id="scn" class="scn2 ${sc.bg||'office'}"><div class="scn2-top"><span class="scn2-chip">${esc(tag)}</span></div><div class="scn2-card"><div class="scn2-img">${scnBG(sc.bg)}<div class="scn2-pt">${portrait(sc.who,96)}</div></div>
+ <div class="scn2-body"><small>${esc(sc.role||(sc.who&&sc.who.role)||'')}${sc.who&&sc.who.n?' · '+esc(sc.who.n):''}</small><h2>${head}</h2>${body.length?`<p>${body.join(' ')}</p>`:''}
+ <div id="scnC">${ch.map((x,i)=>`<button class="scn2-opt ${i===0&&ch.length>1?'pri':''}" onclick="scnPick(${i})"><div><b>${x.l}</b>${x.sub?`<small>${x.sub}</small>`:''}</div><i>›</i></button>`).join('')}</div><div id="scnR"></div></div></div></div>`);
+ if(sc.music)try{musicTrack(sc.music)}catch(e){}if(sc.bg==='call'){try{sfx('ring');hap('long')}catch(e){}}};
+scnPick=function(i){if(!SC||SC.done)return;SC.done=true;const ch=SC.sc.choices&&SC.sc.choices.length?SC.sc.choices:[{l:'Continue'}];const c=ch[i];try{hap(c.hap||'tap')}catch(e){}let rep=null;try{rep=c.f?c.f():null}catch(e){}
+ if(SC.sc.log)diary(SC.sc.log[0],SC.sc.log[1],c.l+(rep&&rep.note?' · '+rep.note:''));try{save()}catch(e){}
+ if(!rep||(!rep.say&&!rep.note))return scnEnd();const C=document.getElementById('scnC'),R=document.getElementById('scnR');
+ if(C)C.innerHTML=`<div class="scn2-you">You: ${c.l}</div>`;if(R)R.innerHTML=`${rep.say?`<div class="scn2-say">“${rep.say}”</div>`:''}${rep.note?`<div class="scn2-fx">${rep.note}</div>`:''}<button class="scn2-opt pri" onclick="scnEnd()"><div><b>Continue</b></div><i>›</i></button>`};
+scnSkip=function(){};scnTap=function(){};
+
+/* ---------- top bar: rename first tab ---------- */
+render=(function(o){return function(){o();try{const b=document.querySelector('.tabbar button');if(b&&/Studio/.test(b.textContent))b.innerHTML=b.innerHTML.replace('Studio','Home')}catch(e){}}})(render);
 
 
 applyTheme();title();
