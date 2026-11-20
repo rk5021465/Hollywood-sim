@@ -485,6 +485,39 @@ body.sheet-open .tabbar{display:none}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.pgrid .btn{margin:0;font-size:12.5px;line-height:1.2;padding:6px}.pgrid .btn:disabled{opacity:.4}
 .pgrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pgrid2 .btn{margin:6px 0 0}
 .winopt small{font-size:12.5px!important;font-weight:500!important;letter-spacing:0!important;line-height:1.35}
+/* ===== v11 scenes ===== */
+.scn{position:fixed;inset:0;z-index:60;background:#0c0a10;color:#fff;display:flex;flex-direction:column;animation:scnIn .35s ease-out both;overflow:hidden}
+.scn.out{animation:scnOut .26s ease-in both}
+@keyframes scnIn{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:none}}@keyframes scnOut{to{opacity:0;transform:scale(.98)}}
+.scn-bg{position:absolute;inset:0 0 auto 0;height:46%;overflow:hidden}.scn-bg svg{width:100%;height:100%;display:block;animation:kb 14s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.08) translateY(-2%)}}
+.scn-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0c0a1000 35%,#0c0a10 100%)}
+.scn-top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px 0}
+.scn-tag{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;background:#0008;border:1px solid #ffffff2a;padding:6px 10px;border-radius:20px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.scn-skip{background:#0008;border:1px solid #ffffff2a;color:#fff;border-radius:20px;padding:6px 12px;font:inherit;font-size:12px;font-weight:700}
+.scn-who{position:relative;z-index:2;margin-top:auto;display:flex;align-items:flex-end;gap:12px;padding:0 18px;transform:translateY(-6px)}
+.scn-who>svg{border:3px solid #E8B84A;border-radius:50%;box-shadow:0 10px 30px #000c,0 0 0 6px #e8b84a22;flex:none}
+.scn.call .scn-who{flex-direction:column;align-items:center;text-align:center;position:absolute;top:13%;left:0;right:0}
+.scn.call .scn-who>svg{animation:callPulse 1.6s ease-in-out infinite}@keyframes callPulse{50%{box-shadow:0 10px 30px #000c,0 0 0 16px #45d48f22}}
+.scn-who b{display:block;font-size:20px;font-weight:800;letter-spacing:-.2px}.scn-who span{font-size:12.5px;color:#E8B84A;font-weight:700}
+.scn-body{position:relative;z-index:2;height:54%;display:flex;flex-direction:column;padding:6px 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:linear-gradient(180deg,#0c0a10,#15111b)}
+.scn.call .scn-body{height:56%;margin-top:auto}
+.scn-lines{flex:1;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:6px 0 10px;scroll-behavior:smooth}
+.sl{align-self:flex-start;max-width:90%;background:#ffffff12;border:1px solid #ffffff14;padding:11px 14px;border-radius:18px 18px 18px 6px;font-size:15px;line-height:1.42;animation:pbIn .35s ease-out both}
+.sl.me{align-self:flex-end;background:linear-gradient(180deg,#FFD77A,#E8B84A);color:#1F1A14;border:0;border-radius:18px 18px 6px 18px;font-weight:700}
+.sl .big{font-size:22px;color:#FFD77A}.sl .pos{color:#5BE39C}.sl .neg{color:#FF7C80}.sl .gold{color:#FFD77A}
+.sfx{align-self:center;font-size:12px;font-weight:800;color:#FFD77A;background:#e8b84a1c;border:1px solid #e8b84a44;padding:5px 12px;border-radius:20px;animation:pbIn .4s .1s ease-out both}
+.scn-ch{display:flex;flex-direction:column;gap:8px}
+.scn-btn{width:100%;text-align:left;padding:13px 15px;border-radius:16px;border:1px solid #ffffff22;background:#ffffff0d;color:#fff;font:inherit;animation:pbIn .3s ease-out both}
+.scn-btn:active{transform:scale(.98)}.scn-btn b{display:block;font-size:15px}.scn-btn small{display:block;font-size:12px;color:#CFC6B8;margin-top:2px}
+.scn-btn.pri{background:linear-gradient(180deg,#FFD77A,#E8B84A 60%,#D3A23A);color:#1F1A14;border:0;box-shadow:0 8px 22px #e8b84a40}.scn-btn.pri small{color:#4a3a1c}
+.ring1,.ring2,.ring3{transform-origin:180px 100px;animation:ringOut 2.4s ease-out infinite}.ring2{animation-delay:.8s}.ring3{animation-delay:1.6s}
+@keyframes ringOut{from{transform:scale(.6);opacity:.9}to{transform:scale(1.3);opacity:0}}
+/* diary */
+.dlog{position:relative;padding-left:6px}.dl{display:flex;gap:12px;padding:0 0 14px;position:relative}.dl::before{content:"";position:absolute;left:17px;top:36px;bottom:0;width:2px;background:var(--line)}
+.dl>i{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);font-style:normal;font-size:17px;box-shadow:0 4px 12px rgba(31,26,20,.08)}
+.dl small{display:block;color:var(--muted);font-size:11.5px;font-weight:700}.dl b{display:block;font-size:14.5px;margin-top:1px}.dl span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.scn-btn small{text-transform:none!important;letter-spacing:0!important;font-weight:500!important}
 </style>
 </head>
 <body>
@@ -3882,6 +3915,129 @@ hq8=(function(o){return function(){const n=pitchOpen().length;return o().replace
 let CASH10=null;
 function countUp(el,from,to){if(typeof requestAnimationFrame==='undefined'||!el)return;const t0=Date.now(),d=650;const step=()=>{const k=Math.min(1,(Date.now()-t0)/d),e=1-Math.pow(1-k,3);el.textContent=M(from+(to-from)*e);if(k<1)requestAnimationFrame(step)};step()}
 render=(function(o){return function(){o();try{const el=document.querySelector('.hero-s b');if(el&&CASH10!=null&&Math.abs(CASH10-S.cash)>.05){countUp(el,CASH10,S.cash);if(S.cash>CASH10+1)el.classList.add('up')}if(S&&S.cash!=null)CASH10=S.cash}catch(e){}}})(render);
+
+/* ===================== v11 — a day at the studio: team characters, weekly scenes, opening-weekend call, studio diary ===================== */
+
+/* ---------- your team ---------- */
+const TEAMR=[{k:'asst',r:'Executive Assistant',g:'F',em:'📋'},{k:'dist',r:'Head of Distribution',g:'M',em:'🎟️'},{k:'mkt',r:'Marketing Chief',g:'F',em:'📣'},{k:'prod',r:'Head of Production',g:'M',em:'🎬'}];
+function teamM(k){S.team=S.team||{};if(!S.team[k]){const r=TEAMR.find(x=>x.k===k)||TEAMR[0];const taken=new Set(Object.values(S.team).map(x=>x.n));const lasts=Object.values(S.team).map(x=>x.n.split(' ').pop());let nm=nameGen(taken,r.g);for(let i=0;i<8&&lasts.includes(nm.split(' ').pop());i++)nm=nameGen(taken,r.g);S.team[k]={id:'team_'+k+'_'+RI(100,99999),n:nm,g:r.g,age:RI(29,56),role:r.r,em:r.em,k,mood:70}}return S.team[k]}
+function rivalCEO(r){S.rceo=S.rceo||{};if(!S.rceo[r.n]){const g=Math.random()<.5?'F':'M';S.rceo[r.n]={id:'rceo_'+r.n.replace(/\W/g,'')+RI(10,999),n:nameGen(new Set(),g),g,age:RI(44,68),role:'CEO, '+r.n}}return S.rceo[r.n]}
+
+/* ---------- studio diary ---------- */
+function diary(icon,title,text){S.diary=S.diary||[];S.diary.unshift({w:wIdx(),d:typeof curDate==='function'?fmtDay(curDate()):tLabel(tNow()),icon,title,text});S.diary=S.diary.slice(0,120)}
+function diaryView(){const L=S.diary||[];modal(`<h2>Studio diary</h2><p class="muted" style="font-size:13px;margin:-4px 0 12px">Every meeting, crisis and decision that shaped ${esc(S.name)}.</p>
+ ${L.length?`<div class="dlog">${L.map(e=>`<div class="dl"><i>${e.icon}</i><div><small>${esc(e.d)}</small><b>${e.title}</b><span>${e.text}</span></div></div>`).join('')}</div>`:'<div class="empty">Your story starts next week.</div>'}
+ <div class="sec"><h2>Your team</h2></div>${TEAMR.map(r=>{const m=teamM(r.k);return `<div class="card row tm">${portrait(m,52)}<div style="flex:1;margin-left:10px"><b>${esc(m.n)}</b><br><small class="muted">${r.em} ${m.role}</small></div></div>`}).join('')}`)}
+
+/* ---------- scene backgrounds ---------- */
+function scnBG(k){
+ if(k==='set')return `<svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="sl1" cx=".25" cy="0" r=".9"><stop offset="0" stop-color="#fff3c4" stop-opacity=".55"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></radialGradient><radialGradient id="sl2" cx=".8" cy="0" r=".8"><stop offset="0" stop-color="#c4e1ff" stop-opacity=".4"/><stop offset="1" stop-color="#c4e1ff" stop-opacity="0"/></radialGradient></defs><rect width="360" height="200" fill="#16131c"/><rect x="40" y="30" width="280" height="120" fill="#1f6b45"/><rect x="40" y="30" width="280" height="120" fill="url(#sl1)"/><rect width="360" height="200" fill="url(#sl2)"/><rect y="150" width="360" height="50" fill="#221d29"/><g fill="#0d0b10"><rect x="22" y="8" width="14" height="22"/><rect x="324" y="8" width="14" height="22"/><path d="M60 150l-16 50h8l14-44zM300 150l16 50h-8l-14-44z"/><rect x="250" y="112" width="40" height="26" rx="4"/><rect x="286" y="118" width="16" height="12"/><path d="M262 138l-10 40h4l12-40zM276 138l8 40h-4l-10-40z"/></g><circle cx="270" cy="125" r="7" fill="#333" stroke="#777"/></svg>`;
+ if(k==='call')return `<svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1b2a3a"/><stop offset="1" stop-color="#3a1f3a"/></linearGradient></defs><rect width="360" height="200" fill="url(#cg)"/><g fill="none" stroke="#fff" opacity=".18"><circle class="ring1" cx="180" cy="100" r="60"/><circle class="ring2" cx="180" cy="100" r="85"/><circle class="ring3" cx="180" cy="100" r="110"/></g></svg>`;
+ if(k==='street')return `<svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><rect width="360" height="200" fill="#120f1a"/><g fill="#1e1a2a"><rect x="0" y="40" width="70" height="120"/><rect x="80" y="20" width="60" height="140"/><rect x="220" y="30" width="70" height="130"/><rect x="296" y="50" width="64" height="110"/></g><g fill="#f5c46b" opacity=".5">${[0,1,2,3,4,5].map(i=>`<rect x="${92+(i%2)*24}" y="${34+Math.floor(i/2)*30}" width="10" height="14"/>`).join('')}${[0,1,2,3].map(i=>`<rect x="${232+(i%2)*28}" y="${48+Math.floor(i/2)*34}" width="12" height="14"/>`).join('')}</g><rect x="150" y="60" width="60" height="100" fill="#2a2333"/><text x="180" y="80" text-anchor="middle" font-size="8" fill="#E8B84A" letter-spacing="2">STUDIO GATE</text><rect y="160" width="360" height="40" fill="#1a1622"/>${[30,70,290,330,110,250].map((x,i)=>`<g><circle cx="${x}" cy="176" r="12" fill="#0b0910"/><rect x="${x-9}" y="${160}" width="18" height="10" rx="2" fill="#0b0910"/><circle class="flash" style="animation-delay:${(i*.43)%2}s" cx="${x}" cy="160" r="5" fill="#fff"/></g>`).join('')}</svg>`;
+ if(k==='screen')return `<svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe6ff" stop-opacity=".35"/><stop offset="1" stop-color="#cfe6ff" stop-opacity="0"/></linearGradient></defs><rect width="360" height="200" fill="#0e0c12"/><rect x="60" y="14" width="240" height="96" rx="3" fill="#dfe8f2" opacity=".9"/><polygon points="170,200 190,200 300,110 60,110" fill="url(#beam)"/>${[0,1,2].map(r=>Array.from({length:12},(_,i)=>`<circle cx="${18+i*30+(r%2)*15}" cy="${140+r*22}" r="11" fill="#1d1922"/>`).join('')).join('')}</svg>`;
+ return `<svg viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${(S.wk||0)%2?'#7C4A8B':'#E8B98A'}"/><stop offset="1" stop-color="${(S.wk||0)%2?'#F4B26A':'#9CC9F0'}"/></linearGradient></defs><rect width="360" height="200" fill="#2A2018"/><rect x="18" y="14" width="324" height="118" rx="6" fill="url(#osky)"/><g fill="#1F1A14" opacity=".55"><rect x="30" y="74" width="22" height="58"/><rect x="56" y="54" width="16" height="78"/><rect x="76" y="86" width="28" height="46"/><rect x="108" y="48" width="14" height="84"/><rect x="250" y="64" width="20" height="68"/><rect x="274" y="80" width="30" height="52"/><rect x="308" y="58" width="18" height="74"/></g><text x="180" y="46" text-anchor="middle" font-size="17" font-weight="800" fill="#fff" opacity=".85" letter-spacing="7">HOLLYWOOD</text><rect y="132" width="360" height="68" fill="#3A2C20"/><rect y="150" width="360" height="50" fill="#5B4330"/><rect y="148" width="360" height="4" fill="#7A5A3E"/><rect x="236" y="126" width="40" height="24" rx="3" fill="#E8E1D4"/><circle cx="96" cy="138" r="10" fill="#E8B84A"/><rect x="93" y="122" width="6" height="14" fill="#E8B84A"/></svg>`}
+
+/* ---------- scene player ---------- */
+let SC=null;
+function scnDOM(){return typeof document!=='undefined'&&document.body&&document.body.insertAdjacentHTML&&document.getElementById}
+function playScene(sc,next){
+ if(!scnDOM()){const c=sc.choices&&sc.choices.length?pick(sc.choices):null;try{if(c&&c.f)c.f()}catch(e){}if(sc.log)diary(sc.log[0],sc.log[1],(c&&c.l)||'');return next&&next()}
+ SC={sc,next,i:0,typed:[],done:false,reply:null};const old=document.getElementById('scn');if(old)old.remove();
+ document.body.insertAdjacentHTML('beforeend',`<div id="scn" class="scn ${sc.bg||'office'}"><div class="scn-bg">${scnBG(sc.bg)}</div><div class="scn-top"><span class="scn-tag">${sc.tag||'Studio'}</span><button class="scn-skip" onclick="scnSkip()">Skip ⏭</button></div><div class="scn-who">${portrait(sc.who,104)}<div><b>${esc(sc.who?sc.who.n:'')}</b><span>${esc(sc.role||sc.who&&sc.who.role||'')}</span></div></div><div class="scn-body" onclick="scnTap()"><div class="scn-lines" id="scnL"></div><div class="scn-ch" id="scnC"></div></div></div>`);
+ if(sc.music)try{musicTrack(sc.music)}catch(e){}if(sc.bg==='call'){sfx('ring');hap('long')}
+ scnNext()}
+function scnNext(){if(!SC)return;const L=SC.sc.lines;if(SC.i<L.length){const t=L[SC.i++];const box=document.getElementById('scnL');if(box){box.insertAdjacentHTML('beforeend',`<div class="sl">${t}</div>`);box.scrollTop=9e9}clearTimeout(SC.tm);SC.tm=setTimeout(scnNext,Math.min(1900,650+t.replace(/<[^>]+>/g,'').length*18));return}scnChoices()}
+function scnTap(){if(!SC||SC.chShown)return;clearTimeout(SC.tm);scnNext()}
+function scnSkip(){if(!SC)return;clearTimeout(SC.tm);while(SC.i<SC.sc.lines.length){const t=SC.sc.lines[SC.i++];const box=document.getElementById('scnL');if(box)box.insertAdjacentHTML('beforeend',`<div class="sl">${t}</div>`)}scnChoices()}
+function scnChoices(){if(!SC||SC.chShown)return;SC.chShown=true;const c=document.getElementById('scnC');if(!c)return;const ch=SC.sc.choices&&SC.sc.choices.length?SC.sc.choices:[{l:'Continue'}];
+ c.innerHTML=ch.map((x,i)=>`<button class="scn-btn ${i===0&&ch.length>1?'pri':''}" onclick="event.stopPropagation();scnPick(${i})"><b>${x.l}</b>${x.sub?`<small>${x.sub}</small>`:''}</button>`).join('');const b=document.getElementById('scnL');if(b)b.scrollTop=9e9}
+function scnPick(i){if(!SC)return;const ch=SC.sc.choices&&SC.sc.choices.length?SC.sc.choices:[{l:'Continue'}];const c=ch[i];hap(c.hap||'tap');let rep=null;try{rep=c.f?c.f():null}catch(e){}
+ if(SC.sc.log)diary(SC.sc.log[0],SC.sc.log[1],c.l+(rep&&rep.note?' · '+rep.note:''));try{save()}catch(e){}
+ const box=document.getElementById('scnL');const cc=document.getElementById('scnC');
+ if(box)box.insertAdjacentHTML('beforeend',`<div class="sl me">${c.l}</div>`+(rep&&rep.say?`<div class="sl">${rep.say}</div>`:'')+(rep&&rep.note?`<div class="sfx">${rep.note}</div>`:''));if(box)box.scrollTop=9e9;
+ if(cc)cc.innerHTML=`<button class="scn-btn pri" onclick="event.stopPropagation();scnEnd()"><b>Continue</b></button>`;if(!rep)scnEnd()}
+function scnEnd(){if(!SC)return;clearTimeout(SC.tm);const n=SC.next;SC=null;const e=document.getElementById('scn');if(e){e.classList.add('out');setTimeout(()=>e.remove(),260)}try{musicTrack('hq')}catch(e){}if(n)n()}
+
+/* ---------- money helpers (small, realistic effects) ---------- */
+function spend(v){v=+(+v).toFixed(2);S.cash-=v;return v}
+function pctProd(p,x){return +(Math.max(.3,(p.prod||20)*x)).toFixed(1)}
+function fx(t){return {note:t}}
+
+/* ---------- weekly scene deck (cooldowns + variants, so nothing repeats every week) ---------- */
+function shooting(){return S.projects.filter(p=>!p.vault&&phaseOf(p)==='shoot')}
+function inPost(){return S.projects.filter(p=>!p.vault&&(phaseOf(p)==='post'||phaseOf(p)==='ready')&&p.dist!=='sell')}
+function soon(){const now=wIdx();return S.projects.filter(p=>!p.vault&&p.dist!=='sell'&&p.dist!=='stream'&&p.releaseT<9999&&(p.releaseT*4+(p.relWk||0))-now>0&&(p.releaseT*4+(p.relWk||0))-now<=10)}
+function inThe(){return S.films.filter(f=>!f.ended&&f.shown&&f.weeks&&f.dist!=='stream'&&f.dist!=='sell')}
+const DECK=[
+ {k:'crisis',cd:3,w:5,ok:()=>shooting().length,make:()=>{const p=pick(shooting());const pr=teamM('prod');const L=person(p.cast&&p.cast.lead),D=person(p.dir);const v=RI(0,4);const T=esc(p.title);
+  if(v===0&&L)return {bg:'set',tag:'On set · '+T,who:pr,lines:[`Boss, quick one from the <b>${T}</b> set.`,`${esc(L.n)} has been two hours late three days running. The crew is losing patience.`],log:['⏰','Late star on '+T],choices:[
+   {l:'Fine them',sub:'Crew respects it · star sulks',f:()=>{p.chem=(p.chem||0)-2;L.rel=(L.rel||0)-8;return {say:`Done. ${esc(L.n)} isn’t happy, but they showed up on time today.`,note:'Chemistry −2 · '+esc(L.n)+' relationship down'}}},
+   {l:'I’ll talk to them myself',sub:'Costs a day of shooting',f:()=>{const c=spend(pctProd(p,.004));p.paid+=c;p.chem=(p.chem||0)+2;L.rel=(L.rel||0)+6;return {say:'They opened up. Family stuff. They’re back on track.',note:'−'+M(c)+' · Chemistry +2'}}},
+   {l:'Let it slide',f:()=>{p.chem=(p.chem||0)-1;return {say:'Okay. I’ll keep the crew calm.',note:'Chemistry −1'}}}]};
+  if(v===1)return {bg:'set',tag:'On set · '+T,who:pr,lines:['Bad news.',`A storm tore through the outdoor set of <b>${T}</b> last night. Half of it is gone.`],log:['🌩️','Storm hits '+T],choices:[
+   {l:'Rebuild it properly',sub:'≈'+M(pctProd(p,.05))+' · keeps the look',f:()=>{const c=spend(pctProd(p,.05));p.paid+=c;p.q=clamp((p.q||60)+1,3,97);return {say:'Crews start tonight. It’ll look even better.',note:'−'+M(c)+' · Quality +1'}}},
+   {l:'Move the scenes indoors',sub:'Cheap · weaker scenes',f:()=>{p.q=clamp((p.q||60)-3,3,97);return {say:'We’ll make it work on a soundstage.',note:'Quality −3'}}},
+   {l:'Delay a month',sub:'Release may slip',f:()=>{p.sch.shoot+=1;p.sch.total+=1;return {say:'Pushing the schedule. Distribution won’t love it.',note:'Shoot +1 month'}}}]};
+  if(v===2&&D)return {bg:'set',tag:'On set · '+T,who:D,role:'Director, '+p.title,lines:['Got a minute?',`I need ten more days on <b>${T}</b>. The finale isn’t there yet, and I won’t put my name on something half-done.`],log:['🎥','Director asks for more days on '+T],choices:[
+   {l:'Approve the days',sub:'≈'+M(pctProd(p,.06)),f:()=>{const c=spend(pctProd(p,.06));p.paid+=c;p.q=clamp((p.q||60)+4,3,97);D.rel=(D.rel||0)+8;return {say:'Thank you. You won’t regret this.',note:'−'+M(c)+' · Quality +4'}}},
+   {l:'Hold the line',sub:'On budget · director annoyed',f:()=>{p.q=clamp((p.q||60)-2,3,97);D.rel=(D.rel||0)-10;return {say:'…Fine. It’s your studio.',note:'Quality −2 · director relationship down'}}}]};
+  if(v===3&&L)return {bg:'set',tag:'On set · '+T,who:pr,lines:[`The leads on <b>${T}</b> aren’t speaking off camera.`,'It’s starting to show on screen.'],log:['💢','Feud on the set of '+T],choices:[
+   {l:'Mediate a dinner',sub:'Small cost',f:()=>{const c=spend(.2*inf(tNow()));p.paid+=c;p.chem=(p.chem||0)+3;return {say:'Long night, lots of wine. They hugged it out.',note:'Chemistry +3'}}},
+   {l:'Leak it to the press',sub:'Hype up · chemistry down',f:()=>{p.hype=(p.hype||0)+5;p.chem=(p.chem||0)-4;post(null,`the ${p.title} set drama is WILD 🍿`,RI(5000,90000));return {say:'It’s everywhere by lunch. Ticket interest is up.',note:'Hype +5 · Chemistry −4'}}}]};
+  return {bg:'set',tag:'On set · '+T,who:pr,lines:[`Someone leaked set photos from <b>${T}</b>.`,'They’re trending. Fans are going crazy over the costumes.'],log:['📸','Leaked set photos of '+T],choices:[
+   {l:'Lean into it',sub:'Post an official photo',f:()=>{p.hype=(p.hype||0)+6;return {say:'Official photo is up. Two million likes in an hour.',note:'Hype +6'}}},
+   {l:'Send the lawyers',sub:'Protects surprises',f:()=>{const c=spend(.3*inf(tNow()));p.q=clamp((p.q||60)+1,3,97);return {say:'They’re down. The twist stays secret.',note:'−'+M(c)}}}]}}},
+ {k:'test',cd:2,w:6,ok:()=>inPost().some(p=>p.test&&!p.tsDone),make:()=>{const p=inPost().find(p=>p.test&&!p.tsDone);p.tsDone=1;const d=teamM('dist');const T=esc(p.title);const s=p.test;
+  return {bg:'screen',tag:'Test screening · '+T,who:d,lines:[`We just screened <b>${T}</b> for 400 people in Pasadena.`,`Score: <b class="${s>=75?'pos':s>=55?'gold':'neg'}">${s}/100</b>. ${s>=80?'They cheered at the end. This could be big.':s>=60?'Good, not great. The middle drags.':'People walked out. The ending isn’t landing.'}`],log:['📋',T+' test screening: '+s],choices:[
+   {l:'Release it as it is',f:()=>({say:s>=75?'Smart. Don’t touch what works.':'Your call. I’ll manage expectations.',note:'No changes'})},
+   {l:'Re-edit the ending',sub:'≈'+M(pctProd(p,.015))+' · no delay',f:()=>{const c=spend(pctProd(p,.015));p.paid+=c;const g=RI(1,7);p.q=clamp((p.q||60)+g*.6,3,97);p.test=clamp(s+g,5,99);return {say:`New cut scored ${p.test}. Better.`,note:'−'+M(c)+' · Test '+s+' → '+p.test}}},
+   ...(p.reshot||s>=80?[]:[{l:'Order reshoots',sub:'≈'+M(pctProd(p,.07))+' · +1 month',f:()=>{const c=spend(pctProd(p,.07));p.paid+=c;p.reshot=1;p.sch.post+=1;p.sch.total+=1;return {say:'Booking the cast back. It’ll be worth it.',note:'−'+M(c)+' · Reshoots booked'}}}])]}}},
+ {k:'tiein',cd:6,w:3,ok:()=>soon().some(p=>['Animation','Superhero','Action','Sci-Fi','Comedy'].includes(p.genre)),make:()=>{const p=pick(soon().filter(p=>['Animation','Superhero','Action','Sci-Fi','Comedy'].includes(p.genre)));const m=teamM('mkt');const T=esc(p.title);const brand=pick(['Burger Galaxy','Fizz Cola','ZoomCar','Pixel Phones','SnackTime','Volt Energy']);const v=+(Math.max(1,p.prod*.03)).toFixed(1);
+  return {bg:'office',tag:'Marketing',who:m,lines:[`${brand} wants a tie-in for <b>${T}</b>.`,`They’ll pay ${M(v)} and run ads in 3,000 stores. It’s a little cheesy.`],log:['🍔','Tie-in offer for '+T],choices:[
+   {l:'Take the deal',sub:'+'+M(v)+' · hype +4',f:()=>{S.cash+=v;p.hype=(p.hype||0)+4;sfx('cash');return {say:'Signed. Kids’ meals with our characters next month.',note:'+'+M(v)+' · Hype +4'}}},
+   {l:'Pass, protect the brand',f:()=>({say:'Fair. Prestige matters.',note:'No deal'})}]}}},
+ {k:'trailer',cd:5,w:3,ok:()=>soon().length,make:()=>{const p=pick(soon());const m=teamM('mkt');const T=esc(p.title);const views=RI(8,60);
+  return {bg:'office',tag:'Marketing',who:m,lines:[`The teaser for <b>${T}</b> hit ${views} million views overnight.`,'Do we drop the full trailer now or make them wait?'],log:['🎞️','Teaser buzz for '+T],choices:[
+   {l:'Drop it now',sub:'Strike while it’s hot',f:()=>{p.hype=(p.hype||0)+3;return {say:'Going live at noon.',note:'Hype +3'}}},
+   {l:'Make them wait',sub:'Riskier · bigger payoff',f:()=>{const g=Math.random()<.55?6:-1;p.hype=(p.hype||0)+g;return {say:g>0?'The wait drove them wild. Huge reaction.':'Hm. The buzz cooled a bit.',note:'Hype '+(g>0?'+':'')+g}}}]}}},
+ {k:'paps',cd:5,w:3,ok:()=>S.projects.length||inThe().length,make:()=>{const p=pick(S.projects.length?S.projects:inThe());const T=esc(p.title);const ceo=S.ceo||{n:'You'};const q=pick([`Is it true <b>${T}</b> is over budget?`,`Are the rumours about trouble on <b>${T}</b> true?`,`Is <b>${T}</b> the movie that saves your studio?`]);
+  return {bg:'street',tag:'Studio gate',who:{id:'press_'+RI(1,500),n:pick(['Daily Reel','Hollywood Wire','Screen Scoop','The Insider'])+' reporter',g:Math.random()<.5?'F':'M',age:33},role:'Reporter',lines:['Cameras flash as your car pulls up.',q],log:['📰','Questioned by reporters'],choices:[
+   {l:'“No comment.”',f:()=>({say:'They shout a few more questions. You walk on.',note:'Nothing changes'})},
+   {l:'Laugh it off',sub:'Charm can backfire',f:()=>{const g=Math.random()<.65?2:-2;gainRep(g);return {say:g>0?'The clip goes viral for the right reasons.':'The clip goes viral, but not in a good way.',note:'Prestige '+(g>0?'+':'')+g}}},
+   {l:'“It’s the best thing we’ve made.”',sub:'Hype up · raises expectations',f:()=>{p.hype=(p.hype||0)+3;return {say:'Headline tomorrow: “Studio boss goes all in.”',note:'Hype +3'}}}]}}},
+ {k:'rival',cd:7,w:2,ok:()=>S.rivals.some(r=>r.alive),make:()=>{const r=pick(S.rivals.filter(r=>r.alive));const c=rivalCEO(r);const last=S.films.slice(-1)[0];
+  const ln=last&&last.profit<0?`Saw <b>${esc(last.title)}</b>’s numbers. Rough weekend. Happens to the best of us. 😉`:last?`Congrats on <b>${esc(last.title)}</b>. Enjoy it while it lasts.`:'Heard you’re building a studio. Welcome to the big leagues.';
+  return {bg:'call',tag:'Text message',who:c,role:c.role,lines:[ln],log:['💬','Text from '+esc(c.n)+' ('+esc(r.n)+')'],choices:[
+   {l:'“Watch this space.”',f:()=>{gainRep(1);return {say:'😏',note:'Prestige +1'}}},
+   {l:'“Want to talk co-financing?”',sub:'Friendlier rivals',f:()=>{r.friend=(r.friend||0)+1;return {say:'Interesting. Let’s get lunch sometime.',note:'Relations with '+esc(r.n)+' up'}}},
+   {l:'Leave them on read',f:()=>({say:'',note:'Silence is a message too'})}]}}},
+ {k:'star',cd:8,w:2,ok:()=>S.people.actors.some(a=>a.star>=60&&!busy(a)),make:()=>{const a=pick(S.people.actors.filter(a=>a.star>=60&&!busy(a)));const fan=S.films.slice(-1)[0];
+  return {bg:'office',tag:'Unexpected visitor',who:a,role:'Actor · star power '+Math.round(a.star),lines:[`<i>${esc(a.n)} walks into your office unannounced.</i>`,fan?`I saw <b>${esc(fan.title)}</b>. I want in on whatever you do next.`:'I keep hearing your name around town. I want to work with you.'],log:['⭐',esc(a.n)+' stopped by'],choices:[
+   {l:'“Let’s find something.”',sub:'They’ll be easier to sign',f:()=>{a.rel=(a.rel||0)+15;return {say:'Call my people. I mean it.',note:esc(a.n)+' relationship +15'}}},
+   {l:'Take a selfie for socials',sub:'Hype for your studio',f:()=>{gainRep(1);post(null,`spotted: ${a.n} at ${S.name} HQ 👀`,RI(20000,300000));return {say:'They grin for the camera.',note:'Prestige +1'}}},
+   {l:'“Not right now.”',f:()=>{a.rel=(a.rel||0)-5;return {say:'Your loss.',note:esc(a.n)+' relationship −5'}}}]}}},
+ {k:'crew',cd:12,w:1,ok:()=>S.projects.length>=2,make:()=>{const pr=teamM('prod');const c=+(.6*inf(tNow())).toFixed(1);
+  return {bg:'office',tag:'Studio lot',who:pr,lines:['The crews have pulled long weeks across all our shoots.','A bonus would go a long way.'],log:['👷','Crew bonus request'],choices:[
+   {l:'Pay a bonus',sub:'−'+M(c),f:()=>{spend(c);S.projects.forEach(p=>p.chem=(p.chem||0)+1);gainRep(1);return {say:'They cheered when I told them.',note:'−'+M(c)+' · all projects chemistry +1'}}},
+   {l:'Not this time',f:()=>({say:'I’ll let them know. Some won’t be happy.',note:'No bonus'})}]}}},
+ {k:'brief',cd:4,w:4,ok:()=>inThe().length,make:()=>{const a=teamM('asst');const f=pick(inThe());const so=typeof boShown==='function'?boShown(f):{ww:f.ww,n:1};const be=typeof beFilm==='function'?beFilm(f):null;
+  return {bg:'office',tag:'Morning briefing',who:a,lines:[pick(['Morning, boss. Coffee’s on your desk.','Good morning. Busy day.','Morning! You’ll want to sit down for this.']),`<b>${esc(f.title)}</b> is at ${M(so.ww)} worldwide after week ${so.n||1}.`+(be?(so.ww>=be?' It’s past break-even. We’re in profit. 🎉':` We need ${M(be-so.ww)} more to break even.`):''),pick(['The trades are calling about it.','The cinema chains want to keep it on more screens.','Your mother called. She saw it twice.'])],log:['☕','Briefing: '+esc(f.title)],choices:[{l:'Thanks. Keep me posted.'}]}}}
+];
+function weekScenes(){if(PREFS.scenes===false)return [];const now=wIdx();S.scnCD=S.scnCD||{};const ok=DECK.filter(d=>(S.scnCD[d.k]==null||now-S.scnCD[d.k]>=d.cd)&&(()=>{try{return d.ok()}catch(e){return false}})());if(!ok.length)return [];
+ const n=Math.random()<.22?2:Math.random()<.78?1:0;const out=[];const pool=ok.slice();
+ for(let i=0;i<n&&pool.length;i++){const tot=sum(pool,d=>d.w);let r=Math.random()*tot;let d=pool[0];for(const x of pool){r-=x.w;if(r<=0){d=x;break}}pool.splice(pool.indexOf(d),1);let sc=null;try{sc=d.make()}catch(e){sc=null}if(sc){S.scnCD[d.k]=now;out.push(sc)}}return out}
+const _rq11=runQueue;runQueue=function(){try{if(S&&!S.over&&S.scnW!==wIdx()){S.scnW=wIdx();weekScenes().forEach(sc=>QUEUE.push(()=>playScene(sc,runQueue)))}}catch(e){}return _rq11()};
+
+/* ---------- opening weekend phone call ---------- */
+const _rs11=releaseScreen;releaseScreen=function(f){if(f.dist==='stream'||f.dist==='sell'||f._call||PREFS.scenes===false)return _rs11(f);f._call=1;const d=teamM('dist');const o=f.opening;const rk=(()=>{try{const l=weekendList();const i=l.findIndex(x=>x.mine&&x.id===f.id);return i>=0?i+1:null}catch(e){return null}})();
+ const good=f.profit>0,big=f.ww>400*inf(tNow());const lines=[pick(['Are you sitting down?','Boss, I’ve got the Sunday numbers.','You’re going to want to hear this.']),`<b>${esc(f.title)}</b> opened to <b class="big">${M(o)}</b>${rk?` — <b>#${rk}</b> at the box office`:''}.`,
+  big?'The trades are calling it the event of the year. Champagne’s on me.':good?'Solid start. Strong word of mouth, and legs could carry us.':'It’s soft. Really soft. The cinemas will pull screens fast.',`Audiences gave it ${esc(f.grade||'')}, critics ${f.critic}%.`];
+ const call=()=>playScene({bg:'call',tag:'Incoming call · Sunday 9:14 AM',who:d,lines,music:big?'awards':good?'hq':'tension',log:[big?'🏆':good?'🎟️':'📉',esc(f.title)+' opening weekend: '+M(o)],choices:big?[{l:'Pop the champagne 🍾',hap:'confirm',f:()=>{sfx('win');return {say:'Already did. Congratulations, boss.'}}}]:good?[{l:'Great work. Keep pushing.',f:()=>({say:'On it. More screens next weekend.'})}]:[{l:'What went wrong?',hap:'reject',f:()=>({say:pick(['Too much competition that weekend.','The reviews hurt us.','The marketing never found the audience.'])})},{l:'Cut our losses.',f:()=>({say:'Understood. I’ll start licensing talks.'})}]},()=>_rs11(f));
+ if(!f._prem&&PREFS.cuts!==false&&typeof premiereScene==='function'){f._prem=1;try{sfx('fanfare');musicTrack('awards')}catch(e){}cutScene(premiereScene(f),call)}else call()};
+
+/* ---------- hooks: HQ tile + settings ---------- */
+hq8=(function(o){return function(){const n=(S.diary||[]).length;return o().replace('<div class="sec"><h2>Studio</h2></div><div class="tgrid">',`<div class="sec"><h2>Studio</h2></div><div class="tgrid"><button class="qt" onclick="diaryView()">${ic('target','#B5821C')}<span>Diary & team</span></button>`)}})(hq8);
+settings=(function(o){return function(){o();const box=document.querySelector('#modal .modal>div .card');if(box&&box.insertAdjacentHTML)box.insertAdjacentHTML('beforeend',`<div class="row" style="margin-top:12px"><span>🎭 Studio scenes</span><button class="btn sm ghost" style="margin:0" onclick="PREFS.scenes=PREFS.scenes===false;savePrefs10();settings()">${PREFS.scenes===false?'Off':'On'}</button></div>`)}})(settings);
 
 
 applyTheme();title();
