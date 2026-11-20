@@ -3131,7 +3131,7 @@ function mediaModal(){const L=(S.invites||[]).filter(i=>!i.done);modal(`<h3>🎙
 let MI=null;
 function openInvite(id){const i=(S.invites||[]).find(x=>x.id===id);if(!i||i.done)return mediaModal();MI={i,step:0,buzz:0,risk:0,qs:shuffle(QS.slice()).slice(0,3),log:[]};miView()}
 function miView(){const {i,step,qs}=MI;const who=i.who==='ceo'?S.ceo:person(i.who);const rv=(S.rivals.filter(r=>r.alive)[0]||{n:'a rival'}).n;
- if(step>=qs.length)return miEnd();const q=qs[step];musicTrack('tension');
+ if(step>=qs.length)return miEnd();const q=qs[step];
  modal(`<div class="center"><small>${i.o[1]} ${i.o[2]} · ${i.o[3]}</small><div style="margin:8px 0">${portrait(who,80)}</div><b>${esc(who?who.n:'You')}</b></div><div class="card"><small>Host · question ${step+1} of ${qs.length}</small><p style="font-size:16px;margin-top:4px">"${q.q.replace('{t}',esc(i.title)).replace('{rv}',esc(rv))}"</p></div>
  ${q.a.map((a,k)=>`<button class="btn ghost" onclick="miAns(${k})">${a[0]}</button>`).join('')}${MI.log.length?`<div class="muted" style="font-size:12px;margin-top:6px">${MI.log.join('<br>')}</div>`:''}`)}
 function miAns(k){const a=MI.qs[MI.step].a[k];const bad=Math.random()<a[2];MI.buzz+=bad?-Math.round(a[1]*.6):a[1];if(bad)MI.risk++;MI.log.push(bad?`😬 "${a[0]}" backfired`:`✅ "${a[0]}" landed`);MI.step++;miView()}
@@ -3168,7 +3168,7 @@ const _wt7=weekTick;weekTick=function(){_wt7();shootScenes()};
 /* ---------- music routing ---------- */
 const _ti7=title;title=function(){musicTrack('menu');_ti7()};
 const _rn7=render;render=function(){if(S&&MWANT!=='awards')musicTrack('hq');_rn7()};
-const _nv7=negView;negView=function(){musicTrack('tension');_nv7()};
+const _nv7=negView;negView=function(){_nv7()};
 const _ds7=decisionScreen;decisionScreen=function(d){musicTrack('tension');_ds7(d)};
 const _set7=settings;settings=function(){_set7();const box=document.querySelector('#modal .modal>div .card');if(box&&box.insertAdjacentHTML)box.insertAdjacentHTML('beforeend',`<div class="row" style="margin-top:12px"><span>🎬 Cut scenes</span><button class="btn sm ${PREFS.cuts!==false?'gold':'ghost'}" style="margin:0" onclick="PREFS.cuts=PREFS.cuts===false?true:false;savePrefs();settings()">${PREFS.cuts!==false?'On':'Off'}</button></div>`)};
 
@@ -3949,7 +3949,7 @@ function ngInit(){const p=person(NG.id);if(NG.init)return;NG.init=1;const fit=W&
 function ngVal(){return NG.offer+NG.share*NG.ask*.06+(NG.bonus?NG.ask*.08:0)}
 function ngStrength(){const r=ngVal()/NG.res;if(NG.want&&NG.share<NG.want&&ngVal()<NG.res*1.12)return r>=.97?['Close · they want more back-end','#d9822b',60]:r>=.85?['Weak','#d63a3f',35]:['Insulting','#8b0000',12];return r>=1.05?['Strong','#1f9d5c',90]:r>=.97?['Close','#d9822b',65]:r>=.85?['Weak','#d63a3f',35]:['Insulting','#8b0000',12]}
 negView=function(){ngInit();const p=person(NG.id);const isA=NG.role==='actors';const [sl,sc,sw]=ngStrength();const avail=S.cash+creditLimit()-committed()-wizFees(W);const step=Math.max(.05,+(NG.ask*.05).toFixed(2));
- musicTrack('tension');MKEEP=true;
+ MKEEP=true;
  modal(`<h3>Negotiating · ${esc(p.n)}</h3><div class="ngh">${portrait(p,64)}<div><b>${esc(p.n)}</b><span>${isA?'Actor':ROLE_LBL[NG.role].replace(/s$/,'')} · ${isA?'💜 '+p.star+' star power':'💜 '+p.fame+' fame'} · ⭐ ${p.skill}</span><span class="ngpat">Patience ${'●'.repeat(Math.max(0,NG.pat))}${'○'.repeat(Math.max(0,NG.pat0-NG.pat))}</span></div></div>
  <div class="ngchat">${NG.log.map(m=>`<div class="ngm ${m.them?'them':'me'}">${m.s}</div>`).join('')}</div>
  <div class="card"><div class="row"><small>Their ask</small><b>${M(NG.ask)}${NG.want?` + ${NG.want}%`:''}</b></div><div class="row" style="margin-top:4px"><small>Your budget left</small><b>${M(avail)}</b></div></div>
@@ -4558,7 +4558,7 @@ hq8=function(){const t=tNow();const F=homeFocus();const rows=weekRows();const ta
 /* ---------- event cards (replaces the chat-style scene) ---------- */
 playScene=function(sc,next){
  if(!scnDOM()){const c=sc.choices&&sc.choices.length?pick(sc.choices):null;try{if(c&&c.f)c.f()}catch(e){}if(sc.log)diary(sc.log[0],sc.log[1],(c&&c.l)||'');return next&&next()}
- const pre=S&&S.year<2008;let tag=sc.tag||'Studio';if(pre&&tag==='Text message')tag='Phone call';
+ const pre=S&&S.year<2009;let tag=sc.tag||'Studio';if(pre&&tag==='Text message')tag='Phone call';
  let L=(sc.lines||[]).map(x=>pre?String(x).replace(/hit (\d+) million views overnight/,'is playing before every big release, and audiences are buzzing').replace(/the trades are calling/i,'the trades are calling'):x);
  let hi=L.findIndex(x=>/class="big"/.test(x));if(hi<0)hi=L.length-1;const head=L[hi]||'';const body=L.filter((_,i)=>i!==hi);
  SC={sc,next,chShown:true};const old=document.getElementById('scn');if(old)old.remove();
@@ -4588,7 +4588,7 @@ function mpEl(){if(typeof Audio==='undefined')return null;const a=new Audio();a.
 function mpList(k){if(k==='hq'||k==='home'){if(typeof isEraMode==='function'&&isEraMode())return MUS[eraOf().k]||MUS.modern;return MUS.modern}return MUS[k]||MUS.modern}
 function mpPick(k){const L=mpList(k);const id=k==='hq'?(isEraMode&&isEraMode()?eraOf().k:'modern'):k;MP.i[id]=(MP.i[id]==null?0:MP.i[id]);return L[MP.i[id]%L.length]}
 function mpPlay(k,force){if(!PREFS.music||!MP.ok)return;if(!MP.a){MP.a=mpEl();MP.b=mpEl();if(!MP.a)return}const file=mpPick(k);if(!force&&MP.key===k&&MP.cur&&MP.cur._f===file&&!MP.cur.paused)return;
- const next=MP.cur===MP.a?MP.b:MP.a,prev=MP.cur;next._f=file;next.src=MED+file+'.mp3';next.loop=!/^m(70|80|90)/.test(file)&&mpList(k).length===1;next.currentTime=0;next.volume=0;
+ const next=MP.cur===MP.a?MP.b:MP.a,prev=MP.cur;next._f=file;next.src=MED+file+'.mp3';next.loop=(k==='menu');next.currentTime=0;next.volume=0;
  const p=next.play();if(p&&p.catch)p.catch(()=>{});MP.cur=next;MP.key=k;MP.started=true;clearInterval(MP.fade);const t0=Date.now(),D=1400,pv=prev?prev.volume:0;
  MP.fade=setInterval(()=>{const x=Math.min(1,(Date.now()-t0)/D);next.volume=MP.vol*x;if(prev&&prev!==next){prev.volume=pv*(1-x);if(x>=1)prev.pause()}if(x>=1)clearInterval(MP.fade)},50)}
 function mpNextInList(){const k=MP.key||'hq';const id=k==='hq'?(isEraMode&&isEraMode()?eraOf().k:'modern'):k;MP.i[id]=(MP.i[id]||0)+1;if(k==='premiere'||k==='awards'||k==='tension')return mpPlay('hq',true);mpPlay(k,true)}
@@ -4610,7 +4610,7 @@ const _sfx17=sfx;sfx=function(k){if(PREFS.sfx&&SFXF[k]&&sfxFile(k)){try{if(k==='
 function bgImg(n,extra){return `<img class="pbgimg" src="${MED}bg_${n}.jpg" alt="" ${extra||''}>`}
 function officeBg(tag){tag=String(tag||'');if(/Morning/.test(tag))return 'office_morning';if(/Marketing/.test(tag))return 'office_warm';if(/visitor/i.test(tag))return 'office_day';if(/lot/i.test(tag))return 'office_day';const w=(S&&S.wk)||0;return ['office_morning','office_day','office_warm','office_night'][w%4]}
 function sceneBgName(k,tag){if(k==='set')return /Western/i.test(String(tag))?'western':'set';if(k==='screen')return 'screening';if(k==='call')return /Text/.test(String(tag))?'city_night':'office_night';if(k==='street')return S&&S.year<1990?'marquee':'city_night';return officeBg(tag)}
-let _scTag='';const _ps17=playScene;playScene=function(sc,next){_scTag=(sc&&sc.tag)||'';try{if(sc&&sc.bg==='set'&&/On set · (.+)/.test(_scTag)){const t=RegExp.$1;const p=S.projects.find(x=>x.title===t.replace(/&amp;/g,'&'));if(p&&p.genre==='Western')_scTag+=' Western'}if(sc&&sc.bg==='street')setTimeout(()=>sfx('shutter'),350);if(sc&&sc.bg==='screen')setTimeout(()=>sfx('projector'),200);if(sc&&/Text message/.test(_scTag)&&S.year<2008)_scTag='Phone call'}catch(e){}return _ps17(sc,next)};
+let _scTag='';const _ps17=playScene;playScene=function(sc,next){_scTag=(sc&&sc.tag)||'';try{if(sc&&sc.bg==='set'&&/On set · (.+)/.test(_scTag)){const t=RegExp.$1;const p=S.projects.find(x=>x.title===t.replace(/&amp;/g,'&'));if(p&&p.genre==='Western')_scTag+=' Western'}if(sc&&sc.bg==='set'&&MP.started)musicTrack('tension');if(sc&&sc.bg==='street')setTimeout(()=>sfx('shutter'),350);if(sc&&sc.bg==='screen')setTimeout(()=>sfx('projector'),200);if(sc&&/Text message/.test(_scTag)&&S.year<2008)_scTag='Phone call'}catch(e){}return _ps17(sc,next)};
 scnBG=function(k){return bgImg(sceneBgName(k,_scTag))};
 // pitch room: the meeting painting
 pitchScene=(function(o){return function(P){return o(P).replace(/<svg viewBox="0 0 360 150" class="pbg"[\s\S]*?<\/svg>/,bgImg('meeting','style="display:block;width:100%;height:190px;object-fit:cover"'))}})(pitchScene);
@@ -4655,6 +4655,23 @@ const _nm171=nextMonth;nextMonth=function(){const r=_nm171.apply(this,arguments)
 /* period-correct opening headlines in era mode */
 finishSetup=(function(o){return function(){o.apply(this,arguments);try{if(S&&S.y0&&S.y0<2000){S.news=(S.news||[]).filter(n=>!/20[0-9]{2}|stream|pandemic|social|AI\b|online/i.test(typeof n==='string'?n:n.s||''));
  ['🎬 Young directors are taking over Hollywood. Critics call it a “New Hollywood”.','📺 TV networks are paying record sums to air finished movies.','🎟️ Studios gamble on bold, gritty pictures as audiences tire of old-fashioned musicals.'].reverse().forEach(s=>addNews(s));save();render()}}catch(e){}}})(finishSetup);
+/* ---------- no social media before 2009: period publicity instead ---------- */
+const OLDPLAT=y=>[
+ {k:'chirp',n:'Newspaper ads',i:'📰',c:'#5a4a3a',d:'Full-page ads in the big dailies. Reliable reach with adults.',risk:.02,viral:.01,fit:{Drama:1.2,Thriller:1.2,Biopic:1.3},posts:[['Quarter-page ad',.2,1],['Full-page ad',.5,1.4],['Critics’ quote ad',.15,.8]]},
+ {k:'clipz',n:y<1980?'Radio spots':'Radio & MTV-style spots',i:'📻',c:'#a0522d',d:'Catchy spots on drive-time radio. Great for comedies and music-driven films.',risk:.02,viral:.03,fit:{Comedy:1.3,Romance:1.2,Animation:1.1},posts:[['30-second spot',.15,.9],['Morning-show interview',.1,.8],['Song tie-in',.4,1.4]]},
+ {k:'vid',n:'TV commercials',i:'📺',c:'#2f5c9a',d:'Prime-time trailers on network TV. Expensive, huge reach.',risk:.02,viral:.04,fit:{Action:1.3,'Sci-Fi':1.3,Superhero:1.3,Horror:1.2},posts:[['Late-night spot',.3,1],['Prime-time trailer',.8,1.6],['Big-game ad',1.6,2.2]]},
+ {k:'snap',n:'Magazines & press tour',i:'📸',c:'#8a3a6a',d:'Magazine covers, photo shoots and junkets. Star power matters most.',risk:.03,viral:.04,fit:{Romance:1.3,Drama:1.1,Comedy:1.1},posts:[['Photo shoot',.2,1],['Magazine cover',.5,1.5],['Press junket',.35,1.2]]}];
+function withPlat(fn){return function(){if(!(S&&S.year<2009))return fn.apply(this,arguments);const keep=PLATFORMS.slice();PLATFORMS.length=0;PLATFORMS.push(...OLDPLAT(S.year));try{return fn.apply(this,arguments)}finally{PLATFORMS.length=0;PLATFORMS.push(...keep)}}}
+promo=withPlat(promo);doPost=withPlat(doPost);
+socialPick=(function(o){return function(){o();try{if(S.year<2009){const h=document.querySelector('#modal h3');if(h)h.textContent='📣 Publicity';const p=document.querySelector('#modal h3+p');if(p)p.textContent='Promote an upcoming film or show with ads and press. One push per channel per week.'}}catch(e){}}})(socialPick);
+post=(function(o){return function(h,t,l){if(S&&S.year<2009)return;return o(h,t,l)}})(post);
+addNews=(function(o){return function(s){try{if(S&&S.year<2009)s=String(s).replace(/;?\s*#\w+ trends\.?/g,'.').replace(/goes viral/g,'is the talk of the town').replace(/went viral/g,'was the talk of the town').replace(/viral/g,'buzzing').replace(/on social media/g,'in the press').replace(/podcast/gi,'radio show')}catch(e){}return o(s)}})(addNews);
+mediaModal=(function(o){return function(){o();try{if(S.year<2009)document.querySelectorAll('#modal *').forEach(e=>{if(e.children.length===0&&/odcast/.test(e.textContent))e.textContent=e.textContent.replace(/Podcast/g,'Radio Hour').replace(/podcasts?/g,'radio shows')})}catch(e){}}})(mediaModal);
+hq8=(function(o){return function(){let h=o();try{if(S.year<2009)h=h.replace(/(onclick="socialPick\(\)">[\s\S]*?<span>)(Promote|Social media)(<\/span>)/,'$1Publicity$3')}catch(e){}return h}})(hq8);
+
+/* ---------- music: tension only for real crises, and always come back ---------- */
+negView=(function(o){return function(){o();try{if(MP.key==='tension')musicTrack('hq')}catch(e){}}})(negView);
+modal=(function(o){return function(h){const r=o.apply(this,arguments);try{if(!h&&MP&&['tension','awards','premiere'].includes(MP.key)&&!document.getElementById('cut')&&!document.getElementById('scn'))musicTrack('hq')}catch(e){}return r}})(modal);
 
 
 applyTheme();title();
