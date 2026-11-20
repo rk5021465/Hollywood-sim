@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.JavascriptInterface;
+import android.view.HapticFeedbackConstants;
+import android.os.Build;
 
 public class MainActivity extends Activity {
     private WebView web;
@@ -22,6 +25,19 @@ public class MainActivity extends Activity {
         s.setDomStorageEnabled(true);   // game saves use localStorage
         s.setDatabaseEnabled(true);
         web.setWebViewClient(new WebViewClient());
+        web.addJavascriptInterface(new Object() {
+            @JavascriptInterface
+            public void haptic(String kind) {
+                // Clear, short system haptics (no permission needed)
+                final int c;
+                boolean r = Build.VERSION.SDK_INT >= 30;
+                if (r && "confirm".equals(kind)) c = 16; // CONFIRM (API 30)
+                else if (r && "reject".equals(kind)) c = 17; // REJECT (API 30)
+                else if ("long".equals(kind)) c = HapticFeedbackConstants.LONG_PRESS;
+                else c = HapticFeedbackConstants.KEYBOARD_TAP;
+                web.post(() -> web.performHapticFeedback(c));
+            }
+        }, "HSNative");
         setContentView(web);
         if (savedInstanceState != null) web.restoreState(savedInstanceState);
         else web.loadUrl("file:///android_asset/index.html");
