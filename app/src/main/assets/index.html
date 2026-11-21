@@ -832,6 +832,48 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 .scr31 i{position:absolute;left:0;right:0;bottom:0;height:28%;background:#120b08;clip-path:polygon(0 40%,10% 25%,22% 45%,35% 20%,50% 42%,63% 22%,78% 40%,90% 18%,100% 35%,100% 100%,0 100%)}
 @keyframes scr31{from{filter:brightness(.9)}to{filter:brightness(1.1)}}
 #cut>.pr31{position:absolute!important;inset:0;z-index:1}#cut:has(.pr31) .cutbg{opacity:.9}#cut:has(.pr31){padding:0}#cut .skip{position:absolute!important;z-index:5}
+
+/* ===== v21 Gold Noir ===== */
+body:not(.light){--bg:#0B0A0D;--card:#151116;--card2:#1D1612;--gold:#D4AF37;--gold2:#F3DFA8;--text:#EDE3CF;--muted:#B9AA8C;--line:rgba(212,175,55,.2);--ink:#060507;--soft:#1A1519;background:#0B0A0D}
+body:not(.light) h1,body:not(.light) h2,body:not(.light) h3,body:not(.light) .hh{font-family:'Playfair Display','Noto Serif',Georgia,serif;letter-spacing:.2px}
+body:not(.light) .hh{color:#F3DFA8;font-size:14px;letter-spacing:3px;text-transform:uppercase;font-family:'Cinzel','Playfair Display','Noto Serif',Georgia,serif}
+body:not(.light) .card,body:not(.light) .evr,body:not(.light) .qt{background:linear-gradient(160deg,#18131A,#120E12)!important;border:1px solid rgba(212,175,55,.22)!important;box-shadow:0 8px 22px rgba(0,0,0,.35)!important}
+body:not(.light) .qt>svg{background:rgba(212,175,55,.12)!important}body:not(.light) .qt>svg *{stroke:#E8C878!important}
+body:not(.light) .btn.gold{background:linear-gradient(180deg,#F3DFA8,#C99A3B)!important;color:#1A1206!important;border:0!important}
+body:not(.light) .btn.ghost{background:rgba(212,175,55,.06)!important;border:1px solid rgba(212,175,55,.45)!important;color:#F3DFA8!important}
+body:not(.light) .chips button.on,body:not(.light) .seg button.on{background:rgba(212,175,55,.16)!important;border-color:#D4AF37!important;color:#F3DFA8!important}
+body:not(.light) .topbar{background:rgba(11,10,13,.88)!important;backdrop-filter:blur(10px);border-bottom:1px solid rgba(212,175,55,.18)}
+body:not(.light) .tabbar{background:transparent!important;border:0!important}
+body:not(.light) .tabbar>div{margin:0 12px 12px;border-radius:22px;background:rgba(20,16,21,.94)!important;border:1px solid rgba(212,175,55,.35)!important;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+body:not(.light) .tabbar button{color:#8E826C!important}body:not(.light) .tabbar button.on{color:#E8C878!important}
+.gn-hero{position:relative;margin:-6px -16px 14px;min-height:250px;overflow:hidden;border-radius:0 0 26px 26px}
+.gn-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.gn-fade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,.25),rgba(11,10,13,.55) 55%,#0B0A0D)}
+.gn-in{position:relative;padding:34px 20px 18px;display:flex;flex-direction:column;gap:6px}
+.gn-k{font:700 11px Inter,sans-serif;letter-spacing:4px;color:#D4AF37;text-transform:none}
+.gn-yr{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}.gn-yr h1{margin:0;font-family:'Cinzel','Playfair Display','Noto Serif',Georgia,serif!important;font-size:40px;line-height:1;color:#FFF1C8;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+.gn-ctl{display:flex;gap:8px}.gn-play{width:52px;height:52px;border-radius:26px;border:1px solid #D4AF37;background:rgba(212,175,55,.14);color:#E8C878;display:grid;place-items:center}.gn-play.on{background:linear-gradient(180deg,#F3DFA8,#C99A3B);color:#1A1206;box-shadow:0 0 0 6px rgba(212,175,55,.18)}
+.gn-spd{height:52px;min-width:52px;border-radius:26px;border:1px solid rgba(212,175,55,.45);background:rgba(11,10,13,.5);color:#E8C878;font-weight:800;font-size:14px}
+.gn-st{font-size:12.5px;color:#CDBFA3;margin-top:4px}.gn-step{display:flex;gap:8px;margin-top:10px}.gn-step button{flex:1;height:40px;border-radius:12px;border:1px solid rgba(212,175,55,.3);background:rgba(11,10,13,.55);color:#E8C878;font:600 13px Inter,sans-serif}
+.gn-next{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px;border-radius:18px;margin-bottom:14px;background:linear-gradient(135deg,#1D1612,#120E12);border:1px solid rgba(212,175,55,.55);box-shadow:0 10px 30px rgba(0,0,0,.45);color:#EDE3CF;font-family:inherit}
+.gn-ni{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:24px;background:rgba(212,175,55,.12);color:#E8C878}
+.gn-next small{display:block;font:700 11px Inter,sans-serif;letter-spacing:3px;color:#D4AF37;text-transform:none}.gn-next b{display:block;font-family:'Playfair Display','Noto Serif',Georgia,serif;font-size:18px;line-height:1.25;color:#FFF1C8;margin:3px 0}.gn-next em{font-style:normal;font-size:13px;font-weight:700;color:#E8C878}
+.gn-tl{padding:14px;border-radius:18px;background:#141015;border:1px solid rgba(212,175,55,.2);margin-bottom:6px}
+.gn-tlh{display:flex;justify-content:space-between;align-items:baseline}.gn-tlh span{font:700 11px Inter,sans-serif;letter-spacing:3px;color:#D4AF37}.gn-tlh small{font-size:11.5px;color:#8E826C;text-transform:none;letter-spacing:0}
+.gn-track{position:relative;height:30px;margin:10px 4px 4px}.gn-track:before{content:'';position:absolute;left:0;right:0;top:14px;height:2px;background:linear-gradient(90deg,#D4AF37,rgba(212,175,55,.15))}
+.gn-now{position:absolute;left:-4px;top:8px;width:14px;height:14px;border-radius:7px;background:#F3DFA8;box-shadow:0 0 0 5px rgba(243,223,168,.2)}
+.gn-dot{position:absolute;top:9px;width:12px;height:12px;border-radius:6px;border:2px solid #0B0A0D;background:var(--c);padding:0;transform:translateX(-6px)}
+.gn-tll{display:flex;flex-direction:column;gap:2px;margin-top:6px}.gn-tll button{display:flex;align-items:center;gap:10px;border:0;background:none;color:#EDE3CF;padding:7px 0;font:500 13.5px Inter,sans-serif;text-align:left}.gn-tll i{width:8px;height:8px;border-radius:4px;flex:none}.gn-tll span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gn-tll em{font-style:normal;font-size:12px;color:#B9AA8C}
+.gn-empty{font-size:13px;color:#8E826C;margin-top:4px}
+.gn-row{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none}.gn-row::-webkit-scrollbar{display:none}
+.gn-stage{flex:none;width:132px;border-radius:16px;overflow:hidden;background:#151116;border:1px solid rgba(212,175,55,.25);padding:0 0 10px;text-align:left;color:#EDE3CF;font-family:inherit}
+.gn-sp{position:relative;height:150px;display:grid;place-items:center;background:#0F0C10;overflow:hidden}.gn-sp svg{max-width:100%;max-height:150px}.gn-sp>span{position:absolute;left:6px;top:6px;font:700 9.5px Inter,sans-serif;letter-spacing:1px;color:#fff;padding:3px 6px;border-radius:5px}
+.gn-script{background:radial-gradient(circle at 50% 40%,#2a2118,#0F0C10)}
+.gn-stage b{display:block;font-size:13px;margin:8px 10px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#FFF1C8}.gn-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.12);margin:7px 10px 0}.gn-bar i{display:block;height:3px;border-radius:2px;background:linear-gradient(90deg,#9C7228,#F3DFA8)}
+.gn-new{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:190px;border-style:dashed;border-color:rgba(212,175,55,.6);background:rgba(212,175,55,.05);color:#E8C878}.gn-new b{margin:0;color:#E8C878}
+.gn-bo{border-radius:16px;overflow:hidden;border:1px solid rgba(212,175,55,.2)}.gn-bo div{display:flex;gap:10px;align-items:center;padding:11px 14px;background:#141015;border-top:1px solid rgba(212,175,55,.1)}.gn-bo div:first-child{border-top:0}.gn-bo div.me{background:rgba(212,175,55,.1)}.gn-bo em{font-style:normal;font-family:'Cinzel','Noto Serif',Georgia,serif;font-weight:700;color:#D4AF37;width:16px}.gn-bo b{flex:1;font-weight:700;color:#FFF1C8;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gn-bo span{font-size:12.5px;color:#B9AA8C}.gn-bo span:last-child{color:#EDE3CF;font-weight:700}
+.gn-next b b,.gn-next b i{display:inline;font-size:inherit;margin:0}.gn-hero{min-height:215px}.gn-new{min-height:150px}
+body:not(.light) .lk{color:#E8C878!important}
 </style>
 </head>
 <body>
@@ -5733,6 +5775,76 @@ setupView=(function(o){return function(){try{if(SW)START_YEAR=SW.era||1970}catch
   const av=document.querySelector('#app .card.ceo>div');if(av&&SW.ceo.pimg!=null)av.innerHTML=`<div class="ce31av" style="--fr:${SW.ceo.frame||'#E8B84A'}"><img src="${PIMG[SW.ceo.pimg].src}" alt=""></div>`}}
 }catch(e){console.error(e)}}})(setupView);
 finishSetup=(function(o){return function(){const pi=SW&&SW.ceo&&SW.ceo.pimg;const fr=SW&&SW.ceo&&SW.ceo.frame;o.apply(this,arguments);try{if(pi!=null&&S){S.pimg=S.pimg||{};Object.keys(S.pimg).forEach(k=>{if(S.pimg[k]===pi)delete S.pimg[k]});S.pimg[S.ceo.id||'ceo']=pi;S.ceo.frame=fr;save()}}catch(e){}}})(finishSetup);
+
+/* ===== v21 · GOLD NOIR — new look and a living clock ===== */
+
+/* ---------- theme: Gold Noir becomes the default look (players can still pick Light in Settings) ---------- */
+try{if(!PREFS.noir21){PREFS.noir21=1;PREFS.theme='dark';savePrefs();applyTheme()}}catch(e){}
+
+/* ---------- the clock: time runs by itself and stops when you're needed ---------- */
+const CLK={on:false,speed:1,h:null,seen:{}};
+const CLK_MS={1:2200,2:1200,4:600};
+function clkBlocked(){try{if(!S||S.over)return 'over';if(typeof TAB!=='undefined'&&TAB!=='hq')return 'tab';const m=document.getElementById('modal');if(m&&m.innerHTML.trim())return 'modal';if(document.getElementById('scn')||document.getElementById('cut'))return 'scene';if(typeof QUEUE!=='undefined'&&QUEUE.length){try{runQueue()}catch(e){}const m2=document.getElementById('modal');if(QUEUE.length||(m2&&m2.innerHTML.trim())||document.getElementById('scn')||document.getElementById('cut'))return 'queue'}if(document.querySelector('#app input:focus'))return 'typing'}catch(e){}return ''}
+function clkImportant(){try{return weekRows().filter(r=>!/inboxModal|trendsModal|pitchView|guildInfo/.test(String(r[2])))}catch(e){return []}}
+function clkKey(r){return String(r[2])+'|'+String(r[1]).replace(/<[^>]+>/g,'').slice(0,40)}
+function clkStep(){if(!CLK.on)return;const b=clkBlocked();if(b){if(b!=='typing')clkStop(true);return}
+ try{nextWeek()}catch(e){console.error(e);clkStop();return}
+ setTimeout(()=>{try{if(!CLK.on)return;const m=document.getElementById('modal');if((m&&m.innerHTML.trim())||document.getElementById('scn')||document.getElementById('cut')){clkStop(true);return}
+  const fresh=clkImportant().filter(r=>!CLK.seen[clkKey(r)]);if(fresh.length){fresh.forEach(r=>CLK.seen[clkKey(r)]=1);clkStop(true);toast(`⏸ Paused · ${String(fresh[0][1]).replace(/<[^>]+>/g,'')}`);if(TAB==='hq')render()}}catch(e){}},120)}
+function clkStart(){if(clkBlocked()==='over')return;clkImportant().forEach(r=>CLK.seen[clkKey(r)]=1);CLK.on=true;clearInterval(CLK.h);CLK.h=setInterval(clkStep,CLK_MS[CLK.speed]||1200);clkPaint();setTimeout(clkStep,250)}
+function clkStop(auto){CLK.on=false;clearInterval(CLK.h);CLK.h=null;clkPaint()}
+function clkToggle(){CLK.on?clkStop():clkStart()}
+function clkSpeed(){CLK.speed=CLK.speed===1?2:CLK.speed===2?4:1;if(CLK.on){clearInterval(CLK.h);CLK.h=setInterval(clkStep,CLK_MS[CLK.speed])}clkPaint()}
+function clkPaint(){try{const b=document.getElementById('gnPlay');if(b){b.innerHTML=CLK.on?GN_PAUSE:GN_PLAY;b.setAttribute('aria-label',CLK.on?'Pause time':'Start time');b.classList.toggle('on',CLK.on)}const s=document.getElementById('gnSpd');if(s)s.textContent=CLK.speed+'×';const l=document.getElementById('gnState');if(l)l.textContent=CLK.on?'Time is running · it stops when you are needed':'Time is paused · press play to let it run'}catch(e){}}
+const GN_PLAY='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>';
+const GN_PAUSE='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+/* stepping manually still works and keeps the clock honest */
+render=(function(o){return function(){const r=o.apply(this,arguments);try{if(CLK.on&&typeof TAB!=='undefined'&&TAB!=='hq')clkStop(true);clkPaint()}catch(e){}return r}})(render);
+
+/* ---------- timeline of what's coming ---------- */
+function gnEvents(){const now=wIdx();const ev=[];try{
+ (S.projects||[]).forEach(p=>{if(p.releaseT!=null&&p.dist!=='sell'){const w=p.releaseT*4+(p.relWk||0);if(w>=now)ev.push({w,c:'#E8C878',t:`Premiere · ${p.title}`,a:`projectModal(${p.id})`})}
+  if(p.sch&&p.startT!=null){const sw=(p.startT+p.sch.pre)*4;if(sw>now)ev.push({w:sw,c:'#C8102E',t:`Cameras roll · ${p.title}`,a:`projectModal(${p.id})`})}});
+ (S.drafts||[]).filter(d=>d.status==='writing').forEach(d=>ev.push({w:d.doneW,c:'#7FA7E8',t:`Draft due · ${d.title}`,a:'writersRoom()'}));
+ if(S.guild&&S.guild.next)ev.push({w:S.guild.next*4,c:'#B98CE8',t:'Writers Guild talks',a:'guildInfo()'});
+ }catch(e){}return ev.filter(e=>e.w>=now&&e.w<=now+26).sort((a,b)=>a.w-b.w)}
+function gnWhen(w){const d=w-wIdx();return d<=0?'this week':d===1?'next week':d<9?`in ${d} weeks`:`in ${Math.round(d/4.3)} months`}
+function gnTimeline(){const E=gnEvents().slice(0,6);const now=wIdx();
+ return `<div class="gn-tl"><div class="gn-tlh"><span>COMING UP</span><small>next 6 months</small></div><div class="gn-track"><i class="gn-now"></i>${E.map(e=>`<button class="gn-dot" style="left:${Math.min(97,(e.w-now)/26*100)}%;--c:${e.c}" aria-label="${esc(e.t)} ${gnWhen(e.w)}" onclick="${e.a}"></button>`).join('')}</div>
+ ${E.length?`<div class="gn-tll">${E.slice(0,3).map(e=>`<button onclick="${e.a}"><i style="background:${e.c}"></i><span>${esc(e.t)}</span><em>${gnWhen(e.w)}</em></button>`).join('')}</div>`:'<div class="gn-empty">Nothing scheduled. Start a picture to fill your calendar.</div>'}</div>`}
+
+/* ---------- the lot: what is on your stages ---------- */
+function gnStages(){const L=[];try{(S.projects||[]).filter(p=>!p.vault).forEach(p=>{let ph='ready';try{ph=p.sch?phaseOf(p):'ready'}catch(e){}const lab={pre:['PRE-PRODUCTION','#7A5C2E'],shoot:['FILMING','#C8102E'],post:['POST-PRODUCTION','#1F3A5F'],ready:['READY','#1F6B4A']}[ph]||['IN PROGRESS','#555'];
+  let pct=0;try{if(p.sch){pct=Math.round(clamp((tNow()-p.startT)/p.sch.total,0,1)*100)}}catch(e){}
+  L.push(`<button class="gn-stage" onclick="projectModal(${p.id})"><div class="gn-sp">${typeof posterSVG==='function'?posterSVG(p,96,p.poster||(typeof defaultPoster==='function'?defaultPoster(p):undefined)):''}<span style="background:${lab[1]}">${lab[0]}</span></div><b>${esc(p.title)}</b><div class="gn-bar"><i style="width:${pct}%"></i></div></button>`)});
+ (S.drafts||[]).filter(d=>d.status!=='sold').forEach(d=>{const wr=d.status==='writing';const pct=wr?Math.round(clamp((wIdx()-d.startW)/Math.max(1,d.doneW-d.startW),0,1)*100):100;L.push(`<button class="gn-stage" onclick="${wr?'writersRoom()':`drView(${d.id})`}"><div class="gn-sp gn-script"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E8C878" stroke-width="1.4" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 11h7M9 15h7M9 19h4"/></svg><span style="background:${wr?'#1F3A5F':'#1F6B4A'}">${wr?'WRITING':'DRAFT READY'}</span></div><b>${esc(d.title)}</b><div class="gn-bar"><i style="width:${pct}%"></i></div></button>`)})}catch(e){}
+ L.push(`<button class="gn-stage gn-new" onclick="startFilm()"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><b>New picture</b></button>`);
+ return `<div class="gn-row">${L.join('')}</div>`}
+
+/* ---------- the "up next" card ---------- */
+function gnNext(rows){const r=rows[0];if(r){return `<button class="gn-next" onclick="${r[2]}"><div class="gn-ni">${homeRowIcon(r[0],r[1])}</div><div><small>NEEDS YOU</small><b>${String(r[1])}</b><em>Open →</em></div></button>`}
+ const e=gnEvents()[0];if(e)return `<button class="gn-next" onclick="${e.a}"><div class="gn-ni" style="background:${e.c}22;color:${e.c}">●</div><div><small>UP NEXT · ${gnWhen(e.w).toUpperCase()}</small><b>${esc(e.t)}</b><em>Let time run, or open it now →</em></div></button>`;
+ return `<button class="gn-next" onclick="startFilm()"><div class="gn-ni">✦</div><div><small>YOUR STAGES ARE EMPTY</small><b>Greenlight your next picture</b><em>Start →</em></div></button>`}
+
+/* ---------- the new home ---------- */
+hq8=(function(o){return function(){let old='';try{old=o()}catch(e){}
+ const k=old.indexOf('<h4 class="hh">Create');const tail=k>=0?old.slice(k):'';
+ const rows=(()=>{try{return weekRows()}catch(e){return []}})();
+ const e=typeof eraOf==='function'?eraOf(S.year):null;const bgn=(e&&typeof ERA_BG!=='undefined'&&ERA_BG[e.k])||'marquee';
+ const d=curDate();const mon=MON[d.getMonth()];const fp=typeof frontPage==='function'?frontPage():'';
+ const bo=(()=>{try{return weekendList().slice(0,3)}catch(e){return []}})();
+ return `<section class="gn-hero"><img class="gn-bg" src="${MED}bg_${bgn}.jpg" alt=""><div class="gn-fade"></div>
+ <div class="gn-in"><small class="gn-k">${e?esc(e.n||'').toUpperCase()+' · ':''}THE YEAR IS</small>
+ <div class="gn-yr"><h1>${mon} ${S.year}</h1><div class="gn-ctl"><button id="gnPlay" class="gn-play ${CLK.on?'on':''}" aria-label="${CLK.on?'Pause time':'Start time'}" onclick="clkToggle()">${CLK.on?GN_PAUSE:GN_PLAY}</button><button id="gnSpd" class="gn-spd" aria-label="Change speed" onclick="clkSpeed()">${CLK.speed}×</button></div></div>
+ <div class="gn-st" id="gnState">${CLK.on?'Time is running · it stops when you are needed':'Time is paused · press play to let it run'}</div>
+ <div class="gn-step"><button onclick="clkStop();nextWeek()">One week ›</button><button onclick="clkStop();skipMonth()">Skip to ${tLabel(tNow()+1)}</button></div></div></section>
+ ${gnNext(rows)}
+ ${gnTimeline()}
+ <h4 class="hh">On your lot</h4>${gnStages()}
+ ${rows.length>1?`<h4 class="hh">Also waiting</h4><div class="evl">${rows.slice(1,5).map(r=>`<button class="evr" onclick="${r[2]}"><span class="evd" style="--c:${r[0]}">${homeRowIcon(r[0],r[1])}</span><span class="evt">${r[1]}</span><i>›</i></button>`).join('')}</div>`:''}
+ ${fp?`<h4 class="hh">Front page</h4>${fp}`:''}
+ ${bo.length?`<h4 class="hh">Weekend box office <button class="lk" onclick="boxOfficeModal()">Full chart</button></h4><div class="gn-bo">${bo.map((x,i)=>`<div class="${x.mine?'me':''}"><em>${i+1}</em><b>${esc(x.title||x.t||'')}</b><span>${esc(String(x.studio||"").split(" ")[0])}</span><span>${M(x.wkG||0)}</span></div>`).join('')}</div>`:''}
+ ${tail}`}})(hq8);
 
 
 applyTheme();title();
