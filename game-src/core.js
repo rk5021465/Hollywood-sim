@@ -24,7 +24,7 @@ const seasonG=(w,g)=>{let s=season(w);const k=wkOf(w);if(g==='Horror'&&k>=42&&k<
 const tal=id=>S.talent.find(t=>t.id===id);
 const ageOf=t=>yearOf(S.week)-t.born;
 const active=t=>t.on&&!t.retired;
-const feeOf=t=>(0.04+Math.pow(t.fame/100,2)*1.6+t.skill/100*.2)*cEra()*S.mods.fee;
+const feeOf=t=>(t.role==='writer'?.45:1)*(0.04+Math.pow(t.fame/100,2)*1.6+t.skill/100*.2)*cEra()*S.mods.fee;
 const needP=t=>Math.max(0,Math.round(t.fame-58));
 const relKey=(a,b)=>a<b?a+'|'+b:b+'|'+a;
 const relOf=(a,b)=>(a&&b&&S.rel[relKey(a,b)])||0;
@@ -67,8 +67,9 @@ function newGame(name,startIdx,diff,hist){
  GENRES.forEach(g=>S.heat[g]=clamp(((DECADE_HEAT[g]||{})[dec]||1)*rnd(.92,1.08),.6,1.45));
  ACTORS.forEach(a=>S.talent.push(mkTalent('actor',a[0],a[1],a[2],a[3],null,a[4])));
  DIRECTORS.forEach(d=>S.talent.push(mkTalent('director',d[0],d[1],d[2],d[3],d[4],d[5])));
+ WRITERS.forEach(d=>S.talent.push(mkTalent('writer',d[0],d[1],d[2],d[3],d[4],d[5])));
  S.talent.forEach(t=>{const age=st.y-t.born;if(age>=20&&age<=(t.role==='actor'?76:82)){t.on=true;if(age<27)t.fame=Math.round(t.fame*.45)}else if(age>(t.role==='actor'?76:82))t.retired=true});
- for(let i=0;i<6;i++)newcomer(R()<.65?'actor':'director');
+ for(let i=0;i<6;i++)newcomer(R()<.6?'actor':R()<.5?'director':'writer');
  const act=S.talent.filter(active);
  for(let i=0;i<30;i++){const a=pick(act),b=pick(act);if(a!==b)S.rel[relKey(a.id,b.id)]=R()<.6?ri(40,90):-ri(40,90)}
  for(let i=0;i<6;i++)S.scripts.push(mkScript());
@@ -166,7 +167,8 @@ function advance(){
  if(!S.investor&&!S.offer&&R()<.02&&S.projects.length>0){S.offer=true;news('A private investor wants to co-finance your films. See Money.','info')}
  // projects
  for(const p of S.projects){
-  if(p.stage==='rewrite'){p.left--;if(p.left<=0){p.stage=p.lead?'ready':'dev';toast('Rewrite finished on <b>'+esc(p.title)+'</b>.')}}
+  if(p.stage==='writing'){p.left--;if(p.left<=0)finishWriting(p)}
+  else if(p.stage==='rewrite'){p.left--;if(p.left<=0){p.stage=p.lead?'ready':'dev';toast('Rewrite finished on <b>'+esc(p.title)+'</b>.')}}
   else if(p.stage==='shoot'){if(striking){p.paused=true;continue}p.paused=false;spend(p.weekly,'Shooting: '+p.title,p);p.left--;p.shot++;
    if(p.events<2&&R()<.3&&p.left>0){p.events++;queue.push(()=>eventModal(p))}
    if(p.left<=0){p.stage='post';p.left=Math.max(1,4-Math.floor(S.b.post/2));news('Cameras stopped rolling on "'+p.title+'". Post-production begins.')}}
@@ -229,10 +231,19 @@ function newYear(yr){
   if(t.on&&!t.retired){if(age>lim){t.retired=true;t.on=false;news(t.name+' has retired after a long career.')}
    else{t.fame=clamp(t.fame-1,3,99);if(t.role==='actor'&&age>60){t.skill=clamp(t.skill-.6,5,99);t.fame=clamp(t.fame-1,3,99)}if(age<35&&R()<.5)t.skill=clamp(t.skill+1,5,99)}}});
  if(debut.length)news('New faces in town: '+debut.slice(0,3).map(t=>t.name).join(', ')+'.','info');
- for(let i=0;i<3;i++)newcomer(R()<.65?'actor':'director');
+ for(let i=0;i<4;i++)newcomer(i===3?'writer':R()<.65?'actor':'director');
  if(S.ipo){const yp=S.ledger.filter(l=>yearOf(l.w)===yr-1).reduce((a,l)=>a+l.a,0);if(yp<0){S.fame=clamp(S.fame-3,0,100);news('Shareholders are unhappy after a losing year. Share price falls.','bad');S.ipo.price*=.85}else{S.ipo.price*=1.08;news('A profitable year. Shareholders are pleased.','ok')}}
 }
 function startStrike(weeks,hist){S.strike={until:S.week+weeks};news((hist?'History repeats: ':'')+'Writers and actors walk out. Hollywood is on strike.','bad');queue.push(()=>infoModal('Industry news','Hollywood is on strike','Shooting stops on every film and no new films can be greenlit for about '+weeks+' weeks. Rival studios are frozen too.'))}
+function finishWriting(p){
+ const w=tal(p.writer);const sk=w?w.skill:50;const match=w&&w.genres.includes(p.genre)?8:0;
+ const base=sk*.6+6+S.b.writers*3+match*.75+themeFit(p.genre,p.theme)*3+rnd(-10,10);
+ p.sc={hook:clamp(Math.round(base+rnd(-12,12)),10,97),story:clamp(Math.round(base+rnd(-12,12)),10,97),chars:clamp(Math.round(base+rnd(-12,12)),10,97),comm:clamp(Math.round(35+(w?w.fame:20)*.25+(S.heat[p.genre]-1)*60+{low:0,mid:6,high:12}[p.tier]+rnd(-12,12)),10,98)};
+ p.stage='dev';p.logline=pick(LOGLINES[p.theme]||['A story only Hollywood could tell.']);
+ if(w){w.busy=0;w.films++;w.fame=clamp(w.fame+1,3,99)}
+ news((w?w.name:'Your writers')+' finished the script for "'+p.title+'".','gold');
+ toast('Script finished: <b>'+esc(p.title)+'</b>. Cast it in Films.');
+}
 function finishPost(p){
  const base=craftOf(p);
  p.Q=Math.round(clamp(base*rnd(.88,1.12)+p.qMod,5,98));

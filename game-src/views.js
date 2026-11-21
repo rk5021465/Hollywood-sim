@@ -33,7 +33,7 @@ function nextStep(){
  if(p.some(x=>x.stage==='ready')&&freeStages()>0&&!(S.strike&&S.strike.until>S.week))return['A cast film is ready for the greenlight.','Greenlight','films'];
  if(p.some(x=>x.stage==='dev'))return['You own a script with no cast yet.','Cast it','films'];
  if(S.b.lab>0&&!S.tech.cur&&availTech().length)return['Your research lab is idle.','Choose research','research'];
- if(!p.some(x=>x.stage!=='done'))return['Your stages are empty. Buy a script to start a film.','Browse scripts','scripts'];
+ if(!p.some(x=>x.stage!=='done'))return['Your stages are empty. Buy a script or write your own to start a film.','Go to scripts','scripts'];
  if(S.b.lab===0&&S.cash>BLD.lab.cost(0)*era()*3&&p.filter(x=>x.stage==='done').length>=2)return['Build a research lab to unlock new film technology.','See the lot','studio'];
  return null;
 }
@@ -74,7 +74,7 @@ function lotSVG(){
  }
  return `<svg viewBox="0 0 470 330" role="img" aria-label="Your studio lot"><title>Your studio lot</title>${g}${labels}</svg>`;
 }
-function pipeHTML(){const c=k=>S.projects.filter(p=>k.includes(p.stage)).length;const st=[['In development',['dev','rewrite','ready']],['Shooting',['shoot']],['Post',['post']],['Ready to release',['market','scheduled']],['In theaters',['theaters']]];return `<div class="pipe">${st.map(([n,k])=>`<span class="${c(k)?'on':''}">${n}<b>${c(k)}</b></span>`).join('')}</div>`}
+function pipeHTML(){const c=k=>S.projects.filter(p=>k.includes(p.stage)).length;const st=[['In development',['writing','dev','rewrite','ready']],['Shooting',['shoot']],['Post',['post']],['Ready to release',['market','scheduled']],['In theaters',['theaters']]];return `<div class="pipe">${st.map(([n,k])=>`<span class="${c(k)?'on':''}">${n}<b>${c(k)}</b></span>`).join('')}</div>`}
 function vStudio(){
  const ns=nextStep();const r=rankOf();
  return `<div class="head"><div><h2>${esc(S.name)}</h2><p>${dateStr(S.week)}, the ${decade()}s. Tap a building to build or upgrade it.</p></div></div>
@@ -90,9 +90,10 @@ function vStudio(){
 }
 function filmCard(p){
  const d=tal(p.dir),l=tal(p.lead),s=tal(p.sup);
- const who=d&&l?`${esc(l.name)}${s?' and '+esc(s.name):''}, directed by ${esc(d.name)}`:'Not cast yet';
+ const wr=tal(p.writer);const who=(d&&l?`${esc(l.name)}${s?' and '+esc(s.name):''}, directed by ${esc(d.name)}`:'Not cast yet')+(wr?`, written by ${esc(wr.name)}`:'');
  let body='',acts='';const tc=(.08*TIER[p.tier].m)*era();
  switch(p.stage){
+  case 'writing':{const w=tal(p.writer);const tot={low:5,mid:7,high:9}[p.tier]-S.b.writers;body=`<div class="prog"><span>${w?esc(w.name)+' is writing':'Writing'}</span><span>${p.left} week${p.left>1?'s':''} left</span></div><div class="bar"><i style="width:${clamp((1-p.left/Math.max(2,tot))*100,5,100)}%"></i></div>`;break}
   case 'dev':body=`<div class="meta">${esc(p.logline)}</div>`;acts=`<button class="btn gold sm" data-act="castm" data-id="${p.id}">Cast the film</button><button class="btn plain sm" data-act="rewrite" data-id="${p.id}" ${S.cash<tc?'disabled':''}>Rewrite, ${money(tc)}</button><button class="btn text sm" data-act="drop" data-id="${p.id}">Shelve</button>`;break;
   case 'rewrite':body=`<div class="prog"><span>Rewriting the script</span><span>${p.left} week${p.left>1?'s':''} left</span></div><div class="bar"><i style="width:${(2-p.left)/2*100}%"></i></div>`;break;
   case 'ready':body=`<div class="meta">Cast signed. Story ${Math.round(p.sc.story)}, hook ${Math.round(p.sc.hook)}.</div>`;acts=`<button class="btn gold sm" data-act="glm" data-id="${p.id}">Greenlight</button><button class="btn plain sm" data-act="castm" data-id="${p.id}">Recast</button><button class="btn plain sm" data-act="rewrite" data-id="${p.id}" ${S.cash<tc?'disabled':''}>Rewrite</button>`;break;
@@ -102,7 +103,7 @@ function filmCard(p){
   case 'scheduled':body=`<div class="meta">Opens ${weekLbl(p.rel)}, in ${p.rel-S.week} week${p.rel-S.week>1?'s':''}. Awareness ${pct(p.aw)}.</div>`;break;
   case 'theaters':body=`<div class="prog"><span>Week ${p.wk} in theaters</span><span>Last weekend ${money(p.lastGross||p.open)}</span></div><div style="font:600 22px var(--sans)" class="gold num">${money(p.total||p.open)} <small class="muted" style="font-size:13px;font-weight:400">+ ${money(p.intl||0)} overseas</small></div>`;break;
  }
- const label={dev:'In development',rewrite:'Rewriting',ready:'Ready to greenlight',shoot:'Shooting',post:'Post-production',market:'Ready to release',scheduled:'Release booked',theaters:'In theaters'}[p.stage];
+ const label={writing:'Being written',dev:'In development',rewrite:'Rewriting',ready:'Ready to greenlight',shoot:'Shooting',post:'Post-production',market:'Ready to release',scheduled:'Release booked',theaters:'In theaters'}[p.stage];
  return `<article class="card mine"><div class="top2">${poster({title:p.title,genre:p.genre,theme:p.theme,studio:S.name,seq:p.seq},72)}<div><div class="tags"><span class="pill g">${label}</span><span class="pill">${p.genre}</span><span class="pill">${TIER[p.tier].n}</span>${p.seq>1?'<span class="pill ok">Sequel</span>':''}</div><div class="ttl" style="margin-top:6px">${esc(p.title)}</div><div class="meta">${p.theme} · ${who}</div></div></div>${body}${acts?`<div class="acts">${acts}</div>`:''}</article>`;
 }
 function vFilms(){
@@ -113,18 +114,18 @@ function vFilms(){
 }
 function vScripts(){
  const sorted=[...S.scripts].sort((a,b)=>a.expires-b.expires);
- return `<div class="head"><div><h2>Script market</h2><p>Buy a script to start a film. Hot genres and good combos sell more tickets.</p></div></div>
+ return `<div class="head"><div><h2>Scripts</h2><p>Buy a script from the market, or have your own writers create one.</p></div><button class="btn gold" data-act="write">Write an original script</button></div>
  <div class="heat">${[...GENRES].sort((a,b)=>S.heat[b]-S.heat[a]).map(g=>{const h=S.heat[g];return `<div><b>${g}</b><span class="${h>1.1?'ok':h<.85?'bad':'muted'}">${h>1.1?'Hot':h<.85?'Cold':'Steady'} · ${Math.round(h*100)}</span></div>`}).join('')}</div>
  <div class="sec"><h3>On the market</h3><span class="muted">${S.scripts.length} scripts</span></div>
  <div class="cards">${sorted.map(s=>{const fit=themeFit(s.genre,s.theme);return `<article class="card"><div class="top2">${poster({title:s.title,genre:s.genre,theme:s.theme,studio:''},72)}<div><div class="tags"><span class="pill ${S.heat[s.genre]>1.1?'ok':S.heat[s.genre]<.85?'bad':''}">${s.genre}</span><span class="pill">${TIER[s.tier].n}</span>${s.expires-S.week<=3?'<span class="pill warn">Leaving soon</span>':''}</div><div class="ttl" style="margin-top:6px">${esc(s.title)}</div><div class="meta">${s.theme} · ${s.source}${fit>0?' · <span class="ok">great combo</span>':fit<0?' · <span class="bad">awkward combo</span>':''}</div></div></div><div class="meta" style="font-family:var(--serif);font-style:italic">${esc(s.logline)}</div><div class="stars" aria-label="Script quality">${stars(scriptAvg(s.sc))}</div><div class="acts"><b class="gold num" style="align-self:center;margin-right:auto">${money(s.price)}</b><button class="btn plain sm" data-act="script" data-id="${s.id}">Read</button><button class="btn gold sm" data-act="buy" data-id="${s.id}" ${S.cash<s.price?'disabled':''}>Buy</button></div></article>`}).join('')}</div>`;
 }
 function vTalent(){
  const f=talentFilter;let list=S.talent.filter(active);
- if(f==='actor'||f==='director')list=list.filter(t=>t.role===f);if(f==='free')list=list.filter(t=>!t.busy&&!lockReason(t));if(f==='stars')list=list.filter(t=>t.fame>=65);
+ if(f==='actor'||f==='director'||f==='writer')list=list.filter(t=>t.role===f);if(f==='free')list=list.filter(t=>!t.busy&&!lockReason(t));if(f==='stars')list=list.filter(t=>t.fame>=65);
  list.sort((a,b)=>b.fame-a.fame);
- return `<div class="head"><div><h2>Talent</h2><p>${S.talent.filter(active).length} actors and directors working in Hollywood.</p></div></div>
- <div class="filters">${[['all','Everyone'],['actor','Actors'],['director','Directors'],['free','Available to you'],['stars','Stars']].map(([k,n])=>`<button class="opt" data-act="tfilter" data-v="${k}" aria-pressed="${f===k}">${n}</button>`).join('')}</div>
- <div class="tgrid">${list.slice(0,60).map(t=>`<button class="tcard" data-act="tmodal" data-id="${t.id}">${portrait(t,56,ageOf(t))}<div><b>${esc(t.name)}</b><small>${t.role==='director'?'Director':'Actor'} · Age ${ageOf(t)}</small><small>Skill ${Math.round(t.skill)} · Fame ${Math.round(t.fame)}</small><small class="${t.busy?'warn':lockReason(t)?'bad':'gold'}">${t.busy?'Busy on a film':lockReason(t)||money(feeOf(t))+' per film'}</small></div></button>`).join('')}</div>`;
+ return `<div class="head"><div><h2>Talent</h2><p>${S.talent.filter(active).length} actors, directors and writers working in Hollywood.</p></div></div>
+ <div class="filters">${[['all','Everyone'],['actor','Actors'],['director','Directors'],['writer','Writers'],['free','Available to you'],['stars','Stars']].map(([k,n])=>`<button class="opt" data-act="tfilter" data-v="${k}" aria-pressed="${f===k}">${n}</button>`).join('')}</div>
+ <div class="tgrid">${list.slice(0,60).map(t=>`<button class="tcard" data-act="tmodal" data-id="${t.id}">${portrait(t,56,ageOf(t))}<div><b>${esc(t.name)}</b><small>${{director:'Director',writer:'Writer',actor:'Actor'}[t.role]} · Age ${ageOf(t)}</small><small>Skill ${Math.round(t.skill)} · Fame ${Math.round(t.fame)}</small><small class="${t.busy?'warn':lockReason(t)?'bad':'gold'}">${t.busy?'Busy on a film':lockReason(t)||money(feeOf(t))+' per film'}</small></div></button>`).join('')}</div>`;
 }
 function vCharts(){
  const list=[...S.films].sort((a,b)=>b.gross-a.gross);
@@ -210,6 +211,12 @@ document.addEventListener('click',e=>{
   case 'bld':buildingModal(t.dataset.k);break;
   case 'upgrade':upgrade(t.dataset.k);break;
   case 'script':scriptModal(id);break;
+  case 'write':writeModal();break;
+  case 'wg':writeSel.genre=t.dataset.v;writeSel.sugg=null;writeSel.theme=null;{const sc=$('#modal').scrollTop;drawWrite();$('#modal').scrollTop=sc}break;
+  case 'wth':writeSel.theme=t.dataset.v;{const sc=$('#modal').scrollTop;drawWrite();$('#modal').scrollTop=sc}break;
+  case 'wtier':writeSel.tier=t.dataset.v;{const sc=$('#modal').scrollTop;drawWrite();$('#modal').scrollTop=sc}break;
+  case 'wpick':writeSel.writer=id;{const sc=$('#modal').scrollTop;drawWrite();$('#modal').scrollTop=sc}break;
+  case 'wgo':startWriting();break;
   case 'buy':buyScript(id);break;
   case 'castm':castModal(id);break;
   case 'crole':castSel.role=t.dataset.k;drawCast();break;
