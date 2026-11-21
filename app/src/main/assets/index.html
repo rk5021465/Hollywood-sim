@@ -740,6 +740,8 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 .fl25 i{font-style:normal;display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font-weight:800;font-size:12px;border:1.5px solid #c9962e;color:#c9962e}
 .fl25 .on i{background:linear-gradient(180deg,#f6dc8e,#a87a26);color:#2a1d06;border-color:#a87a26}.fl25 .done i{background:#c9962e;color:#fff}
 .fl25 b{display:block;font-size:12px;margin-top:3px}.fl25 span{display:block;font-size:9.5px;opacity:.65}.fl25 em{flex:0 0 14px;height:1.5px;background:#c9962e66;margin-bottom:26px}
+
+.cov25{font:italic 13px/1.4 Georgia,serif;color:#5e4f2e;margin:6px 0 2px;padding:6px 9px;border-left:2px solid #d4af37;background:rgba(212,175,55,.10);border-radius:0 6px 6px 0}.cov25 b{font-style:normal;color:#9a7417;font-family:inherit}
 </style>
 </head>
 <body>
@@ -2025,7 +2027,7 @@ function wiz(){const back=`<button class="btn ghost" onclick="${W.step?'W.step--
  let h=hud()+`<div class="steps">${STEPS.map((s,i)=>`<i class="${i<=W.step?'on':''}"></i>`).join('')}</div><small>Step ${W.step+1} of 6 · ${STEPS[W.step]}</small>`;
  const g=W.script?W.script.genre:null;
  if(W.step===0){
-  h+=`<h2>Buy a script</h2>`+(W.sc.length?W.sc.map((s,i)=>`<div class="card opt ${W.script===s?'sel':''}" onclick="W.script=W.sc[${i}];wiz()"><div class="row"><b>${GEN[s.genre].icon} ${esc(s.title)}</b><span class="muted">${M(s.cost)}</span></div><div class="muted" style="font-size:13px;margin-top:5px">Coverage ${(s.q/10).toFixed(1)}/10 · by ${esc(pname(s.writer))}</div>${bar(s.q)}<div class="tags"><span class="tag">${s.genre}</span><span class="tag ${s.hype>=10?'good':''}">${s.type}</span>${s.hype?`<span class="tag good">+${Math.round(s.hype)} awareness</span>`:''}${s.fr>=.5?'<span class="tag hot">Franchise potential</span>':''}</div></div>`).join(''):'<p class="muted card">No scripts on the market this month.</p>');
+  h+=`<h2>Buy a script</h2>`+(W.sc.length?W.sc.map((s,i)=>`<div class="card opt ${W.script===s?'sel':''}" onclick="W.script=W.sc[${i}];wiz()"><div class="row"><b>${GEN[s.genre].icon} ${esc(s.title)}</b><span class="muted">${M(s.cost)}</span></div><div class="muted" style="font-size:13px;margin-top:5px">Coverage ${(s.q/10).toFixed(1)}/10 · by ${esc(pname(s.writer))}</div>${bar(s.q)}${covNote(s)}<div class="tags"><span class="tag">${s.genre}</span><span class="tag ${s.hype>=10?'good':''}">${s.type}</span>${s.hype?`<span class="tag good">+${Math.round(s.hype)} awareness</span>`:''}${s.fr>=.5?'<span class="tag hot">Franchise potential</span>':''}</div></div>`).join(''):'<p class="muted card">No scripts on the market this month.</p>');
   h+=`<button class="btn gold" ${W.script?'':'disabled'} onclick="W.step=1;wiz()">Next →</button>`+back;
  }else if(W.step===1){W._role='directors';
   h+=`<h2>Hire a director</h2>`+W.dirs.map((d,i)=>personCard(d,W.dir===d.id,`W.dir='${d.id}';wiz()`,false,lockC(d))).join('');
@@ -2280,7 +2282,7 @@ function wiz(){const back=`<button class="btn ghost" onclick="${W.step?'W.step--
  const g=W.script?W.script.genre:null;
  if(W.step===0){
   h+=`<h2>${W.script?esc(W.script.title):'New movie'}</h2><div class="seg">${[['market','📚 Buy a script'],['orig','✍️ Original idea'],['seq','🌟 Sequel']].map(m=>`<button class="${W.mode===m[0]?'on':''}" onclick="W.mode='${m[0]}';wiz()">${m[1]}</button>`).join('')}</div>`;
-  if(W.mode==='market'){const list=W.sc.filter(s=>!s.fid);h+=list.map((s)=>{const i=W.sc.indexOf(s);return `<div class="card opt ${W.script===s?'sel':''}" onclick="W.script=W.sc[${i}];wiz()"><div class="row"><b>${GEN[s.genre].icon} ${esc(s.title)}</b><span class="muted">${M(s.cost)}</span></div><div class="muted" style="font-size:13px;margin-top:5px">Coverage ${(s.q/10).toFixed(1)}/10 · by ${esc(pname(s.writer))}</div>${bar(s.q)}<div class="tags"><span class="tag">${s.genre}</span><span class="tag ${s.hype>=10?'good':''}">${s.type}</span>${s.fr>=.5?'<span class="tag hot">Franchise potential</span>':''}</div></div>`}).join('')||'<p class="card muted">No scripts on the market this month.</p>'}
+  if(W.mode==='market'){const list=W.sc.filter(s=>!s.fid);h+=list.map((s)=>{const i=W.sc.indexOf(s);return `<div class="card opt ${W.script===s?'sel':''}" onclick="W.script=W.sc[${i}];wiz()"><div class="row"><b>${GEN[s.genre].icon} ${esc(s.title)}</b><span class="muted">${M(s.cost)}</span></div><div class="muted" style="font-size:13px;margin-top:5px">Coverage ${(s.q/10).toFixed(1)}/10 · by ${esc(pname(s.writer))}</div>${bar(s.q)}${covNote(s)}<div class="tags"><span class="tag">${s.genre}</span><span class="tag ${s.hype>=10?'good':''}">${s.type}</span>${s.fr>=.5?'<span class="tag hot">Franchise potential</span>':''}</div></div>`}).join('')||'<p class="card muted">No scripts on the market this month.</p>'}
   else if(W.mode==='orig'){const o=W.orig;W._role='writers';
    h+=`<div class="card"><small>Movie title</small><div class="row"><input type="text" maxlength="40" value="${esc(o.title)}" oninput="W.orig.title=this.value;if(W.script&&W.script.own)W.script.title=this.value"><button class="btn sm ghost" style="margin:6px 0 0" onclick="W.orig.title=genTitle(W.orig.genre);W.script=null;wiz()">🎲</button></div>
    <small style="display:block;margin-top:10px">Genre</small><div class="chips" style="margin-top:6px;flex-wrap:wrap">${GENRES.map(x=>`<button class="${o.genre===x?'on':''}" onclick="W.orig.genre='${x}';W.script=null;wiz()">${GEN[x].icon} ${x}</button>`).join('')}</div></div>
@@ -4925,6 +4927,20 @@ openPerson=(function(o){return function(id){o(id);try{const p=person(id);const h
 /* ---------- Child & teen actors ---------- */
 actorFee=(function(o){return function(a){const f=o(a);return a&&(a.age||30)<18?+(f*.4+.02*I()).toFixed(3):f}})(actorFee);
 nextMonth=(function(o){return function(){const r=o.apply(this,arguments);try{if(S.month===0)(S.people.actors||[]).forEach(a=>{if((a.age||30)<=18){a.skill=clamp(a.skill+RI(0,3),20,99);if(a.age===18&&!a._grown){a._grown=1;if(a.star>=40)addNews(`🎓 Former child star ${esc(a.n)} turns 18 and steps into adult roles.`)}}})}catch(e){}return r}})(nextMonth);
+
+/* ---- Script coverage: reader's notes (v18.5) ---- */
+function covNote(s){try{if(!s.cov){let h=0;const k=(s.title||'')+s.genre+(s.writer||'');for(let i=0;i<k.length;i++)h=(h*31+k.charCodeAt(i))>>>0;const r=()=>{h=(h*1103515245+12345)>>>0;return (h>>>8)/16777216};
+ const q=s.q||50,sub=()=>clamp(Math.round(q+(r()-.5)*44),5,99);const sc={hook:sub(),story:sub(),characters:sub(),dialogue:sub()};
+ const ord=Object.entries(sc).sort((a,b)=>b[1]-a[1]);const [hi,hv]=ord[0],[lo,lv]=ord[3];const P=a=>a[Math.floor(r()*a.length)];
+ const HI={hook:['A killer premise you can pitch in one line','The hook grabs you on page one','Instantly sellable concept'],story:['Tight, well-built plot','The story moves like a train','Smart structure with a great third act'],characters:['Characters you fall for','A lead role actors will fight over','Rich, memorable characters'],dialogue:['Sharp, quotable dialogue','Every scene crackles','Dialogue that sounds alive']};
+ const LO={hook:['the premise feels familiar','the opening is slow to grab','the concept is hard to sum up'],story:['the middle sags','the ending falls flat','the plot has holes'],characters:['the villain is thin','the lead is hard to root for','the supporting cast is flat'],dialogue:['the dialogue is clunky','too much exposition',s.genre==='Comedy'?'the jokes don\'t land':'the lines feel flat']};
+ const w=typeof person==='function'?person(s.writer):null;
+ let a=(hv>=78?P(HI[hi])+'.':hv>=55?'Solid '+hi+'.':'The '+hi+' '+(hi==='characters'?'are':'is')+' its best part.')+' '+(lv<45?'But '+P(LO[lo])+' — needs a rewrite.':lv<62?'Though '+P(LO[lo])+'.':'Clean all round.');
+ const tail=[];if((s.hype||0)>=15)tail.push('Built-in audience.');else if(['Action','Comedy','Horror','Family','Animation','Sci-Fi'].includes(s.genre)&&q>=55)tail.push('Very commercial.');else if(q<45)tail.push('A hard sell.');
+ if((s.crit||0)>=8||(q>=80&&['Drama','Biopic','Romance','War'].includes(s.genre)))tail.push('Awards bait.');
+ if(w&&w.spec&&w.spec===s.genre&&q>=60)tail.push('Writer knows this genre.');
+ s.cov=a+(tail.length?' '+tail.join(' '):'')}
+ return `<div class="cov25"><b>Reader's note:</b> ${esc(s.cov)}</div>`}catch(e){return ''}}
 
 
 applyTheme();title();

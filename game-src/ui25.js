@@ -213,3 +213,17 @@ openPerson=(function(o){return function(id){o(id);try{const p=person(id);const h
 /* ---------- Child & teen actors ---------- */
 actorFee=(function(o){return function(a){const f=o(a);return a&&(a.age||30)<18?+(f*.4+.02*I()).toFixed(3):f}})(actorFee);
 nextMonth=(function(o){return function(){const r=o.apply(this,arguments);try{if(S.month===0)(S.people.actors||[]).forEach(a=>{if((a.age||30)<=18){a.skill=clamp(a.skill+RI(0,3),20,99);if(a.age===18&&!a._grown){a._grown=1;if(a.star>=40)addNews(`🎓 Former child star ${esc(a.n)} turns 18 and steps into adult roles.`)}}})}catch(e){}return r}})(nextMonth);
+
+/* ---- Script coverage: reader's notes (v18.5) ---- */
+function covNote(s){try{if(!s.cov){let h=0;const k=(s.title||'')+s.genre+(s.writer||'');for(let i=0;i<k.length;i++)h=(h*31+k.charCodeAt(i))>>>0;const r=()=>{h=(h*1103515245+12345)>>>0;return (h>>>8)/16777216};
+ const q=s.q||50,sub=()=>clamp(Math.round(q+(r()-.5)*44),5,99);const sc={hook:sub(),story:sub(),characters:sub(),dialogue:sub()};
+ const ord=Object.entries(sc).sort((a,b)=>b[1]-a[1]);const [hi,hv]=ord[0],[lo,lv]=ord[3];const P=a=>a[Math.floor(r()*a.length)];
+ const HI={hook:['A killer premise you can pitch in one line','The hook grabs you on page one','Instantly sellable concept'],story:['Tight, well-built plot','The story moves like a train','Smart structure with a great third act'],characters:['Characters you fall for','A lead role actors will fight over','Rich, memorable characters'],dialogue:['Sharp, quotable dialogue','Every scene crackles','Dialogue that sounds alive']};
+ const LO={hook:['the premise feels familiar','the opening is slow to grab','the concept is hard to sum up'],story:['the middle sags','the ending falls flat','the plot has holes'],characters:['the villain is thin','the lead is hard to root for','the supporting cast is flat'],dialogue:['the dialogue is clunky','too much exposition',s.genre==='Comedy'?'the jokes don\'t land':'the lines feel flat']};
+ const w=typeof person==='function'?person(s.writer):null;
+ let a=(hv>=78?P(HI[hi])+'.':hv>=55?'Solid '+hi+'.':'The '+hi+' '+(hi==='characters'?'are':'is')+' its best part.')+' '+(lv<45?'But '+P(LO[lo])+' — needs a rewrite.':lv<62?'Though '+P(LO[lo])+'.':'Clean all round.');
+ const tail=[];if((s.hype||0)>=15)tail.push('Built-in audience.');else if(['Action','Comedy','Horror','Family','Animation','Sci-Fi'].includes(s.genre)&&q>=55)tail.push('Very commercial.');else if(q<45)tail.push('A hard sell.');
+ if((s.crit||0)>=8||(q>=80&&['Drama','Biopic','Romance','War'].includes(s.genre)))tail.push('Awards bait.');
+ if(w&&w.spec&&w.spec===s.genre&&q>=60)tail.push('Writer knows this genre.');
+ s.cov=a+(tail.length?' '+tail.join(' '):'')}
+ return `<div class="cov25"><b>Reader's note:</b> ${esc(s.cov)}</div>`}catch(e){return ''}}

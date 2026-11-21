@@ -730,3 +730,5 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 .fl25 i{font-style:normal;display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;font-weight:800;font-size:12px;border:1.5px solid #c9962e;color:#c9962e}
 .fl25 .on i{background:linear-gradient(180deg,#f6dc8e,#a87a26);color:#2a1d06;border-color:#a87a26}.fl25 .done i{background:#c9962e;color:#fff}
 .fl25 b{display:block;font-size:12px;margin-top:3px}.fl25 span{display:block;font-size:9.5px;opacity:.65}.fl25 em{flex:0 0 14px;height:1.5px;background:#c9962e66;margin-bottom:26px}
+
+.cov25{font:italic 13px/1.4 Georgia,serif;color:#5e4f2e;margin:6px 0 2px;padding:6px 9px;border-left:2px solid #d4af37;background:rgba(212,175,55,.10);border-radius:0 6px 6px 0}.cov25 b{font-style:normal;color:#9a7417;font-family:inherit}
