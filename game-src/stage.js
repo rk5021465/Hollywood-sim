@@ -1,6 +1,6 @@
 "use strict";
 // Painted stage: a painting with a slow cinematic drift, cross-fades, and living effects drawn on top.
-const ART_HAVE=new Set(['haveli','garden','temple','tent','feast','nikah','farewell','bmother','aunt','uncle','bride','groom','priest','cook','rival']);
+const ART_HAVE=new Set(['haveli','garden','temple','tent','palace','feast','nikah','farewell','baraat','pheras','bmother','aunt','uncle','bride','groom','priest','cook','rival','gfather','bfather']);
 function art(k){return 'assets/'+k+'.webp'}
 function venueArt(kind){if(kind==='haveli2')kind='haveli';if(ART_HAVE.has(kind))return art(kind);if(kind==='palace')return art(ART_HAVE.has('palace')?'palace':'haveli');return art('haveli')}
 class Stage{
