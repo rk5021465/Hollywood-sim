@@ -42,6 +42,10 @@ public class MainActivity extends Activity {
             return ins;
         });
         setContentView(root);
+        if (Build.VERSION.SDK_INT >= 33) {
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT, this::handleBack);
+        }
         if (savedInstanceState != null) web.restoreState(savedInstanceState);
         else web.loadUrl("file:///android_asset/index.html");
     }
@@ -52,13 +56,16 @@ public class MainActivity extends Activity {
         web.saveState(out);
     }
 
-    @Override
-    public void onBackPressed() {
-        // Back closes a sheet, then leaves a sub-screen, and only then exits the app.
+    // Back closes a sheet, then leaves a sub-screen, and only then exits the app.
+    private void handleBack() {
         web.evaluateJavascript(
             "(function(){var s=document.querySelector('#sheet');if(s&&!s.dataset.lock){closeSheet();return 'y'}var b=document.querySelector('#back');if(b){b.click();return 'y'}return 'n'})()",
-            r -> { if (r == null || !r.contains("y")) MainActivity.super.onBackPressed(); });
+            r -> { if (r == null || !r.contains("y")) finish(); });
     }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onBackPressed() { handleBack(); }
 
     @Override protected void onPause() { super.onPause(); web.onPause(); if (web != null) web.evaluateJavascript("try{save()}catch(e){}", null); }
     @Override protected void onResume() { super.onResume(); web.onResume(); }

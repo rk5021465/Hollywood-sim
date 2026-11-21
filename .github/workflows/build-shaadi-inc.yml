@@ -17,11 +17,18 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11.1'
-      - run: gradle assembleDebug --no-daemon
+      - name: Bundle offline fonts
+        run: |
+          mkdir -p app/src/main/assets/fonts
+          curl -fsSL -o app/src/main/assets/fonts/Cormorant.ttf "https://github.com/google/fonts/raw/main/ofl/cormorantgaramond/CormorantGaramond%5Bwght%5D.ttf" || true
+          curl -fsSL -o app/src/main/assets/fonts/Inter.ttf "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bopsz,wght%5D.ttf" || true
+          ls -la app/src/main/assets/fonts
+      - run: gradle assembleDebug bundleRelease --no-daemon
       - name: Publish APK as a direct download
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk ShaadiInc.apk
+          cp app/build/outputs/bundle/release/app-release.aab ShaadiInc-unsigned.aab
           gh release delete shaadi-inc --yes --cleanup-tag || true
-          gh release create shaadi-inc ShaadiInc.apk --target shaadi-inc --title "Shaadi Inc. (Stage 1)" --notes "Tap ShaadiInc.apk to download and install." --latest=false
+          gh release create shaadi-inc ShaadiInc.apk ShaadiInc-unsigned.aab --target shaadi-inc --title "Shaadi Inc. (Stage 1)" --notes "Tap ShaadiInc.apk to download and install." --latest=false
