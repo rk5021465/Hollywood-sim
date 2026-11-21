@@ -6,8 +6,8 @@ android {
         applicationId = "com.hollywoodsim.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 33
-        versionName = "18.5"
+        versionCode = 34
+        versionName = "18.6"
     }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
 }

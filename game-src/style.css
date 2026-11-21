@@ -732,3 +732,12 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 .fl25 b{display:block;font-size:12px;margin-top:3px}.fl25 span{display:block;font-size:9.5px;opacity:.65}.fl25 em{flex:0 0 14px;height:1.5px;background:#c9962e66;margin-bottom:26px}
 
 .cov25{font:italic 13px/1.4 Georgia,serif;color:#5e4f2e;margin:6px 0 2px;padding:6px 9px;border-left:2px solid #d4af37;background:rgba(212,175,55,.10);border-radius:0 6px 6px 0}.cov25 b{font-style:normal;color:#9a7417;font-family:inherit}
+
+.dr26{margin-bottom:8px}.ask26{margin-top:10px;padding:10px;border-radius:10px;background:rgba(214,58,63,.08);font-size:13px}
+.grd26{display:inline-grid;place-items:center;min-width:38px;height:38px;border-radius:10px;font:800 15px/1 Georgia,serif;color:#fff;background:#B5821C;margin-right:10px;flex:none}.grd26.big{min-width:62px;height:62px;font-size:26px;border-radius:14px}
+.grd26.gA{background:#1F9D5C}.grd26.gB{background:#2F6FD6}.grd26.gC{background:#B5821C}.grd26.gD,.grd26.gF{background:#D63A3F}
+.drhead{display:flex;gap:14px;align-items:center;margin-bottom:12px}
+.drrow{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,.06)}.drrow:last-child{border:0}.drrow b{font-size:15px}
+.drrow .bar26{grid-column:1/3;height:6px;border-radius:3px;background:rgba(0,0,0,.08);overflow:hidden}.drrow .bar26 i{display:block;height:100%;border-radius:3px}
+.drrow small{grid-column:1/3;color:#7a6c55;font-style:italic}
+.drrow small,.drhead small{text-transform:none;letter-spacing:0}
