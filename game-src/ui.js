@@ -258,5 +258,6 @@ function vChron(m){let h='';if(S.stats.best){const b=S.stats.best;h+='<div class
 
 window.addEventListener('resize',()=>{if(UI.scene&&document.body.contains(UI.scene.cv))UI.scene.resize()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&S)save()});
+if(/ShaadiApp/.test(navigator.userAgent))document.documentElement.classList.add('app');
 window.addEventListener('load',splash);
 document.addEventListener('pointerdown',()=>{AUD.unlock();if(S&&!UI.view)AUD.play('home')},{once:true});

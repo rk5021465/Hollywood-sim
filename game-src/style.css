@@ -81,3 +81,4 @@ h1{font-size:30px}h2{font-size:23px}h3{font-size:19px}
 .pattern{height:10px;margin:0 -16px 12px;background:repeating-linear-gradient(90deg,var(--gold) 0 2px,transparent 2px 10px),var(--red);opacity:.5}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.app .topbar{padding-top:10px}.app .nav{padding-bottom:0}.app .sheet{padding-bottom:18px}.app .toast{bottom:76px}

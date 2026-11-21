@@ -8,15 +8,15 @@ function setupDay(sc,b){const p=planObj(b);const D={sc,b,trad:b.trad,roles:b.tra
  D.dancers=[];for(let i=0;i<8;i++){const F=figure(sc,{fem:i%3===1,mood:1});F.off=[(i%4-1.5)*.9,2.2+Math.floor(i/4)*1.1];D.dancers.push(F)}
  D.drummers=[];for(let i=0;i<2;i++){const F=figure(sc,{fem:false,col:0xF6EEDF,tur:'#C8102E'});F.off=[i?1:-1,1.4];D.drummers.push(F)}
  // bride waits near the mandap with her family
- D.bride=figure(sc,{fem:true,col:0xC8102E,veil:'#C8102E',mood:1});D.bride.set(-1.2,3.2);
+ D.bride=figure(sc,{fem:true,col:0xB3122E,veil:'#C8102E',top:0xB3122E,mood:1});D.bride.set(-1.2,3.2);
  D.bfam=[0,1,2].map(i=>{const F=figure(sc,{fem:i===1,beard:i===0,mood:1});F.set(-2.4+i*.9,6.2);return F});
- D.officiant=figure(sc,{fem:false,col:b.trad==='muslim'?0xF6EEDF:0xF29F05,tur:b.trad==='muslim'?'#F6EEDF':null,beard:true,mood:0});D.officiant.set(1.3,-1.4,.45);
+ D.officiant=figure(sc,{fem:false,col:b.trad==='muslim'?0xF6EEDF:0xF29F05,top:b.trad==='muslim'?0xF6EEDF:0xF29F05,tur:b.trad==='muslim'?'#F6EEDF':null,beard:true,grey:true,mood:0});D.officiant.set(1.3,-1.4,.45);
  placeProc(D,0);
  sc.ticks.push((t,dt)=>dayTick(D,t,dt));
  return D}
-function placeProc(D,t){const z=D.procZ;D.proc.at(0,z);const ry=D.proc.riderY;if(D.rider&&D.rider.mounted!==false)D.rider.set(0,z,ry+(D.procMoving?Math.abs(Math.sin(t*4))*.06:0));
- D.dancers.forEach((F,i)=>{if(F.free)return;F.set(F.off[0],z+F.off[1],D.procMoving||D.role==='arrive'?Math.abs(Math.sin(t*7+i))*.25:0,0)});
- D.drummers.forEach((F,i)=>{if(F.free)return;F.set(F.off[0],z+F.off[1],Math.abs(Math.sin(t*9+i*1.3))*.12)})}
+function placeProc(D,t){const z=D.procZ;D.proc.at(0,z);const ry=D.proc.riderY;if(D.rider&&D.rider.mounted!==false)D.rider.set(0,z,ry+(D.procMoving?Math.abs(Math.sin(t*4))*.04:0),Math.PI);
+ D.dancers.forEach((F,i)=>{if(F.free)return;const dance=D.procMoving||D.role==='arrive';F.set(F.off[0]+(dance?Math.sin(t*2+i)*.15:0),z+F.off[1],dance?Math.abs(Math.sin(t*5+i))*.07:0,Math.PI+(dance?Math.sin(t*2.5+i*1.7)*.9:0));F.armsUp(dance?1.9+Math.sin(t*5+i)*.6:0)});
+ D.drummers.forEach((F,i)=>{if(F.free)return;F.set(F.off[0],z+F.off[1],Math.abs(Math.sin(t*8+i*1.3))*.04,Math.PI);F.armsUp(.6+Math.abs(Math.sin(t*8+i))*.5)})}
 function dayTick(D,t,dt){
  if(D.procMoving&&!D.hold){D.procZ=Math.max(D.procTarget,D.procZ-dt*1.7);if(D.procZ<=D.procTarget){D.procMoving=false;if(D.onArrive){const f=D.onArrive;D.onArrive=null;f()}}}
  placeProc(D,t);
@@ -32,7 +32,7 @@ function dayPhase(D,ph){const role=D.roles[ph]||'farewell';D.role=role;clearLabe
  if(role==='arrive'){D.procMoving=true;AUD.play('baraat')}
  else{if(D.procZ>D.procTarget){D.procZ=D.procTarget;D.procMoving=false}AUD.play('day')}
  if(role==='welcome'){// dancers join the crowd, groom dismounts
-  D.dancers.concat(D.drummers).forEach((F,i)=>{F.free=true;F.mode='wander';F.r=4+Math.random()*3;F.a=Math.random()*6.28;F.s=(Math.random()<.5?-1:1)*(.05+Math.random()*.08);D.sc._G.push(F)});
+  D.dancers.concat(D.drummers).forEach((F,i)=>{F.free=true;F.armsUp(0);F.mode='wander';F.r=4+Math.random()*3;F.a=Math.random()*6.28;F.s=(Math.random()<.5?-1:1)*(.05+Math.random()*.08);D.sc._G.push(F)});
   if(D.rider){D.rider.mounted=false;D.rider.set(1.2,6.4)}}
  if(role==='feast'){D.sc._G.slice(0,6).forEach((F,i)=>{F.mode='still';F.set(5,-2.2+i*.9,0,0)})}
  if(role==='ceremony'){D.sc._G.forEach(F=>{if(F.mode==='still')F.mode='wander'});if(D.rider){D.rider.mounted=false;D.rider.set(.45,.4,.45)}D.bride.set(-.45,.4,.45)}
@@ -52,8 +52,8 @@ function dayDoli(D){const sc=D.sc,m=sc.mark();sc.box(1.2,1,1.6,0xC8102E,0,1,0);s
 // Show an event in the scene. Returns nothing; cleared by dayResolve.
 function dayEvent(D,e){const sc=D.sc,G=sc._G,rg=()=>G[Math.floor(Math.random()*Math.min(G.length,12))]||D.bride;clearLabels(D);D.cur=e;const H=f=>()=>f.head();
  const add=(o)=>{D.tmp.push(o);return o};
- const crowd=(n,from,to,o={})=>{const fs=[];for(let i=0;i<n;i++){const F=figure(sc,Object.assign({mood:o.mood!=null?o.mood:1},o));F.p0=[from[0]+(Math.random()-.5)*2,from[1]+Math.random()*2];F.p1=[to[0]+(Math.random()-.5)*(o.spread||3),to[1]+(Math.random()-.5)*(o.spread||3)];F.k=0;F.set(F.p0[0],F.p0[1]);fs.push(F)}add({figs:fs,tick:(t,dt)=>fs.forEach((F,i)=>{F.k=Math.min(1,F.k+dt*.35);F.set(F.p0[0]+(F.p1[0]-F.p0[0])*F.k,F.p0[1]+(F.p1[1]-F.p0[1])*F.k,F.k<1?Math.abs(Math.sin(t*8+i))*.08:(o.hop?Math.abs(Math.sin(t*10+i))*.2:0))})});return fs};
- const person=(x,z,o={})=>{const F=figure(sc,o);F.set(x,z);add({f:F});if(o.hop)add({tick:t=>F.set(F.x,F.z,Math.abs(Math.sin(t*9))*.22)});return F};
+ const crowd=(n,from,to,o={})=>{const fs=[];for(let i=0;i<n;i++){const F=figure(sc,Object.assign({mood:o.mood!=null?o.mood:1},o));F.p0=[from[0]+(Math.random()-.5)*2,from[1]+Math.random()*2];F.p1=[to[0]+(Math.random()-.5)*(o.spread||3),to[1]+(Math.random()-.5)*(o.spread||3)];F.k=0;F.set(F.p0[0],F.p0[1]);fs.push(F)}add({figs:fs,tick:(t,dt)=>fs.forEach((F,i)=>{F.k=Math.min(1,F.k+dt*.35);F.set(F.p0[0]+(F.p1[0]-F.p0[0])*F.k,F.p0[1]+(F.p1[1]-F.p0[1])*F.k,F.k<1?Math.abs(Math.sin(t*6+i))*.03:(o.hop?Math.abs(Math.sin(t*6+i))*.05:0),Math.atan2(F.p1[0]-F.p0[0],F.p1[1]-F.p0[1])*0+Math.PI);if(o.hop&&F.k>=1)F.armsUp(1.4+Math.sin(t*6+i)*.6)})});return fs};
+ const person=(x,z,o={})=>{const F=figure(sc,o);F.set(x,z);add({f:F});if(o.hop)add({tick:t=>{F.set(F.x,F.z,Math.abs(Math.sin(t*6))*.05,F.ry+Math.sin(t*4)*.02);F.armsUp(1.2+Math.sin(t*7)*.8)}});return F};
  const id=e.id;
  if(id==='ele_stop'||id==='mare_spook'||id==='palki_tilt'){D.hold=true;const tg=D.rider||D.dancers[0];label(D,H(tg),'','warn');label(D,()=>[0,4.6,D.procZ],id==='ele_stop'?'Moti will not move!':id==='mare_spook'?'Whoa! Steady!':'Careful!','say');AUD.sfx('bad')}
  else if(id==='camel'){crowd(6,[3,16],[0,D.procZ+3],{scale:.6,hop:true});label(D,()=>[0,3.6,D.procZ],'What a show!','good')}

@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
         s.setDomStorageEnabled(true);   // keeps the saved house
         s.setMediaPlaybackRequiresUserGesture(false);
         s.setTextZoom(100);
+        s.setUserAgentString(s.getUserAgentString() + " ShaadiApp");
         web.setWebViewClient(new WebViewClient());
         root.addView(web, new FrameLayout.LayoutParams(-1, -1));
         // Android 15+ draws edge to edge: keep the game clear of the status and navigation bars.
