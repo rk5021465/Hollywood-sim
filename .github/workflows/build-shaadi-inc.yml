@@ -2,6 +2,7 @@ name: Build Shaadi Inc APK
 on:
   push:
     branches: [shaadi-inc]
+    paths-ignore: ['tools/**','.github/workflows/probe-music.yml']
   workflow_dispatch:
 permissions:
   contents: write

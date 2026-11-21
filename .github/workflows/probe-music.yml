@@ -1,0 +1,20 @@
+name: Probe free music
+on:
+  push:
+    branches: [shaadi-inc]
+    paths: ['tools/probe_music.py']
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/probe_music.py
+      - name: Publish probe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd probe && zip -q ../music-probe.zip * && cd ..
+          gh release delete music-probe --yes --cleanup-tag || true
+          gh release create music-probe music-probe.zip --target shaadi-inc --title "Music probe" --notes "Candidate free music" --latest=false
