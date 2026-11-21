@@ -784,6 +784,13 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 
 .ct29{border-left:3px solid #2F6FD6}.ct29r{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid rgba(0,0,0,.06)}.ct29r small{display:block;text-transform:none;letter-spacing:0;font-size:12.5px}.ct29b{display:flex;gap:6px;flex:none}
 .ct29tag{font-size:13px;padding:8px 10px;border-radius:10px;background:rgba(47,111,214,.08);margin-bottom:10px}
+
+.sc30row{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory;scrollbar-width:none}.sc30row::-webkit-scrollbar{display:none}
+.sc30c{flex:none;width:172px;scroll-snap-align:start;text-align:left;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 0 8px;overflow:hidden;font-family:inherit;color:var(--text);box-shadow:0 4px 12px rgba(40,30,20,.06)}
+.sc30c.on{outline:3px solid #E8B84A;box-shadow:0 6px 18px rgba(232,184,74,.35)}
+.sc30i{position:relative;height:92px;overflow:hidden}.sc30fit{position:absolute;left:6px;top:6px;background:#1F9D5C;color:#fff;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:8px}.sc30fit.ok{background:#2F6FD6}
+.sc30on{position:absolute;right:6px;top:6px;width:24px;height:24px;border-radius:50%;background:#E8B84A;color:#3A2A0C;display:grid;place-items:center;font-weight:900}
+.sc30c b{display:block;font-size:13px;margin:7px 9px 1px}.sc30c small{display:block;margin:0 9px;font-size:11.5px;color:var(--muted);text-transform:none;letter-spacing:0}.sc30c .sc30r{color:#B5821C;margin-top:2px}
 </style>
 </head>
 <body>
@@ -2366,7 +2373,7 @@ function wiz(){const back=`<button class="btn ghost" onclick="${W.step?'W.step--
    <p class="muted" style="font-size:12px">${g} fans like ${vf[0]}–${vf[1]}% violence. Reach at ${rating}: <b style="color:var(--text)">${pct(ratingMult(g,rating))}</b>. Explicit content hurts China approval.</p></div>
   <div class="card"><div class="row"><small>Production budget</small><b id="pv">${M(W.prod)}</b></div><input type="range" min="${tierRange()[0]}" max="${tierRange()[1]}" value="${W.prod}" oninput="W.prod=+this.value;wizLive()"><p class="muted" style="font-size:12px">Typical ${g}: ${M(ib)}.</p></div>
   <div class="card"><div class="row"><small>Where the money goes</small><span class="tag ${ds>=.85?'good':ds<.65?'bad':''}">Fit ${Math.round(ds*100)}%</span></div>${DEPTS.map(d=>`<div class="row" style="margin-top:8px"><span style="font-size:14px">${d[2]} ${d[1]}</span><b id="d_${d[0]}">${M(W.prod*W.depts[d[0]]/(sum(DEPTS,x=>W.depts[x[0]])||1))}</b></div><input type="range" min="0" max="100" value="${W.depts[d[0]]}" onchange="W.depts.${d[0]}=+this.value;wiz()" oninput="W.depts.${d[0]}=+this.value;wizLive()">`).join('')}</div>
-  ${g!=='Animation'?`<div class="card"><small>Filming location</small>${LOCS.map(l=>`<div class="opt ${W.loc===l.k?'sel':''}" style="padding:9px;border-radius:10px;border:1px solid var(--line);margin-top:6px" onclick="W.loc='${l.k}';wiz()"><div class="row"><b>${l.f} ${l.k}</b><span class="tag good">${Math.round((l.rebate+(!l.foreign?S.ev.usRebate:0))*100)}% rebate</span></div><small style="text-transform:none;letter-spacing:0">${l.note}${(l.look||{})[g]?' · great look for '+g:''}${l.foreign&&ev('tariff')?' · ⚠️ tariff +20%':''}</small></div>`).join('')}</div>
+  ${g!=='Animation'?`<div class="card"><small>Filming location</small>${LOCS.map(l=>`<div class="opt ${W.loc===l.k?'sel':''}" style="padding:9px;border-radius:10px;border:1px solid var(--line);margin-top:6px" onclick="W.loc='${l.k}';wiz()"><div class="row"><b>${l.f} ${l.k}</b><span class="tag good">${Math.round((l.rebate+(!l.foreign?S.ev.usRebate:0))*100)}% rebate</span></div><small style="text-transform:none;letter-spacing:0">${l.note}${(l.look||{})[g]?' · great look for '+g:''}${l.foreign&&ev('tariff')?' · ⚠️ tariff +20%':''}</small></div>`).join('')}</div>${typeof scoutUI==='function'?scoutUI(g):''}
   <div class="card"><div class="row"><small>Shooting days</small><b id="dv">${W.days} days</b></div><input type="range" min="15" max="180" value="${W.days}" oninput="W.days=+this.value;wizLive()"><p class="muted" style="font-size:12px">Typical: ${GEN[g].days} days.</p></div>`:''}
   <div class="card"><div class="row"><span class="muted">Production spend</span><b id="sp">${M(prodSpend(W))}</b></div><div class="row" style="margin-top:5px"><span class="muted">Tax rebate</span><b class="pos" id="rb">${M(rebateOf(W))}</b></div><div class="row" style="margin-top:5px"><span class="muted">Schedule</span><b id="sv">${sch.total} months</b></div></div>
   <button class="btn gold" onclick="W.step=5;wiz()">Next: Release →</button>`+back;
@@ -5419,6 +5426,74 @@ sfxFile=(function(o){return function(k){
  try{Object.values(SFXP).forEach(a=>{if(a&&!a.paused)a.pause()})}catch(e){}
  const ok=o(k);if(ok){musicDuck(1);hook()}return ok}
  function hook(){try{Object.values(SFXP).forEach(a=>{if(a&&!a._duckHook){a._duckHook=1;a.addEventListener('ended',()=>setTimeout(()=>musicDuck(0),150));a.addEventListener('pause',()=>setTimeout(()=>musicDuck(0),150))}})}catch(e){}}})(sfxFile);
+
+/* ===== v19.3 · Location scouting: shoot somewhere breathtaking ===== */
+const SCOUT=[
+ {k:'dunes',n:'Sahara Dunes',w:'Morocco',ic:'🏜️',art:'dunes',fit:{Action:3,'Sci-Fi':4,Biopic:2,Drama:2},c:1.4,risk:'Sandstorms',pal:['#F6C27A','#E59A4C','#B5652B','#FBE3B5']},
+ {k:'alps',n:'Swiss Alps',w:'Switzerland',ic:'🏔️',art:'peaks',fit:{Action:4,Thriller:3,Romance:2,Superhero:2},c:1.5,risk:'Avalanche warnings',pal:['#9CC9F0','#5C86B8','#EEF4FA','#2E4A6E']},
+ {k:'island',n:'Tropical Island',w:'Thailand',ic:'🏝️',art:'beach',fit:{Romance:4,Comedy:3,Action:2,Horror:2},c:1.3,risk:'Monsoon rain',pal:['#7FD6E8','#2BA6B8','#F4E2B0','#2F8F4E']},
+ {k:'paris',n:'Paris Rooftops',w:'France',ic:'🗼',art:'rooftops',fit:{Romance:4,Drama:3,Thriller:3,Biopic:3,Comedy:2},c:1.4,risk:'Permit strikes',pal:['#F2B8A0','#C97E86','#5B4A6E','#FCE3C8']},
+ {k:'tokyo',n:'Neon Tokyo',w:'Japan',ic:'🌃',art:'neon',fit:{'Sci-Fi':4,Thriller:3,Action:3,Superhero:3},c:1.5,risk:'Crowd control',y:1975,pal:['#1B1640','#E94BA0','#36D1E8','#F9D45C']},
+ {k:'jungle',n:'Amazon Rainforest',w:'Brazil',ic:'🌿',art:'jungle',fit:{Action:4,Horror:3,Drama:2,'Sci-Fi':2},c:1.6,risk:'Illness on set',pal:['#2E6B3A','#4FA35A','#B6E07A','#1B3B22']},
+ {k:'castle',n:'Highland Castle',w:'Scotland',ic:'🏰',art:'castle',fit:{Biopic:4,Horror:3,Drama:3,Romance:2},c:1.2,risk:'Endless drizzle',pal:['#8FA8A0','#4E6B62','#C9D6C2','#2F3D3A']},
+ {k:'canyon',n:'Red Rock Canyon',w:'Utah, USA',ic:'🌵',art:'canyon',fit:{Action:4,'Sci-Fi':3,Thriller:2,Drama:2},c:.9,risk:'Heatwaves',pal:['#F7B267','#D9622B','#8C2F1B','#FCE1B4']},
+ {k:'iceland',n:'Black Sand Coast',w:'Iceland',ic:'🌋',art:'volcano',fit:{'Sci-Fi':4,Horror:3,Thriller:3,Superhero:2},c:1.4,risk:'Storms',pal:['#2B3640','#5E7C8A','#C9D9DF','#111']},
+ {k:'aurora',n:'Arctic Northern Lights',w:'Norway',ic:'🌌',art:'aurora',fit:{Romance:3,'Sci-Fi':3,Drama:3,Thriller:3},c:1.6,risk:'Frostbite',pal:['#0C1B33','#2EE6A6','#7B5CE6','#DCEBFF']},
+ {k:'venice',n:'Venetian Canals',w:'Italy',ic:'🛶',art:'canal',fit:{Romance:4,Thriller:3,Drama:3,Comedy:2,Biopic:2},c:1.3,risk:'Flooding (acqua alta)',pal:['#F4C99B','#D88A5C','#4C8DA8','#FCEBD3']},
+ {k:'town',n:'Small-Town America',w:'Iowa, USA',ic:'🌾',art:'town',fit:{Drama:4,Comedy:3,Horror:3,Romance:2},c:.6,risk:'Tornado season',pal:['#F6D46B','#9BC46B','#C0504D','#BFE3F5']},
+ {k:'dubai',n:'Desert Skyline',w:'Dubai',ic:'🏙️',art:'skyline',fit:{Action:4,Thriller:3,'Sci-Fi':3,Superhero:3},c:1.7,risk:'Extreme heat',y:2008,pal:['#F3C27B','#E07A3F','#5A6E8C','#FDE6BF']},
+ {k:'space',n:'Zero-G Flight Studio',w:'Florida, USA',ic:'🚀',art:'space',fit:{'Sci-Fi':5,Superhero:3},c:2.2,risk:'Motion sickness',y:1995,pal:['#0A0F2C','#3A4A8C','#F2F2F2','#F9A03F']}];
+function scoutAvail(){return SCOUT.filter(s=>!s.y||S.year>=s.y)}
+function scoutFit(s,g){return (s.fit||{})[g]||0}
+function scoutCost(s,g){g=g||(typeof W!=='undefined'&&W&&W.script&&W.script.genre)||'Drama';const b=(GEN[g]&&GEN[g].budget)||20;return +(s.c*b*0.07*inf(tNow())).toFixed(2)}
+
+/* flat postcard art */
+function scoutArt(s,w,h){w=w||300;h=h||150;const [a,b,c,d]=s.pal;const sky=`<defs><linearGradient id="sk${s.k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${d}"/><stop offset="1" stop-color="${a}"/></linearGradient></defs><rect width="300" height="150" fill="url(#sk${s.k})"/>`;
+ const sun=(x,y,r,col)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${col}" opacity=".9"/>`;let g='';
+ switch(s.art){
+ case 'dunes':g=sun(220,42,18,'#FFF4D6')+`<path d="M0 105 Q60 70 120 98 T240 92 T300 100 V150 H0Z" fill="${b}"/><path d="M0 125 Q80 95 160 120 T300 115 V150 H0Z" fill="${c}"/><path d="M40 112 l6-10 l6 10z M52 112 l5-8 l5 8z" fill="#5a3418" opacity=".7"/>`;break;
+ case 'peaks':g=`<path d="M0 120 L60 50 L95 90 L140 30 L190 95 L230 55 L300 120 V150 H0Z" fill="${b}"/><path d="M60 50 L74 66 L52 68Z M140 30 L158 52 L124 54Z M230 55 L244 70 L218 72Z" fill="${c}"/><path d="M0 130 Q150 110 300 132 V150 H0Z" fill="${d}"/>`;break;
+ case 'beach':g=sun(70,40,16,'#FFF7C2')+`<rect y="95" width="300" height="30" fill="${b}"/><path d="M0 118 Q150 108 300 120 V150 H0Z" fill="${c}"/><path d="M228 125 Q232 80 246 62" stroke="#6b4a2a" stroke-width="5" fill="none"/><path d="M246 62 q-30 -2 -38 12 M246 62 q24 -12 40 0 M246 62 q-8 -22 -28 -24 M246 62 q14 -20 34 -16" stroke="${d==='#2F8F4E'?d:'#2F8F4E'}" stroke-width="7" fill="none" stroke-linecap="round"/>`;break;
+ case 'rooftops':g=sun(240,40,14,'#FFE9C9')+`<path d="M150 22 L156 90 H144Z M138 90 L162 90 L170 120 H130Z" fill="${c}"/><path d="M0 110 h40 v-22 l10-8 l10 8 v22 h20 v-30 h30 v30 h60 v-26 l12-10 l12 10 v26 h40 v-18 h30 v18 h36 V150 H0Z" fill="${b}"/><path d="M0 130 H300 V150 H0Z" fill="${c}"/>`;break;
+ case 'neon':g=`<rect width="300" height="150" fill="${a}"/>`+[0,1,2,3,4,5,6,7].map(i=>`<rect x="${i*38+4}" y="${40+((i*37)%50)}" width="30" height="${110-((i*37)%50)}" fill="#24204f"/><rect x="${i*38+9}" y="${50+((i*37)%50)}" width="6" height="22" fill="${i%2?b:c}" opacity=".9"/>`).join('')+`<rect x="0" y="132" width="300" height="18" fill="#0f0c26"/><rect x="0" y="132" width="300" height="2" fill="${b}" opacity=".7"/>`;break;
+ case 'jungle':g=`<rect y="60" width="300" height="90" fill="${a}"/>`+[0,1,2,3,4,5,6].map(i=>`<ellipse cx="${i*50}" cy="${70+(i%2)*12}" rx="42" ry="30" fill="${i%2?b:c}" opacity=".85"/>`).join('')+`<path d="M0 150 Q60 112 120 150 Z M180 150 Q240 108 300 150Z" fill="${d}"/><path d="M150 150 V95" stroke="#4a3220" stroke-width="6"/>`;break;
+ case 'castle':g=`<path d="M0 115 Q80 80 160 105 T300 100 V150 H0Z" fill="${b}"/><path d="M175 98 v-38 h10 v-8 h6 v8 h8 v-8 h6 v8 h10 v38Z M162 98 v-24 h8 v24Z M220 98 v-30 h8 v30Z" fill="${d}"/><path d="M0 132 Q150 118 300 135 V150 H0Z" fill="${c}" opacity=".6"/>`;break;
+ case 'canyon':g=sun(60,36,15,'#FFF1C9')+`<path d="M0 150 V80 h40 v-20 h30 v20 h20 v70Z M190 150 V60 h24 v-14 h40 v14 h20 v40 h26 v50Z" fill="${b}"/><path d="M110 150 V100 h30 v-12 h24 v62Z" fill="${c}"/><path d="M0 140 H300 V150 H0Z" fill="${c}"/>`;break;
+ case 'volcano':g=`<path d="M60 120 L130 50 L150 52 L220 120Z" fill="#3a4a55"/><path d="M128 52 q12 -26 4 -40 q16 10 10 40" fill="#ccd" opacity=".5"/><rect y="118" width="300" height="12" fill="${b}"/><path d="M0 128 Q150 120 300 130 V150 H0Z" fill="${d}"/><path d="M0 128 Q150 120 300 130" stroke="#fff" stroke-width="2" opacity=".6" fill="none"/>`;break;
+ case 'aurora':g=`<rect width="300" height="150" fill="${a}"/><path d="M0 60 Q70 20 140 55 T300 40" stroke="${b}" stroke-width="16" fill="none" opacity=".55"/><path d="M0 80 Q90 40 170 70 T300 60" stroke="${c}" stroke-width="12" fill="none" opacity=".45"/>`+[...Array(14)].map((_,i)=>`<circle cx="${(i*53)%300}" cy="${(i*29)%50+6}" r="1.2" fill="#fff"/>`).join('')+`<path d="M0 120 L40 100 L70 115 L110 92 L160 118 L210 98 L260 116 L300 104 V150 H0Z" fill="${d}"/>`;break;
+ case 'canal':g=sun(230,36,13,'#FFF0D6')+`<path d="M0 50 h50 v70 H0Z M250 40 h50 v80 h-50Z" fill="${b}"/><path d="M50 70 h40 v50 H50Z M210 60 h40 v60 h-40Z" fill="${a}" opacity=".9"/><path d="M0 120 H300 V150 H0Z" fill="${c}"/><path d="M120 128 q30 8 60 0 l-6 6 q-24 4 -48 0Z" fill="#222"/><path d="M180 112 v18" stroke="#222" stroke-width="2"/>`;break;
+ case 'town':g=`<rect y="100" width="300" height="50" fill="${b}"/>`+[0,1,2,3,4,5,6,7,8,9,10,11].map(i=>`<path d="M${i*25} 100 l12 -40 l12 40" stroke="${a}" stroke-width="2" fill="none" opacity=".5"/>`).join('')+`<path d="M190 100 v-30 l20 -18 l20 18 v30Z" fill="${c}"/><path d="M228 100 v-50 h8 v50Z" fill="#8b6b4a"/><circle cx="232" cy="46" r="10" fill="#f0f0f0" stroke="#8b6b4a" stroke-width="2"/>`;break;
+ case 'skyline':g=sun(60,40,16,'#FFF3D0')+`<path d="M150 130 L156 20 L162 130Z" fill="${c}"/>`+[0,1,2,3,4,5,6,7,8].map(i=>`<rect x="${i*34}" y="${70+((i*23)%40)}" width="24" height="${80-((i*23)%40)}" fill="${c}" opacity="${.6+.04*i}"/>`).join('')+`<path d="M0 132 Q150 124 300 134 V150 H0Z" fill="${b}"/>`;break;
+ case 'space':g=`<rect width="300" height="150" fill="${a}"/>`+[...Array(22)].map((_,i)=>`<circle cx="${(i*67)%300}" cy="${(i*41)%150}" r="${i%3?1:1.6}" fill="#fff" opacity=".8"/>`).join('')+`<circle cx="250" cy="150" r="70" fill="${b}"/><path d="M90 90 l40 -16 l8 8 l-40 16Z" fill="${c}"/><circle cx="118" cy="80" r="5" fill="${d}"/>`;break}
+ return `<svg viewBox="0 0 300 150" width="100%" preserveAspectRatio="xMidYMid slice" style="display:block;height:${h}px">${sky}${g}</svg>`}
+
+function scoutUI(g){if(g==='Animation')return '';W.scout=W.scout||[];const L=scoutAvail().map(s=>({s,f:scoutFit(s,g)})).sort((a,b)=>(W.scout.includes(b.s.k)-W.scout.includes(a.s.k))||(b.f-a.f));
+ const tot=W.scout.reduce((t,k)=>t+scoutCost(SCOUT.find(x=>x.k===k)),0);
+ return `<div class="card sc30"><div class="row"><b>📍 Location shoot</b><small class="muted">${W.scout.length}/2 · ${tot?'+'+M(tot):'optional'}</small></div><p class="muted" style="font-size:12.5px;margin:4px 0 8px;text-transform:none">Take the crew somewhere breathtaking. A location that suits a <b>${g}</b> film adds scale, buzz and better reviews.</p>
+ <div class="sc30row">${L.map(({s,f})=>{const on=W.scout.includes(s.k);return `<button class="sc30c ${on?'on':''}" onclick="scoutPick('${s.k}')"><div class="sc30i">${scoutArt(s,170,92)}${f>=3?'<span class="sc30fit">✨ Perfect fit</span>':f>=2?'<span class="sc30fit ok">👍 Good fit</span>':''}${on?'<span class="sc30on">✓</span>':''}</div><b>${s.ic} ${s.n}</b><small>${s.w} · ${M(scoutCost(s))}</small><small class="sc30r">⚠️ ${s.risk}</small></button>`}).join('')}</div></div>`}
+function scoutPick(k){W.scout=W.scout||[];const i=W.scout.indexOf(k);if(i>=0)W.scout.splice(i,1);else{if(W.scout.length>=2)W.scout.shift();W.scout.push(k)}const y=window.scrollY;wiz();try{window.scrollTo(0,y);const r=document.querySelector('.sc30row');if(r&&W._scX)r.scrollLeft=W._scX}catch(e){}}
+document.addEventListener&&document.addEventListener('scroll',e=>{try{if(e.target&&e.target.classList&&e.target.classList.contains('sc30row'))W._scX=e.target.scrollLeft}catch(_){}},true);
+
+/* era-appropriate notes for the production hubs */
+const LOC_OLD={'Los Angeles':'Home of the studios and the backlots','Atlanta':'Cheap crews and Southern scenery','New York':'Iconic streets and Broadway talent','London':'World-class stages and classic crews','Vancouver':'Cheap, flexible "Hollywood North"','New Zealand':'Epic landscapes, far from everything','Budapest':'Low costs and old-world architecture'};
+wiz=(function(o){return function(){const keep=LOCS.map(l=>l.note);try{if(S.year<2020)LOCS.forEach(l=>{if(LOC_OLD[l.k])l.note=LOC_OLD[l.k]})}catch(e){}try{return o.apply(this,arguments)}finally{LOCS.forEach((l,i)=>l.note=keep[i])}}})(wiz);
+
+/* greenlight: pay for the trip, remember it on the project */
+greenlight=(function(o){return function(){const sc=(W&&W.scout||[]).slice();const n=S.projects.length;o.apply(this,arguments);try{if(sc.length&&S.projects.length>n){const p=S.projects[S.projects.length-1];p.scout=sc;const cost=sc.reduce((t,k)=>t+scoutCost(SCOUT.find(x=>x.k===k),p.genre),0);S.cash-=cost;p.prod=(p.prod||0)+cost;
+ const names=sc.map(k=>SCOUT.find(x=>x.k===k).n);story({icon:'📍',paper:'trade',head:`${esc(S.name)} will shoot <i>${esc(p.title)}</i> on location: ${esc(names.join(' and '))}.`})}}catch(e){console.error(e)}}})(greenlight);
+
+/* on-location moments while filming */
+function scoutTick(){const live=(S.projects||[]).filter(p=>p.scout&&p.scout.length&&p.sch&&phaseOf(p)==='shoot');if(!live.length||Math.random()>.35)return;const p=pick(live);const s=SCOUT.find(x=>x.k===pick(p.scout));if(!s)return;const why=(t,v)=>(p._why=p._why||[]).push(t.concat([v]));
+ const D=person(p.dir)||{n:'Your director'};const r=Math.random();
+ if(r<.4){const c=+(.25*I()).toFixed(2);QUEUE.push(()=>playScene({who:person(p.dir),role:p.title,tag:'On location',bg:'street',log:['📍',`${s.risk} at ${s.n}`],lines:[`${s.ic} <b>${s.risk}</b> hit the <i>${esc(p.title)}</i> unit in ${esc(s.w)}.`,`"We can wait it out, or pack up and fake it on a soundstage," ${esc(D.n.split(' ')[0])} says.`],
+  choices:[{l:`Wait it out (${M(c)})`,f:()=>{S.cash-=c;p.chem=(p.chem||0)+1;why(['⏳',`Waiting out the ${s.risk.toLowerCase()} at ${s.n} kept the real scenery`],1);return{say:'Three days later the sky clears. Worth it.',note:'Chemistry +1'}}},{l:'Move to a soundstage',f:()=>{p.scoutLost=(p.scoutLost||0)+1;why(['🎭',`Part of the ${s.n} shoot was faked on a soundstage`],-1);return{say:'"It\'ll look fine. Probably."',note:'Location bonus reduced'}}}]},runQueue))}
+ else if(r<.75){p.chem=(p.chem||0)+2;why(['🌅',`A golden-hour shot at ${s.n} became the film's signature image`],1);story({icon:'🌅',paper:'trade',head:`Crew members say a sunset shot at ${esc(s.n)} for <i>${esc(p.title)}</i> is "the most beautiful thing they've ever filmed".`})}
+ else{p.hype=(p.hype||0)+3;why(['📸',`Locals and tourists crowded the ${s.n} set, spreading the word`],1);story({icon:'📸',paper:'tabloid',head:`Fans swarm the <i>${esc(p.title)}</i> set at ${esc(s.n)}, hoping to glimpse the stars.`,post:{h:pick(FANH),text:`literally saw them filming ${p.title} in ${s.w} today!! 😱📍`}})}}
+const _nm30=nextMonth;nextMonth=function(){const r=_nm30.apply(this,arguments);try{if(S&&!S.over)scoutTick()}catch(e){console.error(e)}return r};
+
+/* release: the scenery shows on screen */
+releaseFilm=(function(o){return function(p){try{if(p.scout&&p.scout.length){const g=p.genre;let bonus=0;p._why=p._why||[];p.scout.forEach((k,i)=>{const s=SCOUT.find(x=>x.k===k);if(!s)return;const f=scoutFit(s,g)-(i<(p.scoutLost||0)?2:0);
+  if(f>=3){bonus+=3;p.hype=(p.hype||0)+3;p._why.push([s.ic,`${s.n} gave the film breathtaking scale`,1])}else if(f>=2){bonus+=1.5;p.hype=(p.hype||0)+1;p._why.push([s.ic,`${s.n} looked great on screen`,1])}else{p._why.push([s.ic,`${s.n} was beautiful, but felt out of place in a ${g}`,0])}});p.chem=(p.chem||0)+bonus}}catch(e){}return o(p)}})(releaseFilm);
 
 
 applyTheme();title();
