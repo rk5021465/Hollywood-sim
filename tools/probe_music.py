@@ -4,8 +4,8 @@ API='https://commons.wikimedia.org/w/api.php?'
 def get(params):
     req=urllib.request.Request(API+urllib.parse.urlencode(params),headers=UA)
     return json.load(urllib.request.urlopen(req,timeout=60))
-queries=['shehnai','dhol','tabla','sitar raga','santoor','nadaswaram','brass band India','Indian wedding music','sarangi','bansuri','Rajasthani folk','harmonium']
-want=['Nimisha Shankar - 01 - Gold A Holi Song.ogg','Nimisha Shankar - 02 - Evening Raga.ogg','Nimisha Shankar - 03 - Sunset Raga.ogg','Nimisha Shankar - 04 - Quiet Raga.ogg','Samuel Corwin - 11 - Little Boy Plays Drums and Sings at Amer Fort Jaipur.ogg','Kiravani-L Ramakrishnan.ogg','Sitar sample yaman.ogg']
+queries=['shehnai','sitar raga','nadaswaram','Rajasthani folk']
+want=['Nimisha Shankar - 01 - Gold A Holi Song.ogg','Nimisha Shankar - 02 - Evening Raga.ogg','Nimisha Shankar - 03 - Sunset Raga.ogg','Nimisha Shankar - 04 - Quiet Raga.ogg','Samuel Corwin - 11 - Little Boy Plays Drums and Sings at Amer Fort Jaipur.ogg','Kiravani-L Ramakrishnan.ogg','Sitar sample yaman.ogg','Samuel Corwin - 06 - Harmonium and Drum at the Karni Mata Temple Deshnoke.ogg','Maharashtrian Dhol Perform 001.ogg','Maharashtrian Dhol Perform 02.ogg','Sitar and tabla rendition - Freedom Jam, 2015.oga','Kole Basava performers playing nadaswaram, Bengaluru, Karnataka, India.wav']
 titles=set('File:'+w for w in want)
 for q in queries:
     try:
@@ -29,11 +29,14 @@ json.dump(out,open('probe/probe.json','w'),indent=1)
 free=('CC0','Public domain','CC BY','CC BY-SA','PD')
 for o in out:
     lic=(o['license'] or '')
-    if o['title'][5:] in want or (any(lic.startswith(f) for f in free) and (o['size'] or 0)<9e6 and 'NC' not in lic):
+    if o['title'][5:] in want and 'NC' not in lic:
         fn='probe/'+''.join(ch if ch.isalnum() or ch in '.-_' else '_' for ch in o['title'][5:])
-        try:
-            urllib.request.urlretrieve if False else None
-            req=urllib.request.Request(o['url'],headers=UA);open(fn,'wb').write(urllib.request.urlopen(req,timeout=120).read());o['file']=fn
-        except Exception as e:print('dl fail',o['title'],e)
+        import time
+        for attempt in range(5):
+            try:
+                time.sleep(3+attempt*6)
+                req=urllib.request.Request(o['url'],headers=UA);data=urllib.request.urlopen(req,timeout=120).read()
+                if len(data)>1000:open(fn,'wb').write(data);o['file']=fn;break
+            except Exception as e:print('dl fail',attempt,o['title'],e)
 json.dump(out,open('probe/probe.json','w'),indent=1)
 print(len(out),'items')
