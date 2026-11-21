@@ -197,3 +197,19 @@ const UPGRADES=[
 ];
 
 const STAFF_NAMES=['Munshi Ramlal','Bhagwan Das','Chand Bibi','Kalu Ram','Nathu Singh','Gulab Rai','Hamid Ali','Sohan Lal','Phool Kanwar','Jeevan Ram'];
+
+// Items the player places on the venue. beauty adds to both families' happiness.
+const DECOR_ITEMS=[
+ {k:'banana',name:'Banana trees',cost:12,beauty:1,desc:'Auspicious, by the gate'},
+ {k:'rangoli',name:'Rangoli',cost:8,beauty:1,desc:'Coloured powder art'},
+ {k:'urn',name:'Flower urn',cost:10,beauty:1,desc:'Roses and marigolds'},
+ {k:'lamp',name:'Brass lamp',cost:15,beauty:1,desc:'Warm light'},
+ {k:'seating',name:'Cushioned seats',cost:20,beauty:1,desc:'Two or more stop seat quarrels',tag:'comfort'},
+ {k:'arch',name:'Marigold arch',cost:30,beauty:3,desc:'A wall of flowers'},
+ {k:'canopy',name:'Silk canopy',cost:40,beauty:2,desc:'Two or more protect from rain',tag:'shelter'},
+ {k:'swing',name:'Flower swing',cost:45,beauty:3,desc:'Brides love it',bride:1},
+ {k:'peacock',name:'Peacock statue',cost:70,beauty:4,desc:'Painted and proud',minFame:1},
+ {k:'fountain',name:'Rose-water fountain',cost:90,beauty:5,desc:'Cool and fragrant',minFame:2},
+ {k:'elephant',name:'Elephant statue',cost:140,beauty:7,desc:'The talk of the town',minFame:3}
+];
+const DECOR_BY={};DECOR_ITEMS.forEach(d=>DECOR_BY[d.k]=d);

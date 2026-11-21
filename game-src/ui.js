@@ -59,7 +59,8 @@ function helpSheet(){sheet('<h2>How a wedding house works</h2><div class="sm" st
 function render(){if(!S){splash();return}
  if(S.bankrupt){gameOver();return}
  const app=document.getElementById('app');
- if(UI.view){if(UI.view.t==='plan')return renderPlan();if(UI.view.t==='wed')return renderWedding()}
+ if(UI.view){if(UI.view.t==='plan')return renderPlan();if(UI.view.t==='wed')return renderWedding();if(UI.view.t==='deco')return renderDecor()}
+ AUD.play('home');
  const blk=blockers().length;const ninq=S.inquiries.length;
  app.innerHTML='<div class="topbar"><div class="house"><b>'+S.house+'</b><span>'+MONTHS[S.month]+' '+S.year+' · '+FAME[fameTier()].name+'</span></div><div class="chip"><i>₹</i>'+Math.round(S.money).toLocaleString('en-IN')+'</div></div>'+
  '<div class="main" id="main"></div>'+
@@ -75,7 +76,7 @@ function onMain(e){const a=e.target.closest('[data-a]');if(!a)return;const [k,v]
  else if(k==='accept'){const err=acceptInquiry(id);if(err)toast(err);else{chime(784);toast('Booked');}render()}
  else if(k==='decline'){declineInquiry(id);render()}
  else if(k==='plan'){UI.view={t:'plan',id};render()}
- else if(k==='run'){const b=B();if(!b.locked){UI.view={t:'plan',id};render();toast('Lock the plan first');return}startWedding(b);UI.view={t:'wed',id};render()}
+ else if(k==='run'){const b=B();if(!b.locked){UI.view={t:'plan',id};render();toast('Lock the plan first');return}startWedding(b);UI.view={t:'wed',id};UI.dir=null;render()}
  else if(k==='tab'){UI.tab=v;render()}
  else if(k==='hire')hireSheet();
  else if(k==='fire'){fire(v);render()}
@@ -99,7 +100,7 @@ function monthSheet(ev){const hist=ev.filter(e=>e.hist),oth=ev.filter(e=>!e.hist
  sheet(h,()=>{closeSheet();if(S.pendingHeir)heirSheet()});if(hist.length)chime(523)}
 function heirSheet(){const H=S.pendingHeir;if(!H)return;const bg=sheet('<h2>Choose the next head</h2><p class="mu sm">'+S.head.name+' has passed on. Who will lead the '+S.house+'?</p>'+H.map((h,i)=>'<button class="opt" data-s="'+i+'"><div class="row">'+portrait(h.name,h.female,48)+'<div><div class="t">'+h.name+'</div><div class="sm mu">Age '+h.age+' · '+TRAITS[h.trait].name+'</div><div class="xs dim">'+TRAITS[h.trait].desc+'</div></div></div></button>').join(''),a=>{chooseHeir(+a);closeSheet();toast('A new generation begins');render()});bg.dataset.lock=1}
 function gameOver(){document.getElementById('app').innerHTML='<div class="splash"><h1>The house falls</h1><p class="mu" style="max-width:320px">Debts to the moneylender grew too large. The '+S.house+' closed in '+MONTHS[S.month]+' '+S.year+' after '+S.stats.weddings+' weddings.</p><button class="btn pri" id="ng">Start again</button></div>';$('#ng').onclick=()=>{localStorage.removeItem(SAVE);S=null;splash()}}
-function menuSheet(){sheet('<h2>Menu</h2><button class="opt" data-s="help"><div class="t">How to play</div></button><button class="opt" data-s="title"><div class="t">Back to title screen</div></button>',a=>{closeSheet();if(a==='help')helpSheet();if(a==='title'){save();S=null;splash()}})}
+function menuSheet(){sheet('<h2>Menu</h2><button class="opt" data-s="music"><div class="t">Music and sound: '+(AUD.isOn()?'on':'off')+'</div></button><button class="opt" data-s="help"><div class="t">How to play</div></button><button class="opt" data-s="title"><div class="t">Back to title screen</div></button>',a=>{closeSheet();if(a==='music'){toast('Music '+(AUD.toggle()?'on':'off'))}if(a==='help')helpSheet();if(a==='title'){save();S=null;splash()}})}
 
 // ---------------- Home ----------------
 function vHome(m){const now=nowMi(),t=fameTier(),nf=FAME[t+1];const prog=nf?((S.rep-FAME[t].min)/(nf.min-FAME[t].min)*100):100;
@@ -140,6 +141,7 @@ function renderPlan(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b){UI.vi
  const m=$('#main');let h='<div class="scene" id="sc"><div class="ov">Drag to look around</div></div>';
  h+='<div class="card"><div class="meters"><div><div class="lab"><span>Bride\'s family</span><span>'+Math.round(pr.bride)+'</span></div><div class="bar"><i style="width:'+pr.bride+'%;background:var(--gold)"></i></div></div><div class="clock" style="font-size:16px">'+stars(CLASSES[b.cls].expect)+'<small>expected</small></div><div><div class="lab"><span>Groom\'s family</span><span>'+Math.round(pr.groom)+'</span></div><div class="bar"><i style="width:'+pr.groom+'%;background:var(--rose)"></i></div></div></div><div class="xs dim" style="margin-top:8px">Predicted happiness before anything goes wrong on the day.</div></div>';
  h+='<div class="card"><h3 style="margin-bottom:4px">Demands</h3>'+demandsHtml(b,true)+'</div>';
+ const bt=beauty(b),btg=beautyTarget(b),bb=beautyBonus(b);h+='<div class="card hl"><div class="row"><div style="flex:1"><h3>Decoration</h3><div class="xs mu">'+(b.items||[]).length+' items · beauty '+bt+' of about '+btg+' expected · <span class="'+(bb>=0?'ok':'bad')+'">'+(bb>=0?'+':'')+bb.toFixed(1)+' happiness</span></div></div><button class="btn sm pri" id="deco" '+(b.locked?'disabled':'')+'>Decorate</button></div></div>';
  h+='<div class="sec">Vendors'+(b.locked?'<small>Locked</small>':'')+'</div>';
  for(const s of SLOTS){const v=b.plan[s.id]&&VBY[b.plan[s.id]];h+='<button class="slot'+(v?'':' empty')+'" data-s="'+s.id+'" '+(b.locked?'disabled':'')+'><span class="si">'+svg(s.icon,20)+'</span><span style="flex:1;min-width:0"><span class="xs mu" style="display:block">'+s.name+'</span><span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(v?v.name:'Choose…')+'</span></span>'+(v?'<span style="text-align:right">'+stars(v.q)+'<span class="xs dim" style="display:block">'+money(vCost(v,b))+'</span></span>':'')+'</button>'}
  if(pr.over>1)h+='<p class="sm bad">The venue holds '+planObj(b).venue.cap+' but '+b.guests+' guests are coming.</p>';
@@ -150,12 +152,13 @@ function renderPlan(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b){UI.vi
  m.innerHTML=h;
  $('#back').onclick=()=>{UI.view=null;render()};
  m.querySelectorAll('.slot').forEach(el=>el.onclick=()=>vendorSheet(b,el.dataset.s));
+ if($('#deco'))$('#deco').onclick=()=>{UI.view={t:'deco',id:b.id};render()};
  if($('#sug'))$('#sug').onclick=()=>{b.plan=autoPlan(b,3);save();renderPlan();toast('Suggested a balanced plan')};
  if($('#lock'))$('#lock').onclick=()=>{b.locked=true;save();chime(784);toast('Plan locked');renderPlan()};
  if($('#unlock'))$('#unlock').onclick=()=>{b.locked=false;save();renderPlan()};
  if($('#runw'))$('#runw').onclick=()=>{startWedding(b);UI.view={t:'wed',id:b.id};render()};
  m.querySelectorAll('[data-d]').forEach(el=>el.onclick=()=>{b.delegate=el.dataset.d==='none'?null:el.dataset.d;save();renderPlan();toast(b.delegate?'Delegated':'You will run it yourself')});
- mountScene($('#sc'),b,250,{guests:b.guests,trad:b.trad});
+ mountScene($('#sc'),b,250,{guests:b.guests,trad:b.trad,items:b.items||[]});
 }
 function vendorSheet(b,slot){const s=SLOTS.find(x=>x.id===slot);const list=VENDORS.filter(v=>v.slot===slot);
  sheet('<h2>'+s.name+'</h2><p class="xs mu">'+b.guests+' guests · '+TRADITIONS[b.trad].name+' wedding</p>'+list.map(v=>{const err=vendorOk(v,b);const rl=relLvl(v.id);const extra=v.slot==='venue'?' · holds '+v.cap:v.slot==='feast'?' · '+(v.food==='jain'?'Jain food':v.food==='veg'?'Vegetarian':'Meat and vegetarian'):'';
@@ -164,30 +167,72 @@ function vendorSheet(b,slot){const s=SLOTS.find(x=>x.id===slot);const list=VENDO
 function mountScene(el,b,h,opt){if(!el)return;const cv=document.createElement('canvas');el.appendChild(cv);const sc=new E3.Scene(cv,h);buildVenue(sc,planObj(b),opt);sc.start();UI.scene=sc;return sc}
 
 // ---------------- Wedding day ----------------
-function fmtT(m){m=((m%1440)+1440)%1440;let h=Math.floor(m/60),mm=m%60;const ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(mm).padStart(2,'0')+' '+ap}
+function fmtT(m){m=((Math.round(m)%1440)+1440)%1440;let h=Math.floor(m/60),mm=m%60;const ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(mm).padStart(2,'0')+' '+ap}
+const PHASE_TEXT={arrive:'The groom\'s procession dances through the streets towards the gate.',welcome:'The two families meet at the gate and the guests take their places.',feast:'The kitchens open and hundreds of guests sit down to eat.',ceremony:'The couple sit at the mandap as the sacred moment approaches.',farewell:'The bride says goodbye to the home she grew up in.'};
 function renderWedding(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b||(!b.wd&&!b.result)){UI.view=null;return render()}
  const app=document.getElementById('app');
- if(!app.querySelector('#wsc')){app.innerHTML='<div class="topbar"><div class="house"><b style="font-size:17px">'+b.bride.surname+' and '+b.groom.surname+'</b><span>'+TRADITIONS[b.trad].name+' wedding · '+b.guests+' guests</span></div><div class="chip"><i>₹</i><span id="wmoney"></span></div></div><div class="main" id="main"><div class="scene" id="wsc"></div><div id="wbody"></div></div>';
-  mountScene($('#wsc'),b,230,{guests:b.guests,trad:b.trad,couple:true})}
+ if(!app.querySelector('#wsc')){app.innerHTML='<div class="topbar"><div class="house"><b style="font-size:17px">'+b.bride.surname+' and '+b.groom.surname+'</b><span>'+TRADITIONS[b.trad].name+' wedding · '+b.guests+' guests</span></div><div class="chip"><i>₹</i><span id="wmoney"></span></div></div><div class="main" id="main" style="padding-top:10px"><div class="scene" id="wsc"></div><div id="wbody"></div></div>';
+  const sc=mountScene($('#wsc'),b,300,{guests:b.guests,trad:b.trad,day:true,items:b.items||[]});UI.dir=setupDay(sc,b);UI.shown=-1;UI.busy=false}
  $('#wmoney').textContent=Math.round(S.money-(b.wd?b.wd.cost:0)).toLocaleString('en-IN');
- const body=$('#wbody');
- if(b.result){UI.scene&&(UI.scene._warn.vis=false);return resultView(b,body)}
- const W=b.wd,tr=TRADITIONS[b.trad];const left=W.muhurat-W.time;
- let h='<div class="card"><div class="meters"><div><div class="lab"><span>Bride\'s family</span><span>'+Math.round(W.b)+'</span></div><div class="bar"><i style="width:'+W.b+'%;background:var(--gold)"></i></div></div><div class="clock">'+fmtT(W.time)+'<small>'+tr.clockName+' '+fmtT(W.muhurat)+'</small></div><div><div class="lab"><span>Groom\'s family</span><span>'+Math.round(W.g)+'</span></div><div class="bar"><i style="width:'+W.g+'%;background:var(--rose)"></i></div></div></div>'+
- '<div class="phases">'+tr.phases.map((p,i)=>'<i class="'+(i<W.phase?'d':i===W.phase?'c':'')+'"></i>').join('')+'</div><div class="row xs"><span class="gold">'+(tr.phases[W.phase]||'Farewell')+'</span><span class="sp"></span><span class="'+(left<0&&W.phase<(tr.muhurat?3:2)?'bad':'mu')+'">'+(W.phase<(tr.muhurat?3:2)?(left>=0?left+' min to spare':-left+' min late'):'Ceremony done')+'</span></div></div>';
- if(W.cur){const e=W.cur;UI.scene&&(UI.scene._warn.vis=true);h+='<div class="card event"><h3>'+e.t+'</h3>'+e.ch.map((c,i)=>{const fx=[];if(c.c)fx.push('<span class="bad">−'+money(c.c)+'</span>');if(c.t>0)fx.push('<span class="warn">+'+c.t+' min</span>');if(c.t<0)fx.push('<span class="ok">'+c.t+' min</span>');return '<button class="opt" data-c="'+i+'"><div>'+c.l+'</div>'+(fx.length?'<div class="xs" style="margin-top:3px">'+fx.join(' · ')+'</div>':'')+'</button>'}).join('')+'</div>'}
- else{h+='<button class="btn pri full" id="fin">See how it went</button>'}
+ const body=$('#wbody'),D=UI.dir;
+ if(b.result)return resultView(b,body);
+ const W=b.wd,tr=TRADITIONS[b.trad],cer=tr.muhurat?3:2,left=W.muhurat-W.time;
+ let h='<div class="card" style="padding:12px 14px"><div class="meters"><div><div class="lab"><span>Bride\'s family</span><span>'+Math.round(W.b)+'</span></div><div class="bar"><i style="width:'+W.b+'%;background:var(--gold)"></i></div></div><div class="clock">'+fmtT(W.time)+'<small>'+tr.clockName+' '+fmtT(W.muhurat)+'</small></div><div><div class="lab"><span>Groom\'s family</span><span>'+Math.round(W.g)+'</span></div><div class="bar"><i style="width:'+W.g+'%;background:var(--rose)"></i></div></div></div>'+
+ '<div class="phases">'+tr.phases.map((p,i)=>'<i class="'+(i<UI.shown?'d':i===UI.shown?'c':'')+'"></i>').join('')+'</div><div class="row xs"><span class="gold">'+(tr.phases[Math.max(0,UI.shown)]||'')+'</span><span class="sp"></span><span class="'+(left<0&&W.phase<cer?'bad':'mu')+'">'+(W.phase<cer?(left>=0?left+' min to spare':(-left)+' min late'):'Ceremony done')+'</span></div></div>';
+ const showPhase=W.done?5:W.phase;
+ if(UI.busy){h+='<div class="card mu sm" style="text-align:center">'+(UI.busyText||'…')+'</div>'}
+ else if(showPhase!==UI.shown){
+  const leavingCer=UI.shown===cer;const next=showPhase>=5?null:D.roles[showPhase];
+  if(leavingCer&&!UI.ritualDone){h+='<div class="card event"><h3>'+(b.trad==='muslim'?'The Nikah':'The seven pheras')+'</h3><p class="sm mu">'+(b.trad==='muslim'?'The Qazi is ready. The families fall silent.':'The couple will walk around the sacred fire seven times.')+'</p><button class="btn pri full" id="rit">'+(b.trad==='muslim'?'Begin the Nikah':'Begin the pheras')+'</button></div>'}
+  else if(next){h+='<div class="card event"><div class="xs gold">'+(showPhase+1)+' of 5</div><h3 style="margin-top:2px">'+tr.phases[showPhase]+'</h3><p class="sm mu" style="margin:6px 0 12px">'+PHASE_TEXT[next]+'</p><button class="btn pri full" id="goph">'+(UI.shown<0?'Begin the wedding':'Continue')+'</button></div>'}
+  else{h+='<div class="card event"><h3>The night ends</h3><p class="sm mu">The last guests head home under the stars.</p><button class="btn pri full" id="fin">See how it went</button></div>'}
+ }
+ else if(W.cur){const e=W.cur;h+='<div class="card event"><h3>'+e.t+'</h3>'+e.ch.map((c,i)=>{const fx=[];if(c.c)fx.push('<span class="bad">−'+money(c.c)+'</span>');if(c.t>0)fx.push('<span class="warn">+'+c.t+' min</span>');if(c.t<0)fx.push('<span class="ok">'+c.t+' min</span>');return '<button class="opt" data-c="'+i+'"><div>'+c.l+'</div>'+(fx.length?'<div class="xs" style="margin-top:3px">'+fx.join(' · ')+'</div>':'')+'</button>'}).join('')+'</div>'}
  if(W.log.length)h+='<div class="sec">The evening so far</div><div class="card">'+W.log.slice().reverse().map(l=>'<div class="log"><span class="'+(l.bad?'bad':'')+'">'+l.t+'</span></div>').join('')+'</div>';
  body.innerHTML=h;
- body.querySelectorAll('[data-c]').forEach(el=>el.onclick=()=>{const r=chooseEvent(b,+el.dataset.c);UI.scene&&(UI.scene._warn.vis=false);const d=(r.b+r.g);toast((d>0?'Families pleased':d<0?'Families unhappy':'Done')+(r.cost?' · −'+money(r.cost):''));save();renderWedding()});
- if($('#fin'))$('#fin').onclick=()=>{finishWedding(b,false);chime(b.result.avg>=70?880:330);renderWedding()};
+ const showEv=()=>{if(W.cur&&!W.done)dayEvent(D,W.cur)};
+ if($('#goph'))$('#goph').onclick=()=>{AUD.unlock();UI.shown=showPhase;UI.ritualDone=false;dayPhase(D,showPhase);UI.busy=true;UI.busyText=D.role==='arrive'?'The baraat is on its way…':'…';renderWedding();setTimeout(()=>{UI.busy=false;showEv();renderWedding()},D.role==='arrive'?3200:1700)};
+ if($('#rit'))$('#rit').onclick=()=>{UI.busy=true;UI.busyText=b.trad==='muslim'?'The Nikah is under way…':'The couple walk around the fire…';renderWedding();dayRitual(D,()=>{UI.ritualDone=true;W.b=clamp(W.b+3,0,100);W.g=clamp(W.g+3,0,100);setTimeout(()=>{UI.busy=false;renderWedding()},1200)})};
+ body.querySelectorAll('[data-c]').forEach(el=>el.onclick=()=>{const e=W.cur,ci=+el.dataset.c;const r=chooseEvent(b,ci);dayResolve(D,e,ci,r);save();
+  if(W.phase===UI.shown&&W.cur&&!W.done){UI.busy=true;UI.busyText='…';renderWedding();setTimeout(()=>{UI.busy=false;showEv();renderWedding()},1300)}else renderWedding()});
+ if($('#fin'))$('#fin').onclick=()=>{if(D.role!=='farewell'||!D.doli){dayDoli(D)}UI.busy=true;UI.busyText='The doli carries the bride away…';renderWedding();setTimeout(()=>{UI.busy=false;finishWedding(b,false);AUD.sfx(b.result.avg>=70?'big':'bad');renderWedding()},2600)};
 }
 function resultView(b,body){const r=b.result;const v=r.avg>=85?'A triumph':r.avg>=70?'A success':r.avg>=50?'A mixed affair':'A disaster';
+ if(UI.dir&&r.avg>=70&&!UI.dir.cele){UI.dir.cele=1;addFireworks(UI.dir.sc,4);UI.dir.sc.camTo({tg:[0,2,0],dist:22,ph:.55,th:null})}
  body.innerHTML='<div class="card hl" style="text-align:center"><div class="xs gold">The wedding is over</div><h1 style="margin:6px 0">'+v+'</h1><div class="big-num gold">'+Math.round(r.avg)+'</div><div class="xs mu">out of 100</div></div>'+
  '<div class="grid2"><div class="mini"><div class="l">Bride\'s family</div><div class="v">'+r.bs+'</div></div><div class="mini"><div class="l">Groom\'s family</div><div class="v">'+r.gs+'</div></div></div>'+
- '<div class="card" style="margin-top:12px"><div class="kv"><span>Fee</span><span>'+money(b.fee)+'</span>'+(r.tip?'<span>Gift of thanks</span><span class="ok">+'+money(r.tip)+'</span>':'')+(r.withheld?'<span>Payment withheld</span><span class="bad">−'+money(r.withheld)+'</span>':'')+'<span>Vendors</span><span>−'+money(r.vc)+'</span><span>Costs on the day</span><span>−'+money(r.ev)+'</span><span><b>Profit</b></span><span class="'+(r.profit>=0?'ok':'bad')+'"><b>'+money(r.profit)+'</b></span><span>Fame</span><span class="'+(r.rep>=0?'gold':'bad')+'">'+(r.rep>=0?'+':'')+r.rep+'</span></div></div>'+
+ '<div class="card" style="margin-top:12px"><div class="kv"><span>Fee</span><span>'+money(b.fee)+'</span>'+(r.tip?'<span>Gift of thanks</span><span class="ok">+'+money(r.tip)+'</span>':'')+(r.withheld?'<span>Payment withheld</span><span class="bad">−'+money(r.withheld)+'</span>':'')+'<span>Vendors and decoration</span><span>−'+money(r.vc)+'</span><span>Costs on the day</span><span>−'+money(r.ev)+'</span><span><b>Profit</b></span><span class="'+(r.profit>=0?'ok':'bad')+'"><b>'+money(r.profit)+'</b></span><span>Fame</span><span class="'+(r.rep>=0?'gold':'bad')+'">'+(r.rep>=0?'+':'')+r.rep+'</span></div></div>'+
  '<button class="btn pri full" id="done">Back to the house</button>';
- $('#done').onclick=()=>{UI.view=null;UI.tab='home';render()}}
+ $('#done').onclick=()=>{UI.view=null;UI.tab='home';UI.dir=null;render()}}
+
+// ---------------- Decorate ----------------
+function okSpot(b,x,z,plan){if(Math.abs(x)>8.2||Math.abs(z)>8.2)return false;if(Math.abs(x)<3.3&&Math.abs(z)<3.3)return false;if(plan.feast&&x>5.2&&Math.abs(z)<3.8)return false;if(plan.music&&x<-5.4&&z>3.2&&z<6)return false;if(Math.abs(x)<2.8&&z>6.4)return false;return !(b.items||[]).some(i=>Math.hypot(i.x-x,i.z-z)<1.5)}
+function renderDecor(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b){UI.view=null;return render()}b.items=b.items||[];
+ const app=document.getElementById('app');const p=planObj(b);
+ if(!app.querySelector('#dsc')){app.innerHTML='<div class="topbar"><button class="btn sm ghost" id="back">← Done</button><div class="house" style="text-align:center"><b style="font-size:17px">Decorate the venue</b><span>Tap the ground to place</span></div><div class="chip"><i>₹</i>'+Math.round(S.money).toLocaleString('en-IN')+'</div></div><div class="main" id="main" style="padding-top:10px"><div class="scene" id="dsc"></div><div id="dbody"></div></div>';
+  $('#back').onclick=()=>{save();UI.view={t:'plan',id:b.id};render()};
+  const cv=document.createElement('canvas');$('#dsc').appendChild(cv);const sc=new E3.Scene(cv,Math.min(380,Math.round(innerHeight*.45)));UI.scene=sc;UI.dsc=sc;
+  const rebuild=()=>{buildVenue(sc,p,{trad:b.trad,items:b.items,noGuests:true,noProc:true})};rebuild();sc.th=.6;sc.ph=.95;sc.dist=24;sc.auto=false;sc.start();
+  sc.onTap=(x,y)=>{const g=sc.toGround(x,y);if(!g)return;const gx=Math.round(g[0]*2)/2,gz=Math.round(g[1]*2)/2;
+   if(UI.tool==='remove'){const i=b.items.findIndex(it=>Math.hypot(it.x-g[0],it.z-g[1])<1.2);if(i>=0){b.items.splice(i,1);AUD.sfx('tap');rebuild();drawDecorBody(b)}return}
+   const it=DECOR_BY[UI.tool||'urn'];if(!it)return;if(it.minFame&&fameTier()<it.minFame){toast('Needs more fame');return}
+   if(b.items.length>=24){toast('That is enough decoration');return}
+   if(!okSpot(b,gx,gz,p)){toast('Can\'t place it there');return}
+   b.items.push({k:it.k,x:gx,z:gz});AUD.sfx('place');rebuild();drawDecorBody(b)};
+  UI.rebuildDecor=rebuild}
+ drawDecorBody(b)}
+function drawDecorBody(b){const body=$('#dbody');const bt=beauty(b),tg=beautyTarget(b),bonus=beautyBonus(b);UI.tool=UI.tool||'arch';
+ let h='<div class="card" style="padding:12px 14px"><div class="row"><div style="flex:1"><div class="lab xs mu" style="display:flex;justify-content:space-between"><span>Beauty '+bt+'</span><span>Families expect about '+tg+'</span></div><div class="bar" style="margin-top:4px"><i style="width:'+Math.min(100,bt/(tg*1.6)*100)+'%;background:var(--gold)"></i></div></div></div><div class="row xs" style="margin-top:8px"><span class="mu">'+b.items.length+' items · '+money(itemsCost(b))+'</span><span class="sp"></span><span class="'+(bonus>=0?'ok':'bad')+'">Happiness '+(bonus>=0?'+':'')+bonus.toFixed(1)+'</span></div></div>';
+ h+='<div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:0 -16px 10px;padding-left:16px;padding-right:16px">'+DECOR_ITEMS.map(it=>{const lock=it.minFame&&fameTier()<it.minFame;return '<button class="opt'+(UI.tool===it.k?' sel':'')+'" data-tool="'+it.k+'" style="flex:none;width:128px;margin:0" '+(lock?'disabled':'')+'><div class="t sm">'+it.name+'</div><div class="xs gold">'+money(it.cost)+' · beauty '+it.beauty+'</div><div class="xs mu" style="margin-top:2px">'+(lock?'Needs '+FAME[it.minFame].name:it.desc)+'</div></button>'}).join('')+'</div>';
+ h+='<div class="row" style="gap:8px"><button class="btn sm'+(UI.tool==='remove'?' red':'')+'" data-tool="remove">Remove</button><button class="btn sm" id="auto">Decorate for me</button><span class="sp"></span><button class="btn sm ghost" id="clr">Clear all</button></div>';
+ body.innerHTML=h;
+ body.querySelectorAll('[data-tool]').forEach(el=>el.onclick=()=>{UI.tool=el.dataset.tool;AUD.sfx('tap');drawDecorBody(b)});
+ $('#clr').onclick=()=>{b.items=[];UI.rebuildDecor();drawDecorBody(b)};
+ $('#auto').onclick=()=>{const p=planObj(b);const want=beautyTarget(b)*.9;const pool=DECOR_ITEMS.filter(i=>!(i.minFame&&fameTier()<i.minFame)).sort((a,c)=>c.beauty/c.cost-a.beauty/a.cost);let g=0;
+  const plan=['seating','seating','canopy','canopy','arch','arch','swing','lamp','lamp','lamp','lamp','banana','banana','urn','urn','rangoli','rangoli','peacock','fountain','elephant'];
+  for(const k of plan){if(beauty(b)>=want&&k!=='seating')break;const it=DECOR_BY[k];if(it.minFame&&fameTier()<it.minFame)continue;for(let tries=0;tries<60;tries++){const a=Math.random()*6.28,r=4+Math.random()*4;const x=Math.round(Math.cos(a)*r*2)/2,z=Math.round(Math.sin(a)*r*2)/2;if(okSpot(b,x,z,p)){b.items.push({k,x,z});break}}}
+  AUD.sfx('good');UI.rebuildDecor();drawDecorBody(b)};
+}
 
 // ---------------- Vendors ----------------
 function vVend(m){let h='<p class="sm mu" style="margin-top:0">Vendors you hire often become friends of the house: up to 10% cheaper and more reliable.</p>';
@@ -214,3 +259,4 @@ function vChron(m){let h='';if(S.stats.best){const b=S.stats.best;h+='<div class
 window.addEventListener('resize',()=>{if(UI.scene&&document.body.contains(UI.scene.cv))UI.scene.resize()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&S)save()});
 window.addEventListener('load',splash);
+document.addEventListener('pointerdown',()=>{AUD.unlock();if(S&&!UI.view)AUD.play('home')},{once:true});
