@@ -771,3 +771,6 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 .fp28{display:block;width:100%;text-align:left;border:0;border-radius:16px;padding:14px 16px 12px;background:#efe6d0 radial-gradient(ellipse at 30% 0,rgba(255,255,255,.55),transparent 60%);color:#2b2418;box-shadow:0 1px 0 rgba(0,0,0,.05),0 8px 22px rgba(60,40,10,.12);font-family:Georgia,serif}
 .fp28m{text-align:center;font-size:28px;font-weight:900;line-height:1}.fp28r{display:flex;justify-content:space-between;border-top:3px double #2b2418;border-bottom:1px solid #2b2418;margin:8px 0 10px;padding:3px 0;font:700 10px Georgia,serif;letter-spacing:1px;text-transform:uppercase}
 .fp28h{font:800 19px/1.2 "Oswald","Arial Narrow",Impact,sans-serif;text-transform:uppercase;text-align:center;color:#1e1a12}.fp28 small{display:block;text-align:right;margin-top:8px;color:#9a7417;font:700 12px Georgia,serif;text-transform:none;letter-spacing:0}
+
+.ct29{border-left:3px solid #2F6FD6}.ct29r{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid rgba(0,0,0,.06)}.ct29r small{display:block;text-transform:none;letter-spacing:0;font-size:12.5px}.ct29b{display:flex;gap:6px;flex:none}
+.ct29tag{font-size:13px;padding:8px 10px;border-radius:10px;background:rgba(47,111,214,.08);margin-bottom:10px}

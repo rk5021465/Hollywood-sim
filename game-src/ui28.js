@@ -105,7 +105,7 @@ releaseFilm=(function(o){return function(p){const why=(p._why||[]).slice();const
 
 /* the results report explains why */
 function whyCard(f){if(!f||!f.why||!f.why.length)return '';return `<div class="card why28"><b>Why it played this way</b>${f.why.slice(0,6).map(w=>`<div class="why28r ${w[2]>0?'up':w[2]<0?'dn':''}"><span>${w[0]}</span><span>${esc(w[1])}</span><i>${w[2]>0?'▲':w[2]<0?'▼':'•'}</i></div>`).join('')}</div>`}
-filmReport=(function(o){return function(f,ctx){const r=o(f,ctx);try{setTimeout(()=>{const m=document.querySelector('#modal');if(m&&f&&f.why&&f.why.length&&!m.querySelector('.why28')){const cards=m.querySelectorAll('.card');const at=cards[1]||cards[0];if(at)at.insertAdjacentHTML('afterend',whyCard(f))}},30)}catch(e){}return r}})(filmReport);
+filmReport=(function(o){return function(f,ctx){let h=o(f,ctx);try{const w=whyCard(f);if(w&&typeof h==='string'){const k=h.indexOf('<div class="card"><small>Week by week</small>');h=k>=0?h.slice(0,k)+w+h.slice(k):h+w}}catch(e){}return h}})(filmReport);
 
 /* ---------- people pages: a life story and your history together ---------- */
 openPerson=(function(o){return function(id){o(id);try{const x=person(id);if(!x)return;const m=document.querySelector('#modal');if(!m)return;const w=workedWith(id);const b=bondOf(x);
