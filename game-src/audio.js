@@ -32,7 +32,13 @@ const AUD=(()=>{
   if(--hold<=0){if(!phrase.length)newPhrase();const p=phrase.shift();hold=p.len;
    if(!p.rest&&(mode!=='home'||Math.random()<.7)){const v=mode==='home'?.1:.14;if(p.roll){for(let i=0;i<4;i++)santoor(p.n,t+i*beat/2,v*(i?.6:1),.15)}else santoor(p.n,t,v,.15);if(mode==='baraat'&&Math.random()<.4)santoor(p.n+12,t+beat/2,v*.5,-.1)}}
   step++;timer=setTimeout(tick,beat*1000)}
- function setMode(m){if(!on){mode=m;return}if(m===mode&&timer)return;mode=m;if(timer){clearTimeout(timer);timer=null}if(m==='off'||!ctx())return;step=0;tick()}
+ // Recorded music: CC-licensed recordings from Wikimedia Commons, cross-faded per scene.
+ const TR={home:['home1','home2'],day:['day'],baraat:['baraat'],ceremony:['ceremony']},VOL={home:.45,day:.5,baraat:.6,ceremony:.5};
+ let curEl=null,curMode=null,hi=0;
+ function fade(el,to,ms,done){const from=el.volume,t0=performance.now();const f=()=>{const k=Math.min(1,(performance.now()-t0)/ms);el.volume=Math.max(0,Math.min(1,from+(to-from)*k));if(k<1)requestAnimationFrame(f);else if(done)done()};requestAnimationFrame(f)}
+ function startTrack(m){const list=TR[m];if(!list)return;const name=m==='home'?list[(hi++)%list.length]:list[0];const el=new Audio('assets/music/'+name+'.ogg');el.loop=m!=='home';el.volume=0;el.onended=()=>{if(curEl===el&&curMode==='home'){curEl=null;startTrack('home')}};
+  const p=el.play();if(p&&p.catch)p.catch(()=>{});fade(el,VOL[m],1800);curEl=el;curMode=m}
+ function setMode(m){mode=m;if(!on)return;if(m===curMode&&curEl)return;const old=curEl;if(old)fade(old,0,1400,()=>{old.pause()});curEl=null;curMode=null;if(m==='off')return;startTrack(m)}
  function sfx(k){if(!on||!ctx())return;const t=A.currentTime+.01;
   if(k==='good'){[0,4,7,12].forEach((s,i)=>santoor(s,t+i*.06,.14))}
   else if(k==='bad'){tabla('ge',t,.5);santoor(-1,t+.05,.1);santoor(-2,t+.25,.1)}
@@ -40,6 +46,7 @@ const AUD=(()=>{
   else if(k==='tap'){santoor(12,t,.07)}
   else if(k==='place'){tabla('na',t,.4)}
   else if(k==='big'){[0,4,7,12,16,19].forEach((s,i)=>santoor(s,t+i*.08,.15));tanpura(0,t,.15);dhol('D',t,.5)}}
- function toggle(){on=!on;try{localStorage.setItem('shaadi_music',on?'on':'off')}catch(e){}const m=mode;if(!on){if(timer){clearTimeout(timer);timer=null}}else{mode='off';setMode(m==='off'?'home':m)}return on}
+ function toggle(){on=!on;try{localStorage.setItem('shaadi_music',on?'on':'off')}catch(e){}const m=mode;if(!on){if(curEl){curEl.pause();curEl=null;curMode=null}}else{setMode(m==='off'?'home':m)}return on}
+ document.addEventListener('visibilitychange',()=>{if(!curEl)return;if(document.hidden)curEl.pause();else if(on){const p=curEl.play();if(p&&p.catch)p.catch(()=>{})}});
  return{play:setMode,sfx,toggle,isOn:()=>on,unlock:()=>{ctx()}};
 })();
