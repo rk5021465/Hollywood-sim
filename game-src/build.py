@@ -1,7 +1,7 @@
 import pathlib
 s=pathlib.Path('src')
 css=(s/'style.css').read_text()
-js='\n'.join((s/f).read_text() for f in ['data.js','stage.js','audio.js','game.js','ui.js'])
+js='\n'.join((s/f).read_text() for f in ['data.js','stage.js','audio.js','game.js','story.js','ui.js'])
 html=f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">

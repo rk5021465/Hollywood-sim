@@ -18,7 +18,7 @@ function newGame(founder,trait,houseName){
   staff:[],upgrades:{},inquiries:[],bookings:[],log:[],chron:[],hist:0,fx:{},
   stats:{weddings:0,earned:0,best:null,perfect:0},vrel:{},vuse:{},
   rival:{name:'Sethia wedding house',rep:60},nextId:1,ended:false,negMonths:0,help:{}};
- addLog('You open the doors of '+houseName+' in the old town of Amber.');
+ storyInit();addLog('You open the doors of '+houseName+' in the old town of Amber.');
  genInquiries(true);save();
 }
 function save(){try{localStorage.setItem(SAVE,JSON.stringify(S))}catch(e){}}
@@ -34,7 +34,7 @@ function genClient(){
  const trads=Object.keys(TRADITIONS).filter(k=>!(chatur&&TRADITIONS[k].muhurat));
  if(!trads.length)return null;
  const trad=wpick(trads,k=>TRADITIONS[k].w);
- const cls=wpick(Object.keys(CLASSES),k=>{const c=CLASSES[k];if(tier<c.minFame)return 0;let w={artisan:4-tier*.6,merchant:4,noble:1+tier*.8,royal:tier>=4?1.2:0}[k];if(k==='noble'&&fx('nobleBoost'))w*=2;if(k==='royal'&&fx('royalBoost'))w*=2;if(k==='royal'&&fx('mourn'))w=0;return w});
+ const cls=wpick(Object.keys(CLASSES),k=>{const c=CLASSES[k];if(tier<c.minFame)return 0;let w={artisan:4-tier*.6,merchant:4,noble:1+tier*.8,royal:tier>=4?1.2:0}[k];if(k==='noble'&&fx('nobleBoost'))w*=2;if(k==='noble'&&fx('nobleShy'))w*=.4;if(k==='royal'&&fx('royalBoost'))w*=2;if(k==='royal'&&fx('mourn'))w=0;return w});
  const C=CLASSES[cls];const guests=Math.round(ri(C.guests[0],C.guests[1])/10)*10;
  let fee=ri(C.budget[0],C.budget[1])*(.7+guests/C.guests[1]*.5);if(S.fx.budgetV&&fx('budget'))fee*=1+S.fx.budgetV;
  fee=Math.round(fee/10)*10;
@@ -45,9 +45,9 @@ function genClient(){
  if(trad==='jain'&&!used.has('veg'))dem.bride.push('jainfood');
  let wm=nowMi()+ri(1,4);for(let k=0;k<12;k++){if(!TRADITIONS[trad].muhurat||SEASON[miM(wm)]>0)break;wm++}
  const id=S.nextId++;
- return{id,trad,cls,guests,fee,wm,exp:nowMi()+1,
+ return addClientFlavour({id,trad,cls,guests,fee,wm,exp:nowMi()+1,
   bride:{father:personName(trad)+' '+bs,surname:bs,name:personName(trad,true)},
-  groom:{father:personName(trad)+' '+gs,surname:gs,name:personName(trad)},dem,referral:false};
+  groom:{father:personName(trad)+' '+gs,surname:gs,name:personName(trad)},dem,referral:false});
 }
 function genInquiries(first){
  const tier=fameTier();let season=SEASON[S.month];if(season===0)season=.3;
@@ -64,7 +64,7 @@ function acceptInquiry(id){const i=S.inquiries.findIndex(q=>q.id===id);if(i<0)re
 function declineInquiry(id){S.inquiries=S.inquiries.filter(q=>q.id!==id);save()}
 
 // ---------- vendors / costs ----------
-function vendorOk(v,b){if(v.own&&!S.upgrades[v.own])return'Not owned yet';if(v.minFame&&fameTier()<v.minFame)return'Needs fame: '+FAME[v.minFame].name;
+function vendorOk(v,b){if(S.story&&S.story.blocked[v.id])return'Working for the Sethia house';if(v.own&&!S.upgrades[v.own])return'Not owned yet';if(v.minFame&&fameTier()<v.minFame)return'Needs fame: '+FAME[v.minFame].name;
  if(v.slot==='venue'&&v.noMuslim&&b.trad==='muslim')return'Not for a Nikah';
  if(v.slot==='officiant'){const f=v.faith;if(b.trad==='muslim'&&f!=='muslim')return'A Nikah needs a Qazi';if(b.trad!=='muslim'&&f==='muslim')return'Needs a pandit';if(b.trad!=='jain'&&f==='jain')return'Jain rites only'}
  return null}
@@ -87,7 +87,7 @@ function planIssues(b){const p=planObj(b),iss=[];for(const s of SLOTS)if(!p[s.id
  for(const s of SLOTS){const v=p[s.id];if(v){const e=vendorOk(v,b);if(e)iss.push(v.name+': '+e)}}return iss}
 function predictScores(b){const p=planObj(b),C=CLASSES[b.cls];let base=50+(S.head.trait==='charming'?6:0);const sc={bride:base,groom:base};
  let q=0,n=0;for(const s of SLOTS){const v=p[s.id];if(!v)continue;let vq=v.q;if(S.head.trait==='showman'&&['decor','lights','procession'].includes(s.id))vq+=.6;q+=vq;n++}
- const avg=n?q/n:0;const qd=(avg-C.expect)*7;sc.bride+=qd;sc.groom+=qd;
+ const avg=n?q/n:0;const pe=s=>(b[s]&&b[s].pers&&PERS[b[s].pers].expect)||0;sc.bride+=(avg-C.expect-pe('bride'))*7;sc.groom+=(avg-C.expect-pe('groom'))*7;
  if(p.venue&&p.venue.id==='v7'){sc.bride+=5;sc.groom+=5}
  const bb=beautyBonus(b);sc.bride+=bb+(itemCount(b,'swing')?2:0);sc.groom+=bb*.7;
  for(const d of demandList(b)){const v=d.ok?9:-8;if(d.side==='bride')sc.bride+=v;else sc.groom+=v}
@@ -106,9 +106,9 @@ function startWedding(b){const p=planObj(b),pr=predictScores(b),tr=TRADITIONS[b.
  const slack=ri(30,170)+(S.head.trait==='devout'?40:0);const pre=tr.muhurat?240:150;
  const W={bid:b.id,phase:0,time:1080,muhurat:1080+pre+slack,b:pr.bride,g:pr.groom,cost:0,rep:0,log:[],evQ:[],used:{},cur:null,flags:{},done:false};
  b.wd=W;W.evQ=pickPhaseEvents(b,0);nextEvent(b);return W}
-function evCtx(b){const p=planObj(b);return{plan:p,trad:b.trad,cls:b.cls,month:miM(b.wm),muhurat:TRADITIONS[b.trad].muhurat,over:p.venue?b.guests/p.venue.cap:1,rival:S.rival.rep>S.rep*.8,rel:sl=>vRel(p[sl])}}
+function evCtx(b){const p=planObj(b);return{plan:p,trad:b.trad,cls:b.cls,month:miM(b.wm),muhurat:TRADITIONS[b.trad].muhurat,over:p.venue?b.guests/p.venue.cap:1,rival:S.rival.rep>S.rep*.8,special:b.special,rel:sl=>vRel(p[sl])}}
 function pickPhaseEvents(b,ph){const c=evCtx(b),W=b.wd;const pool=EVENTS.filter(e=>e.ph===ph&&!W.used[e.id]);
- const forced=['jain_onion','meat_veg','crowded','food_short','fire_spark','pandit_late','ele_stop','mare_spook','palki_tilt','drunk_singer'];
+ const forced=['leak','feud1','feud2','double1','rushed1','jain_onion','meat_veg','crowded','food_short','fire_spark','pandit_late','ele_stop','mare_spook','palki_tilt','drunk_singer'];
  const out=[];for(const e of pool){if(e.when&&forced.includes(e.id)&&e.when(c))out.push(e)}
  const rest=pool.filter(e=>!forced.includes(e.id)&&(!e.when||e.when(c))&&!(e.id==='seat'&&itemCount(b,'seating')>=2));
  const want=ph===4?1:(R()<.45?2:1);while(out.length<want&&rest.length){const i=Math.floor(R()*rest.length);out.push(rest.splice(i,1)[0])}
@@ -118,12 +118,12 @@ function nextEvent(b){const W=b.wd;if(W.evQ.length){W.cur=W.evQ.shift();return W
  // phase ends
  W.time+=PHASE_MIN[W.phase];W.phase++;
  const tr=TRADITIONS[b.trad],cerPh=tr.muhurat?3:2;
- if(W.phase===cerPh){const late=W.time-W.muhurat;let pen;if(late>0){pen=Math.min(28,8+late/4)*(tr.muhurat?1:.5);W.b-=pen;W.g-=pen;W.log.push({t:'The ceremony began '+late+' minutes after the '+tr.clockName.toLowerCase()+'.',bad:1});W.rep-=2}else{W.b+=4;W.g+=4;W.log.push({t:'The ceremony began on time, '+(-late)+' minutes before the '+tr.clockName.toLowerCase()+'.'})}
+ if(W.phase===cerPh){const late=W.time-W.muhurat;let pen;if(late>0){pen=Math.min(28,8+late/4)*(tr.muhurat?1:.5);const lm=s=>(b[s].pers&&PERS[b[s].pers].late)||1;W.b-=pen*lm('bride');W.g-=pen*lm('groom');W.log.push({t:'The ceremony began '+late+' minutes after the '+tr.clockName.toLowerCase()+'.',bad:1});W.rep-=2}else{W.b+=4;W.g+=4;W.log.push({t:'The ceremony began on time, '+(-late)+' minutes before the '+tr.clockName.toLowerCase()+'.'})}
   if(W.flags.risk){if(R()<.5){W.b-=10;W.g-=10;W.log.push({t:'The original time was wrong after all. The elders are upset.',bad:1})}}
   if(W.flags.storm){const sh=itemCount(b,'canopy')>=2?.4:1;if(R()<.55){W.b-=14*sh;W.g-=14*sh;W.log.push({t:'The storm soaked the mandap during the ritual.',bad:1})}else W.log.push({t:'The storm passed by. Lucky.'})}}
  if(W.phase>=5){W.cur=null;W.done=true;return null}
  W.evQ=pickPhaseEvents(b,W.phase);return nextEvent(b)}
-function chooseEvent(b,ci){const W=b.wd,e=W.cur,c=e.ch[ci];const res={cost:c.c||0,t:c.t||0,b:c.b||0,g:c.g||0,r:c.r||0};
+function chooseEvent(b,ci){const W=b.wd,e=W.cur,c=e.ch[ci];const ng=s=>(b[s].pers&&PERS[b[s].pers].neg)||1;const res={cost:c.c||0,t:c.t||0,b:Math.round((c.b||0)*((c.b||0)<0?ng('bride'):1)),g:Math.round((c.g||0)*((c.g||0)<0?ng('groom'):1)),r:c.r||0};
  W.cost+=res.cost;W.time+=res.t;W.b+=res.b;W.g+=res.g;W.rep+=res.r;
  if(c.x==='risk')W.flags.risk=1;if(c.x==='storm')W.flags.storm=1;if(c.x==='honour'){S.stats.honour=(S.stats.honour||0)+1}
  if(c.x==='vendorhurt'){const fid=b.plan.feast;S.vrel[fid]=Math.max(0,(S.vrel[fid]||0)-3)}
@@ -131,7 +131,7 @@ function chooseEvent(b,ci){const W=b.wd,e=W.cur,c=e.ch[ci];const res={cost:c.c||
  nextEvent(b);return res}
 function autoRunWedding(b,skill){startWedding(b);let guard=0;while(!b.wd.done&&guard++<30){const e=b.wd.cur;let best=0,bs=-1e9;e.ch.forEach((c,i)=>{const s=(c.b||0)+(c.g||0)-(c.c||0)/8-Math.max(0,c.t||0)/10+(c.r||0)*2+(skill-3)*R()*3;if(s>bs){bs=s;best=i}});if(R()>.4+skill*.12)best=Math.floor(R()*e.ch.length);chooseEvent(b,best)}return finishWedding(b,true)}
 function finishWedding(b,auto){const W=b.wd,C=CLASSES[b.cls];const bs=Math.round(clamp(W.b,0,100)),gs=Math.round(clamp(W.g,0,100)),avg=(bs+gs)/2;
- const vc=planCost(b);let tip=0,withheld=0;if(avg>=85)tip=Math.round(b.fee*.15);else if(avg>=75)tip=Math.round(b.fee*.07);if(avg<40)withheld=Math.round(b.fee*.3);
+ const vc=planCost(b);let tip=0,withheld=0;if(avg>=85)tip=Math.round(b.fee*.15);else if(avg>=75)tip=Math.round(b.fee*.07);if(avg<40)withheld=Math.round(b.fee*.3);const tm=Math.max(...['bride','groom'].map(s=>(b[s].pers&&PERS[b[s].pers].tip)||1));tip=Math.round(tip*tm);if(b.royalPrincess&&avg>=70){S.rep+=25;addLog('The royal wedding of '+b.bride.name+' is the talk of all Rajputana.')}
  const rest=b.fee-b.advance-withheld;S.money+=rest+tip-vc-W.cost;
  const tier=fameTier(),low=(b.cls==='artisan'&&tier>=2)||(b.cls==='merchant'&&tier>=4);let rep=((avg-55)/6)*C.repMul*(low&&avg>55?.3:1)+W.rep;if(S.head.trait==='proud')rep*=1.2;rep=Math.round(rep*10)/10;S.rep=Math.max(0,S.rep+rep);
  for(const s of SLOTS){const id=b.plan[s.id];S.vrel[id]=(S.vrel[id]||0)+(avg>=60?1:.5);S.vuse[id]=(S.vuse[id]||0)+1}
@@ -161,11 +161,14 @@ function advanceMonth(){const ev=[];const now=nowMi();
  while(S.hist<HISTORY.length&&mi(HISTORY[S.hist].y,HISTORY[S.hist].m)<=nowMi()){const h=HISTORY[S.hist++];applyHist(h);ev.push({t:h.t,hist:1,y:h.y});addLog(h.t)}
  // rival
  S.rival.rep+=.6+R()*1.2*(1+fameTier()*.2);
- if(S.inquiries.length&&R()<.18){const q=S.inquiries.splice(Math.floor(R()*S.inquiries.length),1)[0];S.rival.rep+=2;ev.push({t:'The '+q.bride.surname+' family went to the '+S.rival.name+' instead.'})}
+ if(S.story&&S.story.partner){S.money+=60}
+ const calm=S.story&&S.story.rival.step===5&&!S.story.rival.hostile;
+ if(!calm&&S.inquiries.length&&R()<(S.story&&S.story.rival.hostile?.26:.18)){const q=S.inquiries.splice(Math.floor(R()*S.inquiries.length),1)[0];S.rival.rep+=2;ev.push({t:'The '+q.bride.surname+' family went to the '+S.rival.name+' instead.'})}
  // money trouble
  if(S.money<0){const need=Math.ceil(-S.money/100)*100+200;S.debt+=need;S.money+=need;ev.push({t:'Seth Bhikamchand the moneylender lent you '+money(need)+' at 3% a month.',bad:1});addLog('Borrowed '+money(need)+' from the moneylender.')}
  if(S.debt>6000)S.bankrupt=true;
  genInquiries(false);
+ storyInit();if(!S.pendingStory||!S.pendingStory.length)S.pendingStory=storyTick();
  if(S.year>END_YEAR&&!S.ended){S.ended=true;ev.push({t:'The 18th century ends. Stage 1 is complete.',end:1})}
  save();return ev}
 function yearly(ev){const a=S.head.age;if(a>=58&&R()<.1+(a-58)*.04){ev.push({succession:1,t:S.head.name+' has died at the age of '+a+'. The house needs a new head.'});S.pendingHeir=makeHeirs()}}

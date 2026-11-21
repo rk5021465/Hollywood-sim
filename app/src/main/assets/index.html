@@ -432,7 +432,7 @@ function newGame(founder,trait,houseName){
   staff:[],upgrades:{},inquiries:[],bookings:[],log:[],chron:[],hist:0,fx:{},
   stats:{weddings:0,earned:0,best:null,perfect:0},vrel:{},vuse:{},
   rival:{name:'Sethia wedding house',rep:60},nextId:1,ended:false,negMonths:0,help:{}};
- addLog('You open the doors of '+houseName+' in the old town of Amber.');
+ storyInit();addLog('You open the doors of '+houseName+' in the old town of Amber.');
  genInquiries(true);save();
 }
 function save(){try{localStorage.setItem(SAVE,JSON.stringify(S))}catch(e){}}
@@ -448,7 +448,7 @@ function genClient(){
  const trads=Object.keys(TRADITIONS).filter(k=>!(chatur&&TRADITIONS[k].muhurat));
  if(!trads.length)return null;
  const trad=wpick(trads,k=>TRADITIONS[k].w);
- const cls=wpick(Object.keys(CLASSES),k=>{const c=CLASSES[k];if(tier<c.minFame)return 0;let w={artisan:4-tier*.6,merchant:4,noble:1+tier*.8,royal:tier>=4?1.2:0}[k];if(k==='noble'&&fx('nobleBoost'))w*=2;if(k==='royal'&&fx('royalBoost'))w*=2;if(k==='royal'&&fx('mourn'))w=0;return w});
+ const cls=wpick(Object.keys(CLASSES),k=>{const c=CLASSES[k];if(tier<c.minFame)return 0;let w={artisan:4-tier*.6,merchant:4,noble:1+tier*.8,royal:tier>=4?1.2:0}[k];if(k==='noble'&&fx('nobleBoost'))w*=2;if(k==='noble'&&fx('nobleShy'))w*=.4;if(k==='royal'&&fx('royalBoost'))w*=2;if(k==='royal'&&fx('mourn'))w=0;return w});
  const C=CLASSES[cls];const guests=Math.round(ri(C.guests[0],C.guests[1])/10)*10;
  let fee=ri(C.budget[0],C.budget[1])*(.7+guests/C.guests[1]*.5);if(S.fx.budgetV&&fx('budget'))fee*=1+S.fx.budgetV;
  fee=Math.round(fee/10)*10;
@@ -459,9 +459,9 @@ function genClient(){
  if(trad==='jain'&&!used.has('veg'))dem.bride.push('jainfood');
  let wm=nowMi()+ri(1,4);for(let k=0;k<12;k++){if(!TRADITIONS[trad].muhurat||SEASON[miM(wm)]>0)break;wm++}
  const id=S.nextId++;
- return{id,trad,cls,guests,fee,wm,exp:nowMi()+1,
+ return addClientFlavour({id,trad,cls,guests,fee,wm,exp:nowMi()+1,
   bride:{father:personName(trad)+' '+bs,surname:bs,name:personName(trad,true)},
-  groom:{father:personName(trad)+' '+gs,surname:gs,name:personName(trad)},dem,referral:false};
+  groom:{father:personName(trad)+' '+gs,surname:gs,name:personName(trad)},dem,referral:false});
 }
 function genInquiries(first){
  const tier=fameTier();let season=SEASON[S.month];if(season===0)season=.3;
@@ -478,7 +478,7 @@ function acceptInquiry(id){const i=S.inquiries.findIndex(q=>q.id===id);if(i<0)re
 function declineInquiry(id){S.inquiries=S.inquiries.filter(q=>q.id!==id);save()}
 
 // ---------- vendors / costs ----------
-function vendorOk(v,b){if(v.own&&!S.upgrades[v.own])return'Not owned yet';if(v.minFame&&fameTier()<v.minFame)return'Needs fame: '+FAME[v.minFame].name;
+function vendorOk(v,b){if(S.story&&S.story.blocked[v.id])return'Working for the Sethia house';if(v.own&&!S.upgrades[v.own])return'Not owned yet';if(v.minFame&&fameTier()<v.minFame)return'Needs fame: '+FAME[v.minFame].name;
  if(v.slot==='venue'&&v.noMuslim&&b.trad==='muslim')return'Not for a Nikah';
  if(v.slot==='officiant'){const f=v.faith;if(b.trad==='muslim'&&f!=='muslim')return'A Nikah needs a Qazi';if(b.trad!=='muslim'&&f==='muslim')return'Needs a pandit';if(b.trad!=='jain'&&f==='jain')return'Jain rites only'}
  return null}
@@ -501,7 +501,7 @@ function planIssues(b){const p=planObj(b),iss=[];for(const s of SLOTS)if(!p[s.id
  for(const s of SLOTS){const v=p[s.id];if(v){const e=vendorOk(v,b);if(e)iss.push(v.name+': '+e)}}return iss}
 function predictScores(b){const p=planObj(b),C=CLASSES[b.cls];let base=50+(S.head.trait==='charming'?6:0);const sc={bride:base,groom:base};
  let q=0,n=0;for(const s of SLOTS){const v=p[s.id];if(!v)continue;let vq=v.q;if(S.head.trait==='showman'&&['decor','lights','procession'].includes(s.id))vq+=.6;q+=vq;n++}
- const avg=n?q/n:0;const qd=(avg-C.expect)*7;sc.bride+=qd;sc.groom+=qd;
+ const avg=n?q/n:0;const pe=s=>(b[s]&&b[s].pers&&PERS[b[s].pers].expect)||0;sc.bride+=(avg-C.expect-pe('bride'))*7;sc.groom+=(avg-C.expect-pe('groom'))*7;
  if(p.venue&&p.venue.id==='v7'){sc.bride+=5;sc.groom+=5}
  const bb=beautyBonus(b);sc.bride+=bb+(itemCount(b,'swing')?2:0);sc.groom+=bb*.7;
  for(const d of demandList(b)){const v=d.ok?9:-8;if(d.side==='bride')sc.bride+=v;else sc.groom+=v}
@@ -520,9 +520,9 @@ function startWedding(b){const p=planObj(b),pr=predictScores(b),tr=TRADITIONS[b.
  const slack=ri(30,170)+(S.head.trait==='devout'?40:0);const pre=tr.muhurat?240:150;
  const W={bid:b.id,phase:0,time:1080,muhurat:1080+pre+slack,b:pr.bride,g:pr.groom,cost:0,rep:0,log:[],evQ:[],used:{},cur:null,flags:{},done:false};
  b.wd=W;W.evQ=pickPhaseEvents(b,0);nextEvent(b);return W}
-function evCtx(b){const p=planObj(b);return{plan:p,trad:b.trad,cls:b.cls,month:miM(b.wm),muhurat:TRADITIONS[b.trad].muhurat,over:p.venue?b.guests/p.venue.cap:1,rival:S.rival.rep>S.rep*.8,rel:sl=>vRel(p[sl])}}
+function evCtx(b){const p=planObj(b);return{plan:p,trad:b.trad,cls:b.cls,month:miM(b.wm),muhurat:TRADITIONS[b.trad].muhurat,over:p.venue?b.guests/p.venue.cap:1,rival:S.rival.rep>S.rep*.8,special:b.special,rel:sl=>vRel(p[sl])}}
 function pickPhaseEvents(b,ph){const c=evCtx(b),W=b.wd;const pool=EVENTS.filter(e=>e.ph===ph&&!W.used[e.id]);
- const forced=['jain_onion','meat_veg','crowded','food_short','fire_spark','pandit_late','ele_stop','mare_spook','palki_tilt','drunk_singer'];
+ const forced=['leak','feud1','feud2','double1','rushed1','jain_onion','meat_veg','crowded','food_short','fire_spark','pandit_late','ele_stop','mare_spook','palki_tilt','drunk_singer'];
  const out=[];for(const e of pool){if(e.when&&forced.includes(e.id)&&e.when(c))out.push(e)}
  const rest=pool.filter(e=>!forced.includes(e.id)&&(!e.when||e.when(c))&&!(e.id==='seat'&&itemCount(b,'seating')>=2));
  const want=ph===4?1:(R()<.45?2:1);while(out.length<want&&rest.length){const i=Math.floor(R()*rest.length);out.push(rest.splice(i,1)[0])}
@@ -532,12 +532,12 @@ function nextEvent(b){const W=b.wd;if(W.evQ.length){W.cur=W.evQ.shift();return W
  // phase ends
  W.time+=PHASE_MIN[W.phase];W.phase++;
  const tr=TRADITIONS[b.trad],cerPh=tr.muhurat?3:2;
- if(W.phase===cerPh){const late=W.time-W.muhurat;let pen;if(late>0){pen=Math.min(28,8+late/4)*(tr.muhurat?1:.5);W.b-=pen;W.g-=pen;W.log.push({t:'The ceremony began '+late+' minutes after the '+tr.clockName.toLowerCase()+'.',bad:1});W.rep-=2}else{W.b+=4;W.g+=4;W.log.push({t:'The ceremony began on time, '+(-late)+' minutes before the '+tr.clockName.toLowerCase()+'.'})}
+ if(W.phase===cerPh){const late=W.time-W.muhurat;let pen;if(late>0){pen=Math.min(28,8+late/4)*(tr.muhurat?1:.5);const lm=s=>(b[s].pers&&PERS[b[s].pers].late)||1;W.b-=pen*lm('bride');W.g-=pen*lm('groom');W.log.push({t:'The ceremony began '+late+' minutes after the '+tr.clockName.toLowerCase()+'.',bad:1});W.rep-=2}else{W.b+=4;W.g+=4;W.log.push({t:'The ceremony began on time, '+(-late)+' minutes before the '+tr.clockName.toLowerCase()+'.'})}
   if(W.flags.risk){if(R()<.5){W.b-=10;W.g-=10;W.log.push({t:'The original time was wrong after all. The elders are upset.',bad:1})}}
   if(W.flags.storm){const sh=itemCount(b,'canopy')>=2?.4:1;if(R()<.55){W.b-=14*sh;W.g-=14*sh;W.log.push({t:'The storm soaked the mandap during the ritual.',bad:1})}else W.log.push({t:'The storm passed by. Lucky.'})}}
  if(W.phase>=5){W.cur=null;W.done=true;return null}
  W.evQ=pickPhaseEvents(b,W.phase);return nextEvent(b)}
-function chooseEvent(b,ci){const W=b.wd,e=W.cur,c=e.ch[ci];const res={cost:c.c||0,t:c.t||0,b:c.b||0,g:c.g||0,r:c.r||0};
+function chooseEvent(b,ci){const W=b.wd,e=W.cur,c=e.ch[ci];const ng=s=>(b[s].pers&&PERS[b[s].pers].neg)||1;const res={cost:c.c||0,t:c.t||0,b:Math.round((c.b||0)*((c.b||0)<0?ng('bride'):1)),g:Math.round((c.g||0)*((c.g||0)<0?ng('groom'):1)),r:c.r||0};
  W.cost+=res.cost;W.time+=res.t;W.b+=res.b;W.g+=res.g;W.rep+=res.r;
  if(c.x==='risk')W.flags.risk=1;if(c.x==='storm')W.flags.storm=1;if(c.x==='honour'){S.stats.honour=(S.stats.honour||0)+1}
  if(c.x==='vendorhurt'){const fid=b.plan.feast;S.vrel[fid]=Math.max(0,(S.vrel[fid]||0)-3)}
@@ -545,7 +545,7 @@ function chooseEvent(b,ci){const W=b.wd,e=W.cur,c=e.ch[ci];const res={cost:c.c||
  nextEvent(b);return res}
 function autoRunWedding(b,skill){startWedding(b);let guard=0;while(!b.wd.done&&guard++<30){const e=b.wd.cur;let best=0,bs=-1e9;e.ch.forEach((c,i)=>{const s=(c.b||0)+(c.g||0)-(c.c||0)/8-Math.max(0,c.t||0)/10+(c.r||0)*2+(skill-3)*R()*3;if(s>bs){bs=s;best=i}});if(R()>.4+skill*.12)best=Math.floor(R()*e.ch.length);chooseEvent(b,best)}return finishWedding(b,true)}
 function finishWedding(b,auto){const W=b.wd,C=CLASSES[b.cls];const bs=Math.round(clamp(W.b,0,100)),gs=Math.round(clamp(W.g,0,100)),avg=(bs+gs)/2;
- const vc=planCost(b);let tip=0,withheld=0;if(avg>=85)tip=Math.round(b.fee*.15);else if(avg>=75)tip=Math.round(b.fee*.07);if(avg<40)withheld=Math.round(b.fee*.3);
+ const vc=planCost(b);let tip=0,withheld=0;if(avg>=85)tip=Math.round(b.fee*.15);else if(avg>=75)tip=Math.round(b.fee*.07);if(avg<40)withheld=Math.round(b.fee*.3);const tm=Math.max(...['bride','groom'].map(s=>(b[s].pers&&PERS[b[s].pers].tip)||1));tip=Math.round(tip*tm);if(b.royalPrincess&&avg>=70){S.rep+=25;addLog('The royal wedding of '+b.bride.name+' is the talk of all Rajputana.')}
  const rest=b.fee-b.advance-withheld;S.money+=rest+tip-vc-W.cost;
  const tier=fameTier(),low=(b.cls==='artisan'&&tier>=2)||(b.cls==='merchant'&&tier>=4);let rep=((avg-55)/6)*C.repMul*(low&&avg>55?.3:1)+W.rep;if(S.head.trait==='proud')rep*=1.2;rep=Math.round(rep*10)/10;S.rep=Math.max(0,S.rep+rep);
  for(const s of SLOTS){const id=b.plan[s.id];S.vrel[id]=(S.vrel[id]||0)+(avg>=60?1:.5);S.vuse[id]=(S.vuse[id]||0)+1}
@@ -575,11 +575,14 @@ function advanceMonth(){const ev=[];const now=nowMi();
  while(S.hist<HISTORY.length&&mi(HISTORY[S.hist].y,HISTORY[S.hist].m)<=nowMi()){const h=HISTORY[S.hist++];applyHist(h);ev.push({t:h.t,hist:1,y:h.y});addLog(h.t)}
  // rival
  S.rival.rep+=.6+R()*1.2*(1+fameTier()*.2);
- if(S.inquiries.length&&R()<.18){const q=S.inquiries.splice(Math.floor(R()*S.inquiries.length),1)[0];S.rival.rep+=2;ev.push({t:'The '+q.bride.surname+' family went to the '+S.rival.name+' instead.'})}
+ if(S.story&&S.story.partner){S.money+=60}
+ const calm=S.story&&S.story.rival.step===5&&!S.story.rival.hostile;
+ if(!calm&&S.inquiries.length&&R()<(S.story&&S.story.rival.hostile?.26:.18)){const q=S.inquiries.splice(Math.floor(R()*S.inquiries.length),1)[0];S.rival.rep+=2;ev.push({t:'The '+q.bride.surname+' family went to the '+S.rival.name+' instead.'})}
  // money trouble
  if(S.money<0){const need=Math.ceil(-S.money/100)*100+200;S.debt+=need;S.money+=need;ev.push({t:'Seth Bhikamchand the moneylender lent you '+money(need)+' at 3% a month.',bad:1});addLog('Borrowed '+money(need)+' from the moneylender.')}
  if(S.debt>6000)S.bankrupt=true;
  genInquiries(false);
+ storyInit();if(!S.pendingStory||!S.pendingStory.length)S.pendingStory=storyTick();
  if(S.year>END_YEAR&&!S.ended){S.ended=true;ev.push({t:'The 18th century ends. Stage 1 is complete.',end:1})}
  save();return ev}
 function yearly(ev){const a=S.head.age;if(a>=58&&R()<.1+(a-58)*.04){ev.push({succession:1,t:S.head.name+' has died at the age of '+a+'. The house needs a new head.'});S.pendingHeir=makeHeirs()}}
@@ -597,6 +600,83 @@ function buyUpgrade(u){if(S.upgrades[u.id])return'Owned';if(u.req&&!S.upgrades[u
 function repay(n){n=Math.min(n,S.debt,Math.max(0,S.money));S.money-=n;S.debt-=n;save()}
 
 function charityWedding(){if(S.money<2500)return'Costs ₹2,500';if(S.charityAt&&nowMi()-S.charityAt<12)return'You can sponsor one charity wedding a year';S.money-=2500;S.charityAt=nowMi();const g=12+fameTier()*6;S.rep+=g;addLog('Your house paid for the weddings of twelve poor couples. The city blesses your name.');save();return null}
+
+"use strict";
+// Personalities, recurring characters, special weddings and story chains.
+const PERS={
+ proud:{name:'Proud',desc:'Takes offence easily',neg:1.35},
+ easygoing:{name:'Easygoing',desc:'Forgives small mistakes',neg:.7},
+ showoff:{name:'Show-off',desc:'Expects more grandeur',expect:1},
+ thrifty:{name:'Thrifty',desc:'Pays less, tips more when happy',fee:.88,tip:1.6},
+ traditional:{name:'Traditional',desc:'Cares most about the rituals',late:1.3,ritual:1},
+ superstitious:{name:'Superstitious',desc:'A late muhurat is a disaster',late:1.8}
+};
+const SPECIALS={
+ rushed:{name:'Rushed wedding',desc:'Only one month to plan. Pays 40% more.',fee:1.4,w:3},
+ double:{name:'Double wedding',desc:'Two couples at once. More guests, more demands, nearly double pay.',fee:1.8,guests:1.6,w:2},
+ secret:{name:'Secret wedding',desc:'A small, quiet wedding. Pays well, but word must not get out.',fee:1.6,w:2},
+ feud:{name:'Feuding families',desc:'The two families have an old quarrel. Expect trouble.',fee:1.3,w:2}
+};
+const CAST={bua:{name:'Chanda Bua',art:'aunt',title:'the aunt who attends every wedding in Jaipur'},bhanwar:{name:'Bhanwar Singh',art:'uncle',title:'the loudest uncle in Jaipur'},gopal:{name:'Gopal Sethia',art:'rival',title:'head of the Sethia wedding house'}};
+const SPECIAL_EVENTS=[
+ {id:'leak',ph:1,sp:'secret',t:'A neighbour is peeking over the wall. If word of this secret wedding gets out, the families will be shamed.',ch:[{l:'Invite him in and swear him to secrecy',c:20,b:4,g:4},{l:'Hang extra curtains at once',c:30,t:15},{l:'Ignore him',b:-12,g:-12,r:-4}]},
+ {id:'feud1',ph:1,sp:'feud',t:'The two families refuse to sit on the same side of the courtyard.',ch:[{l:'Seat them across from each other with honour',t:10,b:3,g:3},{l:'Mix the seating to make them talk',b:-6,g:-6,r:2},{l:'Ask the elders to make peace first',t:40,b:6,g:6}]},
+ {id:'feud2',ph:2,sp:'feud',t:'An old insult is repeated over the feast. Both fathers stand up.',ch:[{l:'Step between them with a toast to the couple',b:4,g:4},{l:'Bring out the best sweets to calm everyone',c:35,b:5,g:5},{l:'Let them argue',b:-14,g:-14}]},
+ {id:'double1',ph:3,sp:'double',t:'The two brides both want the first blessing from the priest.',ch:[{l:'Let the elder sister go first',g:2,b:-2},{l:'Have the priest bless them together',t:10,b:5,g:3}]},
+ {id:'rushed1',ph:0,sp:'rushed',t:'In the rush, half the flowers were never delivered.',ch:[{l:'Buy every flower left in the bazaar',c:45,t:20},{l:'Make do with what you have',b:-8,g:-4}]}
+];
+EVENTS.push(...SPECIAL_EVENTS.map(e=>Object.assign({},e,{when:c=>c.special===e.sp})));
+const EVCHAR_EXTRA={leak:['bfather','Close the doors! Quickly!'],feud1:['gfather','We will not sit with THEM.'],feud2:['gfather','Say that again, if you dare!'],double1:['bride','I should be first!'],rushed1:['cook','The flower seller never came!']};
+
+function storyInit(){if(!S.story)S.story={rival:{step:0,next:6,hostile:false},bua:0,bhanwar:0,royal:{step:0,next:0},patron:0,blocked:{},log:[]}}
+function addClientFlavour(c){const keys=Object.keys(PERS);c.bride.pers=pick(keys);c.groom.pers=pick(keys);
+ const tier=fameTier();if(R()<.14+tier*.03){const sp=wpick(Object.keys(SPECIALS),k=>SPECIALS[k].w);c.special=sp;const X=SPECIALS[sp];c.fee=Math.round(c.fee*X.fee/10)*10;if(X.guests)c.guests=Math.round(c.guests*X.guests/10)*10;
+  if(sp==='rushed'){c.wm=nowMi()+1;if(TRADITIONS[c.trad].muhurat)while(SEASON[miM(c.wm)]===0)c.wm++}if(sp==='secret'){c.guests=Math.max(30,Math.round(c.guests*.3/10)*10);c.dem.bride=c.dem.bride.filter(d=>d!=='fireworks');c.dem.groom=c.dem.groom.filter(d=>d!=='fireworks');if(!c.dem.bride.includes('quiet'))c.dem.bride.push('quiet')}}
+ for(const s of ['bride','groom'])if(PERS[c[s].pers].fee)c.fee=Math.round(c.fee*PERS[c[s].pers].fee/10)*10;
+ if(S.story&&S.story.patron>0&&R()<.3)c.referral=true;
+ return c}
+// story events shown at the start of a month
+function storyTick(){storyInit();const st=S.story,now=nowMi(),out=[];const T=fameTier();
+ for(const k in st.blocked)if(st.blocked[k]<=now)delete st.blocked[k];
+ if(st.patron>0)st.patron--;
+ const r=st.rival;if(r.step<5&&now>=r.next&&S.rep>=25){
+  if(r.step===0)out.push('rival1');else if(r.hostile&&r.step===1)out.push('rival2');else if(r.hostile&&r.step===2)out.push('rival3');else if(r.hostile&&r.step===3&&T>=2)out.push('rival4')}
+ if(st.bua>=3&&!st.buaDone){out.push('bua_good')}else if(st.bua<=-3&&!st.buaBad){out.push('bua_bad')}
+ if(st.bhanwar>=3&&!st.bhDone)out.push('bh_good');
+ const k=st.royal;if(k.step===0&&T>=3&&S.year>=1740&&R()<.25)out.push('royal1');else if(k.step===1&&now>=k.next)out.push('royal2');
+ return out.slice(0,1)}
+const STORY={
+ rival1:{who:'gopal',title:'A visit from Gopal Sethia',q:'Jaipur is big enough for both of us… if you leave the noble families to me.',t:'Your rival arrives at your office with a box of sweets and a smile that does not reach his eyes.',ch:[
+  {l:'Agree to stay away from nobles',res:'Sethia leaves you alone, but noble families will hear less of you for two years.',fx:s=>{s.story.rival.step=5;S.fx.nobleShy=24}},
+  {l:'Refuse politely',res:'Gopal Sethia bows stiffly and leaves. You have made an enemy.',fx:s=>{s.story.rival.step=1;s.story.rival.hostile=true;s.story.rival.next=nowMi()+ri(4,9)}},
+  {l:'Laugh and send him away',res:'Word spreads that you laughed at Sethia. The bazaar loves it, but he will not forget.',fx:s=>{s.rep+=3;s.story.rival.step=1;s.story.rival.hostile=true;s.story.rival.next=nowMi()+ri(3,7)}}]},
+ rival2:{who:'cook',title:'Sethia is poaching your cook',q:'He offered me double wages. I have a family to feed…',t:'Your favourite cook comes to you, twisting his cloth in his hands.',ch:[
+  {l:'Match Sethia\'s offer',c:150,res:'Your cook stays, and he is more loyal than ever.',fx:s=>{['f3','f2','f1'].forEach(v=>s.vrel[v]=(s.vrel[v]||0)+3);adv(s)}},
+  {l:'Remind him of his loyalty',res:null,fx:s=>{if(R()<.5){s.story.lastRes='He bows his head and stays.';}else{s.story.blocked.f3=nowMi()+12;s.story.lastRes='He leaves for Sethia. Ustad Karim will not cook for you for a year.'}adv(s)}},
+  {l:'Let him go',res:'Ustad Karim joins the Sethia house. He will not cook for you for a year.',fx:s=>{s.story.blocked.f3=nowMi()+12;adv(s)}}]},
+ rival3:{who:'aunt',title:'A rumour in the bazaar',q:'They say the food at your last wedding made half the guests ill!',t:'Chanda Bua hurries in with the latest gossip. Someone is spreading lies about your house.',ch:[
+  {l:'Host a free tasting for the bazaar',c:200,res:'Hundreds taste your food. The rumour dies, and your name shines.',fx:s=>{s.rep+=6;adv(s)}},
+  {l:'Pay a poet to sing your praises',c:120,res:'The poet\'s verses spread through the lanes. Most people forget the rumour.',fx:s=>{s.rep+=2;adv(s)}},
+  {l:'Ignore it',res:'The rumour lingers. Some families stop writing to you.',fx:s=>{s.rep=Math.max(0,s.rep-8);adv(s)}}]},
+ rival4:{who:'gopal',title:'Proof against Sethia',q:'You would not dare…',t:'A palace clerk confesses: Gopal Sethia has been paying him to steer royal contracts his way. You hold the letters.',ch:[
+  {l:'Expose him at court',res:'The court is scandalised. The Sethia house loses half its standing.',fx:s=>{s.rep+=15;s.rival.rep*=.5;s.story.rival.step=5}},
+  {l:'Make him a silent partner',res:'Sethia pays you ₹60 a month to keep quiet, and stops working against you.',fx:s=>{s.story.rival.step=5;s.story.partner=1}},
+  {l:'Burn the letters',res:'You choose mercy. Some say it was wise, others call it weak.',fx:s=>{s.rep+=2;s.story.rival.step=5}}]},
+ bua_good:{who:'bua',title:'Tea with Chanda Bua',q:'You did well, child. I shall tell all my friends.',t:'The most talked-about aunt in Jaipur invites you for tea. Her approval opens doors.',ch:[{l:'Thank her warmly',res:'For a year, more families come to you on Chanda Bua\'s word.',fx:s=>{s.story.buaDone=1;s.story.patron=12;s.rep+=5}}]},
+ bua_bad:{who:'bua',title:'Chanda Bua is displeased',q:'A disgrace! I will tell everyone.',t:'You have upset Chanda Bua at one too many weddings. She is telling the whole bazaar.',ch:[{l:'Send her a gift of silk',c:80,res:'She accepts the silk with a sniff. The talk fades.',fx:s=>{s.story.buaBad=1;s.story.bua=0}},{l:'Let her talk',res:'Her tongue costs you dearly.',fx:s=>{s.story.buaBad=1;s.rep=Math.max(0,s.rep-8)}}]},
+ bh_good:{who:'bhanwar',title:'Bhanwar Singh vouches for you',q:'This house knows how to treat a man with respect!',t:'The loudest uncle in Jaipur has decided he likes you, and he tells everyone.',ch:[{l:'Invite him to sit at the front at every wedding',res:'Bhanwar Singh roars your praises. Your fame grows.',fx:s=>{s.story.bhDone=1;s.rep+=6}}]},
+ royal1:{who:'gfather',title:'A message from the palace',q:'The Maharaja\'s daughter will marry next season. Houses may present their proposals.',t:'A royal steward stands at your door. This could make your house a legend.',ch:[{l:'Prepare a grand proposal',c:500,res:'Your proposal is delivered to the palace. The steward will return with questions.',fx:s=>{s.story.royal.step=1;s.story.royal.next=nowMi()+2}},{l:'Decline. We are not ready.',res:'Perhaps another time.',fx:s=>{s.story.royal.step=9}}]},
+ royal2:{who:'gfather',title:'The palace steward returns',q:'His Highness asks: what is your vision for the princess?',t:'The steward will carry your answer to the Maharaja. Choose your vision.',ch:[
+  {l:'A palace of a thousand lamps',res:null,fx:s=>royalWin(s,'lamps')},{l:'A garden in full bloom',res:null,fx:s=>royalWin(s,'garden')},{l:'Desert splendour under the stars',res:null,fx:s=>royalWin(s,'desert')}]}
+};
+function adv(s){s.story.rival.step++;s.story.rival.next=nowMi()+ri(4,10)}
+function royalWin(s,vision){s.story.royal.step=9;const chance=Math.min(.85,.35+(S.rep-S.rival.rep)/800+(fameTier()>=4?.2:0));
+ if(R()<chance){const c=genClient();c.cls='royal';c.trad='rajput';c.guests=1600;c.fee=9000;c.special=null;c.royalPrincess=true;c.bride.name='Princess '+pick(FEM);c.bride.surname='Kachhwaha';c.bride.father='Maharaja of Jaipur';c.wm=nowMi()+3;while(SEASON[miM(c.wm)]===0)c.wm++;c.dem.bride=['palace','gold'];c.dem.groom=['elephant','fireworks'];c.exp=nowMi()+2;S.inquiries.unshift(c);
+  s.story.lastRes='The Maharaja chose YOUR house! The royal wedding enquiry is waiting in your bookings. Accept it, and make history.';s.rep+=10}
+ else{s.story.lastRes='The Maharaja chose the '+S.rival.name+'. They will dine on this triumph for years.';S.rival.rep+=40}}
+function applyStory(id,ci){const ev=STORY[id],c=ev.ch[ci];if(c.c){S.money-=c.c}S.story.lastRes=c.res;c.fx(S);const res=S.story.lastRes;S.story.log.unshift({i:nowMi(),t:ev.title+': '+res});addLog(ev.title+'. '+res);save();return res}
+// recurring cast reacts to how aunt/uncle events went
+function castReact(e,res){storyInit();const ch=(EVCHAR[e.id]||[])[0];const d=(res.b||0)+(res.g||0);if(ch==='aunt')S.story.bua+=d>0?1:d<0?-1:0;if(ch==='uncle')S.story.bhanwar+=d>0?1:d<0?-1:0}
 
 "use strict";
 const $=s=>document.querySelector(s);
@@ -696,8 +776,8 @@ function monthSheet(ev){const hist=ev.filter(e=>e.hist),oth=ev.filter(e=>!e.hist
  if(ev.some(e=>e.end))h+='<div class="card hl"><h3>The century turns</h3><p class="sm">You have reached 1801. Stage 1 is complete. The next update takes your house into the 1800s, with railways and the first cameras. You can keep playing in the meantime.</p></div>';
  if(ev.some(e=>e.succession))h+='<p class="bad">'+ev.find(e=>e.succession).t+'</p>';
  h+='<button class="btn pri full" data-s="x" style="margin-top:8px">Continue</button>';
- if(!hist.length&&!oth.length&&!ev.some(e=>e.end||e.succession))return;
- sheet(h,()=>{closeSheet();if(S.pendingHeir)heirSheet()});if(hist.length)chime(523)}
+ if(!hist.length&&!oth.length&&!ev.some(e=>e.end||e.succession)){storySheet();return}
+ sheet(h,()=>{closeSheet();if(S.pendingHeir)heirSheet();else storySheet()});if(hist.length)chime(523)}
 function heirSheet(){const H=S.pendingHeir;if(!H)return;const bg=sheet('<h2>Choose the next head</h2><p class="mu sm">'+S.head.name+' has passed on. Who will lead the '+S.house+'?</p>'+H.map((h,i)=>'<button class="opt" data-s="'+i+'"><div class="row">'+portrait(h.name,h.female,48)+'<div><div class="t">'+h.name+'</div><div class="sm mu">Age '+h.age+' · '+TRAITS[h.trait].name+'</div><div class="xs dim">'+TRAITS[h.trait].desc+'</div></div></div></button>').join(''),a=>{chooseHeir(+a);closeSheet();toast('A new generation begins');render()});bg.dataset.lock=1}
 function gameOver(){document.getElementById('app').innerHTML='<div class="splash painted"><div class="bgimg" style="background-image:url('+art('haveli')+')"></div><div class="bgshade"></div><h1>The house falls</h1><p class="mu" style="max-width:320px">Debts to the moneylender grew too large. The '+S.house+' closed in '+MONTHS[S.month]+' '+S.year+' after '+S.stats.weddings+' weddings.</p><button class="btn pri" id="ng">Start again</button></div>';$('#ng').onclick=()=>{localStorage.removeItem(SAVE);S=null;splash()}}
 function menuSheet(){sheet('<h2>Menu</h2><button class="opt" data-s="music"><div class="t">Music and sound: '+(AUD.isOn()?'on':'off')+'</div></button><button class="opt" data-s="help"><div class="t">How to play</div></button><button class="opt" data-s="title"><div class="t">Back to title screen</div></button>',a=>{closeSheet();if(a==='music'){toast('Music '+(AUD.toggle()?'on':'off'))}if(a==='help')helpSheet();if(a==='title'){save();S=null;splash()}})}
@@ -727,11 +807,11 @@ function vBook(m){let h='<div class="sec">Enquiries<small>'+S.inquiries.length+'
  if(!S.inquiries.length)h+='<div class="card mu sm">No new enquiries. Families write more often in the wedding season and as your fame grows.</div>';
  S.inquiries.forEach(q=>{const exp=q.exp-nowMi();h+='<div class="card'+(q.referral?' hl':'')+'">'+(q.referral?'<div class="xs gold" style="margin-bottom:4px">Recommended by a happy family</div>':'')+
   '<div class="row"><div class="couple"><img src="'+art('bride')+'" alt=""><img src="'+art('groom')+'" alt=""></div><div style="flex:1;min-width:0"><div style="font-family:var(--serif);font-size:19px">'+q.bride.surname+' and '+q.groom.surname+'</div><div class="xs mu">'+TRADITIONS[q.trad].name+' · '+CLASSES[q.cls].name+'</div></div><div style="text-align:right"><div class="gold" style="font-size:17px">'+money(q.fee)+'</div><div class="xs dim">fee</div></div></div>'+
-  '<div class="kv" style="margin:10px 0"><span>Wedding</span><span>'+dateStr(q.wm)+'</span><span>Guests</span><span>'+q.guests+'</span><span>Expectations</span><span>'+stars(CLASSES[q.cls].expect)+'</span></div>'+demandsHtml(q,false)+
+  (q.special?'<div class="card hl" style="margin:10px 0 0;padding:8px 10px"><div class="xs gold">'+SPECIALS[q.special].name+'</div><div class="xs mu">'+SPECIALS[q.special].desc+'</div></div>':'')+(q.royalPrincess?'<div class="card hl" style="margin:10px 0 0;padding:8px 10px"><div class="xs gold">The royal wedding</div><div class="xs mu">The Maharaja chose your house. Make history.</div></div>':'')+'<div class="kv" style="margin:10px 0"><span>Wedding</span><span>'+dateStr(q.wm)+'</span><span>Guests</span><span>'+q.guests+'</span><span>Expectations</span><span>'+stars(CLASSES[q.cls].expect)+'</span></div>'+demandsHtml(q,false)+
   '<div class="row" style="margin-top:10px"><button class="btn sm ghost" data-a="decline:'+q.id+'">Decline</button><span class="sp"></span><span class="xs dim">'+(exp<=0?'Last chance this month':'')+'</span><button class="btn sm pri" data-a="accept:'+q.id+'">Accept</button></div></div>'});
  const up=activeBookings().sort((a,b)=>a.wm-b.wm);h+='<div class="sec">Booked<small>'+up.length+' of '+capacity()+'</small></div>';up.forEach(b=>h+=bookingRow(b));if(!up.length)h+='<div class="card mu sm">Nothing booked yet.</div>';
  m.innerHTML=h}
-function demandsHtml(b,live){const dl=live?demandList(b):null;let h='';for(const side of ['bride','groom']){const fam=b[side];h+='<div class="row" style="margin-top:10px;gap:8px"><img src="'+art(side==='bride'?'bfather':'gfather')+'" alt="" style="width:30px;height:30px;border-radius:15px;object-fit:cover;border:1px solid var(--gold)"><div class="xs mu">'+(side==='bride'?'Bride\'s family':'Groom\'s family')+' · '+fam.father+'</div></div>';
+function demandsHtml(b,live){const dl=live?demandList(b):null;let h='';for(const side of ['bride','groom']){const fam=b[side];h+='<div class="row" style="margin-top:10px;gap:8px"><img src="'+art(side==='bride'?'bfather':'gfather')+'" alt="" style="width:30px;height:30px;border-radius:15px;object-fit:cover;border:1px solid var(--gold)"><div class="xs mu">'+(side==='bride'?'Bride\'s family':'Groom\'s family')+' · '+fam.father+'</div>'+(fam.pers?personTag(fam.pers):'')+'</div>';
  b.dem[side].forEach((id,i)=>{const t=id==='jainfood'?'Jain food: no onion or garlic':DEMANDS.find(d=>d.id===id).t;let ic='<span class="dim">•</span>';if(live){const d=dl.find(x=>x.side===side&&x.id===id);ic=d.ok?'<span class="ok">✓</span>':'<span class="bad">✗</span>'}h+='<div class="demand"><span class="ic">'+ic+'</span><span>'+t+'</span></div>'})}return h}
 
 // ---------------- Planner ----------------
@@ -740,6 +820,7 @@ function renderPlan(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b){UI.vi
  app.innerHTML='<div class="topbar"><button class="btn sm ghost" id="back">← Back</button><div class="house" style="text-align:center"><b style="font-size:17px">'+b.bride.surname+' and '+b.groom.surname+'</b><span>'+dateStr(b.wm)+' · '+b.guests+' guests</span></div><div class="chip"><i>₹</i>'+Math.round(S.money).toLocaleString('en-IN')+'</div></div><div class="main" id="main"></div>';
  const m=$('#main');let h='<div id="pst"></div>';
  h+='<div class="card"><div class="meters"><div><div class="lab"><span>Bride\'s family</span><span>'+Math.round(pr.bride)+'</span></div><div class="bar"><i style="width:'+pr.bride+'%;background:var(--gold)"></i></div></div><div class="clock" style="font-size:16px">'+stars(CLASSES[b.cls].expect)+'<small>expected</small></div><div><div class="lab"><span>Groom\'s family</span><span>'+Math.round(pr.groom)+'</span></div><div class="bar"><i style="width:'+pr.groom+'%;background:var(--rose)"></i></div></div></div><div class="xs dim" style="margin-top:8px">Predicted happiness before anything goes wrong on the day.</div></div>';
+ if(b.special)h+='<div class="card hl"><div class="xs gold">'+SPECIALS[b.special].name+'</div><div class="sm mu">'+SPECIALS[b.special].desc+'</div></div>';
  h+='<div class="card"><h3 style="margin-bottom:4px">Demands</h3>'+demandsHtml(b,true)+'</div>';
  const bt=beauty(b),btg=beautyTarget(b),bb=beautyBonus(b);h+='<div class="card hl"><div class="row"><div style="flex:1"><h3>Decoration</h3><div class="xs mu">'+(b.items||[]).length+' items · beauty '+bt+' of about '+btg+' expected · <span class="'+(bb>=0?'ok':'bad')+'">'+(bb>=0?'+':'')+bb.toFixed(1)+' happiness</span></div></div><button class="btn sm pri" id="deco" '+(b.locked?'disabled':'')+'>Decorate</button></div></div>';
  h+='<div class="sec">Vendors'+(b.locked?'<small>Locked</small>':'')+'</div>';
@@ -774,8 +855,9 @@ const EVCHAR={ele_stop:['groom','Move, Moti! My bride is waiting!'],mare_spook:[
  fire_spark:['bmother','Fire! The canopy is burning!'],ring:['groom','The ring… I had it right here!'],pandit_late:['aunt','No priest? How will they marry?'],shehnai:['bmother','Listen… just listen.'],quarrel:['uncle','That land was always OURS!'],firework_show:['groom','The whole city is watching!'],
  decor_wow:['bmother','It looks like a palace!'],decor_wilt:['aunt','Wilted flowers? How shameful.'],wind:['cook','Hold the ropes! The tent is leaning!'],crowded:['uncle','There is no room to breathe!'],vidaai:['bfather','Go well, my daughter. Be happy.'],rukhsati:['bmother','Go well, my daughter.'],shoe:['groom','Where are my shoes?'],
  thief:['aunt','A gift box is missing! Someone stole it!'],rival_gossip:['rival','Such a pity their weddings are so… ordinary.'],drunk_singer:['cook','The singer has lost his voice!'],storm_gods:['priest','Let me offer a special blessing.'],palace_guard:['uncle','Papers? We are the wedding party!'],child_lost:['bmother','My little one is lost!']};
+Object.assign(EVCHAR,EVCHAR_EXTRA);
 const EVFX={rain:{rain:1,dark:.25},fire_spark:{fire:1,embers:1},firework_show:{fireworks:1},decor_wow:{petals:.6},shehnai:{petals:.4},sweets:{sparkle:1.5},camel:{petals:.3}};
-function whoName(b,c){const p=planObj(b);return{groom:'The groom, '+b.groom.name+' '+b.groom.surname,bride:'The bride, '+b.bride.name,bmother:'Mother of the bride',bfather:'Father of the bride, '+b.bride.father,gfather:'Father of the groom, '+b.groom.father,uncle:'Uncle of the groom',aunt:'Aunt of the bride',cook:(p.feast?p.feast.name:'The head cook'),priest:(p.officiant?p.officiant.name:'The officiant'),rival:'From the '+S.rival.name}[c]}
+function whoName(b,c){const p=planObj(b);return{groom:'The groom, '+b.groom.name+' '+b.groom.surname,bride:'The bride, '+b.bride.name,bmother:'Mother of the bride',bfather:'Father of the bride, '+b.bride.father,gfather:'Father of the groom, '+b.groom.father,uncle:'Bhanwar Singh, '+CAST.bhanwar.title,aunt:'Chanda Bua, '+CAST.bua.title,cook:(p.feast?p.feast.name:'The head cook'),priest:(p.officiant?p.officiant.name:'The officiant'),rival:'From the '+S.rival.name}[c]}
 function roles(b){return b.trad==='muslim'?['arrive','welcome','ceremony','feast','farewell']:['arrive','welcome','feast','ceremony','farewell']}
 function phaseArt(b,role){const p=planObj(b),v=p.venue?p.venue.kind:'haveli';if(role==='arrive')return ART_HAVE.has('baraat')?art('baraat'):venueArt(v);if(role==='feast')return art('feast');if(role==='ceremony')return b.trad==='muslim'?art('nikah'):(ART_HAVE.has('pheras')?art('pheras'):venueArt(v));if(role==='farewell')return art('farewell');return venueArt(v)}
 function stageFx(st,o){for(const k of ['petals','embers','rain','fire','fireworks','confetti','dark'])st.set(k,0);st.set('sparkle',1);for(const k in (o||{}))st.set(k,o[k])}
@@ -807,7 +889,7 @@ function renderWedding(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b||(!
  if($('#rit'))$('#rit').onclick=()=>{UI.busy=true;UI.busyText=b.trad==='muslim'?'The Nikah is under way…':'The couple walk around the fire…';renderWedding();
   stageFx(st,{embers:1,petals:.3});st.focus(0,4,1.25);let k=0;const lines=b.trad==='muslim'?['The Qazi reads the vows','“Qubool hai”','“Qubool hai”','“Qubool hai”','They are married']:['Phera 1 of 7','Phera 2 of 7','Phera 3 of 7','Phera 4 of 7','Phera 5 of 7','Phera 6 of 7','Phera 7 of 7','Married'];
   const step=()=>{st.caption(lines[k]);AUD.sfx('tap');k++;if(k<lines.length)setTimeout(step,1150);else{AUD.sfx('big');stageFx(st,{petals:1,confetti:1,embers:.6});setTimeout(()=>{st.caption('');UI.ritualDone=true;W.b=clamp(W.b+3,0,100);W.g=clamp(W.g+3,0,100);UI.busy=false;renderWedding()},1800)}};step()};
- body.querySelectorAll('[data-c]').forEach(el=>el.onclick=()=>{const e=W.cur,ci=+el.dataset.c;const r=chooseEvent(b,ci);save();const d=(r.b||0)+(r.g||0);
+ body.querySelectorAll('[data-c]').forEach(el=>el.onclick=()=>{const e=W.cur,ci=+el.dataset.c;const r=chooseEvent(b,ci);castReact(e,r);save();const d=(r.b||0)+(r.g||0);
   const keep=e.id==='rain'&&ci===2;if(!keep)stageFx(st,{embers:R[UI.shown]==='ceremony'&&b.trad!=='muslim'?.7:0,petals:d>0?.35:0});
   st.caption(d>0?'Families pleased  +'+d:d<0?'Families unhappy  '+d:'',r.cost?'Cost '+money(r.cost):'');AUD.sfx(d>0?'good':d<0?'bad':'tap');
   UI.busy=true;UI.busyText='…';renderWedding();setTimeout(()=>{st.caption('');UI.busy=false;if(W.phase===UI.shown&&W.cur&&!W.done)showEv();renderWedding()},1300)});
@@ -844,6 +926,8 @@ function vVend(m){let h='<p class="sm mu" style="margin-top:0">Vendors you hire 
 
 // ---------------- House ----------------
 function vHouse(m){const hd=S.head;let h='<div class="card hl"><div class="row"><img src="'+art(hd.female?'bmother':'gfather')+'" alt="" style="width:72px;height:72px;border-radius:36px;object-fit:cover;border:2px solid var(--gold)"><div><div class="xs gold">Head of the house · Generation '+hd.gen+'</div><div style="font-family:var(--serif);font-size:22px">'+hd.name+'</div><div class="sm mu">Age '+hd.age+' · '+TRAITS[hd.trait].name+'</div><div class="xs dim">'+TRAITS[hd.trait].desc+'</div></div></div></div>';
+ storyInit();const st=S.story;const rel=v=>v>=3?'<span class="tag o">Friend</span>':v>0?'<span class="tag o">Warming to you</span>':v<=-3?'<span class="tag r">Enemy</span>':v<0?'<span class="tag r">Annoyed</span>':'<span class="tag">Neutral</span>';
+ h+='<div class="sec">People of Jaipur</div><div class="card">'+[['bua',rel(st.bua)],['bhanwar',rel(st.bhanwar)],['gopal',st.story?'':(st.partner?'<span class="tag g">Silent partner</span>':st.rival.hostile&&st.rival.step<5?'<span class="tag r">Plotting against you</span>':st.rival.step>=5&&st.rival.hostile?'<span class="tag">Defeated</span>':'<span class="tag">Watching you</span>')]].map(([k,t])=>'<div class="list-item"><img src="'+art(CAST[k].art)+'" alt="" style="width:44px;height:44px;border-radius:22px;object-fit:cover;border:1px solid var(--gold)"><div style="flex:1"><div>'+CAST[k].name+'</div><div class="xs mu">'+CAST[k].title+'</div></div>'+t+'</div>').join('')+'</div>';
  h+='<div class="sec">Wedding managers<small>'+S.staff.length+'</small></div><div class="card">'+(S.staff.length?S.staff.map(s=>'<div class="list-item"><div class="av">'+portrait(s.name,/Bibi|Kanwar/.test(s.name))+'</div><div style="flex:1"><div>'+s.name+'</div><div class="xs mu">'+money(s.wage)+' a month</div></div>'+stars(s.skill)+'<button class="btn sm ghost" data-a="fire:'+s.id+'">Let go</button></div>').join(''):'<p class="sm mu" style="margin:0">Managers add a booking slot and can run weddings for you.</p>')+'<button class="btn full" style="margin-top:10px" data-a="hire">Hire a manager</button></div>';
  h+='<div class="sec">Charity</div><div class="card row"><div style="flex:1"><div>Sponsor weddings for poor couples</div><div class="xs mu">₹2,500, once a year. Earns fame and blessings.</div></div><button class="btn sm" data-a="charity">Sponsor</button></div>';h+='<div class="sec">Improve the house</div>';UPGRADES.forEach(u=>{const own=S.upgrades[u.id];h+='<div class="card row"><div style="flex:1"><div>'+u.name+'</div><div class="xs mu">'+u.desc+'</div></div>'+(own?'<span class="tag o">Owned</span>':'<button class="btn sm '+(S.money>=u.cost?'pri':'')+'" data-a="up:'+u.id+'">'+money(u.cost)+'</button>')+'</div>'});
  if(S.debt)h+='<div class="sec">Moneylender</div><div class="card row"><div style="flex:1"><div class="bad">'+money(S.debt)+' owed</div><div class="xs mu">3% interest every month. The house falls if debt passes ₹6,000.</div></div><button class="btn sm" data-a="repay">Repay ₹500</button></div>';
@@ -863,4 +947,11 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden&&S)save()})
 if(/ShaadiApp/.test(navigator.userAgent))document.documentElement.classList.add('app');
 window.addEventListener('load',splash);
 document.addEventListener('pointerdown',()=>{AUD.unlock();if(S&&!UI.view)AUD.play('home')},{once:true});
+
+function storySheet(){if(!S.pendingStory||!S.pendingStory.length)return;const id=S.pendingStory[0],ev=STORY[id];if(!ev){S.pendingStory.shift();return}
+ const c=CAST[ev.who];const img=c?c.art:ev.who;const nm=c?c.name+', '+c.title:({cook:'Your head cook',aunt:'Chanda Bua, '+CAST.bua.title,gfather:'The royal steward'})[ev.who]||'';
+ const bg=sheet('<div class="xs gold">A story unfolds</div><h2 style="margin:2px 0 12px">'+ev.title+'</h2><div class="who"><img src="'+art(img)+'" alt=""><div><div class="nm">'+nm+'</div><div class="q">“'+ev.q+'”</div></div></div><p class="sm mu">'+ev.t+'</p>'+ev.ch.map((ch,i)=>'<button class="opt" data-s="'+i+'" '+(ch.c&&S.money<ch.c?'disabled':'')+'><div>'+ch.l+'</div>'+(ch.c?'<div class="xs bad" style="margin-top:3px">−'+money(ch.c)+'</div>':'')+'</button>').join(''),a=>{
+  S.pendingStory.shift();const res=applyStory(id,+a);AUD.sfx('good');
+  sheet('<h2>'+ev.title+'</h2><p style="font-family:var(--serif);font-size:19px;line-height:1.4;margin:14px 0">'+res+'</p><button class="btn pri full" data-s="x">Continue</button>',()=>{closeSheet();render();storySheet()})});bg.dataset.lock=1}
+function personTag(p){const P=PERS[p];return P?'<span class="tag" title="'+P.desc+'">'+P.name+'</span>':''}
 </script></body></html>
