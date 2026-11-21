@@ -1,7 +1,7 @@
 /* ===== v21 · GOLD NOIR — new look and a living clock ===== */
 
 /* ---------- theme: Gold Noir becomes the default look (players can still pick Light in Settings) ---------- */
-try{if(!PREFS.noir21){PREFS.noir21=1;PREFS.theme='dark';savePrefs();applyTheme()}}catch(e){}
+try{if(!PREFS.noir21){PREFS.noir21=1;PREFS.theme='noir';savePrefs();applyTheme()}}catch(e){}
 
 /* ---------- the clock: time runs by itself and stops when you're needed ---------- */
 const CLK={on:false,speed:1,h:null,seen:{}};
@@ -49,7 +49,7 @@ function gnNext(rows){const r=rows[0];if(r){return `<button class="gn-next" oncl
  return `<button class="gn-next" onclick="startFilm()"><div class="gn-ni">✦</div><div><small>YOUR STAGES ARE EMPTY</small><b>Greenlight your next picture</b><em>Start →</em></div></button>`}
 
 /* ---------- the new home ---------- */
-hq8=(function(o){return function(){let old='';try{old=o()}catch(e){}
+hq8=(function(o){return function(){if(PREFS.theme==='light'||PREFS.theme==='dark')return o();let old='';try{old=o()}catch(e){}
  const k=old.indexOf('<h4 class="hh">Create');const tail=k>=0?old.slice(k):'';
  const rows=(()=>{try{return weekRows()}catch(e){return []}})();
  const e=typeof eraOf==='function'?eraOf(S.year):null;const bgn=(e&&typeof ERA_BG!=='undefined'&&ERA_BG[e.k])||'marquee';
@@ -69,10 +69,11 @@ hq8=(function(o){return function(){let old='';try{old=o()}catch(e){}
  ${tail}`}})(hq8);
 
 /* ---------- Technicolor theme (option B) ---------- */
-applyTheme=(function(o){return function(){o();try{document.body.classList.toggle('tc',PREFS.theme==='tc')}catch(e){}}})(applyTheme);
-settings=(function(o){return function(){const r=o.apply(this,arguments);try{const b=[...document.querySelectorAll('#modal .seg button')].find(x=>/Dark/.test(x.textContent));if(b&&!document.getElementById('tcBtn')){b.insertAdjacentHTML('afterend',`<button id="tcBtn" class="${PREFS.theme==='tc'?'on':''}" onclick="PREFS.theme='tc';savePrefs();applyTheme();settings()">🎞️ Technicolor</button>`);b.parentElement.style.width='auto';b.textContent='✨ Gold Noir'}}catch(e){}return r}})(settings);
+applyTheme=(function(o){return function(){o();try{document.body.classList.toggle('tc',PREFS.theme==='tc');document.body.classList.toggle('noir',PREFS.theme==='noir')}catch(e){}}})(applyTheme);
+const THEMES=[['light','☀️','Classic Light'],['dark','🌙','Classic Dark'],['noir','✨','Gold Noir'],['tc','🎞️','Technicolor']];
+settings=(function(o){return function(){const r=o.apply(this,arguments);try{const b=[...document.querySelectorAll('#modal .seg button')].find(x=>/Light/.test(x.textContent));if(b){const row=b.closest('.card');row.innerHTML=`<small>🎨 Theme</small><div class="th4">${THEMES.map(t=>`<button class="th4-${t[0]} ${PREFS.theme===t[0]?'on':''}" onclick="PREFS.theme='${t[0]}';savePrefs();applyTheme();settings()"><span>${t[1]}</span><b>${t[2]}</b></button>`).join('')}</div>`}}catch(e){}return r}})(settings);
 function themePick(t){PREFS.theme=t;savePrefs();applyTheme();render()}
-hq8=(function(o){return function(){let h=o();try{h=h.replace('<div class="gn-st"',`<div class="gn-th"><button class="${PREFS.theme!=='tc'?'on':''}" onclick="themePick('dark')">Gold Noir</button><button class="${PREFS.theme==='tc'?'on':''}" onclick="themePick('tc')">Technicolor</button></div><div class="gn-st"`)}catch(e){}return h}})(hq8);
+hq8=(function(o){return function(){let h=o();try{if(h.indexOf('gn-hero')<0)return h;h=h.replace('<div class="gn-st"',`<div class="gn-th"><button class="${PREFS.theme!=='tc'?'on':''}" onclick="themePick('noir')">Gold Noir</button><button class="${PREFS.theme==='tc'?'on':''}" onclick="themePick('tc')">Technicolor</button></div><div class="gn-st"`)}catch(e){}return h}})(hq8);
 try{applyTheme()}catch(e){}
 
 /* ---------- Technicolor home: its own layout, matching mockup B ---------- */
@@ -87,7 +88,7 @@ function tcHome(tail){const rows=(()=>{try{return weekRows()}catch(e){return []}
  return `<section class="tc-hd"><div class="tc-stripes"></div>
  <div class="tc-tk"><div class="tc-tkl"><small>NOW SHOWING</small><h1>${MON[d.getMonth()]} ${S.year}</h1><span id="gnState">${CLK.on?'Time rolls on by itself. It stops when you are needed.':'The reel is paused. Press play to roll.'}</span></div>
  <div class="tc-tkr"><button id="gnPlay" class="gn-play tc-pl ${CLK.on?'on':''}" aria-label="${CLK.on?'Pause time':'Start time'}" onclick="clkToggle()">${CLK.on?GN_PAUSE:GN_PLAY}</button><button id="gnSpd" class="tc-spd" onclick="clkSpeed()">${CLK.speed}×</button></div></div>
- <div class="tc-sm"><button onclick="clkStop();nextWeek()">One week ›</button><button onclick="clkStop();skipMonth()">Skip to ${tLabel(tNow()+1)}</button><button onclick="themePick('dark')">Gold Noir</button></div></section>
+ <div class="tc-sm"><button onclick="clkStop();nextWeek()">One week ›</button><button onclick="clkStop();skipMonth()">Skip to ${tLabel(tNow()+1)}</button><button onclick="themePick('noir')">Gold Noir</button></div></section>
  ${r0||ev?`<button class="tc-wk" onclick="${r0?r0[2]:ev.a}"><div class="tc-wkp">${lead?portrait(lead,70,{square:1}):'<span>🎬</span>'}</div><div><small>${r0?'NEEDS YOU':'COMING '+gnWhen(ev.w).toUpperCase()}</small><b>${r0?String(r0[1]).replace(/<[^>]+>/g,''):esc(ev.t)}</b><em>${r0?'Tap to open':'Let time roll, or open it now'}</em></div></button>`:''}
  <div class="tc-h"><span>On the lot</span><i></i></div>
  <div class="tc-grid">${C.map(c=>`<button class="tc-lc" onclick="${c.a}"><img src="${MED}bg_${c.img}.jpg" alt=""><b>${esc(c.t)}</b><small style="color:${c.c}">${c.s}</small></button>`).join('')}</div>

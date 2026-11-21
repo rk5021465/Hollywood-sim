@@ -834,18 +834,18 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 #cut>.pr31{position:absolute!important;inset:0;z-index:1}#cut:has(.pr31) .cutbg{opacity:.9}#cut:has(.pr31){padding:0}#cut .skip{position:absolute!important;z-index:5}
 
 /* ===== v21 Gold Noir ===== */
-body:not(.light){--bg:#0B0A0D;--card:#151116;--card2:#1D1612;--gold:#D4AF37;--gold2:#F3DFA8;--text:#EDE3CF;--muted:#B9AA8C;--line:rgba(212,175,55,.2);--ink:#060507;--soft:#1A1519;background:#0B0A0D}
-body:not(.light) h1,body:not(.light) h2,body:not(.light) h3,body:not(.light) .hh{font-family:'Playfair Display','Noto Serif',Georgia,serif;letter-spacing:.2px}
-body:not(.light) .hh{color:#F3DFA8;font-size:14px;letter-spacing:3px;text-transform:uppercase;font-family:'Cinzel','Playfair Display','Noto Serif',Georgia,serif}
-body:not(.light) .card,body:not(.light) .evr,body:not(.light) .qt{background:linear-gradient(160deg,#18131A,#120E12)!important;border:1px solid rgba(212,175,55,.22)!important;box-shadow:0 8px 22px rgba(0,0,0,.35)!important}
-body:not(.light) .qt>svg{background:rgba(212,175,55,.12)!important}body:not(.light) .qt>svg *{stroke:#E8C878!important}
-body:not(.light) .btn.gold{background:linear-gradient(180deg,#F3DFA8,#C99A3B)!important;color:#1A1206!important;border:0!important}
-body:not(.light) .btn.ghost{background:rgba(212,175,55,.06)!important;border:1px solid rgba(212,175,55,.45)!important;color:#F3DFA8!important}
-body:not(.light) .chips button.on,body:not(.light) .seg button.on{background:rgba(212,175,55,.16)!important;border-color:#D4AF37!important;color:#F3DFA8!important}
-body:not(.light) .topbar{background:rgba(11,10,13,.88)!important;backdrop-filter:blur(10px);border-bottom:1px solid rgba(212,175,55,.18)}
-body:not(.light) .tabbar{background:transparent!important;border:0!important}
-body:not(.light) .tabbar>div{margin:0 12px 12px;border-radius:22px;background:rgba(20,16,21,.94)!important;border:1px solid rgba(212,175,55,.35)!important;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-body:not(.light) .tabbar button{color:#8E826C!important}body:not(.light) .tabbar button.on{color:#E8C878!important}
+body.noir{--bg:#0B0A0D;--card:#151116;--card2:#1D1612;--gold:#D4AF37;--gold2:#F3DFA8;--text:#EDE3CF;--muted:#B9AA8C;--line:rgba(212,175,55,.2);--ink:#060507;--soft:#1A1519;background:#0B0A0D}
+body.noir h1,body.noir h2,body.noir h3,body.noir .hh{font-family:'Playfair Display','Noto Serif',Georgia,serif;letter-spacing:.2px}
+body.noir .hh{color:#F3DFA8;font-size:14px;letter-spacing:3px;text-transform:uppercase;font-family:'Cinzel','Playfair Display','Noto Serif',Georgia,serif}
+body.noir .card,body.noir .evr,body.noir .qt{background:linear-gradient(160deg,#18131A,#120E12)!important;border:1px solid rgba(212,175,55,.22)!important;box-shadow:0 8px 22px rgba(0,0,0,.35)!important}
+body.noir .qt>svg{background:rgba(212,175,55,.12)!important}body.noir .qt>svg *{stroke:#E8C878!important}
+body.noir .btn.gold{background:linear-gradient(180deg,#F3DFA8,#C99A3B)!important;color:#1A1206!important;border:0!important}
+body.noir .btn.ghost{background:rgba(212,175,55,.06)!important;border:1px solid rgba(212,175,55,.45)!important;color:#F3DFA8!important}
+body.noir .chips button.on,body.noir .seg button.on{background:rgba(212,175,55,.16)!important;border-color:#D4AF37!important;color:#F3DFA8!important}
+body.noir .topbar{background:rgba(11,10,13,.88)!important;backdrop-filter:blur(10px);border-bottom:1px solid rgba(212,175,55,.18)}
+body.noir .tabbar{background:transparent!important;border:0!important}
+body.noir .tabbar>div{margin:0 12px 12px;border-radius:22px;background:rgba(20,16,21,.94)!important;border:1px solid rgba(212,175,55,.35)!important;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+body.noir .tabbar button{color:#8E826C!important}body.noir .tabbar button.on{color:#E8C878!important}
 .gn-hero{position:relative;margin:-6px -16px 14px;min-height:250px;overflow:hidden;border-radius:0 0 26px 26px}
 .gn-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
 .gn-fade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,.25),rgba(11,10,13,.55) 55%,#0B0A0D)}
@@ -935,6 +935,11 @@ body.tc.onhq .topbar{display:none!important}
 @keyframes tcin{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}@keyframes tcstamp{from{opacity:0;transform:rotate(-10deg) scale(2.2)}to{opacity:1;transform:rotate(-10deg) scale(1)}}
 body.tc .ow25h{background:#2B1D14!important;border:4px solid #E0A526;box-shadow:0 0 0 3px #A3201A}body.tc .ow25h h2{font-family:'Abril Fatface',Georgia,serif!important;font-style:normal;color:#FFE7A6}
 body.tc .ow25r{background:#FCF4E2!important;border:2px solid #2B1D14!important;color:#2B1D14}body.tc .ow25r.me{background:#A3201A!important;color:#FCEBC3!important;border-color:#A3201A!important}
+
+.th4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.th4 button{height:64px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:inherit;font-size:13px;border:2px solid transparent}
+.th4 button span{font-size:20px}.th4 button.on{outline:3px solid #E0A526;outline-offset:1px}
+.th4-light{background:#F7F4EE;color:#2B2520}.th4-dark{background:#1D1A21;color:#F3ECE0}.th4-noir{background:linear-gradient(135deg,#1D1612,#0B0A0D);color:#E8C878;border-color:#D4AF37!important}.th4-tc{background:#F3E9D2;color:#A3201A;border-color:#2B1D14!important}
+.th4-light{border-color:#D8CFC0!important}
 </style>
 </head>
 <body>
@@ -5840,7 +5845,7 @@ finishSetup=(function(o){return function(){const pi=SW&&SW.ceo&&SW.ceo.pimg;cons
 /* ===== v21 · GOLD NOIR — new look and a living clock ===== */
 
 /* ---------- theme: Gold Noir becomes the default look (players can still pick Light in Settings) ---------- */
-try{if(!PREFS.noir21){PREFS.noir21=1;PREFS.theme='dark';savePrefs();applyTheme()}}catch(e){}
+try{if(!PREFS.noir21){PREFS.noir21=1;PREFS.theme='noir';savePrefs();applyTheme()}}catch(e){}
 
 /* ---------- the clock: time runs by itself and stops when you're needed ---------- */
 const CLK={on:false,speed:1,h:null,seen:{}};
@@ -5888,7 +5893,7 @@ function gnNext(rows){const r=rows[0];if(r){return `<button class="gn-next" oncl
  return `<button class="gn-next" onclick="startFilm()"><div class="gn-ni">✦</div><div><small>YOUR STAGES ARE EMPTY</small><b>Greenlight your next picture</b><em>Start →</em></div></button>`}
 
 /* ---------- the new home ---------- */
-hq8=(function(o){return function(){let old='';try{old=o()}catch(e){}
+hq8=(function(o){return function(){if(PREFS.theme==='light'||PREFS.theme==='dark')return o();let old='';try{old=o()}catch(e){}
  const k=old.indexOf('<h4 class="hh">Create');const tail=k>=0?old.slice(k):'';
  const rows=(()=>{try{return weekRows()}catch(e){return []}})();
  const e=typeof eraOf==='function'?eraOf(S.year):null;const bgn=(e&&typeof ERA_BG!=='undefined'&&ERA_BG[e.k])||'marquee';
@@ -5908,10 +5913,11 @@ hq8=(function(o){return function(){let old='';try{old=o()}catch(e){}
  ${tail}`}})(hq8);
 
 /* ---------- Technicolor theme (option B) ---------- */
-applyTheme=(function(o){return function(){o();try{document.body.classList.toggle('tc',PREFS.theme==='tc')}catch(e){}}})(applyTheme);
-settings=(function(o){return function(){const r=o.apply(this,arguments);try{const b=[...document.querySelectorAll('#modal .seg button')].find(x=>/Dark/.test(x.textContent));if(b&&!document.getElementById('tcBtn')){b.insertAdjacentHTML('afterend',`<button id="tcBtn" class="${PREFS.theme==='tc'?'on':''}" onclick="PREFS.theme='tc';savePrefs();applyTheme();settings()">🎞️ Technicolor</button>`);b.parentElement.style.width='auto';b.textContent='✨ Gold Noir'}}catch(e){}return r}})(settings);
+applyTheme=(function(o){return function(){o();try{document.body.classList.toggle('tc',PREFS.theme==='tc');document.body.classList.toggle('noir',PREFS.theme==='noir')}catch(e){}}})(applyTheme);
+const THEMES=[['light','☀️','Classic Light'],['dark','🌙','Classic Dark'],['noir','✨','Gold Noir'],['tc','🎞️','Technicolor']];
+settings=(function(o){return function(){const r=o.apply(this,arguments);try{const b=[...document.querySelectorAll('#modal .seg button')].find(x=>/Light/.test(x.textContent));if(b){const row=b.closest('.card');row.innerHTML=`<small>🎨 Theme</small><div class="th4">${THEMES.map(t=>`<button class="th4-${t[0]} ${PREFS.theme===t[0]?'on':''}" onclick="PREFS.theme='${t[0]}';savePrefs();applyTheme();settings()"><span>${t[1]}</span><b>${t[2]}</b></button>`).join('')}</div>`}}catch(e){}return r}})(settings);
 function themePick(t){PREFS.theme=t;savePrefs();applyTheme();render()}
-hq8=(function(o){return function(){let h=o();try{h=h.replace('<div class="gn-st"',`<div class="gn-th"><button class="${PREFS.theme!=='tc'?'on':''}" onclick="themePick('dark')">Gold Noir</button><button class="${PREFS.theme==='tc'?'on':''}" onclick="themePick('tc')">Technicolor</button></div><div class="gn-st"`)}catch(e){}return h}})(hq8);
+hq8=(function(o){return function(){let h=o();try{if(h.indexOf('gn-hero')<0)return h;h=h.replace('<div class="gn-st"',`<div class="gn-th"><button class="${PREFS.theme!=='tc'?'on':''}" onclick="themePick('noir')">Gold Noir</button><button class="${PREFS.theme==='tc'?'on':''}" onclick="themePick('tc')">Technicolor</button></div><div class="gn-st"`)}catch(e){}return h}})(hq8);
 try{applyTheme()}catch(e){}
 
 /* ---------- Technicolor home: its own layout, matching mockup B ---------- */
@@ -5926,7 +5932,7 @@ function tcHome(tail){const rows=(()=>{try{return weekRows()}catch(e){return []}
  return `<section class="tc-hd"><div class="tc-stripes"></div>
  <div class="tc-tk"><div class="tc-tkl"><small>NOW SHOWING</small><h1>${MON[d.getMonth()]} ${S.year}</h1><span id="gnState">${CLK.on?'Time rolls on by itself. It stops when you are needed.':'The reel is paused. Press play to roll.'}</span></div>
  <div class="tc-tkr"><button id="gnPlay" class="gn-play tc-pl ${CLK.on?'on':''}" aria-label="${CLK.on?'Pause time':'Start time'}" onclick="clkToggle()">${CLK.on?GN_PAUSE:GN_PLAY}</button><button id="gnSpd" class="tc-spd" onclick="clkSpeed()">${CLK.speed}×</button></div></div>
- <div class="tc-sm"><button onclick="clkStop();nextWeek()">One week ›</button><button onclick="clkStop();skipMonth()">Skip to ${tLabel(tNow()+1)}</button><button onclick="themePick('dark')">Gold Noir</button></div></section>
+ <div class="tc-sm"><button onclick="clkStop();nextWeek()">One week ›</button><button onclick="clkStop();skipMonth()">Skip to ${tLabel(tNow()+1)}</button><button onclick="themePick('noir')">Gold Noir</button></div></section>
  ${r0||ev?`<button class="tc-wk" onclick="${r0?r0[2]:ev.a}"><div class="tc-wkp">${lead?portrait(lead,70,{square:1}):'<span>🎬</span>'}</div><div><small>${r0?'NEEDS YOU':'COMING '+gnWhen(ev.w).toUpperCase()}</small><b>${r0?String(r0[1]).replace(/<[^>]+>/g,''):esc(ev.t)}</b><em>${r0?'Tap to open':'Let time roll, or open it now'}</em></div></button>`:''}
  <div class="tc-h"><span>On the lot</span><i></i></div>
  <div class="tc-grid">${C.map(c=>`<button class="tc-lc" onclick="${c.a}"><img src="${MED}bg_${c.img}.jpg" alt=""><b>${esc(c.t)}</b><small style="color:${c.c}">${c.s}</small></button>`).join('')}</div>
