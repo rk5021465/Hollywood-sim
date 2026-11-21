@@ -89,6 +89,27 @@ h1{font-size:30px}h2{font-size:23px}h3{font-size:19px}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .app .topbar{padding-top:10px}.app .nav{padding-bottom:0}.app .sheet{padding-bottom:18px}.app .toast{bottom:76px}
+.stage{position:relative;overflow:hidden;border-radius:16px;border:1px solid #4a3a2a;background:#0d0a12;margin-bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.st-l{position:absolute;inset:-2%;background-size:cover;background-position:center;opacity:0;will-change:transform,opacity}
+.st-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.stage:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(10,5,12,.55) 100%),linear-gradient(180deg,rgba(0,0,0,0) 60%,rgba(18,14,22,.75) 100%)}
+.st-cap{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;opacity:0;transform:translateY(8px);transition:all .6s ease}
+.st-cap.on{opacity:1;transform:none}
+.st-cap b{display:block;font-family:var(--serif);font-size:26px;font-weight:600;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.st-cap span{display:block;font-size:13px;color:#F6EEDF;opacity:.9;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+.who{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.who img,.who .ph{width:64px;height:64px;border-radius:32px;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 0 3px rgba(217,169,49,.18);flex:none;background:#2A2031}
+.who .nm{font-size:12px;color:var(--gold)}.who .q{font-family:var(--serif);font-size:19px;font-style:italic;line-height:1.25;margin-top:2px}
+.event-card{animation:up .35s ease-out}
+.couple{display:flex;flex:none}.couple img{width:44px;height:44px;border-radius:22px;object-fit:cover;border:2px solid var(--p1)}.couple img+img{margin-left:-14px}
+.hero{position:relative;height:150px;margin:-14px -16px 14px;overflow:hidden}
+.hero .st-l{opacity:1}
+.splash.painted{background:#120E16}
+.splash .bgimg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.8;animation:kb 30s ease-out forwards}
+.splash .bgshade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,14,22,.3),rgba(18,14,22,.85) 60%,#120E16)}
+.splash>*:not(.bgimg):not(.bgshade){position:relative}
+@keyframes kb{from{transform:scale(1.05)}to{transform:scale(1.2) translate(-2%,-2%)}}
+.cnt{display:flex;align-items:center;gap:8px}.cnt button{width:34px;height:34px;border-radius:17px;border:1px solid var(--line);background:var(--p2);font-size:18px}.cnt b{min-width:18px;text-align:center}
 </style></head><body><div id="app"></div>
 <script>"use strict";
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -307,285 +328,43 @@ const DECOR_ITEMS=[
 const DECOR_BY={};DECOR_ITEMS.forEach(d=>DECOR_BY[d.k]=d);
 
 "use strict";
-// WebGL renderer: smooth shading, moonlight shadows, warm point lights, fog, twilight sky, glow sprites.
-const E3=(()=>{
-const hex=h=>[(h>>16)&255,(h>>8)&255,h&255];
-const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
-const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
-const norm=a=>{const l=Math.hypot(a[0],a[1],a[2])||1;return[a[0]/l,a[1]/l,a[2]/l]};
-const lerp=(a,b,t)=>a+(b-a)*t;
-function mk(polys,center){return polys.map(v=>{let n=[0,0,0];for(let i=0;i<v.length;i++){const a=v[i],b=v[(i+1)%v.length];n[0]+=(a[1]-b[1])*(a[2]+b[2]);n[1]+=(a[2]-b[2])*(a[0]+b[0]);n[2]+=(a[0]-b[0])*(a[1]+b[1])}n=norm(n);const c=[0,0,0];v.forEach(p=>{c[0]+=p[0]/v.length;c[1]+=p[1]/v.length;c[2]+=p[2]/v.length});if(dot(n,sub(c,center))<0)n=[-n[0],-n[1],-n[2]];return{v,n}})}
-const cache={};
-function boxG(w,h,d){const k='b'+w+'_'+h+'_'+d;if(cache[k])return cache[k];const x=w/2,z=d/2,P=[[-x,0,-z],[x,0,-z],[x,0,z],[-x,0,z],[-x,h,-z],[x,h,-z],[x,h,z],[-x,h,z]],F=[[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];return cache[k]=mk(F.map(f=>f.map(i=>P[i])),[0,h/2,0])}
-// smooth-sided frustum/cone; flat=true gives faceted look
-function prismG(rt,rb,h,n,a0=0,y0=0){const k='p'+[rt,rb,h,n,a0,y0].join('_');if(cache[k])return cache[k];const F=[],T=[],B=[];const sl=(rb-rt)/h;const smooth=n>=10;
- for(let i=0;i<n;i++){const a=a0+i/n*Math.PI*2,b=a0+(i+1)/n*Math.PI*2;const p1=[Math.cos(a)*rb,y0,Math.sin(a)*rb],p2=[Math.cos(b)*rb,y0,Math.sin(b)*rb],p3=[Math.cos(b)*rt,y0+h,Math.sin(b)*rt],p4=[Math.cos(a)*rt,y0+h,Math.sin(a)*rt];
-  const na=norm([Math.cos(a),sl,Math.sin(a)]),nb=norm([Math.cos(b),sl,Math.sin(b)]);
-  if(rt>0)F.push(smooth?{v:[p1,p2,p3,p4],vn:[na,nb,nb,na]}:{v:[p1,p2,p3,p4]});else F.push(smooth?{v:[p1,p2,[0,y0+h,0]],vn:[na,nb,norm([Math.cos((a+b)/2),sl,Math.sin((a+b)/2)])]}:{v:[p1,p2,[0,y0+h,0]]});B.push(p1);if(rt>0)T.push(p4)}
- F.push({v:B});if(rt>0)F.push({v:T});
- const out=F.map(f=>{if(f.vn)return f;return mk([f.v],[0,y0+h/2,0])[0]});return cache[k]=out}
-function sphG(r,n=12,m=8,half=false){const k='s'+[r,n,m,half].join('_');if(cache[k])return cache[k];const F=[],mm=half?Math.ceil(m/2):m;const P=(t,p)=>[Math.sin(t)*Math.cos(p),Math.cos(t),Math.sin(t)*Math.sin(p)];
- for(let j=0;j<mm;j++){const t1=j/m*Math.PI,t2=(j+1)/m*Math.PI;for(let i=0;i<n;i++){const a=i/n*Math.PI*2,b=(i+1)/n*Math.PI*2;const q=[P(t1,a),P(t2,a),P(t2,b),P(t1,b)];F.push({v:q.map(v=>[v[0]*r,v[1]*r,v[2]*r]),vn:q})}}
- if(half){const v=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2;v.push([Math.cos(a)*r,0,Math.sin(a)*r])}F.push({v,n:[0,-1,0]})}
- return cache[k]=F}
-function gridG(size,n,y=0){const F=[],S=size/n,h=size/2;for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=-h+i*S,z=-h+j*S;F.push({v:[[x,y,z],[x+S,y,z],[x+S,y,z+S],[x,y,z+S]],n:[0,1,0],chk:(i+j)%2})}return F}
-function diskG(r,n,y){const v=[];for(let i=0;i<n;i++){const a=-i/n*Math.PI*2;v.push([Math.cos(a)*r,y,Math.sin(a)*r])}return[{v,n:[0,1,0]}]}
-
-// ---------- shaders ----------
-const VS=`attribute vec3 aP;attribute vec3 aN;attribute vec3 aC;uniform mat4 uM,uVP,uL;uniform mat3 uNM;varying vec3 vW,vN,vC;varying vec4 vLs;
-void main(){vec4 w=uM*vec4(aP,1.);vW=w.xyz;vN=uNM*aN;vC=aC;vLs=uL*w;gl_Position=uVP*w;}`;
-const FS=`precision highp float;varying vec3 vW,vN,vC;varying vec4 vLs;uniform vec3 uCol,uCam,uMoonDir,uMoonCol,uSky,uGnd,uFog;uniform float uEmit,uAlpha,uFogN,uFogF,uShOn;uniform vec3 uLP[8];uniform vec3 uLC[8];uniform sampler2D uSh;
-float unpack(vec4 c){return dot(c,vec4(1./16777216.,1./65536.,1./256.,1.));}
-float shadow(){vec3 c=vLs.xyz/vLs.w*.5+.5;if(c.x<0.||c.x>1.||c.y<0.||c.y>1.||uShOn<.5)return 1.;float s=0.;float b=.0025;
- for(int x=-1;x<=1;x++)for(int y=-1;y<=1;y++){s+=(c.z-b>unpack(texture2D(uSh,c.xy+vec2(float(x),float(y))/1024.)))?0.:1.;}return s/9.;}
-void main(){vec3 base=pow(vC*uCol,vec3(2.2));vec3 col;
- if(uEmit>.5){col=base*2.2;}else{vec3 N=normalize(vN);if(!gl_FrontFacing)N=-N;
-  vec3 hemi=mix(uGnd,uSky,N.y*.5+.5);float sh=shadow();vec3 L=hemi+max(dot(N,uMoonDir),0.)*uMoonCol*sh;
-  for(int i=0;i<8;i++){vec3 d=uLP[i]-vW;float dd=length(d);float at=1./(1.+dd*dd*.22);L+=uLC[i]*(max(dot(N,d/dd),0.)*.85+.15)*at;}
-  vec3 V=normalize(uCam-vW);float rim=pow(1.-max(dot(N,V),0.),3.)*.18;col=base*L+rim*uSky;}
- col*=1.35;float f=smoothstep(uFogN,uFogF,length(vW-uCam));col=mix(col,uFog,f);
- col=col*(2.51*col+.03)/(col*(2.43*col+.59)+.14);col=pow(clamp(col,0.,1.),vec3(1./2.2));gl_FragColor=vec4(col,uAlpha);}`;
-const DVS=`attribute vec3 aP;uniform mat4 uM,uL;void main(){gl_Position=uL*uM*vec4(aP,1.);}`;
-const DFS=`precision highp float;vec4 pack(float d){vec4 b=vec4(16777216.,65536.,256.,1.);vec4 m=vec4(0.,1./256.,1./256.,1./256.);vec4 r=fract(d*b);r-=r.xxyz*m;return r;}void main(){gl_FragColor=pack(gl_FragCoord.z);}`;
-const SVS=`attribute vec2 aP;varying vec2 vP;void main(){vP=aP;gl_Position=vec4(aP,.9999,1.);}`;
-const SFS=`precision highp float;varying vec2 vP;uniform mat4 uInv;uniform float uT;
-float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-void main(){vec4 a=uInv*vec4(vP,1.,1.);vec3 d=normalize(a.xyz/a.w);float y=d.y;
- vec3 zen=vec3(.035,.045,.13),mid=vec3(.16,.08,.22),hor=vec3(.55,.24,.2);
- vec3 c=mix(hor,mid,smoothstep(-.02,.18,y));c=mix(c,zen,smoothstep(.15,.7,y));
- float az=atan(d.z,d.x);c+=vec3(.35,.12,.05)*pow(max(0.,1.-abs(y-.02)*6.),2.)*(.6+.4*sin(az*1.3));
- vec2 g=vec2(az*60.,y*90.);vec2 gi=floor(g);float s=h(gi);if(s>.985&&y>.12){vec2 f=fract(g)-.5;c+=vec3(.9,.9,1.)*smoothstep(.12,0.,length(f))*(.5+.5*sin(uT*2.+s*80.));}
- vec3 md=normalize(vec3(-.55,.42,-.72));float m=dot(d,md);c+=vec3(1.,.95,.85)*smoothstep(.9993,.9996,m)+vec3(.25,.25,.35)*pow(max(m,0.),400.);
- gl_FragColor=vec4(pow(c,vec3(.95)),1.);}`;
-const PVS=`attribute vec3 aP;attribute vec4 aC;attribute float aS;uniform mat4 uVP;uniform float uF;varying vec4 vC;void main(){vec4 p=uVP*vec4(aP,1.);gl_Position=p;gl_PointSize=clamp(aS*uF/max(p.w,.1),1.,160.);vC=aC;}`;
-const PFS=`precision mediump float;varying vec4 vC;void main(){float r=length(gl_PointCoord-.5)*2.;float a=pow(max(0.,1.-r),2.2);gl_FragColor=vec4(vC.rgb*a*vC.a,a*vC.a);}`;
-
-function prog(gl,vs,fs){const p=gl.createProgram();for(const [t,s] of [[gl.VERTEX_SHADER,vs],[gl.FRAGMENT_SHADER,fs]]){const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))console.error(gl.getShaderInfoLog(sh));gl.attachShader(p,sh)}gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))console.error(gl.getProgramInfoLog(p));
- const u={},a={};const nu=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);for(let i=0;i<nu;i++){const inf=gl.getActiveUniform(p,i);const nm=inf.name.replace('[0]','');u[nm]=gl.getUniformLocation(p,inf.name)}const na=gl.getProgramParameter(p,gl.ACTIVE_ATTRIBUTES);for(let i=0;i<na;i++){const inf=gl.getActiveAttrib(p,i);a[inf.name]=gl.getAttribLocation(p,inf.name)}return{p,u,a}}
-// faces -> flat arrays
-function tris(faces,M,col,out){for(const f of faces){const v=f.v;const vn=f.vn;for(let i=1;i<v.length-1;i++){for(const k of [0,i,i+1]){const p=v[k];let n=vn?vn[k]:f.n;if(M){const q=M.p(p);out.p.push(q[0],q[1],q[2]);const m=M.n(n);out.n.push(m[0],m[1],m[2])}else{out.p.push(p[0],p[1],p[2]);out.n.push(n[0],n[1],n[2])}out.c.push(col[0],col[1],col[2])}}}}
-function rot3(ry,rx,rz){const cy=Math.cos(ry),sy=Math.sin(ry),cx=Math.cos(rx),sx=Math.sin(rx),cz=Math.cos(rz),sz=Math.sin(rz);
- // R = Ry(engine convention) * Rx * Rz ; row-major 3x3
- const Ry=[cy,0,-sy, 0,1,0, sy,0,cy],Rx=[1,0,0,0,cx,-sx,0,sx,cx],Rz=[cz,-sz,0,sz,cz,0,0,0,1];const mm=(A,B)=>{const o=[];for(let r=0;r<3;r++)for(let c=0;c<3;c++)o.push(A[r*3]*B[c]+A[r*3+1]*B[3+c]+A[r*3+2]*B[6+c]);return o};return mm(mm(Ry,Rx),Rz)}
-function xf(o){const R=rot3(o.ry||0,o.rx||0,o.rz||0),s=o.s,p=o.p;return{R,s,p:(v)=>{const x=v[0]*s[0],y=v[1]*s[1],z=v[2]*s[2];return[R[0]*x+R[1]*y+R[2]*z+p[0],R[3]*x+R[4]*y+R[5]*z+p[1],R[6]*x+R[7]*y+R[8]*z+p[2]]},n:(n)=>{const x=n[0]/s[0],y=n[1]/s[1],z=n[2]/s[2];return norm([R[0]*x+R[1]*y+R[2]*z,R[3]*x+R[4]*y+R[5]*z,R[6]*x+R[7]*y+R[8]*z])}}}
-function mul4(a,b){const o=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s}return o}
-function inv4(m){const a=m,o=new Float32Array(16);const b00=a[0]*a[5]-a[1]*a[4],b01=a[0]*a[6]-a[2]*a[4],b02=a[0]*a[7]-a[3]*a[4],b03=a[1]*a[6]-a[2]*a[5],b04=a[1]*a[7]-a[3]*a[5],b05=a[2]*a[7]-a[3]*a[6],b06=a[8]*a[13]-a[9]*a[12],b07=a[8]*a[14]-a[10]*a[12],b08=a[8]*a[15]-a[11]*a[12],b09=a[9]*a[14]-a[10]*a[13],b10=a[9]*a[15]-a[11]*a[13],b11=a[10]*a[15]-a[11]*a[14];let d=b00*b11-b01*b10+b02*b09+b03*b08-b04*b07+b05*b06;if(!d)return o;d=1/d;
- o[0]=(a[5]*b11-a[6]*b10+a[7]*b09)*d;o[1]=(a[2]*b10-a[1]*b11-a[3]*b09)*d;o[2]=(a[13]*b05-a[14]*b04+a[15]*b03)*d;o[3]=(a[10]*b04-a[9]*b05-a[11]*b03)*d;o[4]=(a[6]*b08-a[4]*b11-a[7]*b07)*d;o[5]=(a[0]*b11-a[2]*b08+a[3]*b07)*d;o[6]=(a[14]*b02-a[12]*b05-a[15]*b01)*d;o[7]=(a[8]*b05-a[10]*b02+a[11]*b01)*d;o[8]=(a[4]*b10-a[5]*b08+a[7]*b06)*d;o[9]=(a[1]*b08-a[0]*b10-a[3]*b06)*d;o[10]=(a[12]*b04-a[13]*b02+a[15]*b00)*d;o[11]=(a[9]*b02-a[8]*b04-a[11]*b00)*d;o[12]=(a[5]*b07-a[4]*b09-a[6]*b06)*d;o[13]=(a[0]*b09-a[1]*b07+a[2]*b06)*d;o[14]=(a[13]*b01-a[12]*b03-a[14]*b00)*d;o[15]=(a[8]*b03-a[9]*b01+a[10]*b00)*d;return o}
-function viewM(r,u,f,cp){return new Float32Array([r[0],u[0],-f[0],0,r[1],u[1],-f[1],0,r[2],u[2],-f[2],0,-dot(r,cp),-dot(u,cp),dot(f,cp),1])}
-const toLin=c=>Math.pow(c/255,2.2);
-
-class Scene{
- constructor(canvas,h){this.cv=canvas;this.h=h;this.O=[];this.pts=[];this.parts=[];this.labels=[];this.lights=[];this.th=.75;this.ph=.62;this.dist=24;this.tg=[0,1.2,0];this.goal=null;this.drag=false;this.idle=0;this.auto=true;this.fire=[0,1,0];this.fireOn=1;this.dark=0;this.ticks=[];this.run=false;this.T0=performance.now();this.onTap=null;this.dynMode=false;this.baked=null;
-  const par=canvas.parentNode;canvas.style.display='block';const ov=document.createElement('canvas');ov.style.cssText='position:absolute;left:0;top:0;width:100%;touch-action:none';par.appendChild(ov);this.ov=ov;this.octx=ov.getContext('2d');
-  const gl=canvas.getContext('webgl',{antialias:true,alpha:false,premultipliedAlpha:false})||canvas.getContext('experimental-webgl');this.gl=gl;
-  if(gl){this.P=prog(gl,VS,FS);this.Pd=prog(gl,DVS,DFS);this.Ps=prog(gl,SVS,SFS);this.Pp=prog(gl,PVS,PFS);this.gcache=new Map();
-   this.quad=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,this.quad);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
-   this.pbuf=gl.createBuffer();
-   const S=1024;this.shTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,this.shTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,S,S,0,gl.RGBA,gl.UNSIGNED_BYTE,null);for(const [k,v] of [[gl.TEXTURE_MIN_FILTER,gl.NEAREST],[gl.TEXTURE_MAG_FILTER,gl.NEAREST],[gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE],[gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE]])gl.texParameteri(gl.TEXTURE_2D,k,v);
-   this.shFB=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,this.shFB);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,this.shTex,0);const rb=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,rb);gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT16,S,S);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rb);gl.bindFramebuffer(gl.FRAMEBUFFER,null);this.shS=S}
-  let lx,ly,dx0,dy0,t0;const ev=ov;
-  ev.addEventListener('pointerdown',e=>{this.drag=true;lx=dx0=e.clientX;ly=dy0=e.clientY;t0=performance.now();try{ev.setPointerCapture(e.pointerId)}catch(_){}});
-  ev.addEventListener('pointermove',e=>{if(!this.drag)return;const mx=e.clientX-lx,my=e.clientY-ly;if(Math.abs(e.clientX-dx0)+Math.abs(e.clientY-dy0)>6){this.th-=mx*.008;this.ph=Math.min(1.3,Math.max(.12,this.ph+my*.005));this.idle=0;if(this.goal){this.goal.th=null;this.goal.ph=null}}lx=e.clientX;ly=e.clientY});
-  const up=e=>{if(this.drag&&e.type==='pointerup'&&Math.abs(e.clientX-dx0)+Math.abs(e.clientY-dy0)<8&&performance.now()-t0<450&&this.onTap){const r=ev.getBoundingClientRect();this.onTap(e.clientX-r.left,e.clientY-r.top)}this.drag=false};
-  ev.addEventListener('pointerup',up);ev.addEventListener('pointercancel',up);
-  this.resize()}
- resize(){const DPR=Math.min(window.devicePixelRatio||1,2),w=this.cv.parentNode.clientWidth||360;this.w=w;this.DPR=DPR;for(const c of [this.cv,this.ov]){c.width=w*DPR;c.height=this.h*DPR;c.style.height=this.h+'px';c.style.width=w+'px'}this.octx.setTransform(DPR,0,0,DPR,0,0)}
- clear(){this.O=[];this.pts=[];this.parts=[];this.labels=[];this.ticks=[];this.lights=[];if(this.baked&&this.gl){this.gl.deleteBuffer(this.baked.b)}this.baked=null;this.dynMode=false}
- add(g,col,x,y,z,o={}){const ob=Object.assign({g,col:hex(col),p:[x,y,z],ry:0,rx:0,rz:0,s:[1,1,1],vis:true,dyn:this.dynMode},o);this.O.push(ob);return ob}
- box(w,h,d,col,x,y,z,o){return this.add(boxG(w,h,d),col,x,y,z,o)}
- cyl(r,h,col,x,y,z,n=8,o){return this.add(prismG(r,r,h,Math.max(n,12)),col,x,y,z,o)}
- cone(r,h,col,x,y,z,n=8,o,a0=0){return this.add(prismG(0,r,h,n,a0),col,x,y,z,o)}
- ball(r,col,x,y,z,o){return this.add(sphG(r,10,7),col,x,y,z,o)}
- dome(r,col,x,y,z,o){return this.add(sphG(r,14,10,true),col,x,y,z,o)}
- flat(w,d,col,x,z,o){return this.add([{v:[[-w/2,.03,-d/2],[w/2,.03,-d/2],[w/2,.03,d/2],[-w/2,.03,d/2]],n:[0,1,0]}],col,x,0,z,o)}
- ground(size,n,c1,c2,side){this.add(boxG(size,.4,size).filter(f=>f.n[1]<.5),side,0,-.4,0);const F=gridG(size,n);this.add(F.filter(f=>!f.chk),c1,0,0,0);this.add(F.filter(f=>f.chk),c2,0,0,0)}
- point(x,y,z,col,size,blink){const q={p:[x,y,z],col,size:size||.09,blink:blink||0,ph:Math.random()*6};this.pts.push(q);return q}
- light(x,y,z,col,int){const L={p:[x,y,z],c:hex(col).map(v=>v/255*int)};this.lights.push(L);return L}
- face(x,y,z,f){return{p:[x,y,z],face:f,vis:true}}
- mark(){return{o:this.O.length,p:this.pts.length}}
- group(m,ox,oz){const g={objs:this.O.slice(m.o).map(o=>({o,b:o.p.slice()})),pts:this.pts.slice(m.p).map(q=>({q,b:q.p.slice()})),ox,oz,at(x,z,y=0){for(const e of this.objs)e.o.p=[e.b[0]-this.ox+x,e.b[1]+y,e.b[2]-this.oz+z];for(const e of this.pts)e.q.p=[e.b[0]-this.ox+x,e.b[1]+y,e.b[2]-this.oz+z]},show(v){for(const e of this.objs)e.o.vis=v;for(const e of this.pts)e.q.vis=v}};g.objs.forEach(e=>e.o.dyn=true);return g}
- camTo(g){this.goal=Object.assign({th:null,ph:null,dist:null,tg:null},g);this.auto=false}
- // merge every non-dynamic object into one buffer
- bake(){const gl=this.gl;if(!gl)return;const out={p:[],n:[],c:[]};const keep=[];for(const o of this.O){if(o.dyn||!o.vis){keep.push(o);continue}tris(o.g,xf(o),o.col.map(v=>v/255),out)}
-  this.O=keep;const data=new Float32Array(out.p.length*3);const N=out.p.length/3;for(let i=0;i<N;i++){data.set(out.p.slice(i*3,i*3+3),i*9);data.set(out.n.slice(i*3,i*3+3),i*9+3);data.set(out.c.slice(i*3,i*3+3),i*9+6)}
-  const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);this.baked={b,n:N};this.dynMode=true}
- geo(g){let e=this.gcache.get(g);if(e)return e;const out={p:[],n:[],c:[]};tris(g,null,[1,1,1],out);const N=out.p.length/3,data=new Float32Array(N*9);for(let i=0;i<N;i++){data.set(out.p.slice(i*3,i*3+3),i*9);data.set(out.n.slice(i*3,i*3+3),i*9+3);data.set([1,1,1],i*9+6)}const gl=this.gl,b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);e={b,n:N};this.gcache.set(g,e);return e}
- start(){if(this.run)return;this.run=true;const loop=()=>{if(!this.run)return;if(!document.body.contains(this.cv)){this.run=false;return}this.frame();requestAnimationFrame(loop)};requestAnimationFrame(loop)}
- stop(){this.run=false}
- toGround(x,y){const P=this._P;if(!P)return null;const d=norm([P.f[0]+P.r[0]*(x-P.cx)/P.Fc-P.u[0]*(y-P.cy)/P.Fc,P.f[1]+P.r[1]*(x-P.cx)/P.Fc-P.u[1]*(y-P.cy)/P.Fc,P.f[2]+P.r[2]*(x-P.cx)/P.Fc-P.u[2]*(y-P.cy)/P.Fc]);if(d[1]>=-.01)return null;const t=-P.cp[1]/d[1];return[P.cp[0]+d[0]*t,P.cp[2]+d[2]*t]}
- project(p){const P=this._P;if(!P)return null;const d=sub(p,P.cp),z=dot(d,P.f);if(z<.3)return null;return[P.cx+dot(d,P.r)/z*P.Fc,P.cy-dot(d,P.u)/z*P.Fc,z]}
- bindGeo(pr,b){const gl=this.gl;gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.enableVertexAttribArray(pr.a.aP);gl.vertexAttribPointer(pr.a.aP,3,gl.FLOAT,false,36,0);if(pr.a.aN!=null&&pr.a.aN>=0){gl.enableVertexAttribArray(pr.a.aN);gl.vertexAttribPointer(pr.a.aN,3,gl.FLOAT,false,36,12)}if(pr.a.aC!=null&&pr.a.aC>=0){gl.enableVertexAttribArray(pr.a.aC);gl.vertexAttribPointer(pr.a.aC,3,gl.FLOAT,false,36,24)}}
- objM(o){const R=rot3(o.ry,o.rx,o.rz),s=o.s,p=o.p;const M=new Float32Array([R[0]*s[0],R[3]*s[0],R[6]*s[0],0,R[1]*s[1],R[4]*s[1],R[7]*s[1],0,R[2]*s[2],R[5]*s[2],R[8]*s[2],0,p[0],p[1],p[2],1]);const NM=new Float32Array([R[0]/s[0],R[3]/s[0],R[6]/s[0],R[1]/s[1],R[4]/s[1],R[7]/s[1],R[2]/s[2],R[5]/s[2],R[8]/s[2]]);return{M,NM}}
- frame(){const now=performance.now(),t=(now-this.T0)/1000,dt=Math.min(.05,(now-(this._lt||now))/1000);this._lt=now;const W=this.w,H=this.h,gl=this.gl;
-  if(this.goal){const g=this.goal,k=Math.min(1,dt*2.2);if(g.th!=null){let d=g.th-this.th;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;this.th+=d*k}if(g.ph!=null)this.ph=lerp(this.ph,g.ph,k);if(g.dist!=null)this.dist=lerp(this.dist,g.dist,k);if(g.tg)this.tg=this.tg.map((v,i)=>lerp(v,g.tg[i],k))}
-  else if(this.auto&&!this.drag&&++this.idle>150)this.th+=.0015;
-  for(const f of this.ticks)f(t,dt);
-  const tg=this.tg,cp=[tg[0]+Math.sin(this.th)*Math.cos(this.ph)*this.dist,tg[1]+Math.sin(this.ph)*this.dist,tg[2]+Math.cos(this.th)*Math.cos(this.ph)*this.dist];
-  const f=norm(sub(tg,cp)),r=norm(cross(f,[0,1,0])),u=cross(r,f),Fc=Math.min(W,H*1.15)*1.25,cx=W/2,cy=H*.5;this._P={cp,f,r,u,Fc,cx,cy};
-  const oc=this.octx;oc.clearRect(0,0,W,H);
-  if(!gl){oc.fillStyle='#1E1724';oc.fillRect(0,0,W,H);oc.fillStyle='#B9AEB8';oc.font='13px system-ui';oc.fillText('This phone cannot show the 3D view.',16,24);return}
-  const n=.3,fa=260;const Pm=new Float32Array([Fc/(W/2),0,0,0,0,Fc/(H/2),0,0,0,0,-(fa+n)/(fa-n),-1,0,0,-2*fa*n/(fa-n),0]);const V=viewM(r,u,f,cp);const VP=mul4(Pm,V);
-  // light (moon) matrix
-  const Ld=norm([-.45,.85,-.55]),lc=[tg[0]*.5,0,tg[2]*.5],lp=[lc[0]+Ld[0]*60,lc[1]+Ld[1]*60,lc[2]+Ld[2]*60],lf=norm(sub(lc,lp)),lr=norm(cross(lf,[0,1,0])),lu=cross(lr,lf);const hs=17;
-  const LP=new Float32Array([1/hs,0,0,0,0,1/hs,0,0,0,0,-2/119,0,0,0,-121/119,1]);const LM=mul4(LP,viewM(lr,lu,lf,lp));
-  const vis=this.O.filter(o=>o.vis);
-  // shadow pass
-  gl.bindFramebuffer(gl.FRAMEBUFFER,this.shFB);gl.viewport(0,0,this.shS,this.shS);gl.clearColor(1,1,1,1);gl.enable(gl.DEPTH_TEST);gl.depthMask(true);gl.disable(gl.BLEND);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-  const pd=this.Pd;gl.useProgram(pd.p);gl.uniformMatrix4fv(pd.u.uL,false,LM);gl.disableVertexAttribArray(1);gl.disableVertexAttribArray(2);
-  const I=new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]);
-  if(this.baked){this.bindGeo(pd,this.baked.b);gl.uniformMatrix4fv(pd.u.uM,false,I);gl.drawArrays(gl.TRIANGLES,0,this.baked.n)}
-  const mats=new Map();for(const o of vis){if(o.emit||o.noShadow)continue;const m=this.objM(o);mats.set(o,m);const g=this.geo(o.g);this.bindGeo(pd,g.b);gl.uniformMatrix4fv(pd.u.uM,false,m.M);gl.drawArrays(gl.TRIANGLES,0,g.n)}
-  gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,this.cv.width,this.cv.height);gl.clearColor(0,0,0,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-  // sky
-  const ps=this.Ps;gl.useProgram(ps.p);gl.depthMask(false);gl.bindBuffer(gl.ARRAY_BUFFER,this.quad);for(let i=0;i<4;i++)if(i!==ps.a.aP)gl.disableVertexAttribArray(i);gl.enableVertexAttribArray(ps.a.aP);gl.vertexAttribPointer(ps.a.aP,2,gl.FLOAT,false,0,0);gl.uniformMatrix4fv(ps.u.uInv,false,inv4(mul4(Pm,new Float32Array([r[0],u[0],-f[0],0,r[1],u[1],-f[1],0,r[2],u[2],-f[2],0,0,0,0,1]))));gl.uniform1f(ps.u.uT,t);gl.drawArrays(gl.TRIANGLES,0,3);gl.depthMask(true);
-  // main
-  const P=this.P;gl.useProgram(P.p);gl.uniformMatrix4fv(P.u.uVP,false,VP);gl.uniformMatrix4fv(P.u.uL,false,LM);gl.uniform3fv(P.u.uCam,cp);gl.uniform3fv(P.u.uMoonDir,Ld);gl.uniform3fv(P.u.uMoonCol,[.42,.46,.66]);gl.uniform3fv(P.u.uSky,[.13,.12,.22]);gl.uniform3fv(P.u.uGnd,[.09,.05,.04]);gl.uniform3fv(P.u.uFog,[.2,.1,.14]);gl.uniform1f(P.u.uFogN,22);gl.uniform1f(P.u.uFogF,150);gl.uniform1f(P.u.uShOn,1);
-  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,this.shTex);gl.uniform1i(P.u.uSh,0);
-  // lights: fire + nearest others
-  const fi=this.fireOn*(1+Math.sin(t*9)*.12+Math.sin(t*23)*.05);const Ls=[{p:this.fire,c:[1.6*fi,.75*fi,.25*fi]}].concat(this.lights.slice().sort((a,b)=>Math.hypot(a.p[0]-tg[0],a.p[2]-tg[2])-Math.hypot(b.p[0]-tg[0],b.p[2]-tg[2])).slice(0,7));
-  const lpA=new Float32Array(24),lcA=new Float32Array(24);Ls.forEach((L,i)=>{lpA.set(L.p,i*3);lcA.set(L.c,i*3)});gl.uniform3fv(P.u.uLP,lpA);gl.uniform3fv(P.u.uLC,lcA);
-  gl.uniform1f(P.u.uAlpha,1);
-  if(this.baked){this.bindGeo(P,this.baked.b);gl.uniformMatrix4fv(P.u.uM,false,I);gl.uniformMatrix3fv(P.u.uNM,false,new Float32Array([1,0,0,0,1,0,0,0,1]));gl.uniform3fv(P.u.uCol,[1,1,1]);gl.uniform1f(P.u.uEmit,0);gl.drawArrays(gl.TRIANGLES,0,this.baked.n)}
-  for(const o of vis){const m=mats.get(o)||this.objM(o);const g=this.geo(o.g);this.bindGeo(P,g.b);gl.uniformMatrix4fv(P.u.uM,false,m.M);gl.uniformMatrix3fv(P.u.uNM,false,m.NM);gl.uniform3fv(P.u.uCol,o.col.map(v=>v/255));gl.uniform1f(P.u.uEmit,o.emit?1:0);gl.drawArrays(gl.TRIANGLES,0,g.n)}
-  // glow sprites
-  const all=this.pts.concat(this.parts);if(all.length){const arr=[];for(const q of all){if(q.vis===false||q.a===0)continue;const on=q.blink?(.75+.25*Math.sin(t*3*q.blink+q.ph)):1;const c=q.col||'#FFE27A';const rr=parseInt(c.slice(1,3),16)/255,gg=parseInt(c.slice(3,5),16)/255,bb=parseInt(c.slice(5,7),16)/255;const a=(q.a==null?1:q.a)*on;
-    arr.push(q.p[0],q.p[1],q.p[2],rr,gg,bb,a,(q.size||.09)*2.2);if(!q.streak)arr.push(q.p[0],q.p[1],q.p[2],rr,gg*.85,bb*.7,a*.35,(q.size||.09)*9)}
-   const pp=this.Pp;gl.useProgram(pp.p);gl.bindBuffer(gl.ARRAY_BUFFER,this.pbuf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(arr),gl.DYNAMIC_DRAW);for(let i=0;i<4;i++)gl.disableVertexAttribArray(i);
-   gl.enableVertexAttribArray(pp.a.aP);gl.vertexAttribPointer(pp.a.aP,3,gl.FLOAT,false,32,0);gl.enableVertexAttribArray(pp.a.aC);gl.vertexAttribPointer(pp.a.aC,4,gl.FLOAT,false,32,12);gl.enableVertexAttribArray(pp.a.aS);gl.vertexAttribPointer(pp.a.aS,1,gl.FLOAT,false,32,28);
-   gl.uniformMatrix4fv(pp.u.uVP,false,VP);gl.uniform1f(pp.u.uF,Fc*this.DPR);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE);gl.depthMask(false);gl.drawArrays(gl.POINTS,0,arr.length/8);gl.depthMask(true);gl.disable(gl.BLEND)}
-  for(let i=0;i<4;i++)gl.disableVertexAttribArray(i);
-  // overlay: vignette, rain darkening, labels
-  const vg=oc.createRadialGradient(W/2,H*.45,Math.min(W,H)*.35,W/2,H*.5,Math.max(W,H)*.75);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(8,4,12,.55)');oc.fillStyle=vg;oc.fillRect(0,0,W,H);
-  if(this.dark){oc.fillStyle='rgba(10,14,30,'+this.dark+')';oc.fillRect(0,0,W,H)}
-  for(const lb of this.labels){if(lb.vis===false)continue;const p=typeof lb.p==='function'?lb.p():lb.p;const s=this.project(p);if(!s)continue;const [x,y]=s;
-   if(lb.kind==='warn'){const bob=Math.sin(t*5)*2;oc.fillStyle='#E5484D';oc.beginPath();oc.arc(x,y-14+bob,9,0,7);oc.fill();oc.fillStyle='#fff';oc.font='600 13px system-ui,sans-serif';oc.textAlign='center';oc.fillText('!',x,y-9.5+bob);oc.beginPath();oc.moveTo(x-4,y-6+bob);oc.lineTo(x+4,y-6+bob);oc.lineTo(x,y-1+bob);oc.fillStyle='#E5484D';oc.fill()}
-   else{oc.font='500 12px system-ui,sans-serif';const tw=oc.measureText(lb.text).width;const bx=Math.max(4,Math.min(W-tw-20,x-tw/2-8)),by=y-34;oc.fillStyle=lb.kind==='good'?'rgba(30,23,36,.92)':'rgba(246,238,223,.96)';rrect(oc,bx,by,tw+16,22,11);oc.fill();if(lb.kind==='good'){oc.strokeStyle='#D9A931';oc.lineWidth=1;oc.stroke()}oc.beginPath();oc.moveTo(x-5,by+21);oc.lineTo(x+5,by+21);oc.lineTo(x,by+28);oc.fill();oc.fillStyle=lb.kind==='good'?'#F6EEDF':'#1a1206';oc.textAlign='left';oc.fillText(lb.text,bx+8,by+15)}}
+// Painted stage: a painting with a slow cinematic drift, cross-fades, and living effects drawn on top.
+const ART_HAVE=new Set(['haveli','garden','temple','tent','feast','nikah','farewell','bmother','aunt','uncle','bride','groom','priest','cook','rival']);
+function art(k){return 'assets/'+k+'.webp'}
+function venueArt(kind){if(kind==='haveli2')kind='haveli';if(ART_HAVE.has(kind))return art(kind);if(kind==='palace')return art(ART_HAVE.has('palace')?'palace':'haveli');return art('haveli')}
+class Stage{
+ constructor(el,h){this.el=el;this.h=h;el.classList.add('stage');el.style.height=h+'px';el.innerHTML='<div class="st-l"></div><div class="st-l"></div><canvas class="st-fx"></canvas><div class="st-cap"></div>';
+  this.L=[...el.querySelectorAll('.st-l')];this.cur=0;this.cv=el.querySelector('canvas');this.ctx=this.cv.getContext('2d');this.cap=el.querySelector('.st-cap');
+  this.fx={sparkle:1,petals:0,embers:0,rain:0,fire:0,fireworks:0,confetti:0,dark:0};this.P=[];this.bursts=[];this.T0=performance.now();this.resize();this.run=true;
+  const loop=()=>{if(!document.body.contains(this.el)){this.run=false;return}this.frame();requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+ resize(){const d=Math.min(devicePixelRatio||1,2);this.W=this.el.clientWidth||360;this.cv.width=this.W*d;this.cv.height=this.h*d;this.ctx.setTransform(d,0,0,d,0,0)}
+ show(src,o={}){const next=this.L[1-this.cur],prev=this.L[this.cur];const moves=[['scale(1.04) translate(0,0)','scale(1.16) translate(-3%,-2%)'],['scale(1.18) translate(3%,2%)','scale(1.05) translate(0,0)'],['scale(1.12) translate(-4%,0)','scale(1.12) translate(4%,0)'],['scale(1.1) translate(3%,-1%)','scale(1.18) translate(-2%,-3%)']];const m=o.move!=null?moves[o.move]:moves[Math.floor(Math.random()*moves.length)];
+  if(o.focus){m[1]='scale(1.35) translate('+o.focus[0]+'%,'+o.focus[1]+'%)'}
+  next.style.transition='none';next.style.backgroundImage='url('+src+')';next.style.transform=m[0];next.style.opacity=0;void next.offsetWidth;
+  next.style.transition='opacity 1.2s ease, transform '+(o.dur||22)+'s ease-out';next.style.opacity=1;next.style.transform=m[1];prev.style.opacity=0;this.cur=1-this.cur;this.src=src}
+ focus(fx,fy,s=1.3){const l=this.L[this.cur];l.style.transition='opacity 1.2s ease, transform 2.4s ease-in-out';l.style.transform='scale('+s+') translate('+fx+'%,'+fy+'%)'}
+ caption(t,sub){this.cap.innerHTML=t?'<b>'+t+'</b>'+(sub?'<span>'+sub+'</span>':''):'';this.cap.classList.toggle('on',!!t)}
+ set(k,v){this.fx[k]=v}
+ burst(x,y,col){const ps=[];for(let i=0;i<46;i++){const a=Math.random()*6.283,s=40+Math.random()*90;ps.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:1})}this.bursts.push({ps,col:col||['#FFD36B','#FF6B6B','#9AD8FF','#F29F05','#E8A0A8'][Math.floor(Math.random()*5)]})}
+ frame(){const t=(performance.now()-this.T0)/1000,dt=Math.min(.05,t-(this._t||t));this._t=t;const c=this.ctx,W=this.W,H=this.h,f=this.fx;c.clearRect(0,0,W,H);
+  // spawn particles
+  const sp=(k,n)=>{for(let i=0;i<n;i++)this.P.push(k())};
+  if(f.petals&&Math.random()<f.petals*.5)sp(()=>({k:'petal',x:Math.random()*W,y:-8,vx:10+Math.random()*16,vy:22+Math.random()*24,r:Math.random()*6,s:3+Math.random()*3,c:['#C8102E','#E8A0A8','#F29F05','#d6455d'][Math.floor(Math.random()*4)],l:1}),1);
+  if(f.embers&&Math.random()<f.embers*.6)sp(()=>({k:'ember',x:W*(.35+Math.random()*.3),y:H*(.75+Math.random()*.2),vx:(Math.random()-.5)*12,vy:-20-Math.random()*30,s:1+Math.random()*1.6,l:1}),1);
+  if(f.rain)sp(()=>({k:'rain',x:Math.random()*W*1.2,y:-10,vx:-60,vy:520+Math.random()*120,l:1}),Math.ceil(f.rain*4));
+  if(f.confetti&&Math.random()<.7)sp(()=>({k:'conf',x:Math.random()*W,y:-6,vx:(Math.random()-.5)*30,vy:40+Math.random()*40,r:Math.random()*6,s:2+Math.random()*2,c:['#D9A931','#F6EEDF','#F29F05','#E8A0A8'][Math.floor(Math.random()*4)],l:1}),2);
+  if(f.fireworks&&Math.random()<.025*f.fireworks)this.burst(W*(.15+Math.random()*.7),H*(.08+Math.random()*.25));
+  // glints on lamps: deterministic positions so they stay put
+  if(f.sparkle){for(let i=0;i<26;i++){const x=((i*137.5)%100)/100*W,y=H*(.35+((i*61.8)%55)/100);const a=Math.max(0,Math.sin(t*(1.3+(i%5)*.37)+i*2.1));if(a<.55)continue;const r=1.5+a*3.5;c.globalAlpha=(a-.55)*1.6*f.sparkle;const g=c.createRadialGradient(x,y,0,x,y,r*3);g.addColorStop(0,'rgba(255,224,150,.9)');g.addColorStop(1,'rgba(255,180,80,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,r*3,0,7);c.fill();c.strokeStyle='rgba(255,240,200,.8)';c.lineWidth=.8;c.beginPath();c.moveTo(x-r*2,y);c.lineTo(x+r*2,y);c.moveTo(x,y-r*2);c.lineTo(x,y+r*2);c.stroke()}c.globalAlpha=1}
+  if(f.fire){const p=.6+.25*Math.sin(t*9)+.15*Math.sin(t*23);const g=c.createRadialGradient(W*.5,H*.2,0,W*.5,H*.2,W*.6);g.addColorStop(0,'rgba(255,120,30,'+(.38*p)+')');g.addColorStop(1,'rgba(255,60,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H)}
+  if(f.dark){c.fillStyle='rgba(10,14,30,'+f.dark+')';c.fillRect(0,0,W,H)}
+  this.P=this.P.filter(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;
+   if(p.k==='petal'||p.k==='conf'){p.r+=dt*3;p.x+=Math.sin(t*2+p.s)*.4;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.globalAlpha=.9;c.beginPath();if(p.k==='petal')c.ellipse(0,0,p.s,p.s*.55,0,0,7);else c.rect(-p.s/2,-p.s/4,p.s,p.s/2);c.fill();c.restore();return p.y<H+10}
+   if(p.k==='ember'){p.l-=dt*.5;c.globalAlpha=Math.max(0,p.l);c.fillStyle='#FFB347';c.beginPath();c.arc(p.x,p.y,p.s,0,7);c.fill();c.globalAlpha=1;return p.l>0}
+   if(p.k==='rain'){c.strokeStyle='rgba(180,200,235,.55)';c.lineWidth=1;c.beginPath();c.moveTo(p.x,p.y);c.lineTo(p.x+p.vx*.025,p.y-p.vy*.025);c.stroke();return p.y<H+20}return false});
+  this.bursts=this.bursts.filter(b=>{let alive=false;for(const p of b.ps){p.vx*=.985;p.vy=p.vy*.985+30*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.l-=dt*.55;if(p.l<=0)continue;alive=true;c.globalAlpha=p.l;c.fillStyle=b.col;c.beginPath();c.arc(p.x,p.y,1.6,0,7);c.fill();c.globalAlpha=p.l*.25;c.beginPath();c.arc(p.x,p.y,4,0,7);c.fill()}c.globalAlpha=1;return alive});
  }
 }
-function rrect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
-return{Scene,boxG,prismG,sphG,diskG};
-})();
-
-const SKINS=['#C68B5E','#A86F48','#8E5A3A','#D29A6A'];
-const CLOTH=[0xC8102E,0x2a6fb0,0xE9A23B,0x5E8C46,0xF6EEDF,0xD9A931,0xE8A0A8,0x8E44AD,0xE07B00,0x1f7a7a];
-const TURB=['#C8102E','#F29F05','#E9A23B','#F6EEDF','#E8A0A8','#5E8C46'];
-const VEIL=['#C8102E','#E8A0A8','#F29F05','#8E44AD','#2a6fb0','#5E8C46'];
-const hx=s=>parseInt(s.slice(1),16);
-function figure(sc,o={}){const R=Math.random;const fem=o.fem!=null?o.fem:R()<.45;const col=o.col!=null?o.col:CLOTH[Math.floor(R()*CLOTH.length)];const sz=o.scale||1;const prev=sc.dynMode;sc.dynMode=true;
- const top=o.top!=null?o.top:(fem?col:(R()<.5?col:0xF2E3C6));const skin=hx(o.skin||SKINS[Math.floor(R()*4)]);const parts=[];
- const P=(g,c,off,ex)=>{const ob=sc.add(g,c,0,0,0,ex||{});parts.push({o:ob,off});return ob};
- P(E3.prismG(.15*sz,(fem?.36:.24)*sz,.8*sz,14),col,[0,0,0]);
- P(E3.prismG(.17*sz,.14*sz,.36*sz,12),top,[0,.78*sz,0]);
- const armG=E3.prismG(.045*sz,.055*sz,.42*sz,10,0,-.42*sz);
- const aL=P(armG,top,[-.2*sz,1.12*sz,0]),aR=P(armG,top,[.2*sz,1.12*sz,0]);
- P(E3.sphG(.06*sz,8,6),skin,[0,1.15*sz,0]);
- P(E3.sphG(.118*sz,14,10),skin,[0,1.27*sz,0]);
- let tur=null;
- if(fem){const vc=hx(o.veil||VEIL[Math.floor(R()*6)]);P(E3.sphG(.142*sz,14,10),vc,[0,1.285*sz,.04*sz],{s:[1,1.06,1]});P(E3.prismG(.13*sz,.25*sz,.46*sz,12),vc,[0,.86*sz,.06*sz])}
- else{tur=o.tur!==undefined?o.tur:(R()<.6?TURB[Math.floor(R()*6)]:null);if(tur){P(E3.sphG(.15*sz,14,10),hx(tur),[0,1.355*sz,.01*sz],{s:[1,.72,1.02]});if(o.plume)P(E3.prismG(0,.03*sz,.2*sz,8),0xD9A931,[0,1.42*sz,-.06*sz])}else P(E3.sphG(.124*sz,12,8),0x1b1210,[0,1.31*sz,.025*sz],{s:[1,.62,1]});
-  if(o.beard!=null?o.beard:R()<.3)P(E3.sphG(.085*sz,10,7),o.grey?0xD8D4CC:0x1b1210,[0,1.2*sz,-.07*sz],{s:[1,.85,.7]})}
- sc.dynMode=prev;
- const F={parts,arms:[aL,aR],fem,sz,x:0,z:0,y:0,ry:0,face:{face:{mood:1},p:[0,0,0],vis:true},
-  set(x,z,y=0,ry){this.x=x;this.z=z;this.y=y;if(ry!=null)this.ry=ry;const c=Math.cos(this.ry),s=Math.sin(this.ry);for(const pt of this.parts){const ox=pt.off[0]*c-pt.off[2]*s,oz=pt.off[0]*s+pt.off[2]*c;pt.o.p=[x+ox,y+pt.off[1],z+oz];pt.o.ry=this.ry}},
-  show(v){for(const pt of this.parts)pt.o.vis=v},head(){return[this.x,this.y+1.48*this.sz,this.z]},
-  armsUp(a){this.arms[0].rz=-(.12+a);this.arms[1].rz=.12+a}};
- F.armsUp(0);F.set(o.x||0,o.z||0);return F}
-
-// deterministic random for the city around the venue
-function srand(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646}}
-function scenery(sc,kind){const r=srand(11);
- sc.add(E3.diskG(170,48,-.42),0x2a1c1e,0,0,0);
- const stones=[0xA8695A,0x9C5E50,0xB27A64,0x8E5648,0xB98572];
- for(let i=0;i<78;i++){const a=r()*Math.PI*2;if(Math.abs(a-Math.PI/2)<.22){r();continue}const rr=24+r()*34,x=Math.cos(a)*rr,z=Math.sin(a)*rr;const w=2+r()*4,d=2+r()*4,h=2.5+r()*6;const c=stones[Math.floor(r()*5)];
-  sc.box(w,h,d,c,x,-.4,z,{ry:a});sc.box(w+.3,.3,d+.3,c-0x101010,x,h-.4,z,{ry:a});
-  const k=r();if(k<.28)sc.dome(Math.min(w,d)*.32,0xD8C2A8,x,h-.1,z);else if(k<.45){for(const [dx,dz] of [[-.4,-.4],[.4,-.4],[-.4,.4],[.4,.4]])sc.cyl(.06,.7,c,x+dx,h-.1,z+dz,12);sc.dome(.62,0xD8C2A8,x,h+.6,z)}
-  const nw=1+Math.floor(r()*3);for(let j=0;j<nw;j++){const wy=.8+r()*(h-1.5),off=(r()-.5)*w*.6;const nx=-Math.cos(a),nz=-Math.sin(a);sc.point(x+nx*(d/2+.05)+(-nz)*off,wy,z+nz*(d/2+.05)+nx*off,r()<.8?'#FFB25A':'#FFD9A0',.09,r()<.2?.3:0)}}
- for(let i=0;i<10;i++){const a=i/10*Math.PI*2+r()*.4,rr=95+r()*30,R=14+r()*16,h=9+r()*12;sc.add(E3.prismG(0,R,h,9,r()),0x231a29,Math.cos(a)*rr,-.4,Math.sin(a)*rr)}
- const fa=-2.3,fx=Math.cos(fa)*92,fz=Math.sin(fa)*92;sc.add(E3.prismG(0,20,16,9),0x241b2a,fx,-.4,fz);for(let i=0;i<9;i++){const b=fa-.12+i*.03;sc.box(4,2.2,1.5,0x6e4a44,Math.cos(b)*86,10.5+Math.sin(i)*.6,Math.sin(b)*86,{ry:b});if(i%2)sc.point(Math.cos(b)*85,11.8,Math.sin(b)*85,'#FFB25A',.25)}
- // trees on the edge of the venue
- for(let i=0;i<14;i++){const a=r()*Math.PI*2,rr=11+r()*8;if(Math.abs(a-Math.PI/2)<.3)continue;const x=Math.cos(a)*rr,z=Math.sin(a)*rr;sc.cyl(.18,1.6,0x3a2a1e,x,-.4,z,12);sc.add(E3.sphG(1.1+r()*.6,10,7),0x1f3b2a,x,1.8,z,{s:[1,.85,1]})}
-}
-
-function drawItem(sc,k,x,z){
- const poly=(n,r,y,a0=0)=>{const v=[];for(let i=0;i<n;i++){const a=a0+i/n*6.28318;v.push([x+Math.cos(a)*r,y,z+Math.sin(a)*r])}return[{v,n:[0,1,0]}]};
- switch(k){
- case'arch':sc.cyl(.12,2.4,0xD9A931,x-.9,0,z,6);sc.cyl(.12,2.4,0xD9A931,x+.9,0,z,6);for(let i=0;i<=8;i++){const a=i/8*Math.PI;sc.ball(.17,i%2?0xF29F05:0xF4C430,x+Math.cos(a)*.9,2.4+Math.sin(a)*.8,z)}break;
- case'lamp':sc.cyl(.06,1.8,0xB8860B,x,0,z,6);sc.add(E3.prismG(.05,.22,.25,6),0xD9A931,x,1.8,z);sc.point(x,2.05,z,'#FFC765',.13,.7);sc.light(x,2.1,z,0xFFB060,.55);break;
- case'urn':sc.add(E3.prismG(.22,.32,.6,8),0xB8705C,x,0,z);sc.ball(.32,0xC8102E,x,.8,z);sc.ball(.18,0xF29F05,x+.15,.95,z);break;
- case'canopy':for(const [a,b] of [[-1,-1],[1,-1],[-1,1],[1,1]])sc.cyl(.05,2.2,0xD9A931,x+a,0,z+b,5);sc.add(E3.prismG(0,1.6,.6,4,Math.PI/4),0xE8A0A8,x,2.2,z);break;
- case'fountain':sc.light(x,1.2,z,0x9fd0ff,.3);sc.add(E3.prismG(.9,1,.35,10),0xEDE6D8,x,0,z);sc.add(poly(10,.85,.37),0x7fb7d6,0,0,0);sc.cyl(.12,1,0xEDE6D8,x,0,z,6);sc.add(E3.prismG(.4,.15,.15,8),0xEDE6D8,x,1,z);for(let i=0;i<8;i++){const a=i/8*6.28;sc.point(x+Math.cos(a)*.45,1.05,z+Math.sin(a)*.45,'#bfe6ff',.05,1.5)}break;
- case'rangoli':sc.add(poly(8,.9,.04),0xC8102E,0,0,0);sc.add(poly(4,.6,.06,.785),0xF29F05,0,0,0);sc.add(poly(6,.25,.08),0xF6EEDF,0,0,0);break;
- case'swing':sc.cyl(.07,2.4,0x6b4a2a,x-.9,0,z,5);sc.cyl(.07,2.4,0x6b4a2a,x+.9,0,z,5);sc.box(2,.12,.12,0x6b4a2a,x,2.4,z);sc.box(1.1,.08,.5,0xD9A931,x,.6,z);for(let i=0;i<6;i++){sc.ball(.09,0xF29F05,x-.5,.8+i*.27,z);sc.ball(.09,0xF29F05,x+.5,.8+i*.27,z)}break;
- case'elephant':{const g=0x7f8c9a;sc.box(1.6,.3,1,0xB8A48A,x,0,z);sc.box(1.4,.9,.8,g,x,.9,z);sc.box(.5,.55,.55,g,x+.85,1.2,z);sc.add(E3.prismG(.08,.14,.8,6),g,x+1.1,.5,z);for(const [a,b] of [[-.5,-.3],[.5,-.3],[-.5,.3],[.5,.3]])sc.cyl(.15,.6,g,x+a,.3,z+b,6);sc.box(1.5,.08,.9,0xC8102E,x,1.8,z);sc.box(.5,.3,.5,0xD9A931,x,1.88,z);break}
- case'seating':sc.box(1.8,.25,.8,0xC8102E,x,0,z);sc.box(1.8,.5,.15,0xD9A931,x,.25,z-.35);sc.ball(.15,0xF29F05,x-.6,.4,z);sc.ball(.15,0xF29F05,x+.6,.4,z);break;
- case'banana':for(const dx of [-.4,.4]){sc.cyl(.1,1.4,0x6b8e23,x+dx,0,z,6);sc.add(E3.prismG(0,.6,1.2,5),0x3f8f3a,x+dx,1.2,z)}break;
- case'peacock':sc.box(.6,.5,.6,0xEDE6D8,x,0,z);sc.ball(.25,0x1f5fa0,x,.75,z);sc.cyl(.05,.5,0x1f5fa0,x,.75,z,5);sc.ball(.1,0x1f5fa0,x,1.3,z);for(let i=0;i<9;i++){const a=-1.1+i*.27;sc.ball(.16,i%2?0x2a9d6f:0x1f7a7a,x+Math.sin(a)*.8,.85+Math.cos(a)*.8,z-.3)}break;
- }}
-
-function buildVenue(sc,plan,opt={}){
- sc.clear();let kind=plan.venue?plan.venue.kind:'haveli';if(kind==='haveli2')kind='haveli';const R=Math.random;
- const pal={haveli:[0xC98B6B,0xBF8061,0x7a4a38],garden:[0x1F4A35,0x23523B,0x163527],temple:[0xB8A48A,0xAD9A80,0x6e604e],tent:[0xC9A56E,0xBF9B63,0x7a603a],palace:[0xE8E0D2,0xDCD3C4,0x8f877a]}[kind];
- scenery(sc,kind);sc.ground(18,12,pal[0],pal[1],pal[2]);sc.add(E3.boxG(4.4,.04,9).filter(f=>f.n[1]>.5),[0x8a5a48,0x2a4a35,0x8d7f6a,0x9a7c50,0xC9C0B0][['haveli','garden','temple','tent','palace'].indexOf(kind)],0,0,13.5,{layer:2});
- sc.dist=kind==='palace'||kind==='tent'?25:23;
- const pink=0xD9917A,pinkD=0xB8705C;
- if(kind==='haveli'){
-  for(const [x,z,w,d] of [[0,-8.6,18,.8],[-8.6,0,.8,18],[8.6,0,.8,18]]){sc.box(w,3.4,d,pink,x,0,z);sc.box(w+.2,.3,d+.2,pinkD,x,3.4,z)}
-  for(let i=-3;i<=3;i++){sc.box(1.2,2,.1,0x5a2f24,i*2.4,.2,-8.15);sc.dome(.6,pinkD,i*2.4,2.2,-8.2)}
-  for(let i=0;i<5;i++)sc.box(.8,.9,.3,pinkD,-7.5+i*3.7,3.7,-8.6);
- } else if(kind==='garden'){
-  for(let i=0;i<10;i++){const a=i/10*Math.PI*2+.3,rr=7.8;const x=Math.cos(a)*rr,z=Math.sin(a)*rr;if(z>6&&Math.abs(x)<4)continue;sc.cyl(.2,1.4,0x5a3a22,x,0,z,6);sc.add(E3.sphG(1.2,7,5),0x2e6b3a,x,2.2,z)}
- } else if(kind==='temple'){
-  sc.box(5,1.2,4,0xB8A48A,0,0,-7);sc.box(3,2.2,3,0xC9B594,0,1.2,-7);sc.cone(1.8,3.2,0xD9C29A,0,3.4,-7,8);sc.add(E3.prismG(0,.15,1.2,4),0xD9A931,0,6.6,-7);
-  for(const x of [-7.5,7.5])for(const z of [-7.5,7.5]){sc.cyl(.35,2.8,0xC9B594,x,0,z,8);sc.dome(.55,0xD9C29A,x,2.8,z)}
- } else if(kind==='tent'){
-  for(const [x,z,s] of [[-5.5,-5.5,2.6],[5.5,-5.5,2.6]]){sc.box(s*2,1.8,s*2,0xF2E3C6,x,0,z);sc.cone(s*1.6,1.8,x<0?0xC8102E:0xF29F05,x,1.8,z,4,{},Math.PI/4)}
-  for(let i=0;i<4;i++)sc.add(E3.prismG(0,1.2,2.2,6),0xC9A56E,-8+i*5.3,0,-9.5);
- } else if(kind==='palace'){
-  for(const [x,z,w,d] of [[0,-8.6,18,.8],[-8.6,0,.8,18],[8.6,0,.8,18]]){sc.box(w,4.2,d,0xEDE6D8,x,0,z);sc.box(w+.2,.35,d+.2,0xD9A931,x,4.2,z)}
-  for(const x of [-6,-2,2,6]){for(const c of [-.7,.7])sc.cyl(.08,1.2,0xEDE6D8,x+c,4.55,-8.6,6);sc.dome(1,0xEDE6D8,x,5.75,-8.6);sc.add(E3.prismG(0,.08,.6,4),0xD9A931,x,6.7,-8.6)}
-  for(let i=-3;i<=3;i++){sc.box(1.4,2.6,.1,0x3b5f8f,i*2.4,.4,-8.15)}
- }
- const isNikah=opt.trad==='muslim';
- sc.box(4.2,.45,4.2,0xF6EEDF,0,0,0);sc.box(4.4,.1,4.4,0xD9A931,0,0,0);
- const dq=plan.decor?plan.decor.q:1;const canopyC=[0xC8102E,0xC8102E,0xC8102E,0xE07B00,0x8A1538,0xB3122E][dq];
- for(const [x,z] of [[-1.75,-1.75],[1.75,-1.75],[-1.75,1.75],[1.75,1.75]]){sc.add(E3.prismG(.13,.15,3.1,8),0xD9A931,x,.45,z);if(dq>=2)for(let i=0;i<(dq>=3?6:3);i++)sc.ball(.14,i%2?0xF29F05:0xF4C430,x,.9+i*.42,z)}
- sc.box(4.5,.16,4.5,0xD9A931,0,3.5,0);sc._canopy=sc.add(E3.prismG(0,3.15,1.9,4,Math.PI/4),canopyC,0,3.66,0,{dyn:true});sc.ball(.24,0xD9A931,0,5.7,0);
- sc._fl=null;if(isNikah){sc.box(2.4,.5,1,0xF6EEDF,0,.45,-.6);sc.box(2.4,.9,.15,0xD9A931,0,.95,-1.05)}
- else{sc.box(.75,.28,.75,0x5a3a1a,0,.45,0);const f1=sc.cone(.28,.75,0xFFB040,0,.73,0,6,{emit:1,dyn:true}),f2=sc.cone(.14,.5,0xFFE27A,0,.73,0,6,{emit:1,dyn:true});sc.point(0,1.1,0,'#FF9A3C',.3,0);sc._fl=[f1,f2]}
- if(dq>=3){const n=dq>=4?72:40;for(let i=0;i<n;i++){const a=i/n*Math.PI*2;sc.point(Math.cos(a)*5.2,3.1-Math.abs(Math.sin(a*6))*.5,Math.sin(a)*5.2,'#F29F05',.07)}}
- if(dq>=4){for(const [x,z] of [[-5,-5],[5,-5],[-5,5],[5,5]]){sc.cyl(.1,3.2,0xD9A931,x,0,z,6);sc.ball(.3,0xF29F05,x,3.3,z)}}
- sc._pots=[];if(plan.feast){sc.box(1.1,.9,6.2,0xF6EEDF,6.3,0,0);sc.box(1.2,.08,6.4,0xD9A931,6.3,.9,0);const nq=plan.feast.q;for(let i=0;i<Math.min(6,nq+1);i++)sc._pots.push(sc.add(E3.prismG(.3,.36,.25,12),0xC9CED8,6.3,.98,-2.5+i*1,{dyn:true}));sc.light(6.3,2.2,0,0xFFB060,.45)}
- sc._musos=[];if(plan.music){const nm=[0,2,3,4,6,7][plan.music.q];for(let i=0;i<nm;i++){const F=figure(sc,{fem:false,col:0xF6EEDF,top:0xF6EEDF,tur:i%2?'#C8102E':'#F29F05'});F.set(-6.5+(i%4)*.8,4+Math.floor(i/4)*.8,0,.8);sc._musos.push(F)}}
- sc.add(E3.prismG(.28,.32,3.6,8),0xE9A23B,-2.4,0,7.6);sc.add(E3.prismG(.28,.32,3.6,8),0xE9A23B,2.4,0,7.6);
- for(let i=0;i<=12;i++){const a=i/12*Math.PI;sc.ball(.3,i%2?0xE9A23B:0xF4C430,Math.cos(a)*2.4,3.6+Math.sin(a)*2.2,7.6)}sc.light(0,3.2,8.4,0xFFA040,.6);
- for(const it of (opt.items||[]))drawItem(sc,it.k,it.x,it.z);
- if(!opt.day&&!opt.noProc)buildProcession(sc,plan.procession?plan.procession.type:null,0,10.6);
- const lt=plan.lights?plan.lights.type:'diya';
- if(lt==='diya'){for(let i=0;i<40;i++){const a=i/40*Math.PI*2;sc.point(Math.cos(a)*3,.5,Math.sin(a)*3,'#FFC765',.05,.6)}sc.light(-3,.8,3,0xFFB060,.35);sc.light(3,.8,-3,0xFFB060,.35)}
- if(lt==='torch'){for(let i=0;i<10;i++){const a=i/10*Math.PI*2;const x=Math.cos(a)*7.4,z=Math.sin(a)*7.4;sc.cyl(.07,2.2,0x5a3a22,x,0,z,5);sc.point(x,2.4,z,'#FF9A3C',.16,2);if(i%2===0)sc.light(x,2.5,z,0xFF8A30,.7)}}
- if(lt==='fireworks'){for(let i=0;i<48;i++){const a=i/48*Math.PI*2;sc.point(Math.cos(a)*8.4,3.3-Math.abs(Math.sin(a*4))*.4,Math.sin(a)*8.4,'#FFE27A',.08,1)}
-  for(let i=0;i<8;i++){const a=i/8*Math.PI*2;sc.cyl(.06,3.4,0xA9B0C3,Math.cos(a)*8.4,0,Math.sin(a)*8.4,5);if(i%2)sc.light(Math.cos(a)*8,3.2,Math.sin(a)*8,0xFFD070,.45)}
-  if(!opt.day)addFireworks(sc,3)}
- sc.bake();
- const ng=opt.noGuests?0:Math.max(8,Math.min(30,Math.round((opt.guests||200)/35)));const G=[];
- for(let i=0;i<ng;i++){const F=figure(sc);F.r=3.6+R()*3.6;F.a=R()*6.28;F.s=(R()<.5?-1:1)*(.04+R()*.1);F.mode='wander';G.push(F)}
- if(opt.couple&&!opt.day){const B=figure(sc,{fem:true,col:0xC8102E,veil:'#C8102E'}),Gm=figure(sc,{fem:false,col:0xF2E3C6,top:0xF2E3C6,tur:'#D9A931',plume:1});B.set(-.45,.4,.45);Gm.set(.45,.4,.45)}
- sc._G=G;sc.fire=[0,1.1,0];sc.fireOn=isNikah?.4:1;
- sc.ticks.push((t)=>{
-  if(sc._fl){const f=1+Math.sin(t*12)*.14+Math.sin(t*7.3)*.09;sc._fl[0].s=[f,f*1.15,f];sc._fl[1].s=[f,f,f]}
-  for(let i=0;i<G.length;i++){const g=G[i];if(g.mode!=='wander')continue;g.a+=g.s*.012;const x=Math.cos(g.a)*g.r,z=Math.sin(g.a)*g.r;g.set(x,z,Math.abs(Math.sin(t*5+i))*.025,-g.a+Math.PI/2)}
-  for(let i=0;i<sc._musos.length;i++){const m=sc._musos[i];m.set(m.x,m.z,0,m.ry);m.armsUp(.5+Math.sin(t*6+i)*.25)}
- });
-}
-function addFireworks(sc,n){const R=Math.random;const fw=[];for(let k=0;k<n;k++){const b={c:[(R()-.5)*14,9+R()*4,(R()-.5)*14],t0:R()*3,col:['#FF5A5A','#FFE27A','#7FD3FF','#F29F05','#C77DFF'][k%5],ps:[]};for(let i=0;i<24;i++){const a=R()*6.28,e=R()*3.14;const q={p:[0,-50,0],d:[Math.cos(a)*Math.sin(e),Math.cos(e),Math.sin(a)*Math.sin(e)],col:b.col,size:.09,a:1};b.ps.push(q);sc.parts.push(q)}fw.push(b)}
- sc.ticks.push(t=>{for(const b of fw){const tt=((t+b.t0)%3.2)/1.6;if(tt<.03){b.c=[(R()-.5)*14,9+R()*4,(R()-.5)*14]}for(const q of b.ps){if(tt>1){q.a=0;continue}q.p=[b.c[0]+q.d[0]*tt*3,b.c[1]+q.d[1]*tt*3-tt*tt*1.2,b.c[2]+q.d[2]*tt*3];q.a=1-tt}}});return fw}
-function buildProcession(sc,pt,ox,oz){const m=sc.mark();let ry=0;
- if(pt==='elephant'){const g=0x8f8a8a;sc.box(2.6,1.6,1.4,g,ox,1.2,oz-.1);sc.box(.9,1,1,g,ox,1.9,oz-1.5);sc.add(E3.prismG(.15,.25,1.4,6),g,ox,.6,oz-2);for(const [x,z] of [[-.9,.8],[.9,.8],[-.9,-.6],[.9,-.6]])sc.cyl(.3,1.2,g,ox+x,0,oz+z,6);sc.box(2.8,.15,1.6,0xC8102E,ox,2.8,oz-.1);sc.box(1.2,.6,1,0xD9A931,ox,2.95,oz);ry=3.55}
- else if(pt==='horse'){const w=0xF2EFEA;sc.box(.6,.7,1.8,w,ox,1,oz);sc.box(.4,.8,.5,w,ox,1.5,oz-.9);for(const [x,z] of [[-.2,.6],[.2,.6],[-.2,-.6],[.2,-.6]])sc.cyl(.08,1,w,ox+x,0,oz+z,5);sc.box(.7,.1,.7,0xC8102E,ox,1.75,oz);ry=1.85}
- else if(pt==='palanquin'){sc.box(1.2,1,1.6,0xC8102E,ox,1,oz);sc.add(E3.prismG(0,1,.6,4,Math.PI/4),0xD9A931,ox,2,oz);sc.box(.1,.1,4,0x5a3a22,ox-.7,1.6,oz);sc.box(.1,.1,4,0x5a3a22,ox+.7,1.6,oz);for(const [x,z] of [[-.7,-1.7],[.7,-1.7],[-.7,1.7],[.7,1.7]]){const F=figure(sc,{fem:false,col:0xF6EEDF,tur:'#F6EEDF'});F.set(ox+x,oz+z)}ry=-1}
- else if(pt==='camel'){for(const dx of [-1.2,1.2]){const c=0xC9A26E;sc.box(.6,.8,1.6,c,ox+dx,1.3,oz);sc.ball(.45,c,ox+dx,2.2,oz);sc.box(.3,1,.3,c,ox+dx,1.8,oz-.9);sc.box(.35,.3,.6,c,ox+dx,2.7,oz-1.1);for(const [x,z] of [[-.2,.6],[.2,.6],[-.2,-.6],[.2,-.6]])sc.cyl(.07,1.3,c,ox+dx+x,0,oz+z,5);sc.box(.7,.1,1,0xC8102E,ox+dx,2.1,oz+.3)}ry=2.15}
- if(ry===0){for(let i=0;i<4;i++)sc.point(ox-1.5+i,1.6,oz+1,'#FFC765',.09,1)}
- const g=sc.group(m,ox,oz);let rider=null;if(ry>=0){rider=figure(sc,{fem:false,col:0xF2E3C6,top:0xF2E3C6,tur:'#D9A931',plume:1,beard:false});rider.set(ox,oz,ry)}g.rider=rider;g.riderY=Math.max(0,ry);return g}
 
 "use strict";
 // Music made from physically modelled plucked strings (santoor, tanpura), tabla and dhol, through a hall reverb.
@@ -820,113 +599,6 @@ function repay(n){n=Math.min(n,S.debt,Math.max(0,S.money));S.money-=n;S.debt-=n;
 function charityWedding(){if(S.money<2500)return'Costs ₹2,500';if(S.charityAt&&nowMi()-S.charityAt<12)return'You can sponsor one charity wedding a year';S.money-=2500;S.charityAt=nowMi();const g=12+fameTier()*6;S.rep+=g;addLog('Your house paid for the weddings of twelve poor couples. The city blesses your name.');save();return null}
 
 "use strict";
-// Stages the wedding day in the 3D scene: camera, baraat, problems, pheras, farewell.
-const ROLES_H=['arrive','welcome','feast','ceremony','farewell'],ROLES_M=['arrive','welcome','ceremony','feast','farewell'];
-const CAMS={arrive:{tg:[0,1.4,11],dist:15,ph:.42,th:.45},welcome:{tg:[0,1,3.5],dist:19,ph:.6,th:.75},feast:{tg:[5.5,1,0],dist:13,ph:.5,th:1.25},ceremony:{tg:[0,1.3,0],dist:11,ph:.48,th:.55},farewell:{tg:[0,1,9],dist:16,ph:.48,th:.25}};
-function setupDay(sc,b){const p=planObj(b);const D={sc,b,trad:b.trad,roles:b.trad==='muslim'?ROLES_M:ROLES_H,role:null,procZ:20,procTarget:10.2,procMoving:false,hold:false,ev:[],labels:[],tmp:[],rain:null,fire:null,ritual:null,doli:null};
- D.proc=buildProcession(sc,p.procession?p.procession.type:null,0,20);D.rider=D.proc.rider;
- if(D.rider){D.proc.objs=D.proc.objs.filter(e=>e.o!==D.rider.body);D.proc.pts=D.proc.pts.filter(e=>e.q!==D.rider.face)}
- D.dancers=[];for(let i=0;i<8;i++){const F=figure(sc,{fem:i%3===1,mood:1});F.off=[(i%4-1.5)*.9,2.2+Math.floor(i/4)*1.1];D.dancers.push(F)}
- D.drummers=[];for(let i=0;i<2;i++){const F=figure(sc,{fem:false,col:0xF6EEDF,tur:'#C8102E'});F.off=[i?1:-1,1.4];D.drummers.push(F)}
- // bride waits near the mandap with her family
- D.bride=figure(sc,{fem:true,col:0xB3122E,veil:'#C8102E',top:0xB3122E,mood:1});D.bride.set(-1.2,3.2);
- D.bfam=[0,1,2].map(i=>{const F=figure(sc,{fem:i===1,beard:i===0,mood:1});F.set(-2.4+i*.9,6.2);return F});
- D.officiant=figure(sc,{fem:false,col:b.trad==='muslim'?0xF6EEDF:0xF29F05,top:b.trad==='muslim'?0xF6EEDF:0xF29F05,tur:b.trad==='muslim'?'#F6EEDF':null,beard:true,grey:true,mood:0});D.officiant.set(1.3,-1.4,.45);
- placeProc(D,0);
- sc.ticks.push((t,dt)=>dayTick(D,t,dt));
- return D}
-function placeProc(D,t){const z=D.procZ;D.proc.at(0,z);const ry=D.proc.riderY;if(D.rider&&D.rider.mounted!==false)D.rider.set(0,z,ry+(D.procMoving?Math.abs(Math.sin(t*4))*.04:0),Math.PI);
- D.dancers.forEach((F,i)=>{if(F.free)return;const dance=D.procMoving||D.role==='arrive';F.set(F.off[0]+(dance?Math.sin(t*2+i)*.15:0),z+F.off[1],dance?Math.abs(Math.sin(t*5+i))*.07:0,Math.PI+(dance?Math.sin(t*2.5+i*1.7)*.9:0));F.armsUp(dance?1.9+Math.sin(t*5+i)*.6:0)});
- D.drummers.forEach((F,i)=>{if(F.free)return;F.set(F.off[0],z+F.off[1],Math.abs(Math.sin(t*8+i*1.3))*.04,Math.PI);F.armsUp(.6+Math.abs(Math.sin(t*8+i))*.5)})}
-function dayTick(D,t,dt){
- if(D.procMoving&&!D.hold){D.procZ=Math.max(D.procTarget,D.procZ-dt*1.7);if(D.procZ<=D.procTarget){D.procMoving=false;if(D.onArrive){const f=D.onArrive;D.onArrive=null;f()}}}
- placeProc(D,t);
- for(const a of D.tmp)if(a.tick)a.tick(t,dt);
- if(D.rain)for(const q of D.rain){q.p[1]-=dt*14;if(q.p[1]<0){q.p[1]=10+Math.random()*4;q.p[0]=(Math.random()-.5)*20;q.p[2]=(Math.random()-.5)*20}}
- if(D.ritual)D.ritual(t,dt);
- if(D.doli){D.doli.z+=dt*1.6;D.doli.g.at(0,D.doli.z);D.doli.bearers.forEach((F,i)=>F.set(F.ox,D.doli.z+F.oz,Math.abs(Math.sin(t*6+i))*.05));if(D.doli.z>19){D.doli.done=true}}
-}
-function label(D,p,text,kind){const lb={p,text,kind};D.sc.labels.push(lb);D.labels.push(lb);return lb}
-function clearLabels(D){D.sc.labels=D.sc.labels.filter(l=>!D.labels.includes(l));D.labels=[]}
-function flash(D,p,text,kind,ms=1800){const lb={p,text,kind};D.sc.labels.push(lb);setTimeout(()=>{D.sc.labels=D.sc.labels.filter(l=>l!==lb)},ms)}
-function dayPhase(D,ph){const role=D.roles[ph]||'farewell';D.role=role;clearLabels(D);if(D.rain){D.sc.parts=D.sc.parts.filter(q=>!D.rain.includes(q));D.rain=null;D.sc.dark=0}D.sc.camTo(CAMS[role]);
- if(role==='arrive'){D.procMoving=true;AUD.play('baraat')}
- else{if(D.procZ>D.procTarget){D.procZ=D.procTarget;D.procMoving=false}AUD.play('day')}
- if(role==='welcome'){// dancers join the crowd, groom dismounts
-  D.dancers.concat(D.drummers).forEach((F,i)=>{F.free=true;F.armsUp(0);F.mode='wander';F.r=4+Math.random()*3;F.a=Math.random()*6.28;F.s=(Math.random()<.5?-1:1)*(.05+Math.random()*.08);D.sc._G.push(F)});
-  if(D.rider){D.rider.mounted=false;D.rider.set(1.2,6.4)}}
- if(role==='feast'){D.sc._G.slice(0,6).forEach((F,i)=>{F.mode='still';F.set(5,-2.2+i*.9,0,0)})}
- if(role==='ceremony'){D.sc._G.forEach(F=>{if(F.mode==='still')F.mode='wander'});if(D.rider){D.rider.mounted=false;D.rider.set(.45,.4,.45)}D.bride.set(-.45,.4,.45)}
- if(role==='farewell'){D.sc._G.forEach(F=>{if(F.mode==='still')F.mode='wander'});D.bride.set(-.6,6.8);if(D.rider)D.rider.set(.6,6.8)}
-}
-// ritual: seven pheras (Hindu/Jain) or the Nikah. Calls done() at the end.
-function dayRitual(D,done){const sc=D.sc;sc.camTo({tg:[0,1.2,0],dist:9,ph:.5,th:null});const G=D.rider,B=D.bride;
- if(D.trad==='muslim'){const lb=label(D,()=>[0,2.2,.4],'The Nikah begins','good');let t0=null;const lines=['The Qazi reads the vows','"Qubool hai"','"Qubool hai"','"Qubool hai"','They are married'];
-  D.ritual=(t)=>{if(t0==null)t0=t;const k=Math.floor((t-t0)/1.6);lb.text=lines[Math.min(lines.length-1,k)];if(G)G.set(.45,.4,.45);B.set(-.45,.4,.45);if(t-t0>8.2){D.ritual=null;clearLabels(D);AUD.sfx('big');flash(D,[0,2.6,0],'Mubarak!','good',2500);done()}};return}
- const lb=label(D,()=>[0,2.6,0],'Phera 1 of 7','good');let t0=null;
- D.ritual=(t)=>{if(t0==null)t0=t;const el=t-t0,a=el*3.0,k=Math.min(7,Math.floor(a/(2*Math.PI))+1);lb.text='Phera '+k+' of 7';
-  const r=1.25;if(G)G.set(Math.cos(a)*r,Math.sin(a)*r,.45,-a);B.set(Math.cos(a-.55)*r,Math.sin(a-.55)*r,.45,-a);
-  if(a>=7*2*Math.PI){D.ritual=null;clearLabels(D);if(G)G.set(.45,.6,.45);B.set(-.45,.6,.45);AUD.sfx('big');petals(D,0,0);flash(D,[0,2.6,0],'Married!','good',2500);done()}}}
-function petals(D,x,z){const sc=D.sc,ps=[];for(let i=0;i<40;i++){const q={p:[x+(Math.random()-.5)*4,4+Math.random()*3,z+(Math.random()-.5)*4],col:['#E8A0A8','#F29F05','#C8102E'][i%3],size:.06,a:1};ps.push(q);sc.parts.push(q)}const tk={keep:1,tick:(t,dt)=>{for(const q of ps){q.p[1]-=dt*1.2;q.p[0]+=Math.sin(t*2+q.p[2])*dt*.4;if(q.p[1]<.05)q.a=0}}};D.tmp.push(tk)}
-function dayDoli(D){const sc=D.sc,m=sc.mark();sc.box(1.2,1,1.6,0xC8102E,0,1,0);sc.add(E3.prismG(0,1,.6,4,Math.PI/4),0xD9A931,0,2,0);sc.box(.1,.1,4,0x5a3a22,-.7,1.6,0);sc.box(.1,.1,4,0x5a3a22,.7,1.6,0);const g=sc.group(m,0,0);
- const bearers=[[-.7,-1.7],[.7,-1.7],[-.7,1.7],[.7,1.7]].map(([x,z])=>{const F=figure(sc,{fem:false,col:0xF6EEDF,tur:'#F6EEDF'});F.ox=x;F.oz=z;return F});D.bride.show(false);D.doli={g,bearers,z:6.5};g.at(0,6.5);petals(D,0,8);sc.camTo({tg:[0,1,11],dist:15,ph:.42,th:.3})}
-// Show an event in the scene. Returns nothing; cleared by dayResolve.
-function dayEvent(D,e){const sc=D.sc,G=sc._G,rg=()=>G[Math.floor(Math.random()*Math.min(G.length,12))]||D.bride;clearLabels(D);D.cur=e;const H=f=>()=>f.head();
- const add=(o)=>{D.tmp.push(o);return o};
- const crowd=(n,from,to,o={})=>{const fs=[];for(let i=0;i<n;i++){const F=figure(sc,Object.assign({mood:o.mood!=null?o.mood:1},o));F.p0=[from[0]+(Math.random()-.5)*2,from[1]+Math.random()*2];F.p1=[to[0]+(Math.random()-.5)*(o.spread||3),to[1]+(Math.random()-.5)*(o.spread||3)];F.k=0;F.set(F.p0[0],F.p0[1]);fs.push(F)}add({figs:fs,tick:(t,dt)=>fs.forEach((F,i)=>{F.k=Math.min(1,F.k+dt*.35);F.set(F.p0[0]+(F.p1[0]-F.p0[0])*F.k,F.p0[1]+(F.p1[1]-F.p0[1])*F.k,F.k<1?Math.abs(Math.sin(t*6+i))*.03:(o.hop?Math.abs(Math.sin(t*6+i))*.05:0),Math.atan2(F.p1[0]-F.p0[0],F.p1[1]-F.p0[1])*0+Math.PI);if(o.hop&&F.k>=1)F.armsUp(1.4+Math.sin(t*6+i)*.6)})});return fs};
- const person=(x,z,o={})=>{const F=figure(sc,o);F.set(x,z);add({f:F});if(o.hop)add({tick:t=>{F.set(F.x,F.z,Math.abs(Math.sin(t*6))*.05,F.ry+Math.sin(t*4)*.02);F.armsUp(1.2+Math.sin(t*7)*.8)}});return F};
- const id=e.id;
- if(id==='ele_stop'||id==='mare_spook'||id==='palki_tilt'){D.hold=true;const tg=D.rider||D.dancers[0];label(D,H(tg),'','warn');label(D,()=>[0,4.6,D.procZ],id==='ele_stop'?'Moti will not move!':id==='mare_spook'?'Whoa! Steady!':'Careful!','say');AUD.sfx('bad')}
- else if(id==='camel'){crowd(6,[3,16],[0,D.procZ+3],{scale:.6,hop:true});label(D,()=>[0,3.6,D.procZ],'What a show!','good')}
- else if(id==='late_baraat'){D.hold=true;const F=D.bfam[0];F.face.face.mood=-1;label(D,H(F),'Where are they?','say')}
- else if(id==='toran'){label(D,[0,5.2,7.6],'The toran is too high!','say')}
- else if(id==='milni_gift'){const F=person(1.5,7,{fem:false,beard:true,tur:'#C8102E',mood:-1});D.tmp.push({f:F});label(D,H(F),'Is that all?','say')}
- else if(id==='seat'){const F=person(-4,3,{fem:false,beard:true,tur:'#E9A23B',mood:-1,hop:true});label(D,H(F),'Where is MY seat?!','say')}
- else if(id==='extra_guests'||id==='crowded'){crowd(12,[0,16],[0,5],{spread:4});label(D,[0,2.6,6],id==='crowded'?'No room left!':'So many guests!','say')}
- else if(id==='dignitary'){crowd(4,[0,17],[2.5,5],{fem:false,col:0x2a4f8f,tur:'#2a4f8f',spread:1.5,mood:0});const F=crowd(1,[0,17],[2,4.2],{fem:false,col:0xD9A931,tur:'#C8102E',beard:true,mood:0,spread:.1})[0];label(D,H(F),'The court official!','say')}
- else if(id==='food_short'){sc._pots.forEach(p=>p.vis=false);G.slice(0,5).forEach(F=>{F.mode='still'});label(D,[6.3,1.6,0],'','warn');label(D,[5,2.4,-1],'Where is the food?','say');AUD.sfx('bad')}
- else if(id==='cook_fight'){person(7.3,-1,{fem:false,col:0xF6EEDF,mood:-1,hop:true});const F=person(7.3,1,{fem:false,col:0xF6EEDF,mood:-1,hop:true});label(D,H(F),'It was YOUR fault!','say')}
- else if(id==='jain_onion'||id==='meat_veg'){const F=person(5,1.5,{fem:false,beard:true,mood:-1});label(D,H(F),id==='jain_onion'?'Is this onion?!':'Meat? Here?!','say');AUD.sfx('bad')}
- else if(id==='sweets'){label(D,[5.3,2.4,0],'Who made these sweets?','good')}
- else if(id==='ghee'){const pd=sc.add([{v:[[4.6,.03,-1],[5.6,.03,-1.2],[5.8,.03,.2],[4.8,.03,.4]],n:[0,1,0]}],0xE9A23B,0,0,0,{layer:2.6});D.tmp.push({o:pd});label(D,[5.2,.6,-.4],'','warn')}
- else if(id==='muhurat_shift'){label(D,H(D.officiant),'It is 30 minutes earlier!','say')}
- else if(id==='rain'){D.rain=[];for(let i=0;i<70;i++){const q={p:[(Math.random()-.5)*20,Math.random()*12,(Math.random()-.5)*20],col:'#9fb4d9',size:.03,a:.7,streak:1};D.rain.push(q);sc.parts.push(q)}sc.dark=.28}
- else if(id==='fire_spark'){const fl=[];for(const [x,z] of [[1.4,1.4],[1,1.6],[1.6,.9]]){fl.push(sc.cone(.35,.9,0xFF7A1A,x,3.7,z,6,{emit:1}))}D.fire=fl;add({tick:t=>fl.forEach((o,i)=>{const s=1+Math.sin(t*14+i)*.25;o.s=[s,s*1.3,s]})});label(D,[1.3,4.6,1.3],'','warn');AUD.sfx('bad')}
- else if(id==='ring'){label(D,H(D.rider||D.bride),'My ring?!','say')}
- else if(id==='pandit_late'){D.officiant.show(false);label(D,[1.3,1.8,-1.4],'','warn');label(D,[0,2.6,0],'No officiant!','say')}
- else if(id==='shehnai'){label(D,[-6,2.4,4.4],'Beautiful…','good')}
- else if(id==='quarrel'){person(-2.6,2.6,{fem:false,mood:-1,hop:true});const F=person(-2,3.4,{fem:false,beard:true,mood:-1,hop:true});label(D,H(F),'That land is OURS!','say')}
- else if(id==='firework_show'){addFireworks(sc,5);label(D,[0,3,4],'Ooooh!','good');AUD.sfx('big')}
- else if(id==='decor_wow'){label(D,[0,3.2,4],'It glitters!','good')}
- else if(id==='decor_wilt'){label(D,[1.75,3.2,1.75],'','warn');label(D,[0,4,2],'The flowers are wilting','say')}
- else if(id==='wind'){label(D,[-5.5,4.2,-5.5],'','warn')}
- else if(id==='vidaai'||id==='rukhsati'){const F=D.bfam[0];F.face.face.mood=-1;label(D,H(F),'Go well, my daughter','say')}
- else if(id==='shoe'){crowd(3,[-3,8],[-.2,7.6],{fem:true,spread:1.2,hop:true});label(D,H(D.rider||D.bride),'Where are my shoes?','say')}
- else if(id==='thief'){label(D,[6.3,1.6,2.6],'','warn');label(D,[6,2.4,2.6],'A gift box is gone','say')}
- else if(id==='rival_gossip'){const F=rg();label(D,H(F),'I heard their weddings…','say')}
- else if(id==='drunk_singer'){const F=sc._musos[0]||rg();label(D,H(F),'…(no voice)…','say')}
- else if(id==='storm_gods'){label(D,H(D.officiant),'A special blessing','good')}
- else if(id==='palace_guard'){crowd(2,[2,17],[1.5,8.6],{fem:false,col:0x2a4f8f,tur:'#2a4f8f',spread:.6,mood:-1});label(D,[1.5,2.4,8.6],'Show your papers!','say')}
- else if(id==='child_lost'){const F=person(-7,6.5,{scale:.55,fem:true,mood:-1});label(D,H(F),'Mama?','say')}
- else{const F=rg();label(D,H(F),'','warn')}
-}
-function dayResolve(D,e,ci,res){const sc=D.sc,id=e.id;clearLabels(D);
- if(D.hold){D.hold=false;if(D.procZ>D.procTarget)D.procMoving=true}
- if(id==='food_short'&&ci!==2)sc._pots.forEach(p=>p.vis=true);
- if(id==='food_short')sc._G.forEach(F=>{if(F.mode==='still'&&D.role!=='feast')F.mode='wander'});
- if(D.fire){D.fire.forEach(o=>o.vis=false);D.fire=null;sc._canopy.col=[90,40,30]}
- if(id==='pandit_late')D.officiant.show(true);
- if(id==='rain'&&ci!==2){sc.parts=sc.parts.filter(q=>!D.rain.includes(q));D.rain=null;sc.dark=0}
- if(id==='late_baraat'||id==='vidaai'||id==='rukhsati')D.bfam[0].face.face.mood=1;
- if(id==='toran'&&D.rider&&ci===0){const R0=D.rider;let k=0;D.tmp.push({keep:1,tick:(t,dt)=>{if(k>1)return;k+=dt;R0.set(R0.x,R0.z,Math.sin(Math.min(1,k)*Math.PI)*1.2)}})}
- // remove temporary people and objects
- for(const a of D.tmp){if(a.figs)a.figs.forEach(F=>F.show(false));if(a.f)a.f.show(false);if(a.o)a.o.vis=false}
- D.tmp=D.tmp.filter(a=>a.tick&&!a.figs&&!a.f&&!a.o&&a.keep);
- const d=(res.b||0)+(res.g||0);const at=D.role==='feast'?[5.5,2.6,0]:D.role==='arrive'?[0,3.6,D.procZ]:D.role==='farewell'?[0,3,8]:[0,3,1];
- if(d>0){flash(D,at,'Families pleased  +'+d,'good');AUD.sfx('good')}else if(d<0){flash(D,at,'Families unhappy  '+d,'say');AUD.sfx('bad')}else AUD.sfx('tap');
-}
-
-"use strict";
 const $=s=>document.querySelector(s);
 const IC={
  home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
@@ -963,7 +635,7 @@ function chime(f=660){try{const A=window._ac||(window._ac=new (window.AudioConte
 
 // ---------------- splash ----------------
 function splash(){const has=load();S=null;if(has){load()}
- document.getElementById('app').innerHTML='<div class="splash"><svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="43" fill="none" stroke="#D9A931" stroke-width="1"/><path d="M45 14c-9 10-20 15-20 30h40c0-15-11-20-20-30z" fill="#C8102E"/><rect x="27" y="44" width="36" height="3" fill="#D9A931"/><path d="M30 47v22M60 47v22M45 47v22" stroke="#D9A931" stroke-width="2"/><rect x="22" y="69" width="46" height="4" fill="#F6EEDF"/><circle cx="45" cy="12" r="3" fill="#D9A931"/></svg>'+
+ document.getElementById('app').innerHTML='<div class="splash painted"><div class="bgimg" style="background-image:url('+art('haveli')+')"></div><div class="bgshade"></div><svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="43" fill="none" stroke="#D9A931" stroke-width="1"/><path d="M45 14c-9 10-20 15-20 30h40c0-15-11-20-20-30z" fill="#C8102E"/><rect x="27" y="44" width="36" height="3" fill="#D9A931"/><path d="M30 47v22M60 47v22M45 47v22" stroke="#D9A931" stroke-width="2"/><rect x="22" y="69" width="46" height="4" fill="#F6EEDF"/><circle cx="45" cy="12" r="3" fill="#D9A931"/></svg>'+
  '<h1>Shaadi Inc.</h1><div class="sub">Four hundred years of weddings</div><p class="mu sm" style="max-width:300px;margin:18px auto 28px">Build a wedding house in 1726 Jaipur and hand it down through the generations.</p>'+
  (S?'<button class="btn pri full" style="max-width:300px" id="cont">Continue: '+S.house+', '+MONTHS[S.month]+' '+S.year+'</button><div style="height:10px"></div><button class="btn ghost full" style="max-width:300px" id="newg">Start a new house</button>':'<button class="btn pri full" style="max-width:300px" id="newg">Found your house</button>')+
  '<p class="dim xs" style="margin-top:30px">Stage 1 · 1726 to 1800</p></div>';
@@ -1004,7 +676,7 @@ function onMain(e){const a=e.target.closest('[data-a]');if(!a)return;const [k,v]
  else if(k==='accept'){const err=acceptInquiry(id);if(err)toast(err);else{chime(784);toast('Booked');}render()}
  else if(k==='decline'){declineInquiry(id);render()}
  else if(k==='plan'){UI.view={t:'plan',id};render()}
- else if(k==='run'){const b=B();if(!b.locked){UI.view={t:'plan',id};render();toast('Lock the plan first');return}startWedding(b);UI.view={t:'wed',id};UI.dir=null;render()}
+ else if(k==='run'){const b=B();if(!b.locked){UI.view={t:'plan',id};render();toast('Lock the plan first');return}startWedding(b);UI.view={t:'wed',id};UI.st=null;render()}
  else if(k==='tab'){UI.tab=v;render()}
  else if(k==='hire')hireSheet();
  else if(k==='fire'){fire(v);render()}
@@ -1027,13 +699,13 @@ function monthSheet(ev){const hist=ev.filter(e=>e.hist),oth=ev.filter(e=>!e.hist
  if(!hist.length&&!oth.length&&!ev.some(e=>e.end||e.succession))return;
  sheet(h,()=>{closeSheet();if(S.pendingHeir)heirSheet()});if(hist.length)chime(523)}
 function heirSheet(){const H=S.pendingHeir;if(!H)return;const bg=sheet('<h2>Choose the next head</h2><p class="mu sm">'+S.head.name+' has passed on. Who will lead the '+S.house+'?</p>'+H.map((h,i)=>'<button class="opt" data-s="'+i+'"><div class="row">'+portrait(h.name,h.female,48)+'<div><div class="t">'+h.name+'</div><div class="sm mu">Age '+h.age+' · '+TRAITS[h.trait].name+'</div><div class="xs dim">'+TRAITS[h.trait].desc+'</div></div></div></button>').join(''),a=>{chooseHeir(+a);closeSheet();toast('A new generation begins');render()});bg.dataset.lock=1}
-function gameOver(){document.getElementById('app').innerHTML='<div class="splash"><h1>The house falls</h1><p class="mu" style="max-width:320px">Debts to the moneylender grew too large. The '+S.house+' closed in '+MONTHS[S.month]+' '+S.year+' after '+S.stats.weddings+' weddings.</p><button class="btn pri" id="ng">Start again</button></div>';$('#ng').onclick=()=>{localStorage.removeItem(SAVE);S=null;splash()}}
+function gameOver(){document.getElementById('app').innerHTML='<div class="splash painted"><div class="bgimg" style="background-image:url('+art('haveli')+')"></div><div class="bgshade"></div><h1>The house falls</h1><p class="mu" style="max-width:320px">Debts to the moneylender grew too large. The '+S.house+' closed in '+MONTHS[S.month]+' '+S.year+' after '+S.stats.weddings+' weddings.</p><button class="btn pri" id="ng">Start again</button></div>';$('#ng').onclick=()=>{localStorage.removeItem(SAVE);S=null;splash()}}
 function menuSheet(){sheet('<h2>Menu</h2><button class="opt" data-s="music"><div class="t">Music and sound: '+(AUD.isOn()?'on':'off')+'</div></button><button class="opt" data-s="help"><div class="t">How to play</div></button><button class="opt" data-s="title"><div class="t">Back to title screen</div></button>',a=>{closeSheet();if(a==='music'){toast('Music '+(AUD.toggle()?'on':'off'))}if(a==='help')helpSheet();if(a==='title'){save();S=null;splash()}})}
 
 // ---------------- Home ----------------
-function vHome(m){const now=nowMi(),t=fameTier(),nf=FAME[t+1];const prog=nf?((S.rep-FAME[t].min)/(nf.min-FAME[t].min)*100):100;
+function vHome(m){setTimeout(()=>{const el=$('#hero');if(el&&!el.dataset.on){el.dataset.on=1;const st=new Stage(el,150);el.style.margin='0 0 12px';st.show(art(['haveli','garden','temple','tent'][S.month%4]),{move:S.month%4,dur:40});stageFx(st,{petals:SEASON[S.month]>=1.2?.25:0});st.caption(S.house,MONTHS[S.month]+' '+S.year)}},0);const now=nowMi(),t=fameTier(),nf=FAME[t+1];const prog=nf?((S.rep-FAME[t].min)/(nf.min-FAME[t].min)*100):100;
  const bl=blockers();const season=SEASON[S.month]===0?'Holy months: only Muslim weddings':SEASON[S.month]>=1.2?'Peak wedding season':'Wedding season';
- let h='<div class="card"><div class="row"><div><div class="xs mu">'+season+'</div><h2 style="margin-top:2px">'+MONTHS[S.month]+' '+S.year+'</h2></div><span class="sp"></span><button class="btn sm ghost" data-a="menu">Menu</button></div>';
+ let h='<div id="hero"></div><div class="card"><div class="row"><div><div class="xs mu">'+season+'</div><h2 style="margin-top:2px">'+MONTHS[S.month]+' '+S.year+'</h2></div><span class="sp"></span><button class="btn sm ghost" data-a="menu">Menu</button></div>';
  if(bl.length)h+='<p class="sm warn" style="margin:10px 0">'+bl[0].t+'</p><button class="btn red full" data-a="run:'+bl[0].b.id+'">Go to the wedding</button>';
  else h+='<button class="btn pri full" style="margin-top:12px" data-a="next">Next month</button><div class="xs dim" style="margin-top:6px;text-align:center">Monthly costs '+money(monthCosts())+'</div>';
  h+='</div>';
@@ -1054,7 +726,7 @@ function bookingRow(b){const now=nowMi(),dl=b.wm-now;const st=b.delegate?'<span 
 function vBook(m){let h='<div class="sec">Enquiries<small>'+S.inquiries.length+' waiting · reply this month</small></div>';
  if(!S.inquiries.length)h+='<div class="card mu sm">No new enquiries. Families write more often in the wedding season and as your fame grows.</div>';
  S.inquiries.forEach(q=>{const exp=q.exp-nowMi();h+='<div class="card'+(q.referral?' hl':'')+'">'+(q.referral?'<div class="xs gold" style="margin-bottom:4px">Recommended by a happy family</div>':'')+
-  '<div class="row"><div style="flex:1;min-width:0"><div style="font-family:var(--serif);font-size:19px">'+q.bride.surname+' and '+q.groom.surname+'</div><div class="xs mu">'+TRADITIONS[q.trad].name+' · '+CLASSES[q.cls].name+'</div></div><div style="text-align:right"><div class="gold" style="font-size:17px">'+money(q.fee)+'</div><div class="xs dim">fee</div></div></div>'+
+  '<div class="row"><div class="couple"><img src="'+art('bride')+'" alt=""><img src="'+art('groom')+'" alt=""></div><div style="flex:1;min-width:0"><div style="font-family:var(--serif);font-size:19px">'+q.bride.surname+' and '+q.groom.surname+'</div><div class="xs mu">'+TRADITIONS[q.trad].name+' · '+CLASSES[q.cls].name+'</div></div><div style="text-align:right"><div class="gold" style="font-size:17px">'+money(q.fee)+'</div><div class="xs dim">fee</div></div></div>'+
   '<div class="kv" style="margin:10px 0"><span>Wedding</span><span>'+dateStr(q.wm)+'</span><span>Guests</span><span>'+q.guests+'</span><span>Expectations</span><span>'+stars(CLASSES[q.cls].expect)+'</span></div>'+demandsHtml(q,false)+
   '<div class="row" style="margin-top:10px"><button class="btn sm ghost" data-a="decline:'+q.id+'">Decline</button><span class="sp"></span><span class="xs dim">'+(exp<=0?'Last chance this month':'')+'</span><button class="btn sm pri" data-a="accept:'+q.id+'">Accept</button></div></div>'});
  const up=activeBookings().sort((a,b)=>a.wm-b.wm);h+='<div class="sec">Booked<small>'+up.length+' of '+capacity()+'</small></div>';up.forEach(b=>h+=bookingRow(b));if(!up.length)h+='<div class="card mu sm">Nothing booked yet.</div>';
@@ -1066,7 +738,7 @@ function demandsHtml(b,live){const dl=live?demandList(b):null;let h='';for(const
 function renderPlan(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b){UI.view=null;return render()}
  const app=document.getElementById('app');const pr=predictScores(b),cost=planCost(b),iss=planIssues(b);const profit=b.fee-cost;const clerk=S.upgrades.clerk;
  app.innerHTML='<div class="topbar"><button class="btn sm ghost" id="back">← Back</button><div class="house" style="text-align:center"><b style="font-size:17px">'+b.bride.surname+' and '+b.groom.surname+'</b><span>'+dateStr(b.wm)+' · '+b.guests+' guests</span></div><div class="chip"><i>₹</i>'+Math.round(S.money).toLocaleString('en-IN')+'</div></div><div class="main" id="main"></div>';
- const m=$('#main');let h='<div class="scene" id="sc"><div class="ov">Drag to look around</div></div>';
+ const m=$('#main');let h='<div id="pst"></div>';
  h+='<div class="card"><div class="meters"><div><div class="lab"><span>Bride\'s family</span><span>'+Math.round(pr.bride)+'</span></div><div class="bar"><i style="width:'+pr.bride+'%;background:var(--gold)"></i></div></div><div class="clock" style="font-size:16px">'+stars(CLASSES[b.cls].expect)+'<small>expected</small></div><div><div class="lab"><span>Groom\'s family</span><span>'+Math.round(pr.groom)+'</span></div><div class="bar"><i style="width:'+pr.groom+'%;background:var(--rose)"></i></div></div></div><div class="xs dim" style="margin-top:8px">Predicted happiness before anything goes wrong on the day.</div></div>';
  h+='<div class="card"><h3 style="margin-bottom:4px">Demands</h3>'+demandsHtml(b,true)+'</div>';
  const bt=beauty(b),btg=beautyTarget(b),bb=beautyBonus(b);h+='<div class="card hl"><div class="row"><div style="flex:1"><h3>Decoration</h3><div class="xs mu">'+(b.items||[]).length+' items · beauty '+bt+' of about '+btg+' expected · <span class="'+(bb>=0?'ok':'bad')+'">'+(bb>=0?'+':'')+bb.toFixed(1)+' happiness</span></div></div><button class="btn sm pri" id="deco" '+(b.locked?'disabled':'')+'>Decorate</button></div></div>';
@@ -1084,82 +756,84 @@ function renderPlan(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b){UI.vi
  if($('#sug'))$('#sug').onclick=()=>{b.plan=autoPlan(b,3);save();renderPlan();toast('Suggested a balanced plan')};
  if($('#lock'))$('#lock').onclick=()=>{b.locked=true;save();chime(784);toast('Plan locked');renderPlan()};
  if($('#unlock'))$('#unlock').onclick=()=>{b.locked=false;save();renderPlan()};
- if($('#runw'))$('#runw').onclick=()=>{startWedding(b);UI.view={t:'wed',id:b.id};render()};
+ if($('#runw'))$('#runw').onclick=()=>{startWedding(b);UI.view={t:'wed',id:b.id};UI.st=null;render()};
  m.querySelectorAll('[data-d]').forEach(el=>el.onclick=()=>{b.delegate=el.dataset.d==='none'?null:el.dataset.d;save();renderPlan();toast(b.delegate?'Delegated':'You will run it yourself')});
- mountScene($('#sc'),b,250,{guests:b.guests,trad:b.trad,items:b.items||[]});
+ const ps=new Stage($('#pst'),Math.round(Math.min(innerWidth,560)*.5));ps.show(venueArt(b.plan.venue?VBY[b.plan.venue].kind:'haveli'),{move:3,dur:30});const bt2=beauty(b),tg2=beautyTarget(b);stageFx(ps,{petals:bt2>=tg2?.4:0,fireworks:b.plan.lights&&VBY[b.plan.lights].type==='fireworks'?.6:0});ps.caption(b.plan.venue?VBY[b.plan.venue].name:'Choose a venue',b.guests+' guests · '+dateStr(b.wm));
 }
 function vendorSheet(b,slot){const s=SLOTS.find(x=>x.id===slot);const list=VENDORS.filter(v=>v.slot===slot);
  sheet('<h2>'+s.name+'</h2><p class="xs mu">'+b.guests+' guests · '+TRADITIONS[b.trad].name+' wedding</p>'+list.map(v=>{const err=vendorOk(v,b);const rl=relLvl(v.id);const extra=v.slot==='venue'?' · holds '+v.cap:v.slot==='feast'?' · '+(v.food==='jain'?'Jain food':v.food==='veg'?'Vegetarian':'Meat and vegetarian'):'';
   return '<button class="opt'+(b.plan[slot]===v.id?' sel':'')+'" data-s="'+v.id+'" '+(err?'disabled':'')+'><div class="row"><span class="t" style="flex:1">'+v.name+'</span><span class="gold">'+money(vCost(v,b))+'</span></div><div class="row" style="margin-top:3px">'+stars(v.q)+'<span class="xs mu">'+extra+'</span><span class="sp"></span><span class="xs '+(v.rel<.75?'warn':'dim')+'">'+(v.rel<.75?'Unreliable':v.rel>=.9?'Reliable':'')+'</span></div><div class="xs mu" style="margin-top:3px">'+(err?'<span class="bad">'+err+'</span>':v.note)+(rl>=2?' · <span class="gold">Friend of the house ('+rl+')</span>':'')+'</div></button>'}).join(''),
  id=>{b.plan[slot]=id;save();closeSheet();renderPlan()})}
-function mountScene(el,b,h,opt){if(!el)return;const cv=document.createElement('canvas');el.appendChild(cv);const sc=new E3.Scene(cv,h);buildVenue(sc,planObj(b),opt);sc.start();UI.scene=sc;return sc}
 
 // ---------------- Wedding day ----------------
 function fmtT(m){m=((Math.round(m)%1440)+1440)%1440;let h=Math.floor(m/60),mm=m%60;const ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+String(mm).padStart(2,'0')+' '+ap}
 const PHASE_TEXT={arrive:'The groom\'s procession dances through the streets towards the gate.',welcome:'The two families meet at the gate and the guests take their places.',feast:'The kitchens open and hundreds of guests sit down to eat.',ceremony:'The couple sit at the mandap as the sacred moment approaches.',farewell:'The bride says goodbye to the home she grew up in.'};
+const EVCHAR={ele_stop:['groom','Move, Moti! My bride is waiting!'],mare_spook:['groom','Whoa! Steady, girl!'],camel:['groom','Look at the children dance!'],late_baraat:['bmother','Where are they? The food is getting cold.'],palki_tilt:['bride','Careful! Please be careful!'],toran:['groom','Who hung it this high?'],
+ milni_gift:['uncle','Is that all? For OUR son?'],seat:['uncle','Where is MY seat? Do you know who I am?'],extra_guests:['uncle','I may have invited a few more friends…'],dignitary:['aunt','A court official! Nobody told us!'],food_short:['cook','The pots are empty! What do I do?'],cook_fight:['cook','It was HIS fault, not mine!'],
+ jain_onion:['aunt','Is that onion? At a Jain wedding?!'],meat_veg:['aunt','Meat? At OUR wedding?'],sweets:['cook','My grandmother\'s recipe. Fifty years old.'],ghee:['cook','Mind the floor! Hot ghee!'],muhurat_shift:['priest','The stars have shifted. We must begin earlier.'],rain:['bmother','Rain? Tonight of all nights?'],
+ fire_spark:['bmother','Fire! The canopy is burning!'],ring:['groom','The ring… I had it right here!'],pandit_late:['aunt','No priest? How will they marry?'],shehnai:['bmother','Listen… just listen.'],quarrel:['uncle','That land was always OURS!'],firework_show:['groom','The whole city is watching!'],
+ decor_wow:['bmother','It looks like a palace!'],decor_wilt:['aunt','Wilted flowers? How shameful.'],wind:['cook','Hold the ropes! The tent is leaning!'],crowded:['uncle','There is no room to breathe!'],vidaai:['bmother','Go well, my daughter.'],rukhsati:['bmother','Go well, my daughter.'],shoe:['groom','Where are my shoes?'],
+ thief:['aunt','A gift box is missing! Someone stole it!'],rival_gossip:['rival','Such a pity their weddings are so… ordinary.'],drunk_singer:['cook','The singer has lost his voice!'],storm_gods:['priest','Let me offer a special blessing.'],palace_guard:['uncle','Papers? We are the wedding party!'],child_lost:['bmother','My little one is lost!']};
+const EVFX={rain:{rain:1,dark:.25},fire_spark:{fire:1,embers:1},firework_show:{fireworks:1},decor_wow:{petals:.6},shehnai:{petals:.4},sweets:{sparkle:1.5},camel:{petals:.3}};
+function whoName(b,c){const p=planObj(b);return{groom:'The groom, '+b.groom.name+' '+b.groom.surname,bride:'The bride, '+b.bride.name,bmother:'Mother of the bride',uncle:'Uncle of the groom',aunt:'Aunt of the bride',cook:(p.feast?p.feast.name:'The head cook'),priest:(p.officiant?p.officiant.name:'The officiant'),rival:'From the '+S.rival.name}[c]}
+function roles(b){return b.trad==='muslim'?['arrive','welcome','ceremony','feast','farewell']:['arrive','welcome','feast','ceremony','farewell']}
+function phaseArt(b,role){const p=planObj(b),v=p.venue?p.venue.kind:'haveli';if(role==='arrive')return ART_HAVE.has('baraat')?art('baraat'):venueArt(v);if(role==='feast')return art('feast');if(role==='ceremony')return b.trad==='muslim'?art('nikah'):(ART_HAVE.has('pheras')?art('pheras'):venueArt(v));if(role==='farewell')return art('farewell');return venueArt(v)}
+function stageFx(st,o){for(const k of ['petals','embers','rain','fire','fireworks','confetti','dark'])st.set(k,0);st.set('sparkle',1);for(const k in (o||{}))st.set(k,o[k])}
 function renderWedding(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b||(!b.wd&&!b.result)){UI.view=null;return render()}
  const app=document.getElementById('app');
- if(!app.querySelector('#wsc')){app.innerHTML='<div class="topbar"><div class="house"><b style="font-size:17px">'+b.bride.surname+' and '+b.groom.surname+'</b><span>'+TRADITIONS[b.trad].name+' wedding · '+b.guests+' guests</span></div><div class="chip"><i>₹</i><span id="wmoney"></span></div></div><div class="main" id="main" style="padding-top:10px"><div class="scene" id="wsc"></div><div id="wbody"></div></div>';
-  const sc=mountScene($('#wsc'),b,300,{guests:b.guests,trad:b.trad,day:true,items:b.items||[]});UI.dir=setupDay(sc,b);UI.shown=-1;UI.busy=false}
+ if(!app.querySelector('#wst')){app.innerHTML='<div class="topbar"><div class="house"><b style="font-size:17px">'+b.bride.surname+' and '+b.groom.surname+'</b><span>'+TRADITIONS[b.trad].name+' wedding · '+b.guests+' guests</span></div><div class="chip"><i>₹</i><span id="wmoney"></span></div></div><div class="main" id="main" style="padding-top:10px"><div id="wst"></div><div id="wbody"></div></div>';
+  UI.st=new Stage($('#wst'),Math.round(Math.min(innerWidth,560)*.62));UI.st.show(venueArt(planObj(b).venue.kind),{move:0});UI.shown=-1;UI.busy=false;UI.ritualDone=false}
  $('#wmoney').textContent=Math.round(S.money-(b.wd?b.wd.cost:0)).toLocaleString('en-IN');
- const body=$('#wbody'),D=UI.dir;
+ const body=$('#wbody'),st=UI.st,R=roles(b);
  if(b.result)return resultView(b,body);
  const W=b.wd,tr=TRADITIONS[b.trad],cer=tr.muhurat?3:2,left=W.muhurat-W.time;
  let h='<div class="card" style="padding:12px 14px"><div class="meters"><div><div class="lab"><span>Bride\'s family</span><span>'+Math.round(W.b)+'</span></div><div class="bar"><i style="width:'+W.b+'%;background:var(--gold)"></i></div></div><div class="clock">'+fmtT(W.time)+'<small>'+tr.clockName+' '+fmtT(W.muhurat)+'</small></div><div><div class="lab"><span>Groom\'s family</span><span>'+Math.round(W.g)+'</span></div><div class="bar"><i style="width:'+W.g+'%;background:var(--rose)"></i></div></div></div>'+
  '<div class="phases">'+tr.phases.map((p,i)=>'<i class="'+(i<UI.shown?'d':i===UI.shown?'c':'')+'"></i>').join('')+'</div><div class="row xs"><span class="gold">'+(tr.phases[Math.max(0,UI.shown)]||'')+'</span><span class="sp"></span><span class="'+(left<0&&W.phase<cer?'bad':'mu')+'">'+(W.phase<cer?(left>=0?left+' min to spare':(-left)+' min late'):'Ceremony done')+'</span></div></div>';
  const showPhase=W.done?5:W.phase;
  if(UI.busy){h+='<div class="card mu sm" style="text-align:center">'+(UI.busyText||'…')+'</div>'}
- else if(showPhase!==UI.shown){
-  const leavingCer=UI.shown===cer;const next=showPhase>=5?null:D.roles[showPhase];
-  if(leavingCer&&!UI.ritualDone){h+='<div class="card event"><h3>'+(b.trad==='muslim'?'The Nikah':'The seven pheras')+'</h3><p class="sm mu">'+(b.trad==='muslim'?'The Qazi is ready. The families fall silent.':'The couple will walk around the sacred fire seven times.')+'</p><button class="btn pri full" id="rit">'+(b.trad==='muslim'?'Begin the Nikah':'Begin the pheras')+'</button></div>'}
-  else if(next){h+='<div class="card event"><div class="xs gold">'+(showPhase+1)+' of 5</div><h3 style="margin-top:2px">'+tr.phases[showPhase]+'</h3><p class="sm mu" style="margin:6px 0 12px">'+PHASE_TEXT[next]+'</p><button class="btn pri full" id="goph">'+(UI.shown<0?'Begin the wedding':'Continue')+'</button></div>'}
-  else{h+='<div class="card event"><h3>The night ends</h3><p class="sm mu">The last guests head home under the stars.</p><button class="btn pri full" id="fin">See how it went</button></div>'}
- }
- else if(W.cur){const e=W.cur;h+='<div class="card event"><h3>'+e.t+'</h3>'+e.ch.map((c,i)=>{const fx=[];if(c.c)fx.push('<span class="bad">−'+money(c.c)+'</span>');if(c.t>0)fx.push('<span class="warn">+'+c.t+' min</span>');if(c.t<0)fx.push('<span class="ok">'+c.t+' min</span>');return '<button class="opt" data-c="'+i+'"><div>'+c.l+'</div>'+(fx.length?'<div class="xs" style="margin-top:3px">'+fx.join(' · ')+'</div>':'')+'</button>'}).join('')+'</div>'}
+ else if(showPhase!==UI.shown){const leavingCer=UI.shown===cer;const next=showPhase>=5?null:R[showPhase];
+  if(leavingCer&&!UI.ritualDone){h+='<div class="card event-card"><h3>'+(b.trad==='muslim'?'The Nikah':'The seven pheras')+'</h3><p class="sm mu">'+(b.trad==='muslim'?'The Qazi is ready. The families fall silent.':'The couple will walk around the sacred fire seven times.')+'</p><button class="btn pri full" id="rit">'+(b.trad==='muslim'?'Begin the Nikah':'Begin the pheras')+'</button></div>'}
+  else if(next){h+='<div class="card event-card"><div class="xs gold">'+(showPhase+1)+' of 5</div><h3 style="margin-top:2px">'+tr.phases[showPhase]+'</h3><p class="sm mu" style="margin:6px 0 12px">'+PHASE_TEXT[next]+'</p><button class="btn pri full" id="goph">'+(UI.shown<0?'Begin the wedding':'Continue')+'</button></div>'}
+  else{h+='<div class="card event-card"><h3>The night ends</h3><p class="sm mu">The last guests head home under the stars.</p><button class="btn pri full" id="fin">See how it went</button></div>'}}
+ else if(W.cur){const e=W.cur,ch=EVCHAR[e.id]||['aunt',''];
+  h+='<div class="card event-card"><div class="who"><img src="'+art(ch[0])+'" alt=""><div><div class="nm">'+whoName(b,ch[0])+'</div><div class="q">“'+ch[1]+'”</div></div></div><p class="sm" style="margin:0 0 10px;color:var(--mu)">'+e.t+'</p>'+e.ch.map((c,i)=>{const fx=[];if(c.c)fx.push('<span class="bad">−'+money(c.c)+'</span>');if(c.t>0)fx.push('<span class="warn">+'+c.t+' min</span>');if(c.t<0)fx.push('<span class="ok">'+c.t+' min</span>');return '<button class="opt" data-c="'+i+'"><div>'+c.l+'</div>'+(fx.length?'<div class="xs" style="margin-top:3px">'+fx.join(' · ')+'</div>':'')+'</button>'}).join('')+'</div>'}
  if(W.log.length)h+='<div class="sec">The evening so far</div><div class="card">'+W.log.slice().reverse().map(l=>'<div class="log"><span class="'+(l.bad?'bad':'')+'">'+l.t+'</span></div>').join('')+'</div>';
  body.innerHTML=h;
- const showEv=()=>{if(W.cur&&!W.done)dayEvent(D,W.cur)};
- if($('#goph'))$('#goph').onclick=()=>{AUD.unlock();UI.shown=showPhase;UI.ritualDone=false;dayPhase(D,showPhase);UI.busy=true;UI.busyText=D.role==='arrive'?'The baraat is on its way…':'…';renderWedding();setTimeout(()=>{UI.busy=false;showEv();renderWedding()},D.role==='arrive'?3200:1700)};
- if($('#rit'))$('#rit').onclick=()=>{UI.busy=true;UI.busyText=b.trad==='muslim'?'The Nikah is under way…':'The couple walk around the fire…';renderWedding();dayRitual(D,()=>{UI.ritualDone=true;W.b=clamp(W.b+3,0,100);W.g=clamp(W.g+3,0,100);setTimeout(()=>{UI.busy=false;renderWedding()},1200)})};
- body.querySelectorAll('[data-c]').forEach(el=>el.onclick=()=>{const e=W.cur,ci=+el.dataset.c;const r=chooseEvent(b,ci);dayResolve(D,e,ci,r);save();
-  if(W.phase===UI.shown&&W.cur&&!W.done){UI.busy=true;UI.busyText='…';renderWedding();setTimeout(()=>{UI.busy=false;showEv();renderWedding()},1300)}else renderWedding()});
- if($('#fin'))$('#fin').onclick=()=>{if(D.role!=='farewell'||!D.doli){dayDoli(D)}UI.busy=true;UI.busyText='The doli carries the bride away…';renderWedding();setTimeout(()=>{UI.busy=false;finishWedding(b,false);AUD.sfx(b.result.avg>=70?'big':'bad');renderWedding()},2600)};
+ const showEv=()=>{if(W.cur&&!W.done){const fx=EVFX[W.cur.id];if(fx){const base={};if(R[UI.shown]==='ceremony'&&b.trad!=='muslim')base.embers=.6;stageFx(st,Object.assign(base,fx))}AUD.sfx(fx&&(fx.fire||fx.rain)?'bad':'tap')}};
+ if($('#goph'))$('#goph').onclick=()=>{AUD.unlock();UI.shown=showPhase;UI.ritualDone=false;const role=R[showPhase];const p=planObj(b);
+  st.show(phaseArt(b,role),{move:showPhase%4});st.caption(tr.phases[showPhase],PHASE_TEXT[role]);
+  stageFx(st,{petals:role==='welcome'||role==='farewell'?.5:0,embers:role==='ceremony'&&b.trad!=='muslim'?.7:0,fireworks:role==='arrive'&&p.lights&&p.lights.type==='fireworks'?1:0});
+  AUD.play(role==='arrive'?'baraat':'day');UI.busy=true;UI.busyText='…';renderWedding();setTimeout(()=>{st.caption('');UI.busy=false;showEv();renderWedding()},2600)};
+ if($('#rit'))$('#rit').onclick=()=>{UI.busy=true;UI.busyText=b.trad==='muslim'?'The Nikah is under way…':'The couple walk around the fire…';renderWedding();
+  stageFx(st,{embers:1,petals:.3});st.focus(0,4,1.25);let k=0;const lines=b.trad==='muslim'?['The Qazi reads the vows','“Qubool hai”','“Qubool hai”','“Qubool hai”','They are married']:['Phera 1 of 7','Phera 2 of 7','Phera 3 of 7','Phera 4 of 7','Phera 5 of 7','Phera 6 of 7','Phera 7 of 7','Married'];
+  const step=()=>{st.caption(lines[k]);AUD.sfx('tap');k++;if(k<lines.length)setTimeout(step,1150);else{AUD.sfx('big');stageFx(st,{petals:1,confetti:1,embers:.6});setTimeout(()=>{st.caption('');UI.ritualDone=true;W.b=clamp(W.b+3,0,100);W.g=clamp(W.g+3,0,100);UI.busy=false;renderWedding()},1800)}};step()};
+ body.querySelectorAll('[data-c]').forEach(el=>el.onclick=()=>{const e=W.cur,ci=+el.dataset.c;const r=chooseEvent(b,ci);save();const d=(r.b||0)+(r.g||0);
+  const keep=e.id==='rain'&&ci===2;if(!keep)stageFx(st,{embers:R[UI.shown]==='ceremony'&&b.trad!=='muslim'?.7:0,petals:d>0?.35:0});
+  st.caption(d>0?'Families pleased  +'+d:d<0?'Families unhappy  '+d:'',r.cost?'Cost '+money(r.cost):'');AUD.sfx(d>0?'good':d<0?'bad':'tap');
+  UI.busy=true;UI.busyText='…';renderWedding();setTimeout(()=>{st.caption('');UI.busy=false;if(W.phase===UI.shown&&W.cur&&!W.done)showEv();renderWedding()},1300)});
+ if($('#fin'))$('#fin').onclick=()=>{UI.busy=true;UI.busyText='The doli carries the bride away…';renderWedding();st.show(art('farewell'),{move:1});stageFx(st,{petals:1});setTimeout(()=>{UI.busy=false;finishWedding(b,false);AUD.sfx(b.result.avg>=70?'big':'bad');renderWedding()},2400)};
 }
 function resultView(b,body){const r=b.result;const v=r.avg>=85?'A triumph':r.avg>=70?'A success':r.avg>=50?'A mixed affair':'A disaster';
- if(UI.dir&&r.avg>=70&&!UI.dir.cele){UI.dir.cele=1;addFireworks(UI.dir.sc,4);UI.dir.sc.camTo({tg:[0,2,0],dist:22,ph:.55,th:null})}
- body.innerHTML='<div class="card hl" style="text-align:center"><div class="xs gold">The wedding is over</div><h1 style="margin:6px 0">'+v+'</h1><div class="big-num gold">'+Math.round(r.avg)+'</div><div class="xs mu">out of 100</div></div>'+
- '<div class="grid2"><div class="mini"><div class="l">Bride\'s family</div><div class="v">'+r.bs+'</div></div><div class="mini"><div class="l">Groom\'s family</div><div class="v">'+r.gs+'</div></div></div>'+
+ if(UI.st&&!UI.st.done){UI.st.done=1;stageFx(UI.st,r.avg>=70?{confetti:1,fireworks:1.5,petals:.5}:{});UI.st.caption(v,Math.round(r.avg)+' out of 100')}
+ body.innerHTML='<div class="grid2"><div class="mini"><div class="l">Bride\'s family</div><div class="v">'+r.bs+'</div></div><div class="mini"><div class="l">Groom\'s family</div><div class="v">'+r.gs+'</div></div></div>'+
  '<div class="card" style="margin-top:12px"><div class="kv"><span>Fee</span><span>'+money(b.fee)+'</span>'+(r.tip?'<span>Gift of thanks</span><span class="ok">+'+money(r.tip)+'</span>':'')+(r.withheld?'<span>Payment withheld</span><span class="bad">−'+money(r.withheld)+'</span>':'')+'<span>Vendors and decoration</span><span>−'+money(r.vc)+'</span><span>Costs on the day</span><span>−'+money(r.ev)+'</span><span><b>Profit</b></span><span class="'+(r.profit>=0?'ok':'bad')+'"><b>'+money(r.profit)+'</b></span><span>Fame</span><span class="'+(r.rep>=0?'gold':'bad')+'">'+(r.rep>=0?'+':'')+r.rep+'</span></div></div>'+
  '<button class="btn pri full" id="done">Back to the house</button>';
- $('#done').onclick=()=>{UI.view=null;UI.tab='home';UI.dir=null;render()}}
+ $('#done').onclick=()=>{UI.view=null;UI.tab='home';UI.st=null;render()}}
 
 // ---------------- Decorate ----------------
-function okSpot(b,x,z,plan){if(Math.abs(x)>8.2||Math.abs(z)>8.2)return false;if(Math.abs(x)<3.3&&Math.abs(z)<3.3)return false;if(plan.feast&&x>5.2&&Math.abs(z)<3.8)return false;if(plan.music&&x<-5.4&&z>3.2&&z<6)return false;if(Math.abs(x)<2.8&&z>6.4)return false;return !(b.items||[]).some(i=>Math.hypot(i.x-x,i.z-z)<1.5)}
 function renderDecor(){const b=S.bookings.find(x=>x.id===UI.view.id);if(!b){UI.view=null;return render()}b.items=b.items||[];
- const app=document.getElementById('app');const p=planObj(b);
- if(!app.querySelector('#dsc')){app.innerHTML='<div class="topbar"><button class="btn sm ghost" id="back">← Done</button><div class="house" style="text-align:center"><b style="font-size:17px">Decorate the venue</b><span>Tap the ground to place</span></div><div class="chip"><i>₹</i>'+Math.round(S.money).toLocaleString('en-IN')+'</div></div><div class="main" id="main" style="padding-top:10px"><div class="scene" id="dsc"></div><div id="dbody"></div></div>';
-  $('#back').onclick=()=>{save();UI.view={t:'plan',id:b.id};render()};
-  const cv=document.createElement('canvas');$('#dsc').appendChild(cv);const sc=new E3.Scene(cv,Math.min(380,Math.round(innerHeight*.45)));UI.scene=sc;UI.dsc=sc;
-  const rebuild=()=>{buildVenue(sc,p,{trad:b.trad,items:b.items,noGuests:true,noProc:true})};rebuild();sc.th=.6;sc.ph=.95;sc.dist=24;sc.auto=false;sc.start();
-  sc.onTap=(x,y)=>{const g=sc.toGround(x,y);if(!g)return;const gx=Math.round(g[0]*2)/2,gz=Math.round(g[1]*2)/2;
-   if(UI.tool==='remove'){const i=b.items.findIndex(it=>Math.hypot(it.x-g[0],it.z-g[1])<1.2);if(i>=0){b.items.splice(i,1);AUD.sfx('tap');rebuild();drawDecorBody(b)}return}
-   const it=DECOR_BY[UI.tool||'urn'];if(!it)return;if(it.minFame&&fameTier()<it.minFame){toast('Needs more fame');return}
-   if(b.items.length>=24){toast('That is enough decoration');return}
-   if(!okSpot(b,gx,gz,p)){toast('Can\'t place it there');return}
-   b.items.push({k:it.k,x:gx,z:gz});AUD.sfx('place');rebuild();drawDecorBody(b)};
-  UI.rebuildDecor=rebuild}
- drawDecorBody(b)}
-function drawDecorBody(b){const body=$('#dbody');const bt=beauty(b),tg=beautyTarget(b),bonus=beautyBonus(b);UI.tool=UI.tool||'arch';
- let h='<div class="card" style="padding:12px 14px"><div class="row"><div style="flex:1"><div class="lab xs mu" style="display:flex;justify-content:space-between"><span>Beauty '+bt+'</span><span>Families expect about '+tg+'</span></div><div class="bar" style="margin-top:4px"><i style="width:'+Math.min(100,bt/(tg*1.6)*100)+'%;background:var(--gold)"></i></div></div></div><div class="row xs" style="margin-top:8px"><span class="mu">'+b.items.length+' items · '+money(itemsCost(b))+'</span><span class="sp"></span><span class="'+(bonus>=0?'ok':'bad')+'">Happiness '+(bonus>=0?'+':'')+bonus.toFixed(1)+'</span></div></div>';
- h+='<div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:0 -16px 10px;padding-left:16px;padding-right:16px">'+DECOR_ITEMS.map(it=>{const lock=it.minFame&&fameTier()<it.minFame;return '<button class="opt'+(UI.tool===it.k?' sel':'')+'" data-tool="'+it.k+'" style="flex:none;width:128px;margin:0" '+(lock?'disabled':'')+'><div class="t sm">'+it.name+'</div><div class="xs gold">'+money(it.cost)+' · beauty '+it.beauty+'</div><div class="xs mu" style="margin-top:2px">'+(lock?'Needs '+FAME[it.minFame].name:it.desc)+'</div></button>'}).join('')+'</div>';
- h+='<div class="row" style="gap:8px"><button class="btn sm'+(UI.tool==='remove'?' red':'')+'" data-tool="remove">Remove</button><button class="btn sm" id="auto">Decorate for me</button><span class="sp"></span><button class="btn sm ghost" id="clr">Clear all</button></div>';
- body.innerHTML=h;
- body.querySelectorAll('[data-tool]').forEach(el=>el.onclick=()=>{UI.tool=el.dataset.tool;AUD.sfx('tap');drawDecorBody(b)});
- $('#clr').onclick=()=>{b.items=[];UI.rebuildDecor();drawDecorBody(b)};
- $('#auto').onclick=()=>{const p=planObj(b);const want=beautyTarget(b)*.9;const pool=DECOR_ITEMS.filter(i=>!(i.minFame&&fameTier()<i.minFame)).sort((a,c)=>c.beauty/c.cost-a.beauty/a.cost);let g=0;
-  const plan=['seating','seating','canopy','canopy','arch','arch','swing','lamp','lamp','lamp','lamp','banana','banana','urn','urn','rangoli','rangoli','peacock','fountain','elephant'];
-  for(const k of plan){if(beauty(b)>=want&&k!=='seating')break;const it=DECOR_BY[k];if(it.minFame&&fameTier()<it.minFame)continue;for(let tries=0;tries<60;tries++){const a=Math.random()*6.28,r=4+Math.random()*4;const x=Math.round(Math.cos(a)*r*2)/2,z=Math.round(Math.sin(a)*r*2)/2;if(okSpot(b,x,z,p)){b.items.push({k,x,z});break}}}
-  AUD.sfx('good');UI.rebuildDecor();drawDecorBody(b)};
+ const app=document.getElementById('app');
+ if(!app.querySelector('#dst')){app.innerHTML='<div class="topbar"><button class="btn sm ghost" id="back">← Done</button><div class="house" style="text-align:center"><b style="font-size:17px">Decorate the venue</b><span>'+planObj(b).venue.name+'</span></div><div class="chip"><i>₹</i>'+Math.round(S.money).toLocaleString('en-IN')+'</div></div><div class="main" id="main" style="padding-top:10px"><div id="dst"></div><div id="dbody"></div></div>';
+  $('#back').onclick=()=>{save();UI.view={t:'plan',id:b.id};render()};UI.dst=new Stage($('#dst'),Math.round(Math.min(innerWidth,560)*.5));UI.dst.show(venueArt(planObj(b).venue.kind),{move:2,dur:30})}
+ const bt=beauty(b),tg=beautyTarget(b),bonus=beautyBonus(b);stageFx(UI.dst,{petals:bt>=tg?.5:bt>=tg*.5?.2:0,sparkle:.6+Math.min(1.4,bt/tg)});
+ let h='<div class="card" style="padding:12px 14px"><div class="lab xs mu" style="display:flex;justify-content:space-between"><span>Beauty '+bt+'</span><span>Families expect about '+tg+'</span></div><div class="bar" style="margin-top:4px"><i style="width:'+Math.min(100,bt/(tg*1.6)*100)+'%;background:var(--gold)"></i></div><div class="row xs" style="margin-top:8px"><span class="mu">'+b.items.length+' items · '+money(itemsCost(b))+'</span><span class="sp"></span><span class="'+(bonus>=0?'ok':'bad')+'">Happiness '+(bonus>=0?'+':'')+bonus.toFixed(1)+'</span></div></div>';
+ h+='<div class="card">'+DECOR_ITEMS.map(it=>{const lock=it.minFame&&fameTier()<it.minFame;const n=itemCount(b,it.k);return '<div class="list-item"><div style="flex:1;min-width:0"><div class="'+(lock?'dim':'')+'">'+it.name+'</div><div class="xs mu">'+(lock?'Needs '+FAME[it.minFame].name:money(it.cost)+' each · beauty '+it.beauty+' · '+it.desc)+'</div></div>'+(lock?'':'<div class="cnt"><button data-m="'+it.k+'" aria-label="Remove one">−</button><b>'+n+'</b><button data-p="'+it.k+'" aria-label="Add one">+</button></div>')+'</div>'}).join('')+'</div>';
+ h+='<div class="row" style="gap:8px"><button class="btn" id="auto" style="flex:1">Decorate for me</button><button class="btn ghost" id="clr">Clear all</button></div>';
+ const body=$('#dbody');body.innerHTML=h;
+ body.querySelectorAll('[data-p]').forEach(el=>el.onclick=()=>{if(b.items.length>=24){toast('That is enough decoration');return}b.items.push({k:el.dataset.p});AUD.sfx('place');renderDecor()});
+ body.querySelectorAll('[data-m]').forEach(el=>el.onclick=()=>{const i=b.items.map(x=>x.k).lastIndexOf(el.dataset.m);if(i>=0){b.items.splice(i,1);AUD.sfx('tap');renderDecor()}});
+ $('#clr').onclick=()=>{b.items=[];renderDecor()};
+ $('#auto').onclick=()=>{b.items=[];const want=beautyTarget(b)*.9;const order=['seating','seating','canopy','canopy','arch','arch','swing','lamp','lamp','lamp','banana','urn','urn','rangoli','rangoli','peacock','fountain','elephant','arch'];for(const k of order){if(beauty(b)>=want&&k!=='seating'&&k!=='canopy')break;const it=DECOR_BY[k];if(it.minFame&&fameTier()<it.minFame)continue;b.items.push({k})}AUD.sfx('good');renderDecor()};
 }
 
 // ---------------- Vendors ----------------

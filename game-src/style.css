@@ -82,3 +82,24 @@ h1{font-size:30px}h2{font-size:23px}h3{font-size:19px}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .app .topbar{padding-top:10px}.app .nav{padding-bottom:0}.app .sheet{padding-bottom:18px}.app .toast{bottom:76px}
+.stage{position:relative;overflow:hidden;border-radius:16px;border:1px solid #4a3a2a;background:#0d0a12;margin-bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.st-l{position:absolute;inset:-2%;background-size:cover;background-position:center;opacity:0;will-change:transform,opacity}
+.st-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.stage:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(10,5,12,.55) 100%),linear-gradient(180deg,rgba(0,0,0,0) 60%,rgba(18,14,22,.75) 100%)}
+.st-cap{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;opacity:0;transform:translateY(8px);transition:all .6s ease}
+.st-cap.on{opacity:1;transform:none}
+.st-cap b{display:block;font-family:var(--serif);font-size:26px;font-weight:600;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.st-cap span{display:block;font-size:13px;color:#F6EEDF;opacity:.9;text-shadow:0 1px 6px rgba(0,0,0,.9)}
+.who{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.who img,.who .ph{width:64px;height:64px;border-radius:32px;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 0 3px rgba(217,169,49,.18);flex:none;background:#2A2031}
+.who .nm{font-size:12px;color:var(--gold)}.who .q{font-family:var(--serif);font-size:19px;font-style:italic;line-height:1.25;margin-top:2px}
+.event-card{animation:up .35s ease-out}
+.couple{display:flex;flex:none}.couple img{width:44px;height:44px;border-radius:22px;object-fit:cover;border:2px solid var(--p1)}.couple img+img{margin-left:-14px}
+.hero{position:relative;height:150px;margin:-14px -16px 14px;overflow:hidden}
+.hero .st-l{opacity:1}
+.splash.painted{background:#120E16}
+.splash .bgimg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.8;animation:kb 30s ease-out forwards}
+.splash .bgshade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,14,22,.3),rgba(18,14,22,.85) 60%,#120E16)}
+.splash>*:not(.bgimg):not(.bgshade){position:relative}
+@keyframes kb{from{transform:scale(1.05)}to{transform:scale(1.2) translate(-2%,-2%)}}
+.cnt{display:flex;align-items:center;gap:8px}.cnt button{width:34px;height:34px;border-radius:17px;border:1px solid var(--line);background:var(--p2);font-size:18px}.cnt b{min-width:18px;text-align:center}
