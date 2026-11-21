@@ -20,7 +20,7 @@ function setupView(){const s=SW;let h=`<div class="steps">${[0,1,2].map(i=>`<i c
   <small style="display:block;margin-top:10px">Colours</small><div class="chips" style="margin-top:6px">${[['#e8b84a','#1a1206'],['#e05d5d','#fff4e0'],['#1f3a5f','#ffd77a'],['#0b0b10','#e8e6e0'],['#3dd68c','#08180f'],['#b07cff','#140a24'],['#f5f5f5','#7a1f2b']].map(c=>`<button style="background:${c[0]};color:${c[1]};${s.logo.c1===c[0]?'outline:2px solid #fff':''}" onclick="SW.logo.c1='${c[0]}';SW.logo.c2='${c[1]}';setupView()">Aa</button>`).join('')}</div>
   <small style="display:block;margin-top:10px">Subtitle</small><div class="chips" style="margin-top:6px">${['Pictures','Films','Studios','Entertainment','Productions','None'].map(t=>`<button class="${s.logo.sub===t?'on':''}" onclick="SW.logo.sub='${t}';setupView()">${t}</button>`).join('')}</div>
   <small style="display:block;margin-top:10px">Icon letters</small><input type="text" maxlength="3" value="${esc(s.logo.icon)}" oninput="SW.logo.icon=this.value.toUpperCase();document.getElementById('lg').innerHTML=logoSVG(SW.logo,260)"></div>
-  <button class="btn gold" onclick="SW.step=1;setupView()">Next: Your CEO →</button><button class="btn ghost" onclick="title()">← Back</button>`;
+  <button class="btn gold" onclick="swNext(1)">Next: Your CEO →</button><button class="btn ghost" onclick="title()">← Back</button>`;
   h=h.replace(logoSVG(s.logo,260),`<div id="lg">${logoSVG(s.logo,260)}</div>`);}
  else if(s.step===1){const L=s.ceo.look;
   const opt=(lbl,key,arr,fmt)=>`<small style="display:block;margin-top:10px">${lbl}</small><div class="chips" style="margin-top:6px">${arr.map((v,i)=>`<button class="${L[key]===v||(typeof v==='number'&&L[key]===i&&false)?'on':''}" onclick="SW.ceo.look.${key}=${typeof v==='string'?`'${v}'`:v};setupView()">${fmt?fmt(v,i):v}</button>`).join('')}</div>`;
@@ -33,10 +33,10 @@ function setupView(){const s=SW;let h=`<div class="steps">${[0,1,2].map(i=>`<i c
   <small style="display:block;margin-top:10px">Outfit</small><div class="chips" style="margin-top:6px">${['tee','collar','suit','turtle'].map(v=>`<button class="${L.style===v?'on':''}" onclick="SW.ceo.look.style='${v}';setupView()">${{tee:'T-shirt',collar:'Shirt',suit:'Suit',turtle:'Turtleneck'}[v]}</button>`).join('')}</div>
   <div class="chips" style="margin-top:8px">${CLOTH.map((c,i)=>`<button style="background:${c};width:38px;height:32px;${L.cloth===i?'outline:2px solid var(--gold)':''}" onclick="SW.ceo.look.cloth=${i};setupView()"></button>`).join('')}</div>
   <div class="row" style="margin-top:10px"><span>Glasses</span><button class="btn sm ${L.glasses?'gold':'ghost'}" style="margin:0" onclick="SW.ceo.look.glasses=!SW.ceo.look.glasses;setupView()">${L.glasses?'On':'Off'}</button></div></div>
-  <button class="btn gold" onclick="SW.step=2;setupView()">Next: Difficulty →</button><button class="btn ghost" onclick="SW.step=0;setupView()">← Back</button>`;}
+  <button class="btn gold" onclick="swNext(2)">Next: Difficulty →</button><button class="btn ghost" onclick="SW.step=0;setupView()">← Back</button>`;}
  else{h+=`<h2>Starting money</h2>${Object.keys(DIFFS).map(k=>`<div class="card opt ${s.diff===k?'sel':''}" onclick="SW.diff='${k}';setupView()"><div class="row"><b style="font-size:20px">${M(DIFFS[k].cash)}</b><span style="color:${DIFFS[k].c};font-weight:800">${DIFFS[k].l}</span></div><p class="muted" style="font-size:13px;margin-top:4px">${{easy:'Room for a few mistakes and a big first film.',medium:'A real mid-size studio. Every flop hurts.',hard:'A scrappy indie. Start small or go broke.'}[k]}</p></div>`).join('')}
   <div class="card ceo">${portrait(s.ceo,70)}<div><b>${esc(s.ceo.n||'You')}</b><div class="muted" style="font-size:13px">CEO of ${esc(s.name||'Silver Screen Pictures')}</div></div></div>
-  <button class="btn gold" onclick="finishSetup()">🎬 Start the game</button><button class="btn ghost" onclick="SW.step=1;setupView()">← Back</button>`}
+  <button class="btn gold" onclick="swNext(3)">🎬 Start the game</button><button class="btn ghost" onclick="SW.step=1;setupView()">← Back</button>`}
  $('#app').innerHTML=h;window.scrollTo(0,0)}
 function finishSetup(){const s=SW;s.ceo.n=s.ceo.n||'Alex Morgan';s.logo.text=s.logo.text||'Silver Screen';s.logo.icon=s.logo.icon||'SS';
  newGame({name:s.name||'Silver Screen Pictures',logo:s.logo,ceo:s.ceo,diff:s.diff,cash:DIFFS[s.diff].cash});TAB='hq';render();
@@ -197,7 +197,7 @@ function greenlight(){W.acts=W.acts3.filter(Boolean);
  if(!W.script.own)S.scripts=S.scripts.filter(x=>x!==W.script);S.projects.push(p);
  S.receivables.push({t:t+p.sch.total,amt:p.rebate*(1-p.cofi),label:p.title+' tax rebate'});
  addNews(`🟢 ${esc(S.name)} greenlights <b>${esc(p.title)}</b> (${p.genre}${p.g2?'/'+p.g2:''}, ${M(p.spend)}) — ${esc(pname(p.dir))} directing ${esc(pname(p.cast.lead))}${p.cast.co?' and '+esc(pname(p.cast.co)):''}.`);
- save();TAB='hq';CAR=0;render();setTimeout(()=>phoneCall('📞 Incoming call',pname(p.dir),`"Thrilled to be on board <b>${esc(p.title)}</b>! Pre-production starts now. I'll call you when we wrap."`),300)}
+ save();TAB='hq';CAR=0;render();addInbox('🎬',pname(p.dir),`Pre-production begins on ${esc(p.title)}`,`"Thrilled to be on board <b>${esc(p.title)}</b>! Pre-production starts now."`)}
 
 /* ---------- Poster designer ---------- */
 let PD=null;

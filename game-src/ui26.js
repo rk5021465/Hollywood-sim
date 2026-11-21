@@ -40,7 +40,7 @@ function drTick(){if(!S||!S.drafts)return;const now=absW();{const used=new Set(S
   if(d.kind==='draft'&&now<d.doneW-1&&w){const r=Math.random();
    if(r<.035){const n=RI(1,3);d.doneW+=n;d.log.push(`Writer's block: ${n} week${n>1?'s':''} late`);addInbox('✍️',w.n,`${d.title} is running late`,`${w.n} has writer's block. Expect the draft about ${n} week${n>1?'s':''} later.`)}
    else if(r<.05&&!d.asked){d.asked=1;d.ask=+(d.fee*.3).toFixed(2);addInbox('💸',w.n,`Bonus request on ${d.title}`,`${w.n} wants a ${M(d.ask)} bonus to keep going. Open Writers' room to answer.`,'writersRoom()');toast(`💸 ${esc(w.n)} wants a bonus to finish <i>${esc(d.title)}</i>`)}
-   else if(r<.058&&!hasT(w,'hardworking')){d.quit=1;d.doneW=now}}
+   else if(r<.058&&!hasT(w,'hardworking')){d.quit=1;d.doneW=now;if(typeof urgentCall==='function')urgentCall(w.n,`Quitting ${d.title}`,`${w.n} has walked off <b>${esc(d.title)}</b>. You'll get the unfinished draft.`,'writersRoom()')}}
   if(now>=d.doneW)drFinish(d)})}
 
 function drFinish(d){const w=person(d.writer);d.status='done';d.doneAt=absW();

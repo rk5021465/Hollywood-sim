@@ -67,11 +67,11 @@ function pitchTick(){const k=wIdx();if(S.pitchW===k)return;S.pitchW=k;S.pitches=
  S.pitches.forEach(x=>{if(x.status==='new'&&k-x.wk>=4){x.status='gone';const p=person(x.who);if(p)addNews(`📞 ${esc(p.n)} took <i>${esc(x.sc.title)}</i> to another studio after you never took the meeting.`)}});
  S.pitches=S.pitches.filter(x=>x.status==='new'||k-x.wk<40).slice(-30);
  if(S.myScripts){const used=new Set(S.projects.map(p=>p.title).concat(S.films.map(f=>f.title)));S.myScripts=S.myScripts.filter(s=>!used.has(s.title)&&(s.until==null||s.until>=tNow()))}
- if(pitchOpen().length<2&&Math.random()<.24&&!ev('wga')){const P=makePitch();if(P){S.pitches.push(P);if(typeof toast==='function')try{toast(`📞 ${pname(P.who)} wants to pitch you a movie`)}catch(e){}}}
+ if(pitchOpen().length<2&&Math.random()<.06&&!ev('wga')){const P=makePitch();if(P){S.pitches.push(P)}}
  (S.passed||[]).filter(x=>x.t===tNow()&&!x.done&&S.wk===2).forEach(x=>{x.done=1;const g=+(x.q*R(.8,6)*inf(tNow())).toFixed(1);addNews(`🎬 ${esc(x.studio)}’s <i>${esc(x.title)}</i>, the pitch you passed on, ${g>250*inf(tNow())?'becomes a smash with':'opens and grosses'} ${M(g)} worldwide.`)})}
 const _wt10=weekTick;weekTick=function(){_wt10();try{pitchTick()}catch(e){}};
 const _nm10=nextMonth;nextMonth=function(){const r=_nm10.apply(this,arguments);try{if(!S.over)pitchTick()}catch(e){}return r};
-const _wr10=weekRows;weekRows=function(){const rows=_wr10();pitchOpen().slice(0,2).forEach(x=>rows.unshift(['#7C5CE0',`📞 <b>${esc(pname(x.who))}</b> wants to pitch you <i>${esc(x.sc.title)}</i>`,`pitchView(${x.id})`]));return rows};
+const _wr10=weekRows;weekRows=function(){const rows=_wr10();pitchOpen().filter(x=>wIdx()-x.wk<=1).slice(0,1).forEach(x=>rows.push(['#7C5CE0',`🎙️ New pitch in the Pitch room: <i>${esc(x.sc.title)}</i>`,`pitchView(${x.id})`]));return rows};
 const _scr10=scripts;scripts=function(){const a=_scr10();const mine=(S.myScripts||[]).filter(s=>!a.includes(s));return mine.concat(a)};
 
 function pitchScene(P){const p=person(P.who);const tod=(S.wk||0)%2?['#F4B26A','#7C4A8B']:['#9CC9F0','#E8B98A'];
