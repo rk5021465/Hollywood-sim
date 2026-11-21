@@ -781,3 +781,5 @@ body.retrophone .happ span{font-family:'Courier New',monospace;letter-spacing:.3
 .sc30i{position:relative;height:92px;overflow:hidden}.sc30fit{position:absolute;left:6px;top:6px;background:#1F9D5C;color:#fff;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:8px}.sc30fit.ok{background:#2F6FD6}
 .sc30on{position:absolute;right:6px;top:6px;width:24px;height:24px;border-radius:50%;background:#E8B84A;color:#3A2A0C;display:grid;place-items:center;font-weight:900}
 .sc30c b{display:block;font-size:13px;margin:7px 9px 1px}.sc30c small{display:block;margin:0 9px;font-size:11.5px;color:var(--muted);text-transform:none;letter-spacing:0}.sc30c .sc30r{color:#B5821C;margin-top:2px}
+.sc30f{flex-wrap:nowrap!important;overflow-x:auto;margin:0 0 8px;scrollbar-width:none}.sc30f::-webkit-scrollbar{display:none}.sc30f button{flex:none;white-space:nowrap}
+.sc30sel{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.sc30chip{border:0;border-radius:999px;padding:5px 10px;background:#FFF1CF;color:#6b4a0c;font:700 12px inherit;font-family:inherit}
