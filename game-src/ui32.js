@@ -96,3 +96,22 @@ function tcHome(tail){const rows=(()=>{try{return weekRows()}catch(e){return []}
  ${rows.length>1?`<div class="tc-h"><span>Also waiting</span><i></i></div><div class="evl">${rows.slice(1,5).map(r=>`<button class="evr" onclick="${r[2]}"><span class="evd" style="--c:${r[0]}">${homeRowIcon(r[0],r[1])}</span><span class="evt">${r[1]}</span><i>›</i></button>`).join('')}</div>`:''}
  ${tail}`}
 hq8=(function(o){return function(){const h=o();if(PREFS.theme!=='tc')return h;try{const k=h.indexOf('<h4 class="hh">Create');return tcHome(k>=0?h.slice(k):'')}catch(e){console.error(e);return h}}})(hq8);
+
+/* ---------- v21.3: Technicolor (B) is the look ---------- */
+try{if(!PREFS.tc213){PREFS.tc213=1;PREFS.theme='tc';savePrefs();applyTheme()}}catch(e){}
+function tcHead(){const L=S.logo||{};return `<div class="tc-top"><div class="tc-logo">${typeof logoMini==='function'?logoMini(L,44):''}</div><div class="tc-nm"><b>${esc(S.name)}</b><small>HOLLYWOOD · EST. ${S.y0||START_YEAR}</small></div><span class="tc-cash">${M(S.cash)}</span><button class="tc-ib" aria-label="Settings" onclick="settings()">${ic('gear')}</button><button class="tc-ib" aria-label="Open phone" onclick="openPhone()">${ic('phone')||'📱'}${(typeof phBadgeTotal==='function'&&phBadgeTotal())?`<i>${phBadgeTotal()}</i>`:''}</button></div>`}
+tcHome=(function(o){return function(tail){let h=o(tail);try{h=h.replace('<section class="tc-hd"><div class="tc-stripes"></div>','<section class="tc-hd"><div class="tc-stripes"></div>'+tcHead());
+ const rel=(S.projects||[]).filter(p=>p.releaseT!=null&&p.dist!=='sell').map(p=>({p,w:p.releaseT*4+(p.relWk||0)})).filter(x=>x.w-wIdx()<=1&&x.w>=wIdx())[0];
+ if(rel){const L=person(rel.p.cast&&rel.p.cast.lead);h=h.replace(/<button class="tc-wk"[\s\S]*?<\/button>/,`<button class="tc-wk" onclick="projectModal(${rel.p.id})"><div class="tc-wkp">${L?portrait(L,70,{square:1}):'🎬'}</div><div><small>THIS WEEKEND</small><b>${esc(rel.p.title)} opens</b><em>Sunday night: watch the box-office numbers roll in.</em></div></button>`)}}catch(e){}return h}})(tcHome);
+render=(function(o){return function(){const r=o.apply(this,arguments);try{document.body.classList.toggle('onhq',typeof TAB!=='undefined'&&TAB==='hq')}catch(e){}return r}})(render);
+tabbar=(function(o){return function(){let h=o();try{if(PREFS.theme==='tc')h=h.replace('<span>Studio</span>','<span>Lot</span>').replace('<span>Projects</span>','<span>Pictures</span>').replace('<span>Talent</span>','<span>Stars</span>')}catch(e){}return h}})(tabbar);
+/* opening weekend reveal in B style */
+function tcOpening(f){try{if(PREFS.theme!=='tc'||!f||!f.opening)return;const rk=f.owRank||1;const d=curDate();
+ const L=(f.owList||[]).slice(0,3);
+ document.body.insertAdjacentHTML('beforeend',`<div id="tcow" class="tcow" onclick="this.remove()"><img src="${MED}bg_marquee.jpg" alt=""><div class="tcow-f"></div><div class="tcow-in">
+ <span class="tcow-tag">SUNDAY NIGHT · ${MON[d.getMonth()].toUpperCase()} ${d.getDate()}</span>
+ <div class="tcow-mq"><small>OPENING WEEKEND</small><h3>${esc(f.title)}</h3><b>${M(f.opening)}</b></div>
+ ${rk===1?'<div class="tcow-st">No. 1 SMASH!</div>':rk<=3?`<div class="tcow-st ok">No. ${rk} OPENING</div>`:''}
+ <p>Tap anywhere to continue</p></div></div>`);if(typeof sfx==='function')sfx('win')}catch(e){}}
+if(typeof openingRace==='function'){openingRace=(function(o){return function(f){const r=o.apply(this,arguments);try{if(PREFS.theme==='tc'){const t=setInterval(()=>{if(f.owRank){clearInterval(t);setTimeout(()=>tcOpening(f),700)}},300);setTimeout(()=>clearInterval(t),15000)}}catch(e){}return r}})(openingRace)}
+try{applyTheme()}catch(e){}
