@@ -44,3 +44,12 @@ const _nm29=nextMonth;nextMonth=function(){const r=_nm29.apply(this,arguments);t
 
 /* contracts on the person page */
 openPerson=(function(o){return function(id){o(id);try{const L=ctAll().filter(c=>c.p===id&&c.left>0);if(!L.length)return;const box=document.querySelector('#modal .life28');if(box)box.insertAdjacentHTML('afterbegin',`<div class="ct29tag">${L.map(c=>`📝 <b>${esc(c.name)}</b>: ${c.left} of ${c.total} films left · ${M(c.fee)} each`).join('<br>')}</div>`)}catch(e){}}})(openPerson);
+
+/* ---------- audio focus: one sound at a time, music ducks underneath ---------- */
+function sfxBusy(){try{return Object.values(SFXP).some(a=>a&&!a.paused&&!a.ended)}catch(e){return false}}
+function musicDuck(on){try{if(typeof MP==='undefined'||!MP.cur)return;if(on){MP.ducked=1;MP.cur.volume=Math.min(MP.cur.volume,(MP.vol||.5)*.12)}else if(MP.ducked&&!sfxBusy()){MP.ducked=0;MP.cur.volume=MP.vol||.5}}catch(e){}}
+sfxFile=(function(o){return function(k){
+ if(k==='ring'&&sfxBusy()){const t0=Date.now();const wait=()=>{if(!sfxBusy()||Date.now()-t0>4000){try{Object.values(SFXP).forEach(a=>{if(a&&!a.paused)a.pause()})}catch(e){}o('ring');musicDuck(1);hook()}else setTimeout(wait,200)};setTimeout(wait,200);return true}
+ try{Object.values(SFXP).forEach(a=>{if(a&&!a.paused)a.pause()})}catch(e){}
+ const ok=o(k);if(ok){musicDuck(1);hook()}return ok}
+ function hook(){try{Object.values(SFXP).forEach(a=>{if(a&&!a._duckHook){a._duckHook=1;a.addEventListener('ended',()=>setTimeout(()=>musicDuck(0),150));a.addEventListener('pause',()=>setTimeout(()=>musicDuck(0),150))}})}catch(e){}}})(sfxFile);

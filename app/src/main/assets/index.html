@@ -4898,9 +4898,9 @@ const DECO_RAYS=(()=>{let s='';for(let i=0;i<16;i++){const a=i/16*Math.PI*2,b=(i
 portrait=(function(old){return function(p,size,opt){opt=opt||{};const s=size||64;if(!p)return old(p,size,opt);
  const [c1,c2]=pHue(p);const u='dp'+(hashStr(String(p.id||p.n)+s)%9999999);const rad=opt.square?'12px':'50%';const im=pImg(p);const ring=`<circle cx="50" cy="50" r="48.5" fill="none" stroke="url(#${u}g)" stroke-width="${s<50?3:2}"/>`;
  const defs=`<defs><radialGradient id="${u}b" cx="50%" cy="34%" r="78%"><stop offset="0" stop-color="${c2}"/><stop offset="1" stop-color="${c1}"/></radialGradient><linearGradient id="${u}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4cf"/><stop offset=".5" stop-color="#e2bb66"/><stop offset="1" stop-color="#9c7228"/></linearGradient></defs>`;
- if(im)return `<svg viewBox="0 0 100 100" width="${s}" height="${s}" style="display:block;border-radius:${rad};overflow:hidden;background:${c1}">${defs}<image href="${im.src}" x="0" y="-4" width="100" height="125" preserveAspectRatio="xMidYMin slice"/>${opt.square?'':ring}</svg>`;
+ if(im)return `<svg viewBox="0 0 100 100" width="${s}" height="${s}" style="display:block;flex:none;flex-shrink:0;aspect-ratio:1/1;border-radius:${rad};overflow:hidden;background:${c1}">${defs}<image href="${im.src}" x="0" y="-4" width="100" height="125" preserveAspectRatio="xMidYMin slice"/>${opt.square?'':ring}</svg>`;
  const ini=initials(p.n);const two=ini.length>1;
- return `<svg viewBox="0 0 100 100" width="${s}" height="${s}" style="display:block;border-radius:${rad};overflow:hidden">${defs}<rect width="100" height="100" fill="url(#${u}b)"/><g fill="#f3d98b" opacity=".09">${DECO_RAYS}</g>
+ return `<svg viewBox="0 0 100 100" width="${s}" height="${s}" style="display:block;flex:none;flex-shrink:0;aspect-ratio:1/1;border-radius:${rad};overflow:hidden">${defs}<rect width="100" height="100" fill="url(#${u}b)"/><g fill="#f3d98b" opacity=".09">${DECO_RAYS}</g>
  <circle cx="50" cy="50" r="38" fill="none" stroke="#e9c97a" stroke-opacity=".5" stroke-width=".8"/>${s>=48?`<path d="M30 70 H70" stroke="#e9c97a" stroke-opacity=".55" stroke-width=".8"/><path d="M50 74 l2 3 -2 3 -2 -3z" fill="#e9c97a" opacity=".8"/>`:''}
  <text x="50" y="${two?61:63}" text-anchor="middle" font-family="'Playfair Display',Didot,Georgia,serif" font-style="italic" font-weight="700" font-size="${two?33:40}" fill="url(#${u}g)" letter-spacing="-1">${ini}</text>${opt.square?'':ring}</svg>`}})(portrait);
 
@@ -5410,6 +5410,15 @@ const _nm29=nextMonth;nextMonth=function(){const r=_nm29.apply(this,arguments);t
 
 /* contracts on the person page */
 openPerson=(function(o){return function(id){o(id);try{const L=ctAll().filter(c=>c.p===id&&c.left>0);if(!L.length)return;const box=document.querySelector('#modal .life28');if(box)box.insertAdjacentHTML('afterbegin',`<div class="ct29tag">${L.map(c=>`📝 <b>${esc(c.name)}</b>: ${c.left} of ${c.total} films left · ${M(c.fee)} each`).join('<br>')}</div>`)}catch(e){}}})(openPerson);
+
+/* ---------- audio focus: one sound at a time, music ducks underneath ---------- */
+function sfxBusy(){try{return Object.values(SFXP).some(a=>a&&!a.paused&&!a.ended)}catch(e){return false}}
+function musicDuck(on){try{if(typeof MP==='undefined'||!MP.cur)return;if(on){MP.ducked=1;MP.cur.volume=Math.min(MP.cur.volume,(MP.vol||.5)*.12)}else if(MP.ducked&&!sfxBusy()){MP.ducked=0;MP.cur.volume=MP.vol||.5}}catch(e){}}
+sfxFile=(function(o){return function(k){
+ if(k==='ring'&&sfxBusy()){const t0=Date.now();const wait=()=>{if(!sfxBusy()||Date.now()-t0>4000){try{Object.values(SFXP).forEach(a=>{if(a&&!a.paused)a.pause()})}catch(e){}o('ring');musicDuck(1);hook()}else setTimeout(wait,200)};setTimeout(wait,200);return true}
+ try{Object.values(SFXP).forEach(a=>{if(a&&!a.paused)a.pause()})}catch(e){}
+ const ok=o(k);if(ok){musicDuck(1);hook()}return ok}
+ function hook(){try{Object.values(SFXP).forEach(a=>{if(a&&!a._duckHook){a._duckHook=1;a.addEventListener('ended',()=>setTimeout(()=>musicDuck(0),150));a.addEventListener('pause',()=>setTimeout(()=>musicDuck(0),150))}})}catch(e){}}})(sfxFile);
 
 
 applyTheme();title();
