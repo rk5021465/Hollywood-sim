@@ -5,7 +5,7 @@ function awareness(){const w=sum(CHANNELS,c=>(W.chan[c[0]]||0)*c[3]);return Math
 function mktCard(){const aw=awareness();return `<div class="card"><div class="row"><small>Marketing campaign</small><b>${M(chanCost())}</b></div>
  ${CHANNELS.map(c=>`<div class="row" style="margin-top:8px"><span style="font-size:13px">${c[1]}</span><div class="chips">${[0,1,2,3].map(l=>`<button class="${(W.chan[c[0]]||0)===l?'on':''}" style="padding:6px 9px" onclick="W.chan.${c[0]}=${l};wiz()">${['Off','Low','Mid','Max'][l]}</button>`).join('')}</div></div>`).join('')}
  <div class="row" style="margin-top:10px"><small>Awareness at release</small><b style="color:${aw>=70?'var(--green)':aw>=45?'var(--gold)':'var(--red)'}">${aw}%</b></div><div class="meter"><i style="width:${aw}%;background:${aw>=70?'var(--green)':aw>=45?'var(--gold)':'var(--red)'}"></i></div>
- <div class="row" style="margin-top:10px"><span style="font-size:14px">🎦 IMAX push (${M(2*I())})</span><button class="btn sm ${W.plf?'gold':'ghost'}" style="margin:0" onclick="W.plf=!W.plf;wiz()">${W.plf?'On':'Off'}</button></div></div>`}
+ ${(W.plf=false,typeof fmtUI==='function'?fmtUI():'')}</div>`}
 
 /* ---------- Talent profile ---------- */
 function roleOf(p){for(const k in S.people)if(S.people[k].includes(p))return k;return 'actors'}
