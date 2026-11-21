@@ -73,7 +73,64 @@ const PIMG=[
  {src:'media/p/f066.jpg',bg:'#c97973',n:'Victoria Ashdown',g:'F',a:[28, 42],s:[0, 1],nat:['UK', 'USA', 'France']},
  {src:'media/p/f067.jpg',bg:'#c46742',n:'Colette Bertrand',g:'F',a:[28, 42],s:[0, 1],nat:['France', 'Italy', 'UK']},
  {src:'media/p/f068.jpg',bg:'#034644',n:'Dorothea Weiss',g:'F',a:[68, 90],s:[0, 1],nat:['Germany', 'UK', 'USA']},
- {src:'media/p/f069.jpg',bg:'#c04e27',n:'Nisha Rao',g:'F',a:[22, 36],s:[2, 4],nat:['India']}];
+ {src:'media/p/f069.jpg',bg:'#c04e27',n:'Nisha Rao',g:'F',a:[22, 36],s:[2, 4],nat:['India']},
+ {src:'media/p/f070.jpg',bg:'#035144',n:'Yuna Takeda',g:'F',a:[34, 50],s:[0, 1],nat:['Japan', 'South Korea', 'China']},
+ {src:'media/p/f071.jpg',bg:'#80835a',n:'Augusta Vane',g:'F',a:[70, 95],s:[0, 1],nat:['UK', 'Italy', 'France']},
+ {src:'media/p/f072.jpg',bg:'#492e5a',n:'Kendra Whitlock',g:'F',a:[38, 54],s:[3, 4],nat:['USA', 'Brazil', 'South Africa']},
+ {src:'media/p/f073.jpg',bg:'#c24b16',n:'Leyla Farahani',g:'F',a:[22, 36],s:[1, 2],nat:['France', 'Spain', 'India']},
+ {src:'media/p/f074.jpg',bg:'#bd4d20',n:'Florence Abernathy',g:'F',a:[70, 95],s:[4, 5],nat:['USA', 'Nigeria', 'South Africa']},
+ {src:'media/p/f075.jpg',bg:'#588ec1',n:'Meera Joshi',g:'F',a:[26, 40],s:[2, 4],nat:['India']},
+ {src:'media/p/f076.jpg',bg:'#681c26',n:'Rosalba Quintana',g:'F',a:[50, 64],s:[3, 4],nat:['Mexico', 'India', 'Brazil']},
+ {src:'media/p/f077.jpg',bg:'#faa085',n:'Concetta Esposito',g:'F',a:[74, 95],s:[1, 2],nat:['Italy', 'Spain', 'India']},
+ {src:'media/p/f078.jpg',bg:'#c27814',n:'Eudora Simmons',g:'F',a:[78, 99],s:[4, 5],nat:['USA', 'Nigeria', 'South Africa']},
+ {src:'media/p/f079.jpg',bg:'#c35e47',n:'Haruko Sato',g:'F',a:[64, 82],s:[0, 1],nat:['Japan', 'China', 'South Korea']},
+ {src:'media/p/f080.jpg',bg:'#4181ad',n:'Nkechi Obi',g:'F',a:[36, 52],s:[4, 5],nat:['Nigeria', 'USA', 'South Africa']},
+ {src:'media/p/f081.jpg',bg:'#10404e',n:'Hye-jin Seo',g:'F',a:[24, 36],s:[0, 1],nat:['South Korea', 'China', 'Japan']},
+ {src:'media/p/f082.jpg',bg:'#0e1a34',n:'Valentina Cruz',g:'F',a:[24, 36],s:[1, 2],nat:['Spain', 'Mexico', 'Italy', 'Brazil']},
+ {src:'media/p/f083.jpg',bg:'#c17812',n:'Graziella Conti',g:'F',a:[74, 95],s:[0, 2],nat:['Italy', 'Spain', 'France']},
+ {src:'media/p/f084.jpg',bg:'#f5937a',n:'Folake Adebayo',g:'F',a:[34, 48],s:[4, 5],nat:['Nigeria', 'USA']},
+ {src:'media/p/f085.jpg',bg:'#bb4b26',n:'Remedios Alarcón',g:'F',a:[70, 92],s:[1, 2],nat:['Mexico', 'Spain', 'Italy']},
+ {src:'media/p/f086.jpg',bg:'#122039',n:'Xu Meifang',g:'F',a:[40, 56],s:[0, 1],nat:['China', 'Japan', 'South Korea']},
+ {src:'media/p/f087.jpg',bg:'#c0760e',n:'Solveig Brandt',g:'F',a:[64, 82],s:[0, 1],nat:['Sweden', 'Germany', 'UK']},
+ {src:'media/p/f088.jpg',bg:'#737745',n:'Lorraine Mabry',g:'F',a:[44, 58],s:[4, 5],nat:['USA', 'South Africa']},
+ {src:'media/p/f089.jpg',bg:'#d4c6e7',n:'Ottavia Sereni',g:'F',a:[64,80],s:[2,3],nat:['Italy', 'Greece', 'Israel']},
+ {src:'media/p/f090.jpg',bg:'#5694bd',n:'Zhou Meilan',g:'F',a:[34,48],s:[1,2],nat:['China', 'Taiwan']},
+ {src:'media/p/f091.jpg',bg:'#3a6351',n:'Adaeze Nwosu',g:'F',a:[54,68],s:[4,5],nat:['Nigeria', 'USA']},
+ {src:'media/p/f092.jpg',bg:'#93906d',n:'Lucía Ferrer',g:'F',a:[20,32],s:[1,2],nat:['Spain', 'Mexico', 'Lebanon']},
+ {src:'media/p/f093.jpg',bg:'#bb5d43',n:'Anjali Raman',g:'F',a:[24,38],s:[2,3],nat:['India', 'UK']},
+ {src:'media/p/f094.jpg',bg:'#c77e20',n:'Lin Qiuyue',g:'F',a:[40,55],s:[1,2],nat:['China', 'Singapore']},
+ {src:'media/p/f095.jpg',bg:'#588ebd',n:'Marguerite Delorme',g:'F',a:[55,70],s:[0,1],nat:['France', 'Canada']},
+ {src:'media/p/f096.jpg',bg:'#c04a24',n:'Winifred Ashcombe',g:'F',a:[75,92],s:[0,1],nat:['UK', 'Ireland']},
+ {src:'media/p/f097.jpg',bg:'#b8593b',n:'Sloane Harrington',g:'F',a:[34,48],s:[0,1],nat:['USA', 'UK']},
+ {src:'media/p/m002.jpg',bg:'#3f3f3f',n:'Kenji Morimoto',g:'M',a:[64,80],s:[1,2],nat:['Japan']},
+ {src:'media/p/m003.jpg',bg:'#482837',n:'Desmond Okafor',g:'M',a:[50,65],s:[4,5],nat:['Nigeria', 'UK']},
+ {src:'media/p/m004.jpg',bg:'#ebb548',n:'Takeshi Arakawa',g:'M',a:[60,75],s:[1,2],nat:['Japan']},
+ {src:'media/p/m005.jpg',bg:'#5b1821',n:'Kang Min-jun',g:'M',a:[24,36],s:[1,2],nat:['South Korea']},
+ {src:'media/p/m006.jpg',bg:'#01473d',n:'Ezekiel Brathwaite',g:'M',a:[75,92],s:[4,5],nat:['Barbados', 'USA', 'Jamaica']},
+ {src:'media/p/m007.jpg',bg:'#3c2960',n:'Callum Fitzmaurice',g:'M',a:[34,50],s:[0,1],nat:['Ireland', 'UK']},
+ {src:'media/p/m008.jpg',bg:'#c26448',n:'Kofi Mensah-Boateng',g:'M',a:[45,60],s:[4,5],nat:['Ghana', 'UK', 'USA']},
+ {src:'media/p/m009.jpg',bg:'#c37255',n:'Marcus Delaney',g:'M',a:[34,48],s:[4,5],nat:['USA', 'Canada']},
+ {src:'media/p/m010.jpg',bg:'#c2531e',n:'Hideo Kuwabara',g:'M',a:[75,90],s:[1,2],nat:['Japan']},
+ {src:'media/p/m011.jpg',bg:'#cb897b',n:'Harish Venkatraman',g:'M',a:[70,85],s:[3,4],nat:['India']},
+ {src:'media/p/m012.jpg',bg:'#e98a76',n:'Shiro Nakagawa',g:'M',a:[60,75],s:[1,2],nat:['Japan']},
+ {src:'media/p/m013.jpg',bg:'#e6b24d',n:'Rupert Halloway',g:'M',a:[50,65],s:[0,1],nat:['UK', 'USA']},
+ {src:'media/p/m014.jpg',bg:'#461d2d',n:'Ambrose Whitaker',g:'M',a:[65,80],s:[4,5],nat:['USA']},
+ {src:'media/p/m015.jpg',bg:'#003a6a',n:'Lachlan Byrne',g:'M',a:[45,58],s:[0,1],nat:['Scotland', 'Ireland']},
+ {src:'media/p/m016.jpg',bg:'#031b37',n:'Vittorio Lanza',g:'M',a:[55,68],s:[1,2],nat:['Italy', 'France']},
+ {src:'media/p/m017.jpg',bg:'#174777',n:'Arjun Selvaraj',g:'M',a:[22,32],s:[4,5],nat:['India', 'Sri Lanka']},
+ {src:'media/p/m018.jpg',bg:'#023f51',n:'Haruto Ishida',g:'M',a:[30,42],s:[1,2],nat:['Japan']},
+ {src:'media/p/m019.jpg',bg:'#b14f22',n:'Farid Haddad',g:'M',a:[70,85],s:[2,3],nat:['Lebanon', 'Egypt']},
+ {src:'media/p/m020.jpg',bg:'#cb857d',n:'Wei Jianyu',g:'M',a:[25,35],s:[1,2],nat:['China', 'Taiwan']},
+ {src:'media/p/m021.jpg',bg:'#bb4f29',n:'Mateo Valdés',g:'M',a:[20,30],s:[1,2],nat:['Mexico', 'Spain']},
+ {src:'media/p/m022.jpg',bg:'#191837',n:'Salvatore Bruni',g:'M',a:[68,82],s:[2,3],nat:['Italy', 'Portugal']},
+ {src:'media/p/m023.jpg',bg:'#3a88b6',n:'Rafael Domingo',g:'M',a:[24,34],s:[2,3],nat:['Philippines', 'Mexico']},
+ {src:'media/p/m024.jpg',bg:'#101c36',n:'Vikram Nair',g:'M',a:[28,38],s:[3,4],nat:['India']},
+ {src:'media/p/m025.jpg',bg:'#be6547',n:'Omar Zaydan',g:'M',a:[24,34],s:[1,2],nat:['Jordan', 'Lebanon', 'Turkey']},
+ {src:'media/p/m026.jpg',bg:'#a3a168',n:'Clarence Toussaint',g:'M',a:[60,75],s:[4,5],nat:['USA', 'Haiti']},
+ {src:'media/p/m027.jpg',bg:'#275843',n:'Soren Lindqvist',g:'M',a:[22,32],s:[0,1],nat:['Sweden', 'Denmark']},
+ {src:'media/p/m028.jpg',bg:'#c2780f',n:'Elias Varga',g:'M',a:[58,72],s:[1,2],nat:['Hungary', 'Greece']},
+ {src:'media/p/m029.jpg',bg:'#ae262a',n:'Tobi Adeyemi',g:'M',a:[22,32],s:[4,5],nat:['Nigeria', 'UK']},
+ {src:'media/p/m030.jpg',bg:'#345a43',n:'Anselm Hartmann',g:'M',a:[68,82],s:[0,1],nat:['Germany', 'Austria']}];
 const JEWEL=[['#0b2e26','#1d6b55'],['#2e0b14','#7a2335'],['#0b1a33','#1f4f86'],['#2e2108','#8a6420'],['#200e2c','#5e2d7a'],['#08282c','#1d7480'],['#2e140a','#8a4220'],['#14142a','#3a3a6e']];
 function pHue(p){return JEWEL[hashStr(p.id||p.n||'x')%JEWEL.length]}
 function isFem(p){try{return p.g==='F'||lookOf(p).g==='F'}catch(e){return p.g==='F'}}
@@ -81,7 +138,8 @@ function initials(n){const w=String(n||'?').replace(/[^A-Za-z\s'-]/g,'').trim().
 function assignPImgs(){if(!S||!S.people)return;S.pimg=S.pimg||{};const used=new Set(Object.values(S.pimg));const pools=['actors','directors','writers','dps','comps'].map(k=>S.people[k]||[]);
  PIMG.forEach((im,i)=>{if(used.has(i))return;const fits=a=>S.pimg[a.id]==null&&isFem(a)===(im.g==='F')&&(a.age||35)>=im.a[0]&&(a.age||35)<=im.a[1];let src=im.role?(S.people[im.role]||[]):(S.people.actors||[]);if(!im.role&&!src.some(fits))src=[].concat(S.people.directors||[],S.people.writers||[],S.people.composers||[],S.people.dps||[]);const pool=src.filter(a=>S.pimg[a.id]==null&&isFem(a)===(im.g==='F')&&(a.age||35)>=im.a[0]&&(a.age||35)<=im.a[1]);
   const sk=a=>{try{return lookOf(a).skin}catch(e){return 2}};const score=a=>(sk(a)>=im.s[0]&&sk(a)<=im.s[1]?100:0)+((im.nat||[]).includes(a.nat)?60:0)+(a.star||a.fame||0)*.5;
-  const best=pool.sort((x,y)=>score(y)-score(x))[0];if(best){if(score(best)<100){best.skinH=im.s[0];delete best.look}S.pimg[best.id]=i;used.add(i);try{const fresh=typeof credits!=='function'||!credits(best.id).length;if(fresh&&im.n&&!takenNames().has?.(im.n)){best.n=im.n;if(im.nat&&!im.nat.includes(best.nat))best.nat=im.nat[0]}}catch(e){}}})}
+  let best=pool.sort((x,y)=>score(y)-score(x))[0];if(!best&&!im.role&&typeof mkActorT==='function'&&(assignPImgs._n=(assignPImgs._n||0)+1)<=80){try{const a=mkActorT(takenNames(),im.a[1]>=55?'C':'M',im.g);a.g=im.g;a.age=RI(im.a[0],Math.min(im.a[1],im.a[0]+12));a.nat=(im.nat||[a.nat])[0];a.skinH=im.s[0];delete a.look;S.people.actors.push(a);best=a}catch(e){}}
+  if(best){if(score(best)<100){best.skinH=im.s[0];delete best.look}S.pimg[best.id]=i;used.add(i);try{const fresh=typeof credits!=='function'||!credits(best.id).length;if(fresh&&im.n&&!takenNames().has?.(im.n)){best.n=im.n;if(im.nat&&!im.nat.includes(best.nat))best.nat=im.nat[0]}}catch(e){}}})}
 function pImg(p){if(!S||!S.pimg||!p||S.pimg[p.id]==null)return null;return PIMG[S.pimg[p.id]]||null}
 const DECO_RAYS=(()=>{let s='';for(let i=0;i<16;i++){const a=i/16*Math.PI*2,b=(i+.45)/16*Math.PI*2;s+=`<polygon points="50,62 ${(50+Math.cos(a)*90).toFixed(1)},${(62+Math.sin(a)*90).toFixed(1)} ${(50+Math.cos(b)*90).toFixed(1)},${(62+Math.sin(b)*90).toFixed(1)}"/>`}return s})();
 portrait=(function(old){return function(p,size,opt){opt=opt||{};const s=size||64;if(!p)return old(p,size,opt);
