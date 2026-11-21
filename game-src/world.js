@@ -219,7 +219,7 @@ function refreshTalent(){
  const P=S.people;
  if(S.month===0){P.actors.forEach(a=>{a.age++;a.skill=clamp(a.skill+RI(-2,3),20,99);a.star=clamp(a.star+(a.age>58?-RI(1,4):RI(-3,3)),3,99)});
   ['directors','writers','composers','dps'].forEach(k=>P[k].forEach(c=>{c.age++;c.skill=clamp(c.skill+RI(-2,2),20,99)}));
-  const gone=P.actors.filter(a=>a.age>72&&Math.random()<.4&&!busy(a));gone.forEach(a=>addNews(`🎭 ${esc(a.n)} announces retirement from acting.`));P.actors=P.actors.filter(a=>!gone.includes(a));
+  const gone=P.actors.filter(a=>!a.dead&&a.age>(S.pimg&&S.pimg[a.id]!=null?88:76)&&Math.random()<.15&&!busy(a));gone.forEach(a=>{if(typeof story==='function')story({icon:'🎭',paper:'courier',who:[a.id],head:`${esc(a.n)} announces retirement after ${a.age-18} years in pictures.`,life:'Retired from acting',dm:(a.bond||0)>=30?{p:a.id,text:'I\'m hanging up my hat. Working with you was one of the joys of my career. 🎩'}:null});else addNews(`🎭 ${esc(a.n)} announces retirement from acting.`)});P.actors=P.actors.filter(a=>!a.dead);P.actors=P.actors.filter(a=>!gone.includes(a));
   ['directors','writers','composers','dps'].forEach(k=>{P[k]=P[k].filter(c=>!(c.age>78&&Math.random()<.4&&!busy(c)))})}
  const tk=takenNames();
  while(P.actors.length<40){const a=mkActor(tk,true,P.actors.filter(x=>x.g==='F').length<20?'F':'M');P.actors.push(a);if(Math.random()<.4)addNews(`🌟 Breakout newcomer ${esc(a.n)} signs with a top agency.`)}
