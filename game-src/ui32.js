@@ -67,3 +67,10 @@ hq8=(function(o){return function(){let old='';try{old=o()}catch(e){}
  ${fp?`<h4 class="hh">Front page</h4>${fp}`:''}
  ${bo.length?`<h4 class="hh">Weekend box office <button class="lk" onclick="boxOfficeModal()">Full chart</button></h4><div class="gn-bo">${bo.map((x,i)=>`<div class="${x.mine?'me':''}"><em>${i+1}</em><b>${esc(x.title||x.t||'')}</b><span>${esc(String(x.studio||"").split(" ")[0])}</span><span>${M(x.wkG||0)}</span></div>`).join('')}</div>`:''}
  ${tail}`}})(hq8);
+
+/* ---------- Technicolor theme (option B) ---------- */
+applyTheme=(function(o){return function(){o();try{document.body.classList.toggle('tc',PREFS.theme==='tc')}catch(e){}}})(applyTheme);
+settings=(function(o){return function(){const r=o.apply(this,arguments);try{const b=[...document.querySelectorAll('#modal .seg button')].find(x=>/Dark/.test(x.textContent));if(b&&!document.getElementById('tcBtn')){b.insertAdjacentHTML('afterend',`<button id="tcBtn" class="${PREFS.theme==='tc'?'on':''}" onclick="PREFS.theme='tc';savePrefs();applyTheme();settings()">🎞️ Technicolor</button>`);b.parentElement.style.width='auto';b.textContent='✨ Gold Noir'}}catch(e){}return r}})(settings);
+function themePick(t){PREFS.theme=t;savePrefs();applyTheme();render()}
+hq8=(function(o){return function(){let h=o();try{h=h.replace('<div class="gn-st"',`<div class="gn-th"><button class="${PREFS.theme!=='tc'?'on':''}" onclick="themePick('dark')">Gold Noir</button><button class="${PREFS.theme==='tc'?'on':''}" onclick="themePick('tc')">Technicolor</button></div><div class="gn-st"`)}catch(e){}return h}})(hq8);
+try{applyTheme()}catch(e){}

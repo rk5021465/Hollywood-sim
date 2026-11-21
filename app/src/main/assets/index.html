@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Hollywood Studio Simulator</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&family=Creepster&family=Orbitron:wght@700&family=Cinzel:wght@700&family=Bangers&family=Pacifico&family=Special+Elite&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&family=Creepster&family=Orbitron:wght@700&family=Cinzel:wght@700&family=Bangers&family=Pacifico&family=Special+Elite&family=Press+Start+2P&family=Abril+Fatface&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0d0b10;--card:#1a1620;--card2:#241e2c;--gold:#e8b84a;--gold2:#ffd77a;--text:#f3ece0;--muted:#a99f92;--red:#ff5d62;--green:#3dd68c;--blue:#6aa8ff;--line:#2e2737}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -874,6 +874,30 @@ body:not(.light) .tabbar button{color:#8E826C!important}body:not(.light) .tabbar
 .gn-bo{border-radius:16px;overflow:hidden;border:1px solid rgba(212,175,55,.2)}.gn-bo div{display:flex;gap:10px;align-items:center;padding:11px 14px;background:#141015;border-top:1px solid rgba(212,175,55,.1)}.gn-bo div:first-child{border-top:0}.gn-bo div.me{background:rgba(212,175,55,.1)}.gn-bo em{font-style:normal;font-family:'Cinzel','Noto Serif',Georgia,serif;font-weight:700;color:#D4AF37;width:16px}.gn-bo b{flex:1;font-weight:700;color:#FFF1C8;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gn-bo span{font-size:12.5px;color:#B9AA8C}.gn-bo span:last-child{color:#EDE3CF;font-weight:700}
 .gn-next b b,.gn-next b i{display:inline;font-size:inherit;margin:0}.gn-hero{min-height:215px}.gn-new{min-height:150px}
 body:not(.light) .lk{color:#E8C878!important}
+/* ===== Technicolor ===== */
+.gn-th{display:flex;gap:6px;margin-top:8px}.gn-th button{height:30px;padding:0 12px;border-radius:15px;border:1px solid rgba(212,175,55,.4);background:rgba(11,10,13,.5);color:#E8C878;font:700 11.5px Inter,sans-serif;letter-spacing:.5px}.gn-th button.on{background:#E8C878;color:#1A1206}
+body.tc{--bg:#F3E9D2;--card:#FCF4E2;--card2:#F7EBD0;--gold:#E0A526;--gold2:#A3201A;--text:#2B1D14;--muted:#6B5444;--line:rgba(43,29,20,.18);--ink:#2B1D14;--soft:#EFE2C4;background:#F3E9D2!important;color:#2B1D14}
+body.tc h1,body.tc h2,body.tc h3{font-family:'Abril Fatface','DM Serif Display','Playfair Display',Georgia,serif!important;color:#2B1D14}
+body.tc .hh{font-family:'Abril Fatface','DM Serif Display',Georgia,serif!important;color:#A3201A!important;letter-spacing:1px!important;text-transform:none!important;font-size:19px!important}
+body.tc .card,body.tc .evr,body.tc .qt{background:#FCF4E2!important;border:2px solid #2B1D14!important;box-shadow:3px 3px 0 #E0A526!important;color:#2B1D14!important}
+body.tc .qt>svg{background:#A3201A!important}body.tc .qt>svg *{stroke:#FCEBC3!important}
+body.tc .btn.gold{background:#A3201A!important;color:#FCEBC3!important;border:0!important;font-family:'Abril Fatface',Georgia,serif}
+body.tc .btn.ghost{background:transparent!important;border:2px solid #A3201A!important;color:#A3201A!important}
+body.tc .chips button.on,body.tc .seg button.on{background:#E0A526!important;border-color:#2B1D14!important;color:#2B1D14!important}
+body.tc .topbar{background:#A3201A!important;border-bottom:3px solid #E0A526!important;color:#FCEBC3}body.tc .topbar *{color:#FCEBC3}
+body.tc .tabbar>div{background:#2B1D14!important;border:0!important}body.tc .tabbar button{color:#BFA98F!important}body.tc .tabbar button.on{color:#E0A526!important}
+body.tc .gn-fade{background:linear-gradient(180deg,rgba(163,32,26,.55),rgba(163,32,26,.75) 60%,#F3E9D2)}body.tc .gn-bg{filter:sepia(.4) saturate(1.3)}
+body.tc .gn-yr h1{font-family:'Abril Fatface',Georgia,serif!important;color:#FFE7A6}body.tc .gn-k{color:#FFE7A6}body.tc .gn-st{color:#FCEBC3}
+body.tc .gn-play{background:#2B1D14;border-color:#E0A526;color:#E0A526}body.tc .gn-play.on{background:#E0A526;color:#2B1D14}body.tc .gn-spd,body.tc .gn-step button{background:#FCF4E2;color:#A3201A;border:2px solid #2B1D14}
+body.tc .gn-next{background:#1F5C5B;border:3px solid #E0A526;color:#FCEBC3}body.tc .gn-next b{font-family:'DM Serif Display',Georgia,serif;color:#FCEBC3}body.tc .gn-next small,body.tc .gn-next em{color:#E0A526}body.tc .gn-ni{background:#E0A526;color:#2B1D14}
+body.tc .gn-tl{background:#FCF4E2;border:2px solid #2B1D14;box-shadow:3px 3px 0 #E0A526}body.tc .gn-tlh span{color:#A3201A}body.tc .gn-tll button{color:#2B1D14}body.tc .gn-tll em{color:#6B5444}body.tc .gn-track:before{background:linear-gradient(90deg,#A3201A,rgba(163,32,26,.15))}body.tc .gn-now{background:#A3201A}body.tc .gn-dot{border-color:#FCF4E2}
+body.tc .gn-stage{background:#FCF4E2;border:2px solid #2B1D14;color:#2B1D14}body.tc .gn-stage b{color:#2B1D14}body.tc .gn-new{background:transparent;border:2px dashed #A3201A;color:#A3201A}body.tc .gn-new b{color:#A3201A}body.tc .gn-bar i{background:#A3201A}
+body.tc .gn-bo{border:2px solid #2B1D14}body.tc .gn-bo div{background:#FCF4E2}body.tc .gn-bo div.me{background:#FFE7A6}body.tc .gn-bo em{color:#A3201A}body.tc .gn-bo b{color:#2B1D14}body.tc .gn-bo span{color:#6B5444}body.tc .gn-bo span:last-child{color:#2B1D14}
+body.tc .gn-th button{background:#FCF4E2;color:#A3201A;border:2px solid #2B1D14}body.tc .gn-th button.on{background:#E0A526;color:#2B1D14}
+body.tc .lk{color:#A3201A!important}
+body.tc .topbar button,body.tc .topbar .tb-ib,body.tc .topbar .tb-cash{background:#FCF4E2!important;border:2px solid #2B1D14!important}body.tc .topbar button *,body.tc .topbar .tb-ib *,body.tc .topbar .tb-cash,body.tc .topbar .tb-cash *{color:#A3201A!important;stroke:#A3201A}
+body.tc .gn-stage .gn-sp{background:#2B1D14}body.tc .gn-stage .gn-script{background:radial-gradient(circle at 50% 40%,#4a2a1a,#2B1D14)}
+body.tc .more,body.tc button.lk2{color:#A3201A}
 </style>
 </head>
 <body>
@@ -5845,6 +5869,13 @@ hq8=(function(o){return function(){let old='';try{old=o()}catch(e){}
  ${fp?`<h4 class="hh">Front page</h4>${fp}`:''}
  ${bo.length?`<h4 class="hh">Weekend box office <button class="lk" onclick="boxOfficeModal()">Full chart</button></h4><div class="gn-bo">${bo.map((x,i)=>`<div class="${x.mine?'me':''}"><em>${i+1}</em><b>${esc(x.title||x.t||'')}</b><span>${esc(String(x.studio||"").split(" ")[0])}</span><span>${M(x.wkG||0)}</span></div>`).join('')}</div>`:''}
  ${tail}`}})(hq8);
+
+/* ---------- Technicolor theme (option B) ---------- */
+applyTheme=(function(o){return function(){o();try{document.body.classList.toggle('tc',PREFS.theme==='tc')}catch(e){}}})(applyTheme);
+settings=(function(o){return function(){const r=o.apply(this,arguments);try{const b=[...document.querySelectorAll('#modal .seg button')].find(x=>/Dark/.test(x.textContent));if(b&&!document.getElementById('tcBtn')){b.insertAdjacentHTML('afterend',`<button id="tcBtn" class="${PREFS.theme==='tc'?'on':''}" onclick="PREFS.theme='tc';savePrefs();applyTheme();settings()">🎞️ Technicolor</button>`);b.parentElement.style.width='auto';b.textContent='✨ Gold Noir'}}catch(e){}return r}})(settings);
+function themePick(t){PREFS.theme=t;savePrefs();applyTheme();render()}
+hq8=(function(o){return function(){let h=o();try{h=h.replace('<div class="gn-st"',`<div class="gn-th"><button class="${PREFS.theme!=='tc'?'on':''}" onclick="themePick('dark')">Gold Noir</button><button class="${PREFS.theme==='tc'?'on':''}" onclick="themePick('tc')">Technicolor</button></div><div class="gn-st"`)}catch(e){}return h}})(hq8);
+try{applyTheme()}catch(e){}
 
 
 applyTheme();title();
