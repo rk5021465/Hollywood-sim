@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/midnight</item>
+        <item name="android:statusBarColor">@color/midnight</item>
+        <item name="android:colorAccent">@color/gold</item>
+    </style>
+    <color name="midnight">#0E1320</color>
+    <color name="gold">#D4AF37</color>
+</resources>

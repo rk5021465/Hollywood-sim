@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reel Empire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a prestige studio boss's private office at night, calm and expensive
+   IDEA: the studio lot seen from the executive tower; premieres behind velvet rope
+   PICTURE: an isometric gold-lined lot you can tap; a curtain-and-gold premiere reveal
+   COLOUR and TYPE: midnight #0E1320, panels #1A2133/#242C42, ivory #F5EFE3, gold #D4AF37, velvet #B3122E; Lora titles, DM Sans UI
+   LAYOUT: top status bar, left rail (desktop) or bottom tabs (phone), one task in the centre */
+:root{color-scheme:dark;--bg:#0E1320;--p1:#1A2133;--p2:#242C42;--line:#323B55;--ivory:#F5EFE3;--silver:#A9B0C3;--gold:#D4AF37;--gold2:#E9C95B;--velvet:#B3122E;--ok:#3FB27F;--warn:#E9A23B;--bad:#E5484D;--info:#5B8DEF;
+--serif:Lora,Georgia,"Times New Roman",serif;--sans:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;background:var(--bg);color:var(--ivory);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.15;text-wrap:balance}
+h2{font-size:26px}h3{font-size:19px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--silver)}.gold{color:var(--gold)}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+/* shell */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:10px max(16px,env(safe-area-inset-left));padding-top:max(10px,env(safe-area-inset-top));background:rgba(14,19,32,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{font:600 17px var(--serif);color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.rank{font-size:12px;color:var(--silver);white-space:nowrap}
+.stats{display:flex;gap:16px;margin-left:auto;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.stat{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15}
+.stat small{font-size:11px;color:var(--silver)}
+.stat b{font-weight:600;font-size:15px}
+.stat.cash b{color:var(--gold);font-size:17px}
+.date{font:500 14px var(--sans);white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:8px 16px;border-radius:6px;border:1px solid transparent;background:none;font-weight:600;font-size:14px;white-space:nowrap;transition:background .15s,border-color .15s,transform .1s}
+.btn:active{transform:translateY(1px)}
+.btn.gold{background:var(--gold);color:#141a29}.btn.gold:hover{background:var(--gold2)}
+.btn.ghost{border-color:var(--gold);color:var(--gold)}.btn.ghost:hover{background:rgba(212,175,55,.1)}
+.btn.plain{border-color:var(--line);color:var(--ivory)}.btn.plain:hover{border-color:var(--silver)}
+.btn.text{color:var(--silver);padding-inline:8px}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btn.sm{min-height:32px;padding:4px 12px;font-size:13px}
+.next{min-width:132px}
+.auto[aria-pressed=true]{background:var(--p2);border-color:var(--gold);color:var(--gold)}
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr);min-height:calc(100vh - 62px)}
+.rail{border-right:1px solid var(--line);padding:16px 10px;display:flex;flex-direction:column;gap:4px;position:sticky;top:62px;height:calc(100vh - 62px)}
+.tab{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;border:0;background:none;color:var(--silver);text-align:left;font-weight:500;font-size:15px;position:relative}
+.tab svg{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tab:hover{color:var(--ivory);background:var(--p1)}
+.tab[aria-current=page]{color:var(--gold);background:var(--p1)}
+.tab .dot{position:absolute;right:10px;top:50%;width:7px;height:7px;margin-top:-3px;border-radius:50%;background:var(--gold)}
+.rail .foot{margin-top:auto;font-size:12px;color:var(--silver);padding:8px 12px;display:flex;flex-direction:column;gap:2px}
+.rail .foot button{background:none;border:0;color:var(--silver);text-align:left;padding:4px 0}
+.rail .foot button:hover{color:var(--ivory)}
+main{padding:24px clamp(16px,3vw,40px) 120px;max-width:1180px;width:100%}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.head p{margin:4px 0 0;color:var(--silver)}
+.panel{background:var(--p1);border:1px solid var(--line);border-radius:12px;padding:16px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.sec{margin:26px 0 12px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.sec h3{font-size:18px}
+.bar{height:6px;background:var(--p2);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);border-radius:3px;transition:width .4s ease-out}
+.srow{display:grid;grid-template-columns:86px minmax(0,1fr) 32px;gap:10px;align-items:center;font-size:13px;margin-top:6px}
+.srow span:last-child{text-align:right}
+.pill{display:inline-block;padding:1px 9px;border-radius:999px;background:var(--p2);font-size:12px;color:var(--silver);white-space:nowrap}
+.pill.g{color:var(--gold)}.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.bad{color:var(--bad)}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.hint{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:linear-gradient(90deg,rgba(212,175,55,.14),rgba(212,175,55,.03));border:1px solid rgba(212,175,55,.45);border-radius:12px;padding:12px 16px;margin-bottom:18px}
+.hint b{color:var(--gold);font-weight:600}
+/* lot */
+.lot{position:relative;background:radial-gradient(120% 90% at 50% 40%,#18213a 0%,#0E1320 75%);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.lot svg{display:block;width:100%;height:auto}
+.lot .b{cursor:pointer}
+.lot .b:hover .tp,.lot .b:focus .tp{fill:#3a466a}
+.lot .lbl{font:500 11px var(--sans);fill:var(--ivory);pointer-events:none}
+.lot .sub{font:400 10px var(--sans);fill:var(--silver);pointer-events:none}
+@media (prefers-reduced-motion:no-preference){.rec{animation:blink 1.4s ease-in-out infinite}.idle{animation:glow 2.4s ease-in-out infinite}}
+@keyframes blink{50%{opacity:.25}}
+@keyframes glow{50%{stroke-opacity:.25}}
+.cast2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bld-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.bld{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--p1);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.bld:hover{border-color:var(--gold)}
+.bld b{font-weight:600;font-size:14px}.bld small{font-size:12px;color:var(--silver)}
+.news{list-style:none;margin:0;padding:0}
+.news li{padding:9px 0;border-bottom:1px solid var(--line);font-size:14px;display:grid;grid-template-columns:62px 1fr;gap:10px}
+.news li:last-child{border:0}
+.news time{font-size:12px;color:var(--silver);padding-top:1px}
+.pipe{display:flex;gap:8px;flex-wrap:wrap}
+.pipe span{background:var(--p2);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--silver)}
+.pipe span b{color:var(--ivory);font-weight:600;margin-left:4px}
+.pipe span.on{background:rgba(212,175,55,.16);color:var(--gold)}
+/* film + script cards */
+.card{background:var(--p1);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card.mine{border-left:3px solid var(--gold)}
+.card .ttl{font:600 19px var(--serif)}
+.card .meta{font-size:13px;color:var(--silver)}
+.card .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.prog{display:flex;justify-content:space-between;font-size:13px;color:var(--silver)}
+.stars{color:var(--gold);letter-spacing:1px}
+.heat{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.heat div{background:var(--p1);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+.heat b{display:block;font-weight:600;font-size:14px}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-weight:500;font-size:12px;color:var(--silver);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--line)}
+td.r,th.r{text-align:right}
+tr.mine td:first-child{box-shadow:inset 3px 0 var(--gold)}
+tr.mine .tt{color:var(--gold)}
+.scroll{overflow-x:auto}
+/* modal */
+.veil{position:fixed;inset:0;z-index:50;background:rgba(5,8,15,.72);display:none;align-items:center;justify-content:center;padding:16px}
+.veil.show{display:flex}
+.modal{background:var(--p1);border:1px solid var(--line);border-radius:14px;width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.modal.wide{width:min(860px,100%)}
+.mh{padding:20px 22px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.mh small{display:block;color:var(--silver);font-size:13px;margin-bottom:4px}
+.mb{padding:16px 22px}
+.mf{padding:14px 22px 20px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--p1)}
+.x{background:none;border:0;color:var(--silver);font-size:22px;line-height:1;width:40px;height:40px;border-radius:8px}
+.x:hover{background:var(--p2);color:var(--ivory)}
+@media (prefers-reduced-motion:no-preference){.veil.show .modal{animation:rise .22s ease-out}}
+@keyframes rise{from{transform:translateY(10px);opacity:0}}
+.opt{display:block;width:100%;text-align:left;background:var(--p2);border:1px solid transparent;border-radius:10px;padding:10px 12px;margin-top:8px}
+.opt:hover{border-color:var(--line)}
+.opt[aria-pressed=true]{border-color:var(--gold);background:rgba(212,175,55,.08)}
+.opt[disabled]{opacity:.45;cursor:not-allowed}
+.opt .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.opt b{font-weight:600}
+.opt small{color:var(--silver);font-size:12px}
+.segs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.segs .opt{margin:0}
+.person{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center}
+.av{width:40px;height:40px;border-radius:50%;background:var(--bg);border:1.5px solid var(--gold);display:grid;place-items:center;font:600 13px var(--sans);color:var(--gold)}
+.est{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;background:var(--bg);border-radius:10px;padding:12px;margin-top:14px}
+.est small{display:block;color:var(--silver);font-size:12px}
+.est b{font:600 20px var(--sans)}
+.choice{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.choice small{color:var(--silver)}
+input[type=range]{width:100%;accent-color:var(--gold);height:32px}
+input[type=text]{width:100%;font:16px var(--sans);color:var(--ivory);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.err{color:var(--bad);font-size:13px;min-height:20px;margin-top:6px}
+.cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.cal .opt{margin:0;padding:8px 10px}
+.cal .opt b{font-size:14px}
+.cal .opt small{display:block}
+.pm{display:grid;grid-template-columns:110px minmax(0,1fr) 40px;gap:10px;align-items:center;font-size:14px;margin:7px 0}
+.pm span:last-child{text-align:right}
+/* premiere */
+.prem{position:fixed;inset:0;z-index:70;display:none;background:#06080e;color:var(--ivory);overflow:hidden}
+.prem.show{display:block}
+.curtain{position:absolute;top:0;bottom:0;width:51%;background:repeating-linear-gradient(90deg,#7d0c20 0 18px,#B3122E 18px 34px,#8f0f25 34px 48px);box-shadow:inset -20px 0 40px rgba(0,0,0,.5);transition:transform 1.4s cubic-bezier(.7,0,.2,1)}
+.curtain.l{left:0}.curtain.r{right:0;box-shadow:inset 20px 0 40px rgba(0,0,0,.5)}
+.prem.open .curtain.l{transform:translateX(-100%)}.prem.open .curtain.r{transform:translateX(100%)}
+.stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:radial-gradient(60% 50% at 50% 45%,rgba(212,175,55,.16),transparent 70%)}
+.stage .k{font-size:14px;color:var(--silver);letter-spacing:.04em}
+.stage h1{font-size:clamp(30px,6vw,52px);margin:10px 0 8px}
+.big{font:600 clamp(44px,11vw,96px)/1 var(--sans);color:var(--gold);font-variant-numeric:tabular-nums;margin:8px 0}
+.stage .line{font-size:16px;margin-top:6px}
+.stage .btn{margin-top:28px}
+.burst{position:absolute;inset:0;pointer-events:none;opacity:0}
+.prem.win .burst{opacity:1}
+@media (prefers-reduced-motion:no-preference){.prem.win .burst{animation:burst 1.6s ease-out forwards}}
+@keyframes burst{from{transform:scale(.6);opacity:1}to{transform:scale(1.4);opacity:0}}
+.toast{position:fixed;right:16px;bottom:88px;z-index:40;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.toast div{background:var(--p2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:14px;max-width:340px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+/* splash */
+.splash{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(70% 60% at 50% 30%,#1c2540,#0E1320 70%)}
+.splash .in{width:min(440px,100%);text-align:center}
+.splash h1{font-size:clamp(48px,12vw,76px);color:var(--gold);letter-spacing:.01em;font-weight:500}
+.splash .tag{color:var(--silver);margin:10px 0 28px;font-family:var(--serif);font-style:italic;font-size:18px}
+.splash form{text-align:left;background:var(--p1);border:1px solid var(--line);border-radius:14px;padding:20px}
+.splash label{font-size:13px;color:var(--silver)}
+.splash .row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.splash .row .btn{flex:1}
+.deco{width:100%;max-width:320px;margin:0 auto 18px;display:block}
+.tabs{display:none}
+@media (max-width:900px){
+ .layout{grid-template-columns:1fr}
+ .rail{display:none}
+ .tabs{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(26,33,51,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:6px 4px max(6px,env(safe-area-inset-bottom))}
+ .tabs .tab{flex-direction:column;gap:2px;font-size:11px;padding:6px 2px;justify-content:center;align-items:center}
+ .tabs .tab[aria-current=page]{background:none}
+ .tabs .tab .dot{top:6px;right:calc(50% - 16px)}
+ .grid2{grid-template-columns:1fr}
+ .stat.hide{display:none}
+ .rank{display:none}
+ main{padding-bottom:140px}
+}
+@media (max-width:560px){
+ .top{flex-wrap:wrap;gap:8px 12px}
+ .brand{max-width:150px;font-size:15px}
+ .stats{gap:12px}
+ .next{min-width:0;flex:1}
+ .tbtns{display:flex;gap:8px;width:100%}
+ .segs{grid-template-columns:1fr}
+ .cast2{grid-template-columns:1fr}
+ .bld-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+ table{font-size:13px}td,th{padding:8px 6px}
+ .hide-s{display:none}
+}
+</style>
+</head>
+<body>
+<header class="top" id="top"></header>
+<div class="layout">
+ <nav class="rail" id="rail" aria-label="Main"></nav>
+ <main id="main"></main>
+</div>
+<nav class="tabs" id="tabs" aria-label="Main"></nav>
+<div class="veil" id="veil" role="dialog" aria-modal="true"><div class="modal" id="modal"></div></div>
+<div class="prem" id="prem" aria-live="polite"></div>
+<div class="toast" id="toast" aria-live="polite"></div>
+<div class="splash" id="splash"></div>
+
+<script>
+{
+const $=s=>document.querySelector(s);
+const R=Math.random,rnd=(a,b)=>a+R()*(b-a),ri=(a,b)=>Math.floor(rnd(a,b+1)),pick=a=>a[Math.floor(R()*a.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money=v=>{const a=Math.abs(v),n=v<0?'−':'';if(a>=1000)return n+'$'+(a/1000).toFixed(2)+'B';if(a>=1)return n+'$'+a.toFixed(a>=100?0:1)+'M';return n+'$'+Math.round(a*1000)+'K'};
+const pct=v=>Math.round(v*100)+'%';
+const SAVE='reelEmpire.v1';
+const START_YEAR=1977;
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const GENRES=['Action','Comedy','Drama','Horror','Sci-Fi','Romance'];
+const SPEC={Action:1,'Sci-Fi':1,Horror:.35,Comedy:.3,Drama:.1,Romance:.15};
+const CRIT={Action:-3,'Sci-Fi':0,Horror:-6,Comedy:-2,Drama:6,Romance:0};
+const WORDS={
+ Action:[['Iron','Midnight','Thunder','Steel','Final','Desert','Hard','Rogue','Silver','Night'],['Justice','Highway','Strike','Run','Squad','Vendetta','Target','Force','Pursuit','Line']],
+ Comedy:[['Crazy','Big','Lucky','Wild','Funny','Silly','Hot','Odd','Happy','Loose'],['Business','Neighbours','Vacation','Wedding','Money','Trouble','Roommates','Weekend','Couple','Cousins']],
+ Drama:[['Silent','Long','Quiet','Broken','Golden','Distant','Last','Paper','Late','Winter'],['Summer','River','Promise','Harvest','Letters','Country','Hours','Season','Witness','Inheritance']],
+ Horror:[['Dark','Blood','Night','Hollow','Grave','Black','Cursed','Crawling','Pale','Thirteenth'],['House','Lake','Harvest','Hour','Woods','Visitor','Shadows','Cellar','Doll','Tenant']],
+ 'Sci-Fi':[['Star','Galaxy','Quantum','Neon','Orbit','Solar','Android','Lunar','Event','Deep'],['Wars','Frontier','Drift','Protocol','Colony','Signal','Station','Odyssey','Horizon','Machine']],
+ Romance:[['Paris','Endless','Sweet','Moonlit','Second','Summer','Secret','Tender','Coastal','Midnight'],['Love','Kiss','Hearts','Affair','Chance','Waltz','Embrace','Promise','Letters','Serenade']]};
+const ACTORS=[['Brad Pitts',72,62],['Meryl Streak',90,70],['Tom Cruz',66,58],['Jodie Faster',80,55],['Al Pachinko',86,82],['Robert De Nero',88,84],['Diane Keatin',78,66],['Jack Nickelsen',84,86],['Faye Dunnaway',76,74],['Warren Beatty-Boop',70,76],['Sissy Spaceship',74,52],['Burt Reynold',58,80],['Goldie Hound',64,60],['Clint Eastwould',72,88],['Jane Fondue',76,72],['Dustin Huffman',84,74],['Barbra Strident',74,78],['Richard Dreyfish',72,60],['Sally Fieldz',74,58],['Gene Hackmann',82,70],['Harrison Fard',70,48],['Carrie Fischer',62,44],['Kurt Rusell',60,40],['Michelle Pfeiffle',66,34],['Bill Murrey',70,46],['Eddie Murfee',68,38],['Sigourney Weever',74,36],['Mel Gibsen',62,32]];
+const DIRECTORS=[['S. Spielbergo',88,78,['Sci-Fi','Action']],['G. Lucash',76,70,['Sci-Fi','Action']],['M. Scorsazy',92,74,['Drama','Action']],['F. F. Copola',90,80,['Drama','Romance']],['W. Allan',84,62,['Comedy','Romance']],['B. De Pulma',74,56,['Horror','Action']],['J. Carpentar',72,44,['Horror','Sci-Fi']],['S. Kubrik',94,82,['Drama','Horror']],['R. Altmann',80,52,['Drama','Comedy']],['N. Ephrun',70,40,['Romance','Comedy']],['J. Landes',66,46,['Comedy','Horror']],['R. Scotch',78,38,['Sci-Fi','Action']],['W. Craven',64,34,['Horror','Drama']],['P. Bogdanovitch',74,50,['Drama','Comedy']]];
+const FIRST=['Lana','Max','Ruby','Theo','Ava','Leo','June','Cal','Ivy','Nico','Rosa','Dex','Mae','Finn','Opal','Rex'];
+const LAST=['Carrow','Delane','Whitlock','Marlowe','Sterling','Ashby','Fairfax','Holloway','Lindqvist','Monroe-ish','Pryce','Quill','Vance','Wilder','Yates','Beaumont'];
+const RIVALS=[{n:'Warner Sisters',c:'#5B8DEF',bias:'Action'},{n:'Paramountain',c:'#9B7BEA',bias:'Drama'},{n:'Universe-al',c:'#3FB27F',bias:'Sci-Fi'},{n:'Crimson Lion',c:'#E9A23B',bias:'Comedy'}];
+const BLD={
+ stage:{n:'Sound stages',d:'Each stage shoots one film at a time.',max:4,cost:l=>2.4*l},
+ writers:{n:"Writers' bungalow",d:'Better rewrites and more scripts on the market.',max:5,cost:l=>.7*l},
+ post:{n:'Post-production house',d:'Faster, better editing, effects and sound.',max:5,cost:l=>.9*l},
+ marketing:{n:'Marketing office',d:'Every marketing dollar reaches more people.',max:5,cost:l=>.9*l},
+ tower:{n:'Executive tower',d:'Your office. Grows as your studio rises.',max:0,cost:()=>0}};
+const TIER={low:{n:'Low budget',prod:1.4,weeks:4,screens:.62,pa:.6,m:1},mid:{n:'Mid budget',prod:4.5,weeks:6,screens:1,pa:2,m:2.4},high:{n:'Tentpole',prod:11,weeks:8,screens:1.25,pa:5,m:5}};
+const LEVELS=[{n:'Lean',m:.75,pv:30,d:'Fewer sets, smaller crew'},{n:'Standard',m:1,pv:55,d:'A solid, professional shoot'},{n:'Lavish',m:1.6,pv:85,d:'Big sets, more spectacle'}];
+const PACES=[{n:'Rushed',w:.75,q:.92,d:'Faster and cheaper, lower quality'},{n:'Normal',w:1,q:1,d:'The usual schedule'},{n:'Careful',w:1.3,q:1.06,d:'More takes, better quality'}];
+const RANKS=[[0,'Garage indie'],[70,'Small studio'],[170,'Major studio'],[320,'Hollywood legend']];
+
+let S=null, tab='studio', queue=[], busy=false, autoTimer=null, muted=false;
+
+const era=()=>Math.pow(1.035,yearOf(S.week)-START_YEAR);
+const yearOf=w=>START_YEAR+Math.floor((w-1)/52);
+const wkOf=w=>((w-1)%52)+1;
+const dateStr=w=>{const k=wkOf(w);const m=Math.min(11,Math.floor((k-1)/4.34));return MONTHS[m]+' '+yearOf(w)};
+const weekLbl=w=>{const k=wkOf(w);const m=Math.min(11,Math.floor((k-1)/4.34));const wim=Math.floor(k-1-m*4.34)+1;return MONTHS[m]+', week '+Math.min(wim,5)};
+const season=w=>{const k=wkOf(w);if(k<=8)return .85;if(k<=17)return .95;if(k<=22)return 1.1;if(k<=35)return 1.25;if(k<=42)return .9;if(k<=46)return 1.02;return 1.2};
+const seasonG=(w,g)=>{let s=season(w);const k=wkOf(w);if(g==='Horror'&&k>=42&&k<=44)s*=1.4;if(g==='Romance'&&k>=6&&k<=7)s*=1.25;return s};
+const tal=id=>S.talent.find(t=>t.id===id);
+const fee=t=>(0.04+Math.pow(t.fame/100,2)*1.6+t.skill/100*.2)*era();
+const needP=t=>Math.max(0,Math.round(t.fame-58));
+const initials=n=>n.replace(/[^A-Za-z ]/g,'').split(' ').filter(Boolean).map(x=>x[0]).slice(0,2).join('').toUpperCase();
+const rankOf=()=>{const sc=S.prestige+S.fame+Math.max(0,S.totalProfit)*0.6;let r=RANKS[0],nx=RANKS[1];for(let i=0;i<RANKS.length;i++)if(sc>=RANKS[i][0]){r=RANKS[i];nx=RANKS[i+1]}return{sc,r,nx}};
+const freeStages=()=>S.b.stage-S.projects.filter(p=>p.stage==='shoot').length;
+const scriptAvg=sc=>(sc.hook+sc.story+sc.chars)/3;
+const stars=v=>{const n=clamp(Math.round(v/20),1,5);return '★'.repeat(n)+'☆'.repeat(5-n)};
+
+function newTitle(g){let t;let i=0;do{const w=WORDS[g];t=(R()<.3?'The ':'')+pick(w[0])+' '+pick(w[1]);i++}while(S.used.includes(t)&&i<30);S.used.push(t);return t}
+function mkScript(){
+ const g=R()<.35?Object.entries(S.heat).sort((a,b)=>b[1]-a[1])[ri(0,2)][0]:pick(GENRES);
+ const r=R(),tier=r<.5?'low':r<.85?'mid':'high';
+ const base=rnd(30,70)+S.b.writers*2;
+ const sc={hook:clamp(Math.round(base+rnd(-18,22)),12,96),story:clamp(Math.round(base+rnd(-18,20)),12,96),chars:clamp(Math.round(base+rnd(-18,20)),12,96),comm:Math.round(rnd(25,92))};
+ const price=(0.04+scriptAvg(sc)/100*.22)*TIER[tier].m*era()*rnd(.85,1.15);
+ return{id:'s'+(S.seq++),title:newTitle(g),genre:g,tier,sc,price,expires:S.week+ri(6,14),logline:logline(g)};
+}
+function logline(g){return pick({
+ Action:['A retired cop has one night to stop a heist.','Two rival drivers race across the desert for a fortune.','A bodyguard must protect the witness everyone wants dead.'],
+ Comedy:['Two mismatched cousins inherit a failing hotel.','A wedding planner books two weddings on the same day.','A nervous accountant is mistaken for a mob boss.'],
+ Drama:['A farming family fights to keep their land.','A disgraced lawyer takes one last impossible case.','Three sisters return home for their father\'s final summer.'],
+ Horror:['Something lives in the walls of the new house.','A summer camp reopens on the anniversary of the murders.','A town stops sleeping, and then stops waking.'],
+ 'Sci-Fi':['A lone pilot picks up a signal from the edge of the galaxy.','An android asks for the right to dream.','Colonists wake 200 years early on a dying ship.'],
+ Romance:['Two strangers keep meeting on the last train to Paris.','A florist and a wedding photographer can\'t stand each other.','Old letters reunite lovers parted by war.']}[g])}
+function mkTalent(role,name,skill,fame,genres){return{id:'t'+(S.seq++),role,name,skill,fame,ego:ri(20,90),genres:genres||[pick(GENRES),pick(GENRES)],busy:0}}
+
+function newGame(name){
+ S={name,week:1,cash:8,fame:12,prestige:4,b:{stage:1,writers:1,post:1,marketing:1},seq:1,used:[],scripts:[],projects:[],talent:[],films:[],upcoming:[],news:[],ledger:[],cashHist:[8],heat:{},loans:0,totalProfit:0,released:[],awards:[],firstRun:true,hints:{}};
+ GENRES.forEach(g=>S.heat[g]=rnd(.8,1.2));
+ S.heat.Horror=1.15;S.heat['Sci-Fi']=1.2;
+ ACTORS.forEach(a=>S.talent.push(mkTalent('actor',a[0],a[1],a[2])));
+ DIRECTORS.forEach(d=>S.talent.push(mkTalent('director',d[0],d[1],d[2],d[3])));
+ for(let i=0;i<4;i++)S.talent.push(mkTalent(R()<.5?'actor':'director',pick(FIRST)+' '+pick(LAST),ri(45,72),ri(8,26)));
+ for(let i=0;i<6;i++)S.scripts.push(mkScript());
+ S.scripts[0].tier='low';S.scripts[0].price=Math.min(S.scripts[0].price,.12);
+ for(let i=0;i<9;i++)scheduleRival(ri(1,10));
+ news('Welcome to Hollywood. '+name+' opens its gates.','gold');
+ save();
+}
+function news(t,c){S.news.unshift({w:S.week,t,c:c||''});S.news=S.news.slice(0,40)}
+function spend(a,t,p){S.cash-=a;S.ledger.unshift({w:S.week,t,a:-a});S.ledger=S.ledger.slice(0,60);if(p)p.cost+=a}
+function earn(a,t,p){S.cash+=a;S.ledger.unshift({w:S.week,t,a});S.ledger=S.ledger.slice(0,60);if(p)p.rev+=a}
+function save(){try{localStorage.setItem(SAVE,JSON.stringify(S))}catch(e){}}
+function load(){try{const s=localStorage.getItem(SAVE);return s?JSON.parse(s):null}catch(e){return null}}
+function toast(t){const box=$('#toast');while(box.children.length>=2)box.firstChild.remove();const d=document.createElement('div');d.innerHTML=t;box.appendChild(d);setTimeout(()=>d.remove(),3200)}
+function chime(kind){if(muted)return;try{const A=window._ac||(window._ac=new (window.AudioContext||window.webkitAudioContext)());const notes=kind==='win'?[523,659,784,1047]:kind==='bad'?[392,311]:[659,880];notes.forEach((f,i)=>{const o=A.createOscillator(),g=A.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,A.currentTime+i*.12);g.gain.linearRampToValueAtTime(.08,A.currentTime+i*.12+.02);g.gain.exponentialRampToValueAtTime(.0001,A.currentTime+i*.12+.6);o.connect(g).connect(A.destination);o.start(A.currentTime+i*.12);o.stop(A.currentTime+i*.12+.7)})}catch(e){}}
+
+/* ---------- rivals ---------- */
+function scheduleRival(ahead){
+ const r=pick(RIVALS);const w=S.week+ahead;
+ if(S.upcoming.some(f=>f.studio===r.n&&f.rel===w))return;
+ const g=R()<.4?r.bias:(R()<.5?Object.entries(S.heat).sort((a,b)=>b[1]-a[1])[0][0]:pick(GENRES));
+ const t=R(),tier=t<.35?'low':t<.8?'mid':'high';
+ const Q=clamp(Math.round(rnd(28,86)),5,95);
+ S.upcoming.push({id:'f'+(S.seq++),title:newTitle(g),genre:g,studio:r.n,tier,rel:w,Q,appeal:rnd(30,88),aw:rnd(.4,.88)*(tier==='high'?1.1:1),tone:R()<.3,critic:clamp(Math.round(Q+CRIT[g]+rnd(-8,8)),3,99),mine:false});
+}
+
+/* ---------- quality maths ---------- */
+function fitOf(p){const d=tal(p.dir),l=tal(p.lead);let f=0;if(d&&d.genres.includes(p.genre))f+=1;if(l&&l.genres.includes(p.genre))f+=1;f+=p.chem||0;return f}
+function craftOf(p,level,pace){
+ const d=tal(p.dir),l=tal(p.lead);const lv=LEVELS[level??p.level??1],pc=PACES[pace??p.pace??1];
+ const crew=48+S.b.post*6, post=45+S.b.post*10;
+ const craft=.30*scriptAvg(p.sc)+.25*(d?d.skill:50)+.20*(l?l.skill:50)+.10*crew+.10*post+.05*lv.pv;
+ return clamp(craft*(1+.05*fitOf(p))*pc.q,5,98);
+}
+function appealOf(p,level){const d=tal(p.dir),l=tal(p.lead);const lv=LEVELS[level??p.level??1];const sp=lv.pv*SPEC[p.genre]+(1-SPEC[p.genre])*50;return clamp(.35*p.sc.comm+.3*(l?l.fame:30)+.1*(d?d.fame:30)+.25*sp,5,99)}
+function awarenessOf(pa,tier,bonus){const k=(1+.15*(S.b.marketing-1));const base=1-Math.exp(-(pa*k)/(2.4*era()*TIER[tier].screens));return clamp(1-(1-base)*(1-S.fame/260)+(bonus||0),.02,.99)}
+function strengthOf(f){return f.aw*(.25+f.appeal/100)*(f.tone?1.15:1)*(.8+f.critic/250)}
+function grade(v){const g=['F','D','C−','C','C+','B−','B','B+','A−','A','A+'];return g[clamp(Math.round((v-30)/6.5),0,10)]}
+
+/* ---------- week advance ---------- */
+function advance(){
+ if(busy||!S||S.over)return;
+ S.week++;
+ const k=wkOf(S.week),yr=yearOf(S.week);
+ const upkeep=(S.b.stage*.02+S.b.writers*.008+S.b.post*.01+S.b.marketing*.01)*era();
+ S.cash-=upkeep;
+ if(S.loans>0){const i=S.loans*.1/52;S.cash-=i}
+ for(const g of GENRES){S.heat[g]=clamp(S.heat[g]+rnd(-.035,.035)+(1-S.heat[g])*.02,.6,1.45)}
+ if(R()<.06){const g=pick(GENRES);const up=R()<.55;S.heat[g]=clamp(S.heat[g]+(up?.18:-.15),.6,1.45);news(up?g+' films are suddenly hot with audiences.':'Audiences are tiring of '+g.toLowerCase()+' films.',up?'info':'')}
+ if(R()<.85)scheduleRival(ri(5,13));if(R()<.45)scheduleRival(ri(5,13));
+ S.scripts=S.scripts.filter(s=>{if(s.expires<=S.week)return false;return true});
+ if(R()<.12&&S.scripts.length>2){const s=pick(S.scripts);S.scripts=S.scripts.filter(x=>x!==s);news(pick(RIVALS).n+' bought the script "'+s.title+'".')}
+ const want=5+S.b.writers;if(S.scripts.length<want&&(S.week%2===0||S.scripts.length<3))S.scripts.push(mkScript());
+ S.talent.forEach(t=>{if(t.busy&&t.busy<=S.week&&!S.projects.some(p=>(p.dir===t.id||p.lead===t.id)&&['dev','ready','rewrite','shoot','post'].includes(p.stage)))t.busy=0});
+ if(k===1&&S.week>1){for(let i=0;i<3;i++){const t=mkTalent(R()<.65?'actor':'director',pick(FIRST)+' '+pick(LAST),ri(45,78),ri(6,24));S.talent.push(t)}news('Three promising newcomers arrive in town for '+yr+'.');S.talent.forEach(t=>t.fame=clamp(t.fame-1,5,99))}
+ // projects
+ for(const p of S.projects){
+  if(p.stage==='rewrite'){p.left--;if(p.left<=0){p.stage=p.lead?'ready':'dev';toast('Rewrite finished on <b>'+esc(p.title)+'</b>.')}}
+  else if(p.stage==='shoot'){spend(p.weekly,'Shooting: '+p.title,p);p.left--;p.shot++;
+   if(p.events<2&&R()<.3&&p.left>0){p.events++;queue.push(()=>eventModal(p))}
+   if(p.left<=0){p.stage='post';p.left=Math.max(1,4-Math.floor(S.b.post/2));news('Cameras stopped rolling on "'+p.title+'". Post-production begins.')}}
+  else if(p.stage==='post'){p.left--;if(p.left<=0)finishPost(p)}
+ }
+ // releases
+ const openers=[];
+ S.projects.filter(p=>p.stage==='scheduled'&&p.rel===S.week).forEach(p=>{const f={id:p.id,title:p.title,genre:p.genre,studio:S.name,tier:p.tier,Q:p.Q,appeal:p.appeal,aw:p.aw,tone:p.tone,critic:p.critic,mine:true,proj:p.id};openers.push(f)});
+ S.upcoming=S.upcoming.filter(f=>{if(f.rel===S.week){openers.push(f);return false}return f.rel>S.week});
+ const total=openers.reduce((a,f)=>a+strengthOf(f),0);
+ // last weekend for change
+ S.films.forEach(f=>f.prev=f.gross);
+ for(const f of S.films){f.wk++;let drop=f.drop+(f.wk>4?.03:0)+rnd(-.03,.03);drop=clamp(drop,.05,.88);f.gross=f.gross*(1-drop);f.total+=f.gross}
+ for(const f of openers){
+  const st=strengthOf(f),comp=1/(1+.35*(total-st));
+  const hold=S.films.filter(x=>x.wk<=2).reduce((a,x)=>a+x.gross,0);
+  const holdF=1/(1+hold/(40*era()));
+  const lr=R();const luck=lr<.04?rnd(2.4,4.5):lr<.16?rnd(.5,.75):rnd(.8,1.25);
+  const heat=S.heat[f.genre],sea=seasonG(S.week,f.genre);
+  const fameB=f.mine?(1+S.fame/220):1.12;
+  const open=10*era()*st*heat*sea*comp*holdF*TIER[f.tier].screens*luck*fameB;
+  const drop=clamp(.40-(f.Q-55)*.0065+(f.tone?.07:0)+(f.critic<40?.06:0)+rnd(-.04,.04),.06,.82);
+  const film={...f,wk:1,gross:open,prev:0,total:open,open,drop,factors:{st,comp:comp*holdF,luck,heat,sea},relW:S.week};
+  S.films.push(film);
+  S.heat[f.genre]=clamp(S.heat[f.genre]-.025,.6,1.45);
+  if(f.mine){const p=S.projects.find(x=>x.id===f.proj);p.stage='theaters';p.open=open;p.factors=film.factors;queue.push(()=>premiere(p,film,openers))}
+ }
+ // credit my films & end runs
+ const ended=[];
+ for(const f of S.films){
+  if(f.mine){const p=S.projects.find(x=>x.id===f.proj);earn(f.gross*.53,'Box office: '+f.title,p);p.total=f.total;p.wk=f.wk;p.lastGross=f.gross}
+  if(f.wk>=2&&(f.gross<.12*era()||f.wk>=16))ended.push(f);
+ }
+ S.films=S.films.filter(f=>!ended.includes(f));
+ for(const f of ended){
+  S.released.push({title:f.title,studio:f.studio,Q:f.Q,critic:f.critic,year:yearOf(f.relW),mine:f.mine,total:f.total,genre:f.genre});
+  if(f.total>14*era()&&f.total>f.open*4){S.heat[f.genre]=clamp(S.heat[f.genre]+.1,.6,1.45);news('"'+f.title+'" had remarkable legs. Expect copycat '+f.genre.toLowerCase()+' films.','info')}
+  if(f.mine){const p=S.projects.find(x=>x.id===f.proj);endRun(p,f)}
+ }
+ if(k===10&&yr>START_YEAR)queue.push(()=>awards(yr-1));
+ S.cashHist.push(S.cash);if(S.cashHist.length>156)S.cashHist.shift();
+ if(S.cash<-12){S.over=true;queue.push(gameOver)}
+ save();render();runQueue();
+}
+function finishPost(p){
+ const base=craftOf(p);
+ p.Q=Math.round(clamp(base*rnd(.88,1.12)+p.qMod,5,98));
+ p.critic=clamp(Math.round(p.Q+CRIT[p.genre]+rnd(-9,9)),3,99);
+ p.appeal=appealOf(p);
+ p.test=clamp(Math.round(.6*p.Q+.4*p.appeal+rnd(-6,6)),5,99);
+ p.stage='market';
+ const d=tal(p.dir),l=tal(p.lead);[d,l].forEach(t=>{if(t)t.busy=S.week+2});
+ news('Test screening for "'+p.title+'": audiences scored it '+p.test+'/100.',p.test>=70?'ok':p.test<45?'bad':'');
+ toast('<b>'+esc(p.title)+'</b> is finished. Plan its release in Films.');
+}
+function endRun(p,f){
+ const hv=.22*f.total*(.6+p.Q/100);
+ earn(hv,'Home video and TV: '+p.title,p);
+ p.stage='done';p.total=f.total;p.hv=hv;p.profit=p.rev-p.cost;
+ S.totalProfit+=p.profit;
+ const ratio=f.total/(10*era());
+ S.fame=clamp(S.fame+clamp(ratio*2.2,0,9)-(p.profit<0?1:0),0,100);
+ S.prestige=clamp(S.prestige+Math.max(0,(p.critic-62)/4),0,100);
+ const d=tal(p.dir),l=tal(p.lead);
+ [d,l].forEach(t=>{if(t){t.fame=clamp(t.fame+clamp(ratio*1.5,-2,8)+(p.critic>75?2:0)-(p.profit<0?2:0),3,99);t.skill=clamp(t.skill+(R()<.4?1:0),5,99);t.busy=0}});
+ const verdict=p.profit>p.cost*1.5?'A smash hit':p.profit>0?'In the black':p.profit>-p.cost*.4?'A modest loss':'A flop';
+ news('"'+p.title+'" ends its run with '+money(p.total)+' at the box office. '+verdict+'.',p.profit>0?'ok':'bad');
+ queue.push(()=>postMortem(p));
+}
+
+/* ---------- queue ---------- */
+function runQueue(){if(busy)return;const f=queue.shift();if(f){busy=true;stopAuto(true);f()}}
+function done(){busy=false;closeModal();render();setTimeout(runQueue,60)}
+
+/* ---------- modals ---------- */
+function openModal(html,wide){const m=$('#modal');m.className='modal'+(wide?' wide':'');m.innerHTML=html;$('#veil').classList.add('show');setTimeout(()=>{const f=m.querySelector('[data-focus]')||m.querySelector('button.gold:not([disabled])')||m.querySelector('button');f&&f.focus()},30)}
+function closeModal(){$('#veil').classList.remove('show');$('#modal').innerHTML=''}
+const mh=(small,title,closable=true)=>`<div class="mh"><div><small>${small}</small><h2>${title}</h2></div>${closable?'<button class="x" data-act="close" aria-label="Close">×</button>':''}</div>`;
+
+function buildingModal(key){
+ const b=BLD[key],l=S.b[key]||0;
+ const r=rankOf();
+ if(key==='tower'){openModal(mh('Executive tower',esc(S.name))+`<div class="mb"><p>You are a <b class="gold">${r.r[1]}</b>.</p>${r.nx?`<p class="muted">Next rank: ${r.nx[1]}. Grow fame, prestige and profit to rise.</p><div class="bar"><i style="width:${clamp((r.sc-r.r[0])/(r.nx[0]-r.r[0])*100,2,100)}%"></i></div>`:'<p>You have reached the top of Hollywood.</p>'}<div class="est"><div><small>Fame</small><b>${Math.round(S.fame)}</b></div><div><small>Prestige</small><b>${Math.round(S.prestige)}</b></div><div><small>Lifetime profit</small><b class="${S.totalProfit>=0?'ok':'bad'}">${money(S.totalProfit)}</b></div><div><small>Goldies won</small><b class="gold">${S.awards.filter(a=>a.mine).length}</b></div></div></div><div class="mf"><button class="btn gold" data-act="close">Done</button></div>`);return}
+ const max=l>=b.max,cost=b.cost(l+ (key==='stage'?0:0))*era();
+ const eff={stage:`You have ${l} sound stage${l>1?'s':''}. ${freeStages()} free right now.`,writers:`Rewrites add +${4+2*l} story. ${5+l} scripts on the market.`,post:`Post takes ${Math.max(1,4-Math.floor(l/2))} weeks. Post quality ${45+l*10}/100.`,marketing:`Marketing reach ×${(1+.15*(l-1)).toFixed(2)}.`}[key];
+ const next={stage:`Add sound stage ${l+1}: shoot ${l+1} films at once.`,writers:`Level ${l+1}: rewrites add +${6+2*l} story, one more script on the market.`,post:`Level ${l+1}: post quality ${55+l*10}/100, faster post.`,marketing:`Level ${l+1}: marketing reach ×${(1+.15*l).toFixed(2)}.`}[key];
+ openModal(mh(key==='stage'?'Production':'Level '+l+' of '+b.max,b.n)+`<div class="mb"><p class="muted">${b.d}</p><p>${eff}</p>${max?'<p class="gold">Fully upgraded.</p>':`<div class="panel" style="background:var(--p2)"><b>${next}</b><div class="muted" style="margin-top:4px">Costs ${money(cost)}. Adds a little weekly upkeep.</div></div>`}</div><div class="mf"><button class="btn text" data-act="close">Close</button>${max?'':`<button class="btn gold" data-act="upgrade" data-k="${key}" ${S.cash<cost?'disabled':''}>${key==='stage'?'Build for ':'Upgrade for '}${money(cost)}</button>`}</div>`);
+}
+function upgrade(key){const b=BLD[key],l=S.b[key];const cost=b.cost(l)*era();if(S.cash<cost||l>=b.max)return;spend(cost,'Built: '+b.n);S.b[key]++;news((key==='stage'?'Sound stage '+S.b[key]+' is open for business':b.n+' upgraded to level '+S.b[key])+'.','gold');toast('<b>'+b.n+'</b> '+(key==='stage'?'built':'upgraded')+'.');chime('ok');save();closeModal();render()}
+
+function scriptModal(id){
+ const s=S.scripts.find(x=>x.id===id);if(!s)return;
+ const fitNote=S.heat[s.genre]>1.12?'<span class="pill ok">'+s.genre+' is hot</span>':S.heat[s.genre]<.85?'<span class="pill bad">'+s.genre+' is cold</span>':'<span class="pill">'+s.genre+' is steady</span>';
+ openModal(mh(s.genre+', '+TIER[s.tier].n.toLowerCase(),esc(s.title))+`<div class="mb"><p style="font-family:var(--serif);font-style:italic;font-size:17px">${esc(s.logline)}</p><div class="tags">${fitNote}<span class="pill">Option ends ${weekLbl(s.expires)}</span></div>
+ ${statRows(s.sc)}
+ <p class="muted" style="margin-top:12px">Script reader's note: ${coverage(s)}</p>
+ <div class="est"><div><small>Price</small><b class="gold">${money(s.price)}</b></div><div><small>Typical shoot cost</small><b>${money(TIER[s.tier].prod*era())}</b></div><div><small>Typical marketing</small><b>${money(TIER[s.tier].pa*era())}</b></div></div></div>
+ <div class="mf"><button class="btn text" data-act="close">Pass</button><button class="btn gold" data-act="buy" data-id="${s.id}" ${S.cash<s.price?'disabled':''}>Buy script for ${money(s.price)}</button></div>`);
+}
+function coverage(s){const a=s.sc;const best=Object.entries({hook:a.hook,story:a.story,characters:a.chars}).sort((x,y)=>y[1]-x[1]);const lo=best[2],hi=best[0];return `Strong ${hi[0]}${hi[1]>75?', genuinely exciting':''}. The ${lo[0]} ${lo[1]<40?'needs real work':'could be sharper'}. ${a.comm>70?'Very commercial.':a.comm<40?'A hard sell to a wide audience.':'Decent mainstream appeal.'}`}
+function statRows(sc){return [['Hook',sc.hook],['Story',sc.story],['Characters',sc.chars],['Commercial',sc.comm]].map(([n,v])=>`<div class="srow"><span class="muted">${n}</span><span class="bar"><i style="width:${v}%"></i></span><span class="num">${v}</span></div>`).join('')}
+function buyScript(id){const s=S.scripts.find(x=>x.id===id);if(!s||S.cash<s.price)return;spend(s.price,'Script: '+s.title);S.scripts=S.scripts.filter(x=>x!==s);
+ const p={id:'p'+(S.seq++),title:s.title,genre:s.genre,tier:s.tier,sc:{...s.sc},logline:s.logline,stage:'dev',cost:s.price,rev:0,rewrites:0,qMod:0,events:0,chem:0,shot:0};S.projects.push(p);
+ news('You bought "'+s.title+'".');toast('<b>'+esc(s.title)+'</b> is yours. Next: cast it in Films.');chime('ok');save();closeModal();tab='films';render()}
+
+function rewrite(id){const p=S.projects.find(x=>x.id===id);const c=(.08*TIER[p.tier].m)*era();if(S.cash<c)return;spend(c,'Rewrite: '+p.title,p);
+ const boost=4+2*S.b.writers;p.rewrites++;if(p.rewrites>2){p.sc.story=clamp(p.sc.story-3,5,99);toast('Too many cooks: the extra rewrite hurt the story.')}else{p.sc.story=clamp(p.sc.story+boost,5,99);p.sc.chars=clamp(p.sc.chars+Math.round(boost*.6),5,99)}
+ p.prevStage=p.stage;p.stage='rewrite';p.left=2;save();render()}
+
+let castSel={};
+function castModal(id){
+ const p=S.projects.find(x=>x.id===id);castSel={pid:id,dir:p.dir||null,lead:p.lead||null};drawCast();
+}
+function drawCast(){
+ const p=S.projects.find(x=>x.id===castSel.pid);
+ const avail=t=>!t.busy||t.id===p.dir||t.id===p.lead;
+ const list=role=>S.talent.filter(t=>t.role===role&&avail(t)).map(t=>({t,fit:(t.genres.includes(p.genre)?18:0)+t.skill*.6+t.fame*.4})).sort((a,b)=>b.fit-a.fit).slice(0,8);
+ const row=(t,key)=>{const locked=needP(t)>S.prestige;const f=fee(t);const sel=castSel[key]===t.id;const match=t.genres.includes(p.genre);
+  return `<button class="opt" data-act="pick" data-k="${key}" data-id="${t.id}" aria-pressed="${sel}" ${locked?'disabled':''}><div class="person"><div class="av">${initials(t.name)}</div><div><b>${esc(t.name)}</b><br><small>Skill ${t.skill} · Fame ${Math.round(t.fame)} · ${t.genres.map(g=>g===p.genre?'<span class="gold">'+g+'</span>':g).join(', ')}</small></div><div style="text-align:right"><b class="num">${money(f)}</b><br><small>${locked?'Needs prestige '+needP(t):match?'Genre match':(t.ego>75?'Big ego':'')}</small></div></div></button>`};
+ const tmp={...p,dir:castSel.dir,lead:castSel.lead};
+ const q=craftOf(tmp,1,1),ap=appealOf(tmp,1);
+ const fees=[castSel.dir,castSel.lead].filter(Boolean).reduce((a,id)=>a+(id===p.dir||id===p.lead?0:fee(tal(id))),0);
+ const ok=castSel.dir&&castSel.lead;
+ openModal(mh('Casting, '+p.genre.toLowerCase(),esc(p.title))+`<div class="mb"><div class="cast2"><div><h3>Director</h3>${list('director').map(x=>row(x.t,'dir')).join('')}</div><div><h3>Lead actor</h3>${list('actor').map(x=>row(x.t,'lead')).join('')}</div></div>
+ <div class="est"><div><small>Expected quality</small><b class="gold">${ok?Math.round(q)+' ±10':'—'}</b></div><div><small>Audience appeal</small><b>${ok?Math.round(ap):'—'}</b></div><div><small>Fees to pay now</small><b>${money(fees)}</b></div></div>
+ <p class="muted" style="margin-top:10px;font-size:13px">Gold genres match this film and raise quality. Stars with high fame need more studio prestige before they'll work with you.</p></div>
+ <div class="mf"><button class="btn text" data-act="close">Cancel</button><button class="btn gold" data-act="cast" ${ok&&S.cash>=fees?'':'disabled'}>Sign the package for ${money(fees)}</button></div>`,true);
+}
+function confirmCast(){const p=S.projects.find(x=>x.id===castSel.pid);let fees=0;[['dir',castSel.dir],['lead',castSel.lead]].forEach(([k,id])=>{if(p[k]!==id){if(p[k]){const o=tal(p[k]);o.busy=0}fees+=fee(tal(id));p[k]=id;tal(id).busy=S.week+60}});
+ if(fees>0)spend(fees,'Talent fees: '+p.title,p);p.chem=R()<.25?1:R()<.2?-1:0;p.stage='ready';
+ news(tal(p.lead).name+' and '+tal(p.dir).name+' sign on to "'+p.title+'".');toast('Package signed. Next: greenlight <b>'+esc(p.title)+'</b>.');chime('ok');save();closeModal();render()}
+
+let glSel={};
+function greenlightModal(id){const p=S.projects.find(x=>x.id===id);glSel={pid:id,level:1,pace:1};drawGL()}
+function drawGL(){
+ const p=S.projects.find(x=>x.id===glSel.pid);const T=TIER[p.tier];
+ const lv=LEVELS[glSel.level],pc=PACES[glSel.pace];
+ const weeks=Math.max(2,Math.round(T.weeks*pc.w));const prod=T.prod*lv.m*(pc.w<1?.9:pc.w>1?1.12:1)*era();
+ const q=craftOf(p,glSel.level,glSel.pace),ap=appealOf(p,glSel.level);
+ const fs=freeStages();
+ openModal(mh('Greenlight meeting',esc(p.title))+`<div class="mb"><h3>Production budget</h3><div class="segs">${LEVELS.map((l,i)=>`<button class="opt" data-act="gl" data-k="level" data-v="${i}" aria-pressed="${glSel.level===i}"><b>${l.n}</b><br><small>${l.d}</small><br><small class="gold">${money(T.prod*l.m*era())}</small></button>`).join('')}</div>
+ <h3 style="margin-top:16px">Shooting pace</h3><div class="segs">${PACES.map((l,i)=>`<button class="opt" data-act="gl" data-k="pace" data-v="${i}" aria-pressed="${glSel.pace===i}"><b>${l.n}</b><br><small>${l.d}</small><br><small>${Math.max(2,Math.round(T.weeks*l.w))} weeks</small></button>`).join('')}</div>
+ <div class="est"><div><small>Shoot cost</small><b class="gold">${money(prod)}</b></div><div><small>Weeks on a stage</small><b>${weeks}</b></div><div><small>Expected quality</small><b>${Math.round(q)} ±10</b></div><div><small>Audience appeal</small><b>${Math.round(ap)}</b></div></div>
+ <p class="muted" style="font-size:13px;margin-top:10px">${dept(p,q,ap,prod)}</p>
+ ${fs<=0?'<p class="warn">All sound stages are busy. Wait for a shoot to finish, or build another stage.</p>':''}</div>
+ <div class="mf"><button class="btn text" data-act="close">Not yet</button><button class="btn gold" data-act="greenlight" data-w="${weeks}" data-c="${prod.toFixed(4)}" ${fs<=0?'disabled':''}>Greenlight: start shooting</button></div>`,true);
+}
+function dept(p,q,ap,prod){const m=ap>65?'Marketing loves it: "Easy to sell."':ap<40?'Marketing is worried: "Who is this for?"':'Marketing: "We can work with this."';const f=prod>S.cash?' Finance warns this will push you into debt.':' Finance signs off.';const c=q>72?' Creative: "This could be special."':q<50?' Creative: "The script needs help."':'';return m+f+c}
+function greenlight(weeks,cost){const p=S.projects.find(x=>x.id===glSel.pid);if(freeStages()<=0)return;p.level=glSel.level;p.pace=glSel.pace;p.stage='shoot';p.left=weeks;p.weeks=weeks;p.weekly=cost/weeks;p.budget=cost;
+ news('"'+p.title+'" is greenlit. Cameras roll next week.','gold');toast('<b>'+esc(p.title)+'</b> is greenlit.');chime('ok');save();closeModal();render()}
+
+const EVENTS=[
+ {t:'The lead refuses a stunt',d:p=>tal(p.lead).name+' says the big jump is too dangerous.',c:[
+  {l:'Use a stunt double',x:p=>'Costs '+money(.1*TIER[p.tier].m*era())+', quality −2',f:p=>{spend(.1*TIER[p.tier].m*era(),'Stunt double',p);p.qMod-=2}},
+  {l:'Insist they do it',x:()=>'Half chance of a great shot (+3), half chance of injury',f:p=>{if(R()<.5){p.qMod+=3;toast('They nailed it. The shot looks incredible.')}else{p.qMod-=2;p.left++;toast('An injury. One extra week of shooting.')}}},
+  {l:'Rewrite the scene',x:()=>'One extra week of shooting',f:p=>{p.left++}}]},
+ {t:'A storm wrecks the set',d:()=>'High winds tore through the exterior set overnight.',c:[
+  {l:'Rebuild it properly',x:p=>'Costs '+money(p.budget*.12),f:p=>spend(p.budget*.12,'Set rebuild',p)},
+  {l:'Move the scenes indoors',x:()=>'Quality −3',f:p=>{p.qMod-=3}},
+  {l:'Wait for the weather',x:()=>'One extra week of shooting',f:p=>{p.left++}}]},
+ {t:'The director wants more time',d:p=>tal(p.dir).name+' believes the third act needs another week.',c:[
+  {l:'Give them the week',x:()=>'One extra week, quality +4',f:p=>{p.left++;p.qMod+=4}},
+  {l:'Refuse',x:()=>'Quality −3, the director is unhappy',f:p=>{p.qMod-=3;tal(p.dir).ego=clamp(tal(p.dir).ego+5,0,99)}},
+  {l:'Add a second unit',x:p=>'Costs '+money(p.budget*.08)+', quality +2',f:p=>{spend(p.budget*.08,'Second unit',p);p.qMod+=2}}]},
+ {t:'A tantrum in the star trailer',d:p=>tal(p.lead).name+' won\'t come out until demands are met.',c:[
+  {l:'Meet the demands',x:p=>'Costs '+money(.05*TIER[p.tier].m*era()),f:p=>spend(.05*TIER[p.tier].m*era(),'Star perks',p)},
+  {l:'Wait it out',x:()=>'Half chance quality −3',f:p=>{if(R()<.5){p.qMod-=3;toast('The mood on set soured. Quality −3.')}else toast('They came out by lunch. No harm done.')}},
+  {l:'Have a firm talk',x:()=>'Could inspire (+2) or backfire (−4)',f:p=>{if(R()<.55){p.qMod+=2;toast('They came back focused. Quality +2.')}else{p.qMod-=4;toast('It backfired badly. Quality −4.')}}}]},
+ {t:'Pages leak to the press',d:()=>'A trade paper printed the ending. Everyone is talking about it.',c:[
+  {l:'Lean into the buzz',x:()=>'More awareness at release, quality −1',f:p=>{p.leak=.07;p.qMod-=1}},
+  {l:'Sue the paper',x:()=>'Costs '+money(.08*era()),f:p=>spend(.08*era(),'Legal fees',p)},
+  {l:'Say nothing',x:()=>'No effect',f:()=>{}}]},
+ {t:'Magic on set',d:p=>tal(p.lead).name+' improvised a scene that left the crew in tears.',c:[
+  {l:'Keep it in the film',x:()=>'Quality +3',f:p=>{p.qMod+=3}},
+  {l:'Stick to the script',x:()=>'No effect',f:()=>{}}]}];
+function eventModal(p){
+ if(p.stage!=='shoot'){done();return}
+ const e=pick(EVENTS);S._ev={pid:p.id,e:EVENTS.indexOf(e)};
+ openModal(mh('On set: '+esc(p.title)+', week '+p.shot+' of '+p.weeks,e.t,false)+`<div class="mb"><p class="muted">${esc(e.d(p))}</p>${e.c.map((c,i)=>`<button class="opt" data-act="evc" data-i="${i}"><div class="choice"><b>${c.l}</b><small>${c.x(p)}</small></div></button>`).join('')}</div>`);
+}
+function eventChoice(i){const p=S.projects.find(x=>x.id===S._ev.pid);const e=EVENTS[S._ev.e];e.c[i].f(p);delete S._ev;save();done()}
+
+let relSel={};
+function releaseModal(id){const p=S.projects.find(x=>x.id===id);const mn=+(TIER[p.tier].pa*.2*era()).toFixed(2);relSel={pid:id,pa:+Math.max(mn,Math.min(TIER[p.tier].pa*era(),S.cash*.6)).toFixed(2),tone:false,w:null};drawRel()}
+function drawRel(){
+ const p=S.projects.find(x=>x.id===relSel.pid);const max=+(TIER[p.tier].pa*4*era()).toFixed(1),min=+(TIER[p.tier].pa*.2*era()).toFixed(2);
+ const aw=awarenessOf(relSel.pa,p.tier,p.leak);
+ const f={aw,appeal:p.appeal,tone:relSel.tone,critic:p.critic};const st=strengthOf(f);
+ const weeks=[];for(let w=S.week+1;w<=S.week+12;w++){const rv=S.upcoming.filter(x=>x.rel===w);const mineThere=S.projects.some(x=>x.stage==='scheduled'&&x.rel===w);weeks.push({w,rv,sea:seasonG(w,p.genre),mineThere})}
+ const est=w=>{const rvS=w.rv.reduce((a,x)=>a+strengthOf(x),0);const comp=1/(1+.35*rvS);return 10*era()*st*S.heat[p.genre]*w.sea*comp*TIER[p.tier].screens*(1+S.fame/220)};
+ const sel=weeks.find(x=>x.w===relSel.w);const e=sel?est(sel):null;
+ openModal(mh('Release plan',esc(p.title))+`<div class="mb">
+ <div class="tags" style="margin-bottom:10px"><span class="pill g">Quality ${p.Q}</span><span class="pill">Critics ${p.critic}%</span><span class="pill">Test score ${p.test}</span><span class="pill ${S.heat[p.genre]>1.1?'ok':S.heat[p.genre]<.85?'bad':''}">${p.genre} heat ${Math.round(S.heat[p.genre]*100)}</span></div>
+ <h3>Marketing budget</h3><div style="display:flex;justify-content:space-between;align-items:baseline"><b class="gold num" style="font-size:22px">${money(relSel.pa)}</b><span class="muted">Awareness ${pct(aw)}</span></div>
+ <input type="range" min="${min}" max="${max}" step="${(max/80).toFixed(3)}" value="${relSel.pa}" data-act="pa" aria-label="Marketing budget">
+ <h3 style="margin-top:12px">How to sell it</h3><div class="segs" style="grid-template-columns:1fr 1fr"><button class="opt" data-act="tone" data-v="0" aria-pressed="${!relSel.tone}"><b>Honestly</b><br><small>Steady word of mouth</small></button><button class="opt" data-act="tone" data-v="1" aria-pressed="${relSel.tone}"><b>As a spectacle</b><br><small>Bigger opening, faster drop</small></button></div>
+ <h3 style="margin-top:16px">Opening weekend</h3><p class="muted" style="font-size:13px;margin:2px 0 8px">Bonus shows the season. Rival films opening the same week take your screens.</p>
+ <div class="cal">${weeks.map(x=>{const best=x.rv.sort((a,b)=>strengthOf(b)-strengthOf(a))[0];const sp=Math.round((x.sea-1)*100);return `<button class="opt" data-act="wk" data-w="${x.w}" aria-pressed="${relSel.w===x.w}" ${x.mineThere?'disabled':''}><b>${weekLbl(x.w)}</b><small class="${sp>0?'ok':sp<0?'bad':''}">Season ${sp>=0?'+':''}${sp}%</small><small>${x.mineThere?'Your other film':x.rv.length?x.rv.length+' rival'+(x.rv.length>1?'s':'')+': '+esc(best.title):'No rivals'}</small></button>`}).join('')}</div>
+ <div class="est"><div><small>Forecast opening</small><b class="gold">${e?money(e*.7)+'–'+money(e*1.35):'Pick a week'}</b></div><div><small>Marketing paid now</small><b>${money(relSel.pa)}</b></div></div>${S.cash<relSel.pa?'<p class="err">Not enough cash for this budget. Lower it, or borrow from the bank in Money.</p>':''}</div>
+ <div class="mf"><button class="btn text" data-act="close">Later</button><button class="btn gold" data-act="schedule" ${relSel.w&&S.cash>=relSel.pa?'':'disabled'}>Book the release</button></div>`,true);
+}
+function schedule(){const p=S.projects.find(x=>x.id===relSel.pid);spend(relSel.pa,'Marketing: '+p.title,p);p.pa=relSel.pa;p.tone=relSel.tone;p.aw=awarenessOf(relSel.pa,p.tier,p.leak);p.rel=relSel.w;p.stage='scheduled';
+ news('"'+p.title+'" will open '+weekLbl(p.rel)+'.');toast('Release booked for '+weekLbl(p.rel)+'.');chime('ok');save();closeModal();render()}
+
+function premiere(p,film,openers){
+ const rank=[...S.films].filter(f=>f.wk===1||true).sort((a,b)=>b.gross-a.gross).findIndex(f=>f.id===film.id)+1;
+ const el=$('#prem');const num1=rank===1;
+ el.className='prem show';
+ el.innerHTML=`<div class="stage"><svg class="burst" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${Array.from({length:24},(_,i)=>{const a=i/24*Math.PI*2;return `<line x1="200" y1="200" x2="${200+Math.cos(a)*190}" y2="${200+Math.sin(a)*190}" stroke="#D4AF37" stroke-width="2" stroke-opacity=".6"/>`}).join('')}</svg>
+ <div class="k">Opening weekend, ${weekLbl(S.week)}</div><h1>${esc(p.title)}</h1><div class="big" id="bigN">$0</div>
+ <div class="line ${num1?'ok':''}" id="pl1" style="opacity:0">${num1?'Number one at the box office':'Number '+rank+' at the box office'}</div>
+ <div class="line muted" id="pl2" style="opacity:0">Critics ${p.critic}% · Audience grade ${grade(.6*p.Q+.4*p.appeal)}</div>
+ <button class="btn gold" data-act="premdone" id="pbtn" style="opacity:0">Back to the studio</button></div><div class="curtain l"></div><div class="curtain r"></div>`;
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const finish=()=>{$('#bigN').textContent=money(film.open);['pl1','pl2','pbtn'].forEach(i=>$('#'+i).style.opacity=1);if(num1){el.classList.add('win');chime('win')}else chime('ok');$('#pbtn').focus()};
+ requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('open')));
+ if(reduce){finish();return}
+ setTimeout(()=>{const t0=performance.now(),D=1700;const step=t=>{const k=Math.min(1,(t-t0)/D),e=1-Math.pow(1-k,3);$('#bigN').textContent=money(film.open*e);if(k<1)requestAnimationFrame(step);else finish()};requestAnimationFrame(step)},1100);
+}
+function premDone(){const el=$('#prem');el.className='prem';el.innerHTML='';done()}
+
+function postMortem(p){
+ const f=p.factors||{st:.5,comp:1,luck:1,heat:1,sea:1};
+ const d=tal(p.dir),l=tal(p.lead);
+ const rows=[['Quality',p.Q],['Stars',((d?d.fame:30)+(l?l.fame:30))/2],['Marketing',p.aw*100],['Timing',clamp((f.sea-.8)/.55*100,3,100)],['Trend',clamp((f.heat-.6)/.85*100,3,100)],['Competition',clamp(f.comp*100,3,100)],['Luck',clamp(50+Math.log2(f.luck)*45,3,100)]];
+ const low=[...rows].sort((a,b)=>a[1]-b[1])[0][0];
+ const tip={Quality:'A stronger script, director or more careful shoot would help most.',Stars:'Bigger names would have drawn a larger opening.',Marketing:'More marketing would have reached more people.',Timing:'A better season, like summer or the holidays, would have helped.',Trend:'This genre was out of fashion. Watch genre heat before you buy.',Competition:'Too many rival films opened nearby. Find a quieter week.',Luck:'Sometimes audiences just don\'t show up. Nobody knows anything.'}[low];
+ const verdict=p.profit>p.cost*1.5?'A smash hit':p.profit>0?'In the black':p.profit>-p.cost*.4?'A modest loss':'A flop';
+ openModal(mh('End of run, '+p.wk+' weeks in theaters',esc(p.title))+`<div class="mb"><p style="font:600 20px var(--serif)" class="${p.profit>0?'ok':'bad'}">${verdict}</p>
+ <div class="est" style="margin-top:6px"><div><small>Box office</small><b>${money(p.total)}</b></div><div><small>Your total income</small><b>${money(p.rev)}</b></div><div><small>Total costs</small><b>${money(p.cost)}</b></div><div><small>Profit</small><b class="${p.profit>=0?'ok':'bad'}">${money(p.profit)}</b></div></div>
+ <h3 style="margin-top:16px">Why it performed this way</h3>${rows.map(([n,v])=>`<div class="pm"><span class="muted">${n}</span><span class="bar"><i style="width:${v}%;background:${v>=65?'var(--ok)':v<35?'var(--bad)':'var(--gold)'}"></i></span><span class="num">${Math.round(v)}</span></div>`).join('')}
+ <p class="panel" style="background:var(--p2);margin-top:12px"><b class="gold">Lesson:</b> ${tip}</p></div>
+ <div class="mf"><button class="btn gold" data-act="pmdone">Continue</button></div>`);
+}
+
+function awards(year){
+ const pool=S.released.filter(r=>r.year===year).sort((a,b)=>b.critic-a.critic).slice(0,5);
+ if(pool.length<2){done();return}
+ const win=pool[0];S._aw={year,win,pool};
+ openModal(mh('The '+(year-START_YEAR+50)+'th Goldies, honouring '+year,'Best Picture',false)+`<div class="mb"><p class="muted">The nominees are:</p>${pool.map(r=>`<div class="opt" style="cursor:default"><div class="row"><b class="${r.mine?'gold':''}">${esc(r.title)}</b><small>${esc(r.studio)}</small></div></div>`).join('')}
+ <p class="muted" style="margin-top:14px;font-family:var(--serif);font-style:italic">The envelope, please.</p></div>
+ <div class="mf"><button class="btn gold" data-act="envelope">Open the envelope</button></div>`);
+}
+function envelope(){const {year,win}=S._aw;const mine=win.mine;
+ S.awards.push({year,title:win.title,studio:win.studio,mine});
+ if(mine){S.prestige=clamp(S.prestige+14,0,100);S.fame=clamp(S.fame+6,0,100);earn(1.5*era(),'Goldie re-release bump: '+win.title);news('"'+win.title+'" wins Best Picture at the Goldies!','gold');chime('win')}else{news('"'+win.title+'" from '+win.studio+' wins Best Picture at the Goldies.');chime('ok')}
+ delete S._aw;save();
+ openModal(mh('Best Picture, '+year,'And the Goldie goes to…',false)+`<div class="mb" style="text-align:center;padding:30px 22px"><svg width="70" height="110" viewBox="0 0 70 110" aria-hidden="true"><circle cx="35" cy="16" r="10" fill="#D4AF37"/><path d="M27 28h16l-3 46h-10z" fill="#D4AF37"/><rect x="18" y="76" width="34" height="8" rx="2" fill="#B8952A"/><rect x="12" y="86" width="46" height="14" rx="3" fill="#8f7420"/></svg>
+ <h1 style="font-size:34px;margin-top:12px" class="${mine?'gold':''}">${esc(win.title)}</h1><p class="muted">${esc(win.studio)}</p>${mine?'<p class="ok">Your studio wins. Prestige +14, fame +6, and a re-release bump.</p>':'<p class="muted">Maybe next year. Prestige comes from films critics love.</p>'}</div>
+ <div class="mf"><button class="btn gold" data-act="awdone">Continue</button></div>`);
+}
+function gameOver(){openModal(mh('The bank has called in its loans','Your studio is bankrupt',false)+`<div class="mb"><p>${esc(S.name)} closed its gates in ${dateStr(S.week)}.</p><div class="est"><div><small>Films released</small><b>${S.projects.filter(p=>p.stage==='done').length}</b></div><div><small>Lifetime profit</small><b class="bad">${money(S.totalProfit)}</b></div><div><small>Goldies</small><b class="gold">${S.awards.filter(a=>a.mine).length}</b></div></div></div><div class="mf"><button class="btn gold" data-act="restart">Start a new studio</button></div>`)}
+
+function loanModal(){const can=S.loans<20;openModal(mh('Finance','Bank loans')+`<div class="mb"><p>Borrow in steps of $5M at 10% a year, paid weekly. You can owe up to $20M.</p><div class="est"><div><small>You owe</small><b>${money(S.loans)}</b></div><div><small>Weekly interest</small><b>${money(S.loans*.1/52)}</b></div></div></div><div class="mf"><button class="btn plain" data-act="repay" ${S.loans>0&&S.cash>=5?'':'disabled'}>Repay $5M</button><button class="btn gold" data-act="borrow" ${can?'':'disabled'}>Borrow $5M</button></div>`)}
+
+/* ---------- rendering ---------- */
+const ICONS={
+ studio:'<path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/>',
+ films:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M7 5l2 4M12 5l2 4M17 5l2 4"/>',
+ scripts:'<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/>',
+ charts:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ money:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.6-.6-3-1.6M12 6v12"/>'};
+const TABS=[['studio','Studio'],['films','Films'],['scripts','Scripts'],['charts','Box office'],['money','Money']];
+function navHTML(){const dot={films:S.projects.some(p=>['dev','ready','market'].includes(p.stage)),scripts:false};return TABS.map(([k,n])=>`<button class="tab" data-act="tab" data-t="${k}" ${tab===k?'aria-current="page"':''}><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg>${n}${dot[k]?'<span class="dot" aria-label="Needs attention"></span>':''}</button>`).join('')}
+function render(){
+ if(!S)return;
+ const r=rankOf();
+ $('#top').innerHTML=`<div style="display:flex;flex-direction:column;line-height:1.2"><span class="brand">${esc(S.name)}</span><span class="rank">${r.r[1]}</span></div>
+ <div class="stats"><div class="stat cash"><small>Cash</small><b class="num">${money(S.cash)}</b></div><div class="stat hide"><small>Fame</small><b>${Math.round(S.fame)}</b></div><div class="stat hide"><small>Prestige</small><b>${Math.round(S.prestige)}</b></div><div class="stat"><small>Week ${wkOf(S.week)}</small><b class="date">${dateStr(S.week)}</b></div>
+ <div class="tbtns"><button class="btn plain sm auto" data-act="auto" aria-pressed="${!!autoTimer}" title="Play weeks automatically">${autoTimer?'Pause':'Auto'}</button> <button class="btn gold next" data-act="next" ${busy?'disabled':''}>Next week</button></div></div>`;
+ $('#rail').innerHTML=navHTML()+`<div class="foot"><span>${dateStr(S.week)}</span><button data-act="mute">${muted?'Sound off':'Sound on'}</button><button data-act="help">How to play</button><button data-act="newgame">New studio</button></div>`;
+ $('#tabs').innerHTML=navHTML();
+ $('#main').innerHTML=({studio:vStudio,films:vFilms,scripts:vScripts,charts:vCharts,money:vMoney})[tab]();
+}
+function nextStep(){
+ const p=S.projects;
+ if(p.some(x=>x.stage==='market'))return['A finished film is waiting for a release plan.','Plan release','films'];
+ if(p.some(x=>x.stage==='ready')&&freeStages()>0)return['A cast film is ready for the greenlight.','Greenlight','films'];
+ if(p.some(x=>x.stage==='dev'))return['You own a script with no cast yet.','Cast it','films'];
+ if(!p.some(x=>!['done'].includes(x.stage)))return['Your stages are empty. Buy a script to start your first film.','Browse scripts','scripts'];
+ return null;
+}
+function lotSVG(){
+ const s=23,ox=210,oy=96;
+ const P=(x,y,z=0)=>[(ox+(x-y)*s*.866).toFixed(1),(oy+(x+y)*s*.5-z).toFixed(1)];
+ const poly=(pts,a)=>`<polygon points="${pts.map(p=>p.join(',')).join(' ')}" ${a}/>`;
+ const box=(x,y,w,d,h,o)=>{const own=o.own;const st=own?'stroke="#D4AF37" stroke-opacity=".55" stroke-width="1"':'stroke="#5a6585" stroke-dasharray="4 3" stroke-width="1" fill="none"';
+  if(!own)return poly([P(x,y),P(x+w,y),P(x+w,y+d),P(x,y+d)],st+' class="tp"');
+  let g=poly([P(x,y+d,0),P(x+w,y+d,0),P(x+w,y+d,h),P(x,y+d,h)],'fill="#1c2440" '+st)+poly([P(x+w,y,0),P(x+w,y+d,0),P(x+w,y+d,h),P(x+w,y,h)],'fill="#252e4c" '+st)+poly([P(x,y,h),P(x+w,y,h),P(x+w,y+d,h),P(x,y+d,h)],'fill="'+(o.top||'#2E3854')+'" class="tp" '+st);
+  if(o.win){for(let i=1;i<o.win;i++){const z=h*i/o.win;g+=`<line x1="${P(x,y+d,z)[0]}" y1="${P(x,y+d,z)[1]}" x2="${P(x+w,y+d,z)[0]}" y2="${P(x+w,y+d,z)[1]}" stroke="#D4AF37" stroke-opacity=".28"/>`}}
+  if(o.arch){const a=P(x+w,y+d*.3,0),b=P(x+w,y+d*.7,0),c=P(x+w,y+d*.7,h*.45),e=P(x+w,y+d*.3,h*.45);g+=poly([a,b,c,e],'fill="#141a2e" stroke="#D4AF37" stroke-opacity=".4"')}
+  return g};
+ const shooting=S.projects.filter(p=>p.stage==='shoot');
+ const B=[
+  {k:'tower',x:.5,y:.5,w:2,d:2,h:96,own:true,win:8,top:'#3a3220',label:'Executive tower',sub:rankOf().r[1]},
+  {k:'writers',x:3.6,y:.5,w:1.8,d:1.6,h:26+S.b.writers*3,own:true,win:2,label:"Writers' bungalow",sub:'Level '+S.b.writers},
+  {k:'marketing',x:6.3,y:.5,w:2,d:1.6,h:30+S.b.marketing*4,own:true,win:3,label:'Marketing',sub:'Level '+S.b.marketing},
+  {k:'post',x:6.3,y:3.5,w:2,d:2,h:26+S.b.post*4,own:true,win:2,label:'Post house',sub:'Level '+S.b.post}];
+ const spots=[[.5,3.5],[3.4,3.5],[.5,6.4],[3.4,6.4]];
+ spots.forEach((sp,i)=>{const own=i<S.b.stage;const film=own?shooting[i]:null;B.push({k:'stage',x:sp[0],y:sp[1],w:2.4,d:2.2,h:44,own,arch:true,top:film?'#4a3e1c':undefined,label:own?'Stage '+(i+1):'Empty lot',sub:own?(film?'Shooting: '+film.title:'Free'):'Build a stage',film,i,idle:own&&!film})});
+ B.sort((a,b)=>(a.x+a.y)-(b.x+b.y));
+ let g=poly([P(0,0),P(9,0),P(9,9),P(0,9)],'fill="#121a2d" stroke="#323B55"');
+ for(let i=1;i<9;i++){g+=`<line x1="${P(i,0)[0]}" y1="${P(i,0)[1]}" x2="${P(i,9)[0]}" y2="${P(i,9)[1]}" stroke="#1b2440"/><line x1="${P(0,i)[0]}" y1="${P(0,i)[1]}" x2="${P(9,i)[0]}" y2="${P(9,i)[1]}" stroke="#1b2440"/>`}
+ g+=`<path d="M${P(3.1,0).join(' ')} L${P(3.1,9).join(' ')}" stroke="#2a3456" stroke-width="5"/><path d="M${P(0,3.1).join(' ')} L${P(9,3.1).join(' ')}" stroke="#2a3456" stroke-width="5"/><path d="M${P(5.95,3.1).join(' ')} L${P(5.95,9).join(' ')}" stroke="#2a3456" stroke-width="5"/>`;
+ let labels='';
+ for(const b of B){
+  const lab=b.own?`${b.label}`:b.label;
+  g+=`<g class="b" data-act="bld" data-k="${b.k}" tabindex="0" role="button" aria-label="${esc(b.label+': '+b.sub)}">${box(b.x,b.y,b.w,b.d,b.h,b)}${b.idle?poly([P(b.x,b.y,b.h),P(b.x+b.w,b.y,b.h),P(b.x+b.w,b.y+b.d,b.h),P(b.x,b.y+b.d,b.h)],'fill="none" stroke="#D4AF37" stroke-width="1.5" class="idle"'):''}${b.film?`<circle class="rec" cx="${P(b.x+b.w/2,b.y+b.d/2,b.h)[0]}" cy="${P(b.x+b.w/2,b.y+b.d/2,b.h)[1]}" r="4" fill="#E5484D"/>`:''}</g>`;
+  const c=P(b.x+b.w/2,b.y+b.d/2,b.own?b.h:0);const tx=+c[0],ty=+c[1];
+  const short={tower:'Tower',writers:'Writers',marketing:'Marketing',post:'Post'}[b.k]||(b.own?'Stage '+(b.i+1):'+ Stage');
+  const tw=short.length*6.4+14;
+  labels+=`<g pointer-events="none"><rect x="${(tx-tw/2).toFixed(1)}" y="${(ty-9).toFixed(1)}" width="${tw.toFixed(1)}" height="17" rx="8.5" fill="#0E1320" fill-opacity=".82" stroke="${b.film?'#E5484D':'#D4AF37'}" stroke-opacity="${b.own?.6:.3}"/><text class="lbl" x="${tx}" y="${(ty+3.5).toFixed(1)}" text-anchor="middle">${esc(short)}</text></g>`;
+ }
+ return `<svg viewBox="0 0 420 340" role="img" aria-label="Your studio lot"><title>Your studio lot</title>${g}${labels}</svg>`;
+}
+function pipeHTML(){const c=k=>S.projects.filter(p=>k.includes(p.stage)).length;const st=[['In development',['dev','rewrite','ready']],['Shooting',['shoot']],['Post',['post']],['Ready to release',['market','scheduled']],['In theaters',['theaters']]];return `<div class="pipe">${st.map(([n,k])=>`<span class="${c(k)?'on':''}">${n}<b>${c(k)}</b></span>`).join('')}</div>`}
+function vStudio(){
+ const ns=nextStep();const r=rankOf();
+ return `<div class="head"><div><h2>${esc(S.name)}</h2><p>${dateStr(S.week)}. Tap a building to upgrade it.</p></div></div>
+ ${ns?`<div class="hint"><span><b>Next step:</b> ${ns[0]}</span><button class="btn gold sm" data-act="tab" data-t="${ns[2]}">${ns[1]}</button></div>`:''}
+ <div class="grid2"><div><div class="lot">${lotSVG()}</div>
+ <div class="bld-list">${['stage','writers','post','marketing'].map(k=>{const l=S.b[k],b=BLD[k];const mx=l>=b.max;return `<button class="bld" data-act="bld" data-k="${k}"><b>${b.n}</b><small>${k==='stage'?l+' built, '+freeStages()+' free':'Level '+l+' of '+b.max}</small><small class="gold">${mx?'Fully upgraded':(k==='stage'?'Build next: ':'Upgrade: ')+money(b.cost(l)*era())}</small></button>`}).join('')}</div></div>
+ <div style="display:flex;flex-direction:column;gap:16px">
+ <div class="panel"><h3>Your films</h3><div style="margin-top:10px">${pipeHTML()}</div></div>
+ <div class="panel"><h3>Studio standing</h3><p class="muted" style="margin:4px 0 8px">${r.r[1]}${r.nx?', next: '+r.nx[1]:''}</p>${r.nx?`<div class="bar"><i style="width:${clamp((r.sc-r.r[0])/(r.nx[0]-r.r[0])*100,2,100)}%"></i></div>`:''}
+ <div class="srow"><span class="muted">Fame</span><span class="bar"><i style="width:${S.fame}%"></i></span><span>${Math.round(S.fame)}</span></div><div class="srow"><span class="muted">Prestige</span><span class="bar"><i style="width:${S.prestige}%"></i></span><span>${Math.round(S.prestige)}</span></div></div>
+ <div class="panel"><h3>Trade news</h3><ul class="news" style="margin-top:6px">${S.news.slice(0,7).map(n=>`<li><time>${MONTHS[Math.min(11,Math.floor((wkOf(n.w)-1)/4.34))]} ${yearOf(n.w)}</time><span class="${n.c}">${esc(n.t)}</span></li>`).join('')}</ul></div>
+ </div></div>`;
+}
+function filmCard(p){
+ const d=tal(p.dir),l=tal(p.lead);
+ const who=d&&l?`${esc(l.name)}, directed by ${esc(d.name)}`:'Not cast yet';
+ let body='',acts='';
+ const tc=(.08*TIER[p.tier].m)*era();
+ switch(p.stage){
+  case 'dev':body=`<div class="meta">${esc(p.logline)}</div>`;acts=`<button class="btn gold sm" data-act="castm" data-id="${p.id}">Cast the film</button><button class="btn plain sm" data-act="rewrite" data-id="${p.id}" ${S.cash<tc?'disabled':''}>Rewrite, ${money(tc)}</button><button class="btn text sm" data-act="drop" data-id="${p.id}">Shelve</button>`;break;
+  case 'rewrite':body=`<div class="prog"><span>Rewriting the script</span><span>${p.left} week${p.left>1?'s':''} left</span></div><div class="bar"><i style="width:${(2-p.left)/2*100}%"></i></div>`;break;
+  case 'ready':body=`<div class="meta">Package signed. Story ${p.sc.story}, hook ${p.sc.hook}.</div>`;acts=`<button class="btn gold sm" data-act="glm" data-id="${p.id}">Greenlight</button><button class="btn plain sm" data-act="castm" data-id="${p.id}">Recast</button><button class="btn plain sm" data-act="rewrite" data-id="${p.id}" ${S.cash<tc?'disabled':''}>Rewrite, ${money(tc)}</button>`;break;
+  case 'shoot':body=`<div class="prog"><span>Shooting, week ${p.shot+1} of ${p.weeks+(p.left+p.shot-p.weeks)}</span><span>${money(p.weekly)} a week</span></div><div class="bar"><i style="width:${p.shot/(p.shot+p.left)*100}%"></i></div>`;break;
+  case 'post':body=`<div class="prog"><span>Editing, effects and music</span><span>${p.left} week${p.left>1?'s':''} left</span></div><div class="bar"><i style="width:60%"></i></div>`;break;
+  case 'market':body=`<div class="tags"><span class="pill g">Quality ${p.Q}</span><span class="pill">Critics ${p.critic}%</span><span class="pill">Test ${p.test}</span></div>`;acts=`<button class="btn gold sm" data-act="relm" data-id="${p.id}">Plan release</button>`;break;
+  case 'scheduled':body=`<div class="meta">Opens ${weekLbl(p.rel)}, in ${p.rel-S.week} week${p.rel-S.week>1?'s':''}. Awareness ${pct(p.aw)}.</div>`;break;
+  case 'theaters':body=`<div class="prog"><span>Week ${p.wk} in theaters</span><span>Last weekend ${money(p.lastGross||p.open)}</span></div><div style="font:600 22px var(--sans)" class="gold num">${money(p.total||p.open)}</div>`;break;
+ }
+ const label={dev:'In development',rewrite:'Rewriting',ready:'Ready to greenlight',shoot:'Shooting',post:'Post-production',market:'Ready to release',scheduled:'Release booked',theaters:'In theaters'}[p.stage];
+ return `<article class="card mine"><div class="tags"><span class="pill g">${label}</span><span class="pill">${p.genre}</span><span class="pill">${TIER[p.tier].n}</span></div><div class="ttl">${esc(p.title)}</div><div class="meta">${who}</div>${body}${acts?`<div class="acts">${acts}</div>`:''}</article>`;
+}
+function vFilms(){
+ const act=S.projects.filter(p=>p.stage!=='done'),arch=S.projects.filter(p=>p.stage==='done').reverse();
+ return `<div class="head"><div><h2>Films</h2><p>Every project from first draft to final weekend.</p></div><button class="btn ghost" data-act="tab" data-t="scripts">Find a script</button></div>
+ ${act.length?`<div class="cards">${act.map(filmCard).join('')}</div>`:`<div class="panel" style="text-align:center;padding:36px"><h3>No films in progress</h3><p class="muted">Buy a script to start your next picture.</p><button class="btn gold" data-act="tab" data-t="scripts">Browse scripts</button></div>`}
+ ${arch.length?`<div class="sec"><h3>Released films</h3><span class="muted">${arch.length}</span></div><div class="panel scroll" style="padding:0"><table><thead><tr><th>Title</th><th class="hide-s">Year</th><th class="r">Box office</th><th class="r">Profit</th><th class="r hide-s">Critics</th><th></th></tr></thead><tbody>${arch.map(p=>`<tr><td class="tt"><b>${esc(p.title)}</b><br><small class="muted">${p.genre}</small></td><td class="hide-s">${yearOf(p.rel)}</td><td class="r num">${money(p.total)}</td><td class="r num ${p.profit>=0?'ok':'bad'}">${money(p.profit)}</td><td class="r hide-s">${p.critic}%</td><td class="r"><button class="btn text sm" data-act="pm" data-id="${p.id}">Report</button></td></tr>`).join('')}</tbody></table></div>`:''}`;
+}
+function vScripts(){
+ const sorted=[...S.scripts].sort((a,b)=>a.expires-b.expires);
+ return `<div class="head"><div><h2>Script market</h2><p>Buy a script to start a film. Hot genres sell more tickets.</p></div></div>
+ <div class="heat">${GENRES.map(g=>{const h=S.heat[g];return `<div><b>${g}</b><span class="${h>1.1?'ok':h<.85?'bad':'muted'}">${h>1.1?'Hot':h<.85?'Cold':'Steady'} · ${Math.round(h*100)}</span></div>`}).join('')}</div>
+ <div class="sec"><h3>On the market</h3><span class="muted">${S.scripts.length} scripts</span></div>
+ <div class="cards">${sorted.map(s=>`<article class="card"><div class="tags"><span class="pill ${S.heat[s.genre]>1.1?'ok':''}">${s.genre}</span><span class="pill">${TIER[s.tier].n}</span>${s.expires-S.week<=3?'<span class="pill warn">Leaving soon</span>':''}</div><div class="ttl">${esc(s.title)}</div><div class="meta" style="font-family:var(--serif);font-style:italic">${esc(s.logline)}</div><div class="stars" aria-label="Script quality">${stars(scriptAvg(s.sc))}</div><div class="acts"><b class="gold num" style="align-self:center;margin-right:auto">${money(s.price)}</b><button class="btn plain sm" data-act="script" data-id="${s.id}">Read</button><button class="btn gold sm" data-act="buy" data-id="${s.id}" ${S.cash<s.price?'disabled':''}>Buy</button></div></article>`).join('')}</div>`;
+}
+function vCharts(){
+ const list=[...S.films].sort((a,b)=>b.gross-a.gross);
+ const soon=[...S.upcoming.map(f=>({...f})),...S.projects.filter(p=>p.stage==='scheduled').map(p=>({title:p.title,studio:S.name,rel:p.rel,genre:p.genre,mine:true}))].filter(f=>f.rel<=S.week+6).sort((a,b)=>a.rel-b.rel);
+ const lastAw=S.awards[S.awards.length-1];
+ return `<div class="head"><div><h2>Box office</h2><p>This weekend's top films, ${weekLbl(S.week)}.</p></div></div>
+ <div class="panel scroll" style="padding:0">${list.length?`<table><thead><tr><th>#</th><th>Title</th><th class="hide-s">Studio</th><th class="r">Weekend</th><th class="r">Change</th><th class="r">Total</th><th class="r hide-s">Week</th></tr></thead><tbody>${list.slice(0,10).map((f,i)=>{const ch=f.wk===1?null:(f.gross/f.prev-1);return `<tr class="${f.mine?'mine':''}"><td>${i+1}</td><td class="tt"><b>${esc(f.title)}</b><br><small class="muted">${f.genre}</small></td><td class="hide-s muted">${esc(f.studio)}</td><td class="r num">${money(f.gross)}</td><td class="r num ${ch===null?'gold':ch>-.25?'ok':ch>-.5?'warn':'bad'}">${ch===null?'New':Math.round(ch*100)+'%'}</td><td class="r num">${money(f.total)}</td><td class="r hide-s">${f.wk}</td></tr>`}).join('')}</tbody></table>`:'<p class="muted" style="padding:20px">No films in theaters yet. Press Next week to move time forward.</p>'}</div>
+ <div class="grid2" style="margin-top:16px"><div class="panel"><h3>Opening soon</h3><table style="margin-top:6px"><tbody>${soon.slice(0,8).map(f=>`<tr class="${f.mine?'mine':''}"><td>${weekLbl(f.rel)}</td><td class="tt">${esc(f.title)}</td><td class="muted r">${esc(f.studio)}</td></tr>`).join('')||'<tr><td class="muted">Nothing announced.</td></tr>'}</tbody></table></div>
+ <div class="panel"><h3>The Goldies</h3>${lastAw?`<p style="margin:8px 0 0">Best Picture ${lastAw.year}: <b class="${lastAw.mine?'gold':''}">${esc(lastAw.title)}</b><br><span class="muted">${esc(lastAw.studio)}</span></p>`:'<p class="muted">Held every March for the previous year\'s films. Critics\' favourites win.</p>'}</div></div>`;
+}
+function vMoney(){
+ const h=S.cashHist,mx=Math.max(...h,1),mn=Math.min(...h,0);const W=600,H=160;
+ const pts=h.map((v,i)=>[(i/(Math.max(h.length-1,1)))*W,H-((v-mn)/(mx-mn||1))*H]);
+ const zero=H-((0-mn)/(mx-mn||1))*H;
+ const upkeep=(S.b.stage*.02+S.b.writers*.008+S.b.post*.01+S.b.marketing*.01)*era();
+ const yr=yearOf(S.week);const yrInc=S.ledger.filter(l=>yearOf(l.w)===yr&&l.a>0).reduce((a,l)=>a+l.a,0);
+ return `<div class="head"><div><h2>Money</h2><p>Cash, costs and loans.</p></div><button class="btn ghost" data-act="loan">Bank loans</button></div>
+ <div class="est" style="margin:0 0 16px"><div><small>Cash</small><b class="gold">${money(S.cash)}</b></div><div><small>Income this year</small><b>${money(yrInc)}</b></div><div><small>Weekly upkeep</small><b>${money(upkeep+S.loans*.1/52)}</b></div><div><small>Loans</small><b>${money(S.loans)}</b></div><div><small>Lifetime profit</small><b class="${S.totalProfit>=0?'ok':'bad'}">${money(S.totalProfit)}</b></div></div>
+ <div class="panel"><h3>Cash over time</h3><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:160px;display:block;margin-top:10px" role="img" aria-label="Cash over time"><line x1="0" x2="${W}" y1="${zero}" y2="${zero}" stroke="#323B55" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="#D4AF37" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><div class="prog" style="margin-top:4px"><span>${money(mn)} low</span><span>${money(mx)} high</span></div></div>
+ <div class="sec"><h3>Recent transactions</h3></div><div class="panel scroll" style="padding:0"><table><tbody>${S.ledger.slice(0,20).map(l=>`<tr><td class="muted" style="white-space:nowrap">${dateStr(l.w)}</td><td>${esc(l.t)}</td><td class="r num ${l.a>=0?'ok':''}">${l.a>=0?'+':''}${money(l.a)}</td></tr>`).join('')||'<tr><td class="muted">No transactions yet.</td></tr>'}</tbody></table></div>`;
+}
+function help(){openModal(mh('How to play','Run a Hollywood studio')+`<div class="mb"><ol style="padding-left:20px;margin:0;line-height:1.9">
+<li><b>Buy a script</b> in Scripts. Hot genres sell more tickets.</li><li><b>Cast it</b> in Films: pick a director and a lead actor. Matching genres raise quality.</li><li><b>Greenlight</b> it: choose the budget and shooting pace. It needs a free sound stage.</li><li>Press <b>Next week</b> to move time. Handle problems on set as they come up.</li><li>When it's finished, <b>plan the release</b>: marketing budget and opening week. Avoid big rival films.</li><li>Watch the <b>premiere</b>, then follow the box office. A report explains every hit and flop.</li></ol>
+<p class="muted" style="margin-top:12px">Profit, fame and prestige raise your rank from garage indie to Hollywood legend. Critics' favourites win Goldies every March. Your game saves automatically on this device.</p></div><div class="mf"><button class="btn gold" data-act="close">Got it</button></div>`)}
+
+/* ---------- auto play ---------- */
+function stopAuto(keepFlag){if(autoTimer){clearInterval(autoTimer);autoTimer=null;if(!keepFlag)render();else render()}}
+function toggleAuto(){if(autoTimer){stopAuto();return}autoTimer=setInterval(()=>{if(!busy)advance()},1100);render()}
+
+/* ---------- splash ---------- */
+function splash(){
+ const saved=load();
+ $('#splash').style.display='flex';
+ $('#splash').innerHTML=`<div class="in"><svg class="deco" viewBox="0 0 320 60" aria-hidden="true"><line x1="0" y1="30" x2="120" y2="30" stroke="#D4AF37" stroke-opacity=".5"/><line x1="200" y1="30" x2="320" y2="30" stroke="#D4AF37" stroke-opacity=".5"/><circle cx="160" cy="30" r="22" fill="none" stroke="#D4AF37"/><circle cx="160" cy="30" r="5" fill="#D4AF37"/>${[0,1,2,3,4].map(i=>{const a=i/5*Math.PI*2-Math.PI/2;return `<circle cx="${160+Math.cos(a)*13}" cy="${30+Math.sin(a)*13}" r="4" fill="none" stroke="#D4AF37"/>`}).join('')}</svg>
+ <h1>Reel Empire</h1><p class="tag">From garage filmmaker to Hollywood legend</p>
+ <form id="nf" novalidate>${saved&&!saved.over?`<button type="button" class="btn gold" style="width:100%;margin-bottom:16px" data-act="continue">Continue ${esc(saved.name)}, ${dateStr(saved.week)}</button>`:''}
+ <label for="sn">Name your studio</label><input type="text" id="sn" maxlength="28" placeholder="Silver Lantern Pictures" autocomplete="off"><div class="err" id="snerr"></div>
+ <div class="row"><button type="submit" class="btn ${saved&&!saved.over?'ghost':'gold'}">Open the studio gates</button></div>
+ <p class="muted" style="font-size:12px;margin:14px 0 0">It's 1977. You have $8M, one sound stage and a dream.${saved&&!saved.over?' Starting a new studio replaces your saved game.':''}</p></form></div>`;
+ $('#nf').addEventListener('submit',e=>{e.preventDefault();const v=$('#sn').value.trim();if(!v){$('#snerr').textContent='Enter a studio name first.';$('#sn').focus();return}newGame(v);$('#splash').style.display='none';tab='studio';render();help()});
+ $('#sn').addEventListener('input',()=>{$('#snerr').textContent=''});
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-act]');if(!t)return;
+ const a=t.dataset.act,id=t.dataset.id;
+ if(t.disabled)return;
+ switch(a){
+  case 'tab':tab=t.dataset.t;closeModal();render();window.scrollTo(0,0);break;
+  case 'next':advance();break;
+  case 'auto':toggleAuto();break;
+  case 'close':closeModal();break;
+  case 'bld':buildingModal(t.dataset.k);break;
+  case 'upgrade':upgrade(t.dataset.k);break;
+  case 'script':scriptModal(id);break;
+  case 'buy':buyScript(id);break;
+  case 'castm':castModal(id);break;
+  case 'pick':castSel[t.dataset.k]=id;drawCast();break;
+  case 'cast':confirmCast();break;
+  case 'rewrite':rewrite(id);break;
+  case 'drop':{const p=S.projects.find(x=>x.id===id);S.projects=S.projects.filter(x=>x!==p);news('"'+p.title+'" was shelved.');save();render();break}
+  case 'glm':greenlightModal(id);break;
+  case 'gl':glSel[t.dataset.k]=+t.dataset.v;drawGL();break;
+  case 'greenlight':greenlight(+t.dataset.w,+t.dataset.c);break;
+  case 'evc':eventChoice(+t.dataset.i);break;
+  case 'relm':releaseModal(id);break;
+  case 'tone':relSel.tone=t.dataset.v==='1';drawRel();break;
+  case 'wk':relSel.w=+t.dataset.w;drawRel();break;
+  case 'schedule':schedule();break;
+  case 'premdone':premDone();break;
+  case 'pm':postMortem(S.projects.find(x=>x.id===id));break;
+  case 'pmdone':if(busy)done();else closeModal();break;
+  case 'envelope':envelope();break;
+  case 'awdone':done();break;
+  case 'loan':loanModal();break;
+  case 'borrow':S.loans+=5;earn(5,'Bank loan');save();loanModal();render();break;
+  case 'repay':S.loans-=5;spend(5,'Loan repaid');save();loanModal();render();break;
+  case 'help':help();break;
+  case 'mute':muted=!muted;render();break;
+  case 'newgame':stopAuto();closeModal();splash();break;
+  case 'continue':S=load();$('#splash').style.display='none';render();break;
+  case 'restart':busy=false;queue=[];closeModal();try{localStorage.removeItem(SAVE)}catch(e){}splash();break;
+ }
+});
+document.addEventListener('input',e=>{if(e.target.dataset.act==='pa'){relSel.pa=+e.target.value;const p=S.projects.find(x=>x.id===relSel.pid);const sc=$('#modal').scrollTop;drawRel();$('#modal').scrollTop=sc;const r=$('#modal input[type=range]');r&&r.focus()}});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'&&$('#veil').classList.contains('show')&&$('#modal .x'))closeModal();
+ if((e.key==='Enter'||e.key===' ')&&e.target.matches('g.b')){e.preventDefault();buildingModal(e.target.dataset.k)}
+ if(e.key==='n'&&!e.target.matches('input')&&!$('#veil').classList.contains('show')&&S&&$('#splash').style.display==='none')advance();
+});
+$('#veil').addEventListener('click',e=>{if(e.target.id==='veil'&&$('#modal .x'))closeModal()});
+splash();
+}
+</script>
+</body>
+</html>
