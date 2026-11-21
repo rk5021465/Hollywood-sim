@@ -971,7 +971,7 @@ function person(id){if(!S||!id)return null;if(id==='ceo')return S.ceo;for(const 
 const pname=id=>{const p=person(id);return p?p.n:'—'};
 const feeMult=()=>(S.ev.feeMult||1)*I()*(typeof bigTax==='function'?bigTax():1);
 const tFee=p=>(hasT(p,'diva')?1.25:1)*(hasT(p,'generous')?.85:1);
-const actorFee=a=>+((0.3+Math.pow(a.star/100,2.3)*22)*feeMult()*tFee(a)).toFixed(1);
+let actorFee=a=>+((0.3+Math.pow(a.star/100,2.3)*22)*feeMult()*tFee(a)).toFixed(1);
 const crewFee=(c,role)=>+(({directors:.4,writers:.2,composers:.15,dps:.15}[role])+Math.pow(c.fame/100,2)*({directors:11,writers:4,composers:2.5,dps:2.5}[role]))*feeMult()*tFee(c);
 const busy=x=>x.busy>=tNow();
 const lockA=a=>typeof availA==='function'?!availA(a).ok:a.star>S.rep+42;
@@ -2301,8 +2301,8 @@ function wiz(){const back=`<button class="btn ghost" onclick="${W.step?'W.step--
   h+=`<h2>Casting</h2>${cast.length?`<div class="card"><small>Your cast</small><div style="display:flex;gap:10px;overflow-x:auto;margin-top:6px">${cast.map(id=>`<div class="center" style="flex:0 0 auto">${portrait(person(id),54)}<div style="font-size:11px;max-width:64px" class="ellip">${esc(pname(id))}</div><small style="text-transform:none">${id===W.lead||W.leads2.includes(id)?'Lead':id===W.co||W.cos2.includes(id)?'Co-star':'Support'}</small><div><button class="btn sm ghost" style="margin:2px 0 0;padding:3px 6px;font-size:11px" onclick="fireCast('${id}')">✕</button></div></div>`).join('')}</div>${W.pen?`<small class="neg" style="text-transform:none">Removal penalties: ${M(W.pen)}</small>`:''}</div>`:''}
   <div class="seg">${roleBtn('lead','Leads')}${roleBtn('co','Co-stars')}${roleBtn('sup','Supporting')}</div>
   <div class="card"><div class="row"><small>👥 Extras</small><b id="exv">${W.extras} people · ${M(W.extras*(GEN[g].days||30)*.00002*I())}</b></div><input type="range" min="0" max="2000" step="50" value="${W.extras}" oninput="W.extras=+this.value;document.getElementById('exv').textContent=W.extras+' people · '+M(W.extras*(GEN[W.script.genre].days||30)*.00002*I())"><p class="muted" style="font-size:12px">Crowds make ${EPIC.join(', ').toLowerCase()} films feel bigger.</p></div>
-  <div class="card"><small>Sort by</small><div class="chips" style="margin-top:6px">${[['star','Fanbase'],['skill','Acting'],['cost','Cost'],['fit','Best fit']].map(s=>`<button class="${W.sort===s[0]?'on':''}" onclick="W.sort='${s[0]}';wiz()">${s[1]}</button>`).join('')}</div><small style="display:block;margin-top:8px">Filter</small><div class="chips" style="margin-top:6px">${[['all','All'],['M','Male'],['F','Female'],['young','Young'],['senior','Senior'],['free','Available']].map(s=>`<button class="${W.gf===s[0]?'on':''}" onclick="W.gf='${s[0]}';W.lim=30;wiz()">${s[1]}</button>`).join('')}</div><small style="display:block;margin-top:8px">Tier</small><div class="chips" style="margin-top:6px">${[['all','All'],['A','A-list'],['B','B-list'],['M','Working'],['R','Rising'],['C','Character']].map(s=>`<button class="${(W.tf||'all')===s[0]?'on':''}" onclick="W.tf='${s[0]}';W.lim=30;wiz()">${s[1]}</button>`).join('')}</div><input type="text" id="castq" placeholder="🔍 Search ${S.people.actors.length} actors by name" value="${esc(W.q||'')}" oninput="W.q=this.value;W.lim=30;MKEEP=true;clearTimeout(window._cq);window._cq=setTimeout(()=>{wiz();const e=document.getElementById('castq');if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length)}},350)"></div>`;
-  let list=S.people.actors.filter(a=>W.gf==='all'||(W.gf==='M'&&a.g==='M')||(W.gf==='F'&&a.g==='F')||(W.gf==='young'&&a.age<30)||(W.gf==='senior'&&a.age>=55)||(W.gf==='free'&&!busy(a)&&!lockA(a))).filter(a=>(!W.tf||W.tf==='all'||(typeof tierOfA==='function'&&tierOfA(a)===W.tf))&&(!W.q||a.n.toLowerCase().includes(W.q.toLowerCase())));
+  <div class="card"><small>Sort by</small><div class="chips" style="margin-top:6px">${[['star','Fanbase'],['skill','Acting'],['cost','Cost'],['fit','Best fit']].map(s=>`<button class="${W.sort===s[0]?'on':''}" onclick="W.sort='${s[0]}';wiz()">${s[1]}</button>`).join('')}</div><small style="display:block;margin-top:8px">Filter</small><div class="chips" style="margin-top:6px">${[['all','All'],['M','Male'],['F','Female'],['kids','Kids & teens'],['young','Young'],['senior','Senior'],['free','Available']].map(s=>`<button class="${W.gf===s[0]?'on':''}" onclick="W.gf='${s[0]}';W.lim=30;wiz()">${s[1]}</button>`).join('')}</div><small style="display:block;margin-top:8px">Tier</small><div class="chips" style="margin-top:6px">${[['all','All'],['A','A-list'],['B','B-list'],['M','Working'],['R','Rising'],['C','Character']].map(s=>`<button class="${(W.tf||'all')===s[0]?'on':''}" onclick="W.tf='${s[0]}';W.lim=30;wiz()">${s[1]}</button>`).join('')}</div><input type="text" id="castq" placeholder="🔍 Search ${S.people.actors.length} actors by name" value="${esc(W.q||'')}" oninput="W.q=this.value;W.lim=30;MKEEP=true;clearTimeout(window._cq);window._cq=setTimeout(()=>{wiz();const e=document.getElementById('castq');if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length)}},350)"></div>`;
+  let list=S.people.actors.filter(a=>W.gf==='all'||(W.gf==='M'&&a.g==='M')||(W.gf==='F'&&a.g==='F')||(W.gf==='kids'&&a.age<18)||(W.gf==='young'&&a.age<30&&a.age>=18)||(W.gf==='senior'&&a.age>=55)||(W.gf==='free'&&!busy(a)&&!lockA(a))).filter(a=>(!W.tf||W.tf==='all'||(typeof tierOfA==='function'&&tierOfA(a)===W.tf))&&(!W.q||a.n.toLowerCase().includes(W.q.toLowerCase())));
   list.sort((a,b)=>W.sort==='skill'?b.skill-a.skill:W.sort==='cost'?actorFee(a)-actorFee(b):W.sort==='fit'?((b.spec===g?20:0)+b.skill)-((a.spec===g?20:0)+a.skill):b.star-a.star);
   h+=`<p class="muted" style="font-size:12.5px;margin:4px 2px 8px">${list.length} actor${list.length===1?'':'s'} match · showing ${Math.min(list.length,W.lim||30)}</p>`+list.slice(0,W.lim||30).map(a=>{const inRole=role==='sup'?W.sup.includes(a.id):role==='lead'?(W.lead===a.id||W.leads2.includes(a.id)):(W.co===a.id||W.cos2.includes(a.id));const elsewhere=cast.includes(a.id)&&!inRole;
    return personCard(a,inRole,inRole?'':`negotiate('${a.id}','actors','${role}')`,true,lockA(a)||elsewhere||busy(a)||a.snub>=tNow(),elsewhere?'<span class="tag blue">Already cast</span>':a.snub>=tNow()?'<span class="tag bad">Refuses to talk</span>':(lockA(a)&&typeof availA==='function'?`<span class="tag bad">${availA(a).why}</span>`:''))}).join('')+(list.length>(W.lim||30)?`<button class="btn ghost" onclick="W.lim=(W.lim||30)+30;MKEEP=true;wiz()">Show 30 more (${list.length-(W.lim||30)} left)</button>`:'');
@@ -4399,17 +4399,18 @@ FIRST_F.push('Amara','Bianca','Clara','Daria','Elena','Fiona','Gemma','Helena','
 LAST.push('Ashby','Barrow','Calloway','Dalton','Ellery','Fairfax','Gallardo','Hargrove','Iverson','Jaramillo','Kensington','Lockhart','Mercer','Navarro','Okafor','Pemberton','Quintero','Rourke','Sinclair','Thornton','Underwood','Valdez','Whitlock','Yamada','Zielinski','Alvarez','Beaumont','Castellanos','Delacroix','Everett','Fontaine','Grimaldi','Hayashi','Ingram','Kowalski','Laurent','Montague','Nakamura','Oyelaran','Prescott','Rasmussen','Santoro','Takahashi','Vasquez','Wolfe','Adeyemi','Bianchi','Coleman','Dubois','Esposito');
 
 /* ---------- tiers ---------- */
-const TIER_L={A:'A-list',B:'B-list',M:'Working actor',R:'Rising star',C:'Character actor'};
-function tierOfA(a){return a.star>=80?'A':a.star>=60?'B':a.age<=27&&a.star<40?'R':a.skill>=74&&a.star<45&&a.age>=36?'C':'M'}
-const TIER_MIX={A:14,B:36,M:90,R:55,C:45};const CREW_N={directors:60,writers:50,composers:28,dps:28};
+const TIER_L={A:'A-list',B:'B-list',M:'Working actor',R:'Rising star',C:'Character actor',K:'Child & teen'};
+function tierOfA(a){return (a.age||30)<18?'K':a.star>=80?'A':a.star>=60?'B':a.age<=27&&a.star<40?'R':a.skill>=74&&a.star<45&&a.age>=36?'C':'M'}
+const TIER_MIX={A:14,B:36,M:90,R:55,C:45,K:26};const CREW_N={directors:60,writers:50,composers:28,dps:28};
 function mkActorT(tk,t,g){const a=mkActor(tk,t==='R',g);
  if(t==='A'){a.star=RI(80,97);a.skill=clamp(RI(62,96),20,99);a.age=RI(28,62)}
  else if(t==='B'){a.star=RI(60,79);a.age=RI(24,62)}
  else if(t==='M'){a.star=RI(30,59);a.age=RI(23,60)}
  else if(t==='R'){a.star=RI(5,36);a.age=RI(18,27)}
  else if(t==='C'){a.star=RI(10,43);a.skill=RI(74,97);a.age=RI(38,74)}
+ else if(t==='K'){a.age=RI(6,17);a.star=RI(5,48);a.skill=clamp(RI(30,88),20,99);a.kid=1}
  return a}
-function topUpTalent(news){if(!S||!S.people)return;const P=S.people;const tk=takenNames();const cnt={A:0,B:0,M:0,R:0,C:0};P.actors.forEach(a=>cnt[tierOfA(a)]++);
+function topUpTalent(news){if(!S||!S.people)return;const P=S.people;const tk=takenNames();const cnt={A:0,B:0,M:0,R:0,C:0,K:0};P.actors.forEach(a=>cnt[tierOfA(a)]++);
  for(const t in TIER_MIX){while(cnt[t]<TIER_MIX[t]){const g=P.actors.filter(x=>x.g==='F').length<P.actors.length/2?'F':'M';const a=mkActorT(tk,t,g);if(tierOfA(a)!==t){cnt[tierOfA(a)]++;P.actors.push(a);continue}P.actors.push(a);cnt[t]++;if(news&&t==='R'&&Math.random()<.25)addNews(`🌟 Breakout newcomer ${esc(a.n)} signs with a top agency.`)}}
  for(const k in CREW_N)while(P[k].length<CREW_N[k])P[k].push(mkCrew(tk,k[0]))}
 genPeople=(function(o){return function(){const P=o();const keep=S;S={people:P};try{topUpTalent(false)}catch(e){}S=keep;return P}})(genPeople);
@@ -4712,6 +4713,7 @@ modal=(function(o){return function(h){const r=o.apply(this,arguments);try{if(!h&
 /* ===================== v18 — Stage 2: deco portraits, live opening weekend, week chart, film flow ===================== */
 
 /* ---------- Deco portraits: illustrated image when we have one, gold monogram otherwise ---------- */
+/* append new portraits at the END only: saves store each portrait's index */
 const PIMG=[
  {src:'media/p_f01.png',bg:'#186751',n:'Vivienne Hale',g:'F',a:[22,48],s:[0,2],nat:['USA','UK','Ireland','Canada']},
  {src:'media/p/f001.jpg',bg:'#1f3f78',n:'Imani Whitfield',g:'F',a:[22,42],s:[4,5],nat:['USA','Nigeria','South Africa','UK']},
@@ -4722,7 +4724,8 @@ const PIMG=[
  {src:'media/p/f006.jpg',bg:'#c7871b',n:'Coretta Ellison',g:'F',a:[33,56],s:[4,5],nat:['USA','Nigeria','South Africa','UK']},
  {src:'media/p/f007.jpg',bg:'#c07f79',n:'Paloma Castañeda',g:'F',a:[28,52],s:[1,3],nat:['Mexico','Spain','Italy','Argentina','Brazil','France']},
  {src:'media/p/f008.jpg',bg:'#706933',n:'Dionne Merriweather',g:'F',a:[48,66],s:[3,5],nat:['USA','India','Brazil','South Africa']},
- {src:'media/p/f009.jpg',bg:'#582254',n:'Audrey Lockwood',g:'F',a:[20,38],s:[0,2],nat:['USA','UK','France','Germany','Italy','Canada']}];
+ {src:'media/p/f009.jpg',bg:'#582254',n:'Audrey Lockwood',g:'F',a:[20,38],s:[0,2],nat:['USA','UK','France','Germany','Italy','Canada']},
+ {src:'media/p/m001.jpg',n:'Graham Whitmore',g:'M',a:[26,45],s:[0,1],nat:['USA','UK','Canada','Ireland'],bg:'#692d33'}];
 const JEWEL=[['#0b2e26','#1d6b55'],['#2e0b14','#7a2335'],['#0b1a33','#1f4f86'],['#2e2108','#8a6420'],['#200e2c','#5e2d7a'],['#08282c','#1d7480'],['#2e140a','#8a4220'],['#14142a','#3a3a6e']];
 function pHue(p){return JEWEL[hashStr(p.id||p.n||'x')%JEWEL.length]}
 function isFem(p){try{return p.g==='F'||lookOf(p).g==='F'}catch(e){return p.g==='F'}}
@@ -4744,10 +4747,10 @@ portrait=(function(old){return function(p,size,opt){opt=opt||{};const s=size||64
 
 /* ---------- Star card (arch frame) for the person detail view ---------- */
 function starCard(p,role){if(!p)return '';let [c1,c2]=pHue(p);const im=pImg(p);if(im&&im.bg){c2=im.bg;c1=mixc(im.bg,'#000000',.62)}const isA=role==='actor'||(S.people.actors||[]).includes(p);
- const tier=isA&&typeof tierOfA==='function'?({A:'A · LIST',B:'STAR',M:'WORKING ACTOR',R:'RISING',C:"CRITICS' DARLING"}[tierOfA(p)]||''):(role||'').toUpperCase();
+ const tier=isA&&typeof tierOfA==='function'?({A:'A · LIST',B:'STAR',M:'WORKING ACTOR',R:'RISING',C:"CRITICS' DARLING",K:(p.age<13?'CHILD STAR':'TEEN STAR')}[tierOfA(p)]||''):(role||'').toUpperCase();
  const st=isA?[[p.star,'STAR'],[p.skill,'TALENT'],[M(actorFee(p)),'FEE']]:[[p.skill,'CRAFT'],[p.fame,'FAME'],[p.age||'—','AGE']];
  return `<div class="sc25" style="--c1:${c1};--c2:${c2}"><div class="sc25r"></div><div class="sc25a">${im?`<img src="${im.src}" alt="">`:`<div class="sc25m">${portrait(p,150,{square:1})}</div>`}</div>${tier?`<div class="sc25t">${tier}</div>`:''}
- <div class="sc25n">${esc(p.n)}</div><div class="sc25s">${esc([p.spec,p.age?p.age+' yrs':'',p.nat].filter(Boolean).join(' · '))}</div><div class="sc25d">✦</div>
+ <div class="sc25n">${esc(p.n)}</div><div class="sc25s">${esc([p.spec,p.age?p.age+' yrs':'',p.nat].filter(Boolean).join(' · '))}</div>${(p.age||30)<18?'<div class="sc25s" style="margin-top:4px;color:#e9c97a">On-set tutor · limited hours · 40% of adult fee</div>':''}<div class="sc25d">✦</div>
  <div class="sc25st">${st.map(x=>`<div>${x[0]}<span>${x[1]}</span></div>`).join('')}</div></div>`}
 
 /* ---------- Era-styled masthead for the review paper ---------- */
@@ -4800,6 +4803,10 @@ render=(function(o){return function(){try{if(S&&S.people)assignPImgs()}catch(e){
 /* ---------- person view opens with the star card ---------- */
 openPerson=(function(o){return function(id){o(id);try{const p=person(id);const h=document.querySelector('#modal .thero');if(p&&h&&!document.querySelector('#modal .sc25')){const role=roleOf(p);const isA=role==='actors';
  const ring=h.querySelector('.ring');if(ring)ring.remove();const h2=h.querySelector('h2');if(h2)h2.remove();h.insertAdjacentHTML('afterbegin',starCard(p,isA?'actor':ROLE_LBL[role].replace(/s$/,'')))}}catch(e){}}})(openPerson);
+
+/* ---------- Child & teen actors ---------- */
+actorFee=(function(o){return function(a){const f=o(a);return a&&(a.age||30)<18?+(f*.4+.02*I()).toFixed(3):f}})(actorFee);
+nextMonth=(function(o){return function(){const r=o.apply(this,arguments);try{if(S.month===0)(S.people.actors||[]).forEach(a=>{if((a.age||30)<=18){a.skill=clamp(a.skill+RI(0,3),20,99);if(a.age===18&&!a._grown){a._grown=1;if(a.star>=40)addNews(`🎓 Former child star ${esc(a.n)} turns 18 and steps into adult roles.`)}}})}catch(e){}return r}})(nextMonth);
 
 
 applyTheme();title();

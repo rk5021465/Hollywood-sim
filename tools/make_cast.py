@@ -44,7 +44,7 @@ WEIGHT = {'Caucasian American':16,'African-American':12,'Nigerian':5,'Ghanaian':
 BG = ['deep emerald','deep sapphire blue','burgundy','deep teal','rich amber gold','deep plum','midnight navy','burnt orange','forest green','crimson','dusty rose','mustard yellow','ocean blue','rust orange','soft coral','lavender','olive green','charcoal','deep purple','terracotta']
 KIDBG = ['sky blue','sunny yellow','mint green','coral','peach','soft lavender','tomato red','turquoise','light orange','pale pink']
 
-used = set()
+used = {'Vivienne Hale','Imani Whitfield','Claire Whitmore','Mei Shen','Ananya Iyer','Loretta Haynes','Coretta Ellison','Paloma Castañeda','Dionne Merriweather','Audrey Lockwood','Graham Whitmore'}
 def name(eth, g):
     d = ETH[eth]
     for _ in range(200):
@@ -104,6 +104,25 @@ ROLE_OUT = {
 
 def article(w): return 'an' if w[0].lower() in 'aeiou' else 'a'
 
+
+FACE=['round face','oval face','square face with strong jaw','long narrow face','heart-shaped face','diamond face with high cheekbones','soft wide face','angular face']
+EYES=['large round eyes','narrow almond eyes','hooded eyes','wide-set eyes','close-set eyes','deep-set eyes','upturned eyes','downturned sleepy eyes']
+NOSE=['small button nose','broad nose','long straight nose','aquiline hooked nose','wide flat nose','upturned nose','prominent nose','narrow pointed nose']
+LIPS=['thin lips','full lips','wide mouth','small mouth','heart-shaped lips','asymmetric lips']
+BROW=['thick straight brows','thin arched brows','bushy brows','soft rounded brows','sharp angled brows','sparse light brows']
+EXPR=['warm smile','serious look','confident smirk','gentle smile showing teeth','thoughtful gaze','playful grin','stern look','calm neutral expression']
+ANGLE=['facing left three-quarter view','facing right three-quarter view','facing forward','head slightly tilted','looking over shoulder']
+MARK=['dimples','freckles across nose','a small mole on cheek','a small scar on eyebrow','a gap between front teeth','laugh lines','prominent ears','a cleft chin','glasses','','','','','']
+def face(kid=False):
+    m=random.choice(MARK)
+    if kid and m in ('a small scar on eyebrow','laugh lines'): m='freckles across nose'
+    if kid:
+        parts=[random.choice(['round face','oval face','heart-shaped face','soft wide face','long narrow face']),random.choice(['large round eyes','almond eyes','wide-set eyes','upturned eyes','sleepy eyes']),random.choice(['small button nose','upturned nose','broad nose','small straight nose']),random.choice(['big gap-toothed grin','shy smile','cheeky grin','missing front tooth smile','curious look','laughing']),random.choice(ANGLE)]
+    else:
+        parts=[random.choice(FACE),random.choice(EYES),random.choice(NOSE),random.choice(LIPS),random.choice(BROW),random.choice(EXPR),random.choice(ANGLE)]
+    if m: parts.append(m)
+    return ', '.join(parts)
+
 lines = []
 def add(section, role, g, age_rng, kid=False, teen=False):
     eth = pick_eth(); age = random.randint(*age_rng); n = name(eth, g); d = ETH[eth]
@@ -111,12 +130,12 @@ def add(section, role, g, age_rng, kid=False, teen=False):
     wr = ' with soft wrinkles' if age >= 60 else ''
     gender = ('girl' if g=='F' else 'boy') if kid else ('teen girl' if g=='F' and teen else 'teen boy' if teen else ('woman' if g=='F' else 'man'))
     hair = hair_desc(eth, g, age)
-    if kid: out = random.choice(KID_F if g=='F' else KID_M); acc=''; bg = random.choice(KIDBG); extra = ', big friendly smile, no makeup'
+    if kid: out = random.choice(KID_F if g=='F' else KID_M); acc=''; bg = random.choice(KIDBG); extra = ', no makeup'
     elif teen: out = random.choice(TEEN_F if g=='F' else TEEN_M); acc=''; bg = random.choice(BG); extra = ', no makeup'
     elif role in ROLE_OUT: out = random.choice(ROLE_OUT[role]); acc = random.choice(ACC_F[:4]+['','','']) if g=='F' else ''; bg = random.choice(BG); extra = facial(g, age)
     else: out = random.choice(OUT_F if g=='F' else OUT_M); acc = random.choice(ACC_F) if g=='F' else ''; bg = random.choice(BG); extra = facial(g, age)+(', red lips' if g=='F' and random.random()<.4 else '')
     era = '' if (kid or teen) else f', {decade()} style'
-    desc = f'{eth} {gender}, age {age}, {hair}, {skin} skin{wr}, {eyes} eyes{extra}, {out}' + (f', {acc}' if acc else '') + era
+    desc = f'{eth} {gender}, age {age}, UNIQUE FACE: {face(kid)}, {hair}, {skin} skin{wr}, {eyes} eyes{extra}, {out}' + (f', {acc}' if acc else '') + era
     lines.append((section, f'{n} — {role}. {desc}. Background: {bg}.'))
 
 for _ in range(70): add('ACTRESSES', 'Actress', 'F', (19, 82))
@@ -130,12 +149,12 @@ for i in range(16): add('CINEMATOGRAPHERS', 'Cinematographer', 'F' if i % 3 == 0
 for i in range(16): add('COMPOSERS', 'Composer', 'F' if i % 3 == 0 else 'M', (28, 80))
 for i in range(16): add('WRITERS', 'Writer', 'F' if i % 2 == 0 else 'M', (25, 78))
 
-STYLE = """For every person I describe next, create one image in exactly this style: minimalist flat vector portrait, head and shoulders, centered, facing slightly to one side, simple flat color shapes with no outlines, very few facial details (eyes as simple shapes, small nose, defined lips), subtle canvas paper texture, elegant luxury fashion illustration, solid single-color background in the color I name, square image, no text, no logos. All people are fictional. Children are shown in a friendly, wholesome way. Reply only with the image. Confirm you understand by saying OK."""
+STYLE = """For every person I describe next, create one image in exactly this style: minimalist flat vector portrait, head and shoulders, centered, facing slightly to one side, simple flat color shapes with no outlines, very few facial details (eyes as simple shapes, small nose, defined lips), subtle canvas paper texture, elegant luxury fashion illustration, solid single-color background in the color I name, square image, no text, no logos. Every person must have a completely different face from all previous images: follow the face shape, eyes, nose, lips, brows, expression and angle I give exactly, never reuse a face. All people are fictional. Children are shown in a friendly, wholesome way. Reply only with the image. Confirm you understand by saying OK."""
 
 out = ['HOLLYWOOD SIM — 250 CAST PORTRAIT PROMPTS (for Google Gemini or Leonardo)', '',
  'HOW TO USE', '1. Open Gemini and start ONE new chat.', '2. Paste the STYLE MESSAGE first.', '3. Then paste one numbered line at a time.',
  '4. Long-press each image > Download. Rename it to its number if you can (e.g. 17.png).', '5. Send the images to Claude in batches and say which numbers they are.',
- 'Tip: if Gemini drifts from the style, paste the STYLE MESSAGE again.', '', '-'*60, 'STYLE MESSAGE (paste this first)', '-'*60, STYLE, '']
+ 'IMPORTANT: start a NEW chat every 5 images (paste the style message again) - long chats make faces look the same.', 'Tip: if a face looks like an earlier one, say: different face, follow the face description exactly.', '', '-'*60, 'STYLE MESSAGE (paste this first)', '-'*60, STYLE, '']
 cur = None
 for i, (sec, l) in enumerate(lines, 1):
     if sec != cur:

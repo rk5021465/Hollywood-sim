@@ -44,7 +44,7 @@ function person(id){if(!S||!id)return null;if(id==='ceo')return S.ceo;for(const 
 const pname=id=>{const p=person(id);return p?p.n:'—'};
 const feeMult=()=>(S.ev.feeMult||1)*I()*(typeof bigTax==='function'?bigTax():1);
 const tFee=p=>(hasT(p,'diva')?1.25:1)*(hasT(p,'generous')?.85:1);
-const actorFee=a=>+((0.3+Math.pow(a.star/100,2.3)*22)*feeMult()*tFee(a)).toFixed(1);
+let actorFee=a=>+((0.3+Math.pow(a.star/100,2.3)*22)*feeMult()*tFee(a)).toFixed(1);
 const crewFee=(c,role)=>+(({directors:.4,writers:.2,composers:.15,dps:.15}[role])+Math.pow(c.fame/100,2)*({directors:11,writers:4,composers:2.5,dps:2.5}[role]))*feeMult()*tFee(c);
 const busy=x=>x.busy>=tNow();
 const lockA=a=>typeof availA==='function'?!availA(a).ok:a.star>S.rep+42;

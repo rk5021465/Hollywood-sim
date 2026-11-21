@@ -1,6 +1,7 @@
 /* ===================== v18 — Stage 2: deco portraits, live opening weekend, week chart, film flow ===================== */
 
 /* ---------- Deco portraits: illustrated image when we have one, gold monogram otherwise ---------- */
+/* append new portraits at the END only: saves store each portrait's index */
 const PIMG=[
  {src:'media/p_f01.png',bg:'#186751',n:'Vivienne Hale',g:'F',a:[22,48],s:[0,2],nat:['USA','UK','Ireland','Canada']},
  {src:'media/p/f001.jpg',bg:'#1f3f78',n:'Imani Whitfield',g:'F',a:[22,42],s:[4,5],nat:['USA','Nigeria','South Africa','UK']},
@@ -11,7 +12,8 @@ const PIMG=[
  {src:'media/p/f006.jpg',bg:'#c7871b',n:'Coretta Ellison',g:'F',a:[33,56],s:[4,5],nat:['USA','Nigeria','South Africa','UK']},
  {src:'media/p/f007.jpg',bg:'#c07f79',n:'Paloma Castañeda',g:'F',a:[28,52],s:[1,3],nat:['Mexico','Spain','Italy','Argentina','Brazil','France']},
  {src:'media/p/f008.jpg',bg:'#706933',n:'Dionne Merriweather',g:'F',a:[48,66],s:[3,5],nat:['USA','India','Brazil','South Africa']},
- {src:'media/p/f009.jpg',bg:'#582254',n:'Audrey Lockwood',g:'F',a:[20,38],s:[0,2],nat:['USA','UK','France','Germany','Italy','Canada']}];
+ {src:'media/p/f009.jpg',bg:'#582254',n:'Audrey Lockwood',g:'F',a:[20,38],s:[0,2],nat:['USA','UK','France','Germany','Italy','Canada']},
+ {src:'media/p/m001.jpg',n:'Graham Whitmore',g:'M',a:[26,45],s:[0,1],nat:['USA','UK','Canada','Ireland'],bg:'#692d33'}];
 const JEWEL=[['#0b2e26','#1d6b55'],['#2e0b14','#7a2335'],['#0b1a33','#1f4f86'],['#2e2108','#8a6420'],['#200e2c','#5e2d7a'],['#08282c','#1d7480'],['#2e140a','#8a4220'],['#14142a','#3a3a6e']];
 function pHue(p){return JEWEL[hashStr(p.id||p.n||'x')%JEWEL.length]}
 function isFem(p){try{return p.g==='F'||lookOf(p).g==='F'}catch(e){return p.g==='F'}}
@@ -33,10 +35,10 @@ portrait=(function(old){return function(p,size,opt){opt=opt||{};const s=size||64
 
 /* ---------- Star card (arch frame) for the person detail view ---------- */
 function starCard(p,role){if(!p)return '';let [c1,c2]=pHue(p);const im=pImg(p);if(im&&im.bg){c2=im.bg;c1=mixc(im.bg,'#000000',.62)}const isA=role==='actor'||(S.people.actors||[]).includes(p);
- const tier=isA&&typeof tierOfA==='function'?({A:'A · LIST',B:'STAR',M:'WORKING ACTOR',R:'RISING',C:"CRITICS' DARLING"}[tierOfA(p)]||''):(role||'').toUpperCase();
+ const tier=isA&&typeof tierOfA==='function'?({A:'A · LIST',B:'STAR',M:'WORKING ACTOR',R:'RISING',C:"CRITICS' DARLING",K:(p.age<13?'CHILD STAR':'TEEN STAR')}[tierOfA(p)]||''):(role||'').toUpperCase();
  const st=isA?[[p.star,'STAR'],[p.skill,'TALENT'],[M(actorFee(p)),'FEE']]:[[p.skill,'CRAFT'],[p.fame,'FAME'],[p.age||'—','AGE']];
  return `<div class="sc25" style="--c1:${c1};--c2:${c2}"><div class="sc25r"></div><div class="sc25a">${im?`<img src="${im.src}" alt="">`:`<div class="sc25m">${portrait(p,150,{square:1})}</div>`}</div>${tier?`<div class="sc25t">${tier}</div>`:''}
- <div class="sc25n">${esc(p.n)}</div><div class="sc25s">${esc([p.spec,p.age?p.age+' yrs':'',p.nat].filter(Boolean).join(' · '))}</div><div class="sc25d">✦</div>
+ <div class="sc25n">${esc(p.n)}</div><div class="sc25s">${esc([p.spec,p.age?p.age+' yrs':'',p.nat].filter(Boolean).join(' · '))}</div>${(p.age||30)<18?'<div class="sc25s" style="margin-top:4px;color:#e9c97a">On-set tutor · limited hours · 40% of adult fee</div>':''}<div class="sc25d">✦</div>
  <div class="sc25st">${st.map(x=>`<div>${x[0]}<span>${x[1]}</span></div>`).join('')}</div></div>`}
 
 /* ---------- Era-styled masthead for the review paper ---------- */
@@ -89,3 +91,7 @@ render=(function(o){return function(){try{if(S&&S.people)assignPImgs()}catch(e){
 /* ---------- person view opens with the star card ---------- */
 openPerson=(function(o){return function(id){o(id);try{const p=person(id);const h=document.querySelector('#modal .thero');if(p&&h&&!document.querySelector('#modal .sc25')){const role=roleOf(p);const isA=role==='actors';
  const ring=h.querySelector('.ring');if(ring)ring.remove();const h2=h.querySelector('h2');if(h2)h2.remove();h.insertAdjacentHTML('afterbegin',starCard(p,isA?'actor':ROLE_LBL[role].replace(/s$/,'')))}}catch(e){}}})(openPerson);
+
+/* ---------- Child & teen actors ---------- */
+actorFee=(function(o){return function(a){const f=o(a);return a&&(a.age||30)<18?+(f*.4+.02*I()).toFixed(3):f}})(actorFee);
+nextMonth=(function(o){return function(){const r=o.apply(this,arguments);try{if(S.month===0)(S.people.actors||[]).forEach(a=>{if((a.age||30)<=18){a.skill=clamp(a.skill+RI(0,3),20,99);if(a.age===18&&!a._grown){a._grown=1;if(a.star>=40)addNews(`🎓 Former child star ${esc(a.n)} turns 18 and steps into adult roles.`)}}})}catch(e){}return r}})(nextMonth);

@@ -6,17 +6,18 @@ FIRST_F.push('Amara','Bianca','Clara','Daria','Elena','Fiona','Gemma','Helena','
 LAST.push('Ashby','Barrow','Calloway','Dalton','Ellery','Fairfax','Gallardo','Hargrove','Iverson','Jaramillo','Kensington','Lockhart','Mercer','Navarro','Okafor','Pemberton','Quintero','Rourke','Sinclair','Thornton','Underwood','Valdez','Whitlock','Yamada','Zielinski','Alvarez','Beaumont','Castellanos','Delacroix','Everett','Fontaine','Grimaldi','Hayashi','Ingram','Kowalski','Laurent','Montague','Nakamura','Oyelaran','Prescott','Rasmussen','Santoro','Takahashi','Vasquez','Wolfe','Adeyemi','Bianchi','Coleman','Dubois','Esposito');
 
 /* ---------- tiers ---------- */
-const TIER_L={A:'A-list',B:'B-list',M:'Working actor',R:'Rising star',C:'Character actor'};
-function tierOfA(a){return a.star>=80?'A':a.star>=60?'B':a.age<=27&&a.star<40?'R':a.skill>=74&&a.star<45&&a.age>=36?'C':'M'}
-const TIER_MIX={A:14,B:36,M:90,R:55,C:45};const CREW_N={directors:60,writers:50,composers:28,dps:28};
+const TIER_L={A:'A-list',B:'B-list',M:'Working actor',R:'Rising star',C:'Character actor',K:'Child & teen'};
+function tierOfA(a){return (a.age||30)<18?'K':a.star>=80?'A':a.star>=60?'B':a.age<=27&&a.star<40?'R':a.skill>=74&&a.star<45&&a.age>=36?'C':'M'}
+const TIER_MIX={A:14,B:36,M:90,R:55,C:45,K:26};const CREW_N={directors:60,writers:50,composers:28,dps:28};
 function mkActorT(tk,t,g){const a=mkActor(tk,t==='R',g);
  if(t==='A'){a.star=RI(80,97);a.skill=clamp(RI(62,96),20,99);a.age=RI(28,62)}
  else if(t==='B'){a.star=RI(60,79);a.age=RI(24,62)}
  else if(t==='M'){a.star=RI(30,59);a.age=RI(23,60)}
  else if(t==='R'){a.star=RI(5,36);a.age=RI(18,27)}
  else if(t==='C'){a.star=RI(10,43);a.skill=RI(74,97);a.age=RI(38,74)}
+ else if(t==='K'){a.age=RI(6,17);a.star=RI(5,48);a.skill=clamp(RI(30,88),20,99);a.kid=1}
  return a}
-function topUpTalent(news){if(!S||!S.people)return;const P=S.people;const tk=takenNames();const cnt={A:0,B:0,M:0,R:0,C:0};P.actors.forEach(a=>cnt[tierOfA(a)]++);
+function topUpTalent(news){if(!S||!S.people)return;const P=S.people;const tk=takenNames();const cnt={A:0,B:0,M:0,R:0,C:0,K:0};P.actors.forEach(a=>cnt[tierOfA(a)]++);
  for(const t in TIER_MIX){while(cnt[t]<TIER_MIX[t]){const g=P.actors.filter(x=>x.g==='F').length<P.actors.length/2?'F':'M';const a=mkActorT(tk,t,g);if(tierOfA(a)!==t){cnt[tierOfA(a)]++;P.actors.push(a);continue}P.actors.push(a);cnt[t]++;if(news&&t==='R'&&Math.random()<.25)addNews(`🌟 Breakout newcomer ${esc(a.n)} signs with a top agency.`)}}
  for(const k in CREW_N)while(P[k].length<CREW_N[k])P[k].push(mkCrew(tk,k[0]))}
 genPeople=(function(o){return function(){const P=o();const keep=S;S={people:P};try{topUpTalent(false)}catch(e){}S=keep;return P}})(genPeople);
