@@ -989,3 +989,13 @@ body.tc .tc-top .burn34{color:#ffe3d9;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .tt38b{margin:2px 0 10px!important;width:100%!important;display:block!important}.tt38b.on{background:var(--gold)!important;color:#1a1408!important;animation:tt38p 1.4s ease-in-out infinite}
 @keyframes tt38p{50%{opacity:.75}}
 .sp36 .rd38{background:#fff0b8;box-shadow:0 0 0 6px #fff0b8;border-radius:2px;transition:background .3s}
+/* ===== v27 prologue / monikers ===== */
+#prol39{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 30%,#1d1712,#070605 70%);color:#efe5cf;display:flex;flex-direction:column;justify-content:center;padding:34px 30px;cursor:pointer;transition:opacity .6s}
+#prol39.out{opacity:0;pointer-events:none}
+.pr39-c{opacity:0;transform:translateY(8px);transition:opacity 1.4s ease,transform 1.4s ease;max-width:520px;margin:0 auto}.pr39-c.in{opacity:1;transform:none}
+.pr39-c small{display:block;text-align:center;font:600 11px Inter,sans-serif;letter-spacing:.42em;color:#c9a35a;margin-bottom:18px}
+.pr39-c p{font:400 19px/1.75 'Playfair Display',Georgia,serif;margin:0}.pr39-c b{color:#f3d382;font-weight:700}
+.pr39-tap{position:absolute;bottom:42px;left:0;right:0;text-align:center;font:600 11px Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#8a7a5f;animation:pr39b 2.4s ease-in-out infinite}
+@keyframes pr39b{50%{opacity:.35}}
+.pr39-skip{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;background:none;border:1px solid #4c3d2c;color:#ad9d80;border-radius:20px;padding:6px 14px;font:600 12px Inter,sans-serif}
+.mn39{text-align:center;font:italic 700 16px 'Playfair Display',Georgia,serif;color:var(--gold);margin:4px 0 8px}
