@@ -23,7 +23,8 @@ function tLabel(t){return MON[((t%12)+12)%12]+' '+(START_YEAR+Math.floor(t/12))}
 const yearOf=t=>START_YEAR+Math.floor(t/12);
 const inf=t=>{const y=yearOf(t==null?tNow():t);return y>=2000?Math.pow(1+INFL,y-2025):Math.pow(1+INFL,-25)*Math.pow(1.045,y-2000)};
 const I=()=>inf(tNow());
-const creditLimit=()=>Math.round((100+S.rep*3+(S.stock.public?S.stock.price*20:0))*I());
+const creditLimit0=()=>Math.round((100+S.rep*3+(S.stock.public?S.stock.price*20:0))*I());
+const creditLimit=()=>{const b=creditLimit0();try{return typeof clMult35==='function'?Math.round(b*clMult35()):b}catch(e){return b}};
 const ev=k=>S.ev[k]&&S.ev[k].until>=tNow()?S.ev[k]:null;
 
 /* ---------- People ---------- */
