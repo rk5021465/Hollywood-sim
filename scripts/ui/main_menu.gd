@@ -73,7 +73,7 @@ func setup(_args: Dictionary) -> void:
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	v.add_child(spacer)
 
-	var has_any := SaveManager.latest_slot() >= 0
+	var has_any: bool = SaveManager.latest_slot() >= 0
 	var cont := UI.holo_btn("Continue", _continue, UI.HOLO_GOLD, 80)
 	cont.disabled = not has_any
 	v.add_child(cont)

@@ -380,7 +380,7 @@ func _choose(c: Dictionary) -> void:
 func _cmd(ln: Dictionary) -> bool:
 	## Returns true when the story must wait for player input.
 	var cmd := str(ln.cmd)
-	var effect := not replay
+	var effect: bool = not replay
 	match cmd:
 		"label":
 			pass

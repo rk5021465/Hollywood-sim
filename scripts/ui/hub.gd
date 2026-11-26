@@ -187,7 +187,7 @@ func _build_body() -> void:
 	# always-available
 	var g := UI.grid(2)
 	body.add_child(g)
-	var residential := str(l.get("district", "")) == "residential"
+	var residential: bool = str(l.get("district", "")) == "residential"
 	if residential or bool(l.get("home", false)) or str(l.get("district", "")) in ["oa", "multiverse"]:
 		g.add_child(_act_btn("Sleep (end day)", _sleep))
 	if residential:

@@ -90,7 +90,7 @@ func _item_row(id: String) -> void:
 	for st in it.get("stats", {}).keys():
 		extra += "  +%d %s" % [int(it.stats[st]), Game.STAT_NAMES.get(st, st)]
 	v.add_child(UI.label(str(it.get("desc", "")) + extra, 17, Color("b8c6e6")))
-	var owned := (cat == "vehicles" and id in Game.s.vehicles) or (bool(it.get("unique", false)) and Game.has_item(id))
+	var owned: bool = (cat == "vehicles" and id in Game.s.vehicles) or (bool(it.get("unique", false)) and Game.has_item(id))
 	h.add_child(_buy_btn(int(it.get("price", 0)), _buy_item.bind(id), owned))
 
 

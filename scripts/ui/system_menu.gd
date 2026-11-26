@@ -220,7 +220,7 @@ func _quests() -> void:
 	var row := UI.hbox(6)
 	content.add_child(row)
 	for t in [["main", "Main"], ["special", "Special"], ["emergency", "Emergency"], ["daily", "Daily"], ["side", "Side"]]:
-		var n := Quests.list_by_type(t[0]).filter(func(i): return str(i.status) != "completed").size()
+		var n: int = Quests.list_by_type(t[0]).filter(func(i): return str(i.status) != "completed").size()
 		var _cb3 := func():
 			quest_filter = t[0]
 			refresh()
@@ -265,7 +265,7 @@ func _quests() -> void:
 						refresh()
 					row2.add_child(UI.holo_btn("Decline", _cb5, BLUE, 60))
 			"active":
-				var tracked := str(Game.s.quests.tracked) == str(inst.id)
+				var tracked: bool = str(Game.s.quests.tracked) == str(inst.id)
 				var _cb6 := func():
 					Game.s.quests.tracked = str(inst.id)
 					Events.quest_updated.emit()
@@ -458,7 +458,7 @@ func _inventory() -> void:
 			b.size_flags_horizontal = Control.SIZE_SHRINK_END
 			row.add_child(b)
 		elif it.has("slot"):
-			var on := str(Game.s.equipment.get(str(it.slot), "")) == id
+			var on: bool = str(Game.s.equipment.get(str(it.slot), "")) == id
 			var _cb14 := func():
 				Game.equip(id)
 				refresh()
@@ -515,7 +515,7 @@ func _titles() -> void:
 		content.add_child(_l("No titles yet. Titles come from quests and achievements.", 20, DIM))
 	for id in owned:
 		var t: Dictionary = Data.titles.get(id, {})
-		var eq := str(Game.s.titles.equipped) == str(id)
+		var eq: bool = str(Game.s.titles.equipped) == str(id)
 		var v := _panel(GOLD if eq else BLUE)
 		v.add_child(_l(str(t.get("name", id)), 22, GOLD))
 		v.add_child(_l(str(t.get("desc", "")) + _stat_text(t.get("bonus", {})), 18, DIM))
@@ -694,7 +694,7 @@ func _lantern() -> void:
 	var ag := UI.grid(3)
 	av.add_child(ag)
 	for a in ring.get("auras", ["white"]):
-		var on := str(ring.aura) == str(a)
+		var on: bool = str(ring.aura) == str(a)
 		var _cb22 := func():
 			ring.aura = str(a)
 			refresh()

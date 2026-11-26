@@ -170,7 +170,7 @@ func _thread() -> void:
 	title_l.text = Data.char_name(thread_npc)
 	var msgs: Array = Game.s.messages.get(thread_npc, [])
 	for m in msgs.slice(max(0, msgs.size() - 30)):
-		var mine := str(m.from) == "me"
+		var mine: bool = str(m.from) == "me"
 		var row := UI.hbox()
 		var bubble := UI.panel(Color("2f6fd6") if mine else Color("252b45"), 18, Color(0, 0, 0, 0), 0, 12)
 		bubble.size_flags_horizontal = Control.SIZE_SHRINK_END if mine else Control.SIZE_SHRINK_BEGIN
@@ -184,7 +184,7 @@ func _thread() -> void:
 			row.add_child(sp)
 		row.add_child(bubble)
 		screen.add_child(row)
-	var can_reply := msgs.size() > 0 and str(msgs.back().from) != "me"
+	var can_reply: bool = msgs.size() > 0 and str(msgs.back().from) != "me"
 	if not can_reply:
 		screen.add_child(_t("Waiting for a reply…", 17, Color("8fa0c8")))
 		return

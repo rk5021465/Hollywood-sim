@@ -75,7 +75,7 @@ func refresh() -> void:
 	list.add_child(UI.label(str(dd.get("desc", "")), 18, Color("b8c6e6")))
 	for id in _visible_locs():
 		var l: Dictionary = Data.locations[id]
-		var here := str(Game.s.location) == id
+		var here: bool = str(Game.s.location) == id
 		var open_slots: Array = l.get("open", [0, 1, 2, 3])
 		var open: bool = int(Game.s.time_slot) in open_slots.map(func(x): return int(x))
 		var t := "%s%s%s" % [l.get("name", id), "  (you are here)" if here else "", "" if open else "  — closed now"]

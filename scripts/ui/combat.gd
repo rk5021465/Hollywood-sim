@@ -210,7 +210,7 @@ func _damage_enemy(raw: float, pierce: bool = false) -> int:
 		_log("%s dodged!" % enemy.get("name", ""))
 		_float("MISS", Color.WHITE, true)
 		return 0
-	var crit := randf() < clampf(0.05 + Game.get_stat("agility") * 0.002, 0.05, 0.35)
+	var crit: bool = randf() < clampf(0.05 + Game.get_stat("agility") * 0.002, 0.05, 0.35)
 	var dmg := int(max(1.0, raw * randf_range(0.9, 1.1) - defense) * (1.6 if crit else 1.0))
 	e_hp -= dmg
 	Audio.play_sfx("hit")

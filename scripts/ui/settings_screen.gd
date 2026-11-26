@@ -82,7 +82,7 @@ func _choice(label_t: String, key: String, options: Array, note: String = "") ->
 	var row := UI.hbox(6)
 	body.add_child(row)
 	for o in options:
-		var on := str(Settings.get_v(key)) == str(o)
+		var on: bool = str(Settings.get_v(key)) == str(o)
 		var b := UI.btn(str(o).capitalize() + (" ●" if on else ""), _set_choice.bind(key, o), 56, 18)
 		row.add_child(b)
 	if note != "":

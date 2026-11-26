@@ -57,7 +57,7 @@ func offer(tpl_id: String, auto_accept: bool = false) -> String:
 	if t.is_empty():
 		push_warning("Unknown quest template: " + tpl_id)
 		return ""
-	var daily := str(t.get("type", "side")) == "daily"
+	var daily: bool = str(t.get("type", "side")) == "daily"
 	if not daily and not bool(t.get("repeatable", false)) and (is_done(tpl_id) or is_present(tpl_id)):
 		return ""
 	if daily and is_present(tpl_id):
