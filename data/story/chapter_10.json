@@ -1,0 +1,292 @@
+{
+ "scenes": [
+  {
+   "id": "c10_return",
+   "title": "Home",
+   "bg": "gov_housing_door",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 10\nReturn to Nexa"
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "cmd": "slot",
+     "n": 2
+    },
+    {
+     "s": "narrator",
+     "t": "The same apartment block. The same cracked doorstep. Peter knocks."
+    },
+    {
+     "s": "narrator",
+     "t": "The door opens."
+    },
+    {
+     "cmd": "show",
+     "c": "mother",
+     "e": "surprised",
+     "p": "right"
+    },
+    {
+     "s": "mother",
+     "e": "surprised",
+     "t": "…Peter?"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Hi, Mom. I'm home."
+    },
+    {
+     "s": "narrator",
+     "t": "She doesn't speak. She just holds him, the way she did in the hospital ten years ago — so tightly it hurts. He doesn't complain."
+    },
+    {
+     "cmd": "bg",
+     "id": "home_living",
+     "tr": "fade"
+    },
+    {
+     "s": "mother",
+     "e": "sad",
+     "t": "Ten years. Ten years, Peter. Where were you?"
+    },
+    {
+     "choice": [
+      {
+       "t": "\"In a jungle. Surviving. Training.\"",
+       "goto": "jungle"
+      },
+      {
+       "t": "\"…A lot of places. Mostly jungles.\"",
+       "goto": "jungle"
+      }
+     ]
+    },
+    {
+     "cmd": "label",
+     "name": "jungle"
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "I survived in a jungle. I trained every day. I'm sorry I couldn't call."
+    },
+    {
+     "s": "mother",
+     "e": "serious",
+     "t": "A jungle."
+    },
+    {
+     "s": "narrator",
+     "t": "Elena looks at him the way she used to look at villains. Then the way she used to look at her husband."
+    },
+    {
+     "s": "mother",
+     "e": "serious",
+     "t": "You stand differently. You breathe differently. The air feels… heavier around you."
+    },
+    {
+     "s": "mother",
+     "e": "sad",
+     "t": "You look like your father, Peter. More every second."
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "Is that a bad thing?"
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "No. It's the best thing I've seen in ten years. …Sit down. I'm making dinner, and you're going to eat all of it."
+    },
+    {
+     "cmd": "rel",
+     "npc": "mother",
+     "add": {
+      "friendship": 5,
+      "trust": -2,
+      "familiarity": 5
+     },
+     "remember": "returned_home"
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "returned_home"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "bg",
+     "id": "home_bedroom",
+     "tr": "black"
+    },
+    {
+     "cmd": "days",
+     "n": 1
+    },
+    {
+     "cmd": "slot",
+     "n": 0
+    },
+    {
+     "s": "narrator",
+     "t": "The next morning. His old bedroom — unchanged, dusted every week for ten years."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Time to go back to school. The Academy's Hero Division still accepts students who never graduated.",
+     "think": true
+    },
+    {
+     "cmd": "sfx",
+     "id": "notify"
+    },
+    {
+     "cmd": "news",
+     "key": "competition_announced"
+    },
+    {
+     "s": "narrator",
+     "t": "His phone lights up with breaking news: a Grand Power Competition, hosted by Professor Hale. Registration closes in three days. The four crew leaders have already entered."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Professor Hale… He always believed in me.",
+     "think": true
+    },
+    {
+     "cmd": "pending_call",
+     "npc": "professor",
+     "call": "call_professor_register"
+    },
+    {
+     "cmd": "contact",
+     "npc": "professor"
+    },
+    {
+     "cmd": "quest",
+     "id": "main_register",
+     "accept": true
+    },
+    {
+     "s": "narrator",
+     "t": "Call Professor Hale using your phone (Phone → Calls) to register in secret."
+    }
+   ],
+   "next": "c10_school",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "home_bedroom"
+  },
+  {
+   "id": "c10_school",
+   "title": "Back at the Academy",
+   "bg": "school_gate",
+   "lines": [
+    {
+     "cmd": "music",
+     "id": "school"
+    },
+    {
+     "s": "narrator",
+     "t": "Nexa Academy. The rankings screen is bigger now. His name isn't on it at all."
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "surprised",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "surprised",
+     "t": "…No way. No WAY."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Hey, John. Sorry I'm late."
+    },
+    {
+     "s": "john",
+     "e": "sad",
+     "t": "LATE?! Ten years, you idiot! I— I copied a tracking power, a telepath, a seer— I looked EVERYWHERE—"
+    },
+    {
+     "s": "narrator",
+     "t": "John grabs him in a hug that would crack a normal person's ribs."
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "You owe me so much ramen. Like, ten years of ramen."
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "I know. I saved you a bowl."
+    },
+    {
+     "cmd": "rel",
+     "npc": "john",
+     "add": {
+      "friendship": 10,
+      "trust": 5
+     },
+     "remember": "reunion"
+    },
+    {
+     "cmd": "show",
+     "c": "selene",
+     "e": "happy",
+     "p": "center"
+    },
+    {
+     "s": "selene",
+     "e": "happy",
+     "t": "Well, well. The runaway returns. Here to watch the competition from the cheap seats?"
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "Something like that."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Nobody knows I've registered. Good.",
+     "think": true
+    }
+   ],
+   "next": "c11_competition",
+   "chain": true,
+   "transition": "fade",
+   "location_after": "school_gate",
+   "requires": {
+    "flag": "registered_competition"
+   },
+   "hint": "Call Professor Hale on your phone to register for the competition."
+  }
+ ]
+}

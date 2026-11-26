@@ -1,0 +1,626 @@
+{
+ "characters": {
+  "peter": {
+   "name": "Peter Parker",
+   "age": 16,
+   "role": "Protagonist • Powerless student",
+   "folder": "peter",
+   "personality": "Kind, stubborn, academically brilliant, quietly insecure.",
+   "bio": "Son of Nexa's former No. 1 and No. 2 heroes, yet born without a power. Top of his class in every written exam and last in every power trial. Bullied, underestimated — and about to receive the Transcendent System.",
+   "powers": [
+    "None (at first)"
+   ],
+   "name_color": "7cc8ff",
+   "color": "2d3a66"
+  },
+  "mother": {
+   "name": "Elena Parker",
+   "age": 41,
+   "role": "Second-strongest hero of Nexa (retired)",
+   "folder": "mother",
+   "personality": "Warm, protective, sharp-eyed. Hides her worry behind jokes.",
+   "bio": "Once the second-strongest hero on Nexa. After her husband vanished fighting Zero she was given government housing 'for her service' — a polite cage. She raises Peter alone and senses far more than she says.",
+   "powers": [
+    "Aegis Field (energy barriers)",
+    "Flight",
+    "Hero-class combat training"
+   ],
+   "stats": {
+    "strength": 120,
+    "speed": 140,
+    "durability": 160,
+    "agility": 130,
+    "energy": 220,
+    "power_mastery": 200
+   },
+   "rel_start": {
+    "friendship": 90,
+    "trust": 75,
+    "respect": 40,
+    "familiarity": 100
+   },
+   "skin": "f2c29b",
+   "hair": "6b3e1f",
+   "eyes": "3c9a5c",
+   "outfit": "e0e0ea",
+   "hair_style": 2,
+   "name_color": "ffb3d9",
+   "fav_location": "city_park",
+   "invite_min": 0
+  },
+  "father": {
+   "name": "Richard Parker",
+   "age": 45,
+   "role": "Former No. 1 hero of Nexa",
+   "folder": "father",
+   "hidden": false,
+   "personality": "Gentle giant. Laughed easily, fought like a storm.",
+   "bio": "Nexa's greatest hero, whose raw physical power was said to end any fight in a single blow, and whose body moved on Ultra Instinct. He defeated Zero at the cost of his apparent death — but Zero absorbed his power and sealed him on a distant planet. Peter does not know.",
+   "powers": [
+    "Overwhelming physical power",
+    "Ultra Instinct"
+   ],
+   "skin": "e8b48a",
+   "hair": "2b1d14",
+   "eyes": "2f6fd6",
+   "outfit": "8a1f2d",
+   "hair_style": 1,
+   "cape": "c9a227",
+   "aura": "c0d8ff",
+   "name_color": "ffd36a"
+  },
+  "john": {
+   "name": "John Reyes",
+   "age": 16,
+   "role": "Transfer student • Peter's best friend",
+   "folder": "john",
+   "personality": "Cheerful, loyal, talks too fast when nervous. Braver than he thinks.",
+   "bio": "A new student with a rare Copy ability: he can mimic another person's power for a short time. Bruce made him a target on his first day — until Peter stepped in.",
+   "powers": [
+    "Copy (mimic powers temporarily)"
+   ],
+   "stats": {
+    "strength": 8,
+    "speed": 10,
+    "durability": 7,
+    "agility": 11,
+    "energy": 14,
+    "power_mastery": 9
+   },
+   "rel_start": {},
+   "skin": "d9a074",
+   "hair": "0f0f12",
+   "eyes": "5a3a22",
+   "outfit": "2f6b4a",
+   "hair_style": 1,
+   "name_color": "8affc1",
+   "fav_location": "restaurant",
+   "invite_min": 20
+  },
+  "bruce": {
+   "name": "Bruce Kaizer",
+   "age": 17,
+   "role": "Strongest student • Leader of Frostfire Dominion",
+   "folder": "bruce",
+   "crew": "frostfire_dominion",
+   "personality": "Arrogant, disciplined, ruthless in a fight. Craves his father's approval.",
+   "bio": "The academy's strongest student. Teleportation, fire and ice, and martial arts drilled into him by a merciless master (trained in Garou's style). His father has quiet connections to Zero's regime.",
+   "powers": [
+    "Teleportation",
+    "Fire & ice manipulation",
+    "Advanced martial arts"
+   ],
+   "stats": {
+    "strength": 60,
+    "speed": 75,
+    "durability": 55,
+    "agility": 70,
+    "energy": 80,
+    "power_mastery": 70
+   },
+   "rel_start": {
+    "rivalry": 25
+   },
+   "skin": "f2c29b",
+   "hair": "e8e8f0",
+   "eyes": "2f6fd6",
+   "outfit": "1d1d24",
+   "hair_style": 4,
+   "emblem": "7fd4ff",
+   "name_color": "7fd4ff"
+  },
+  "zero": {
+   "name": "Zero",
+   "role": "Conqueror of Nexa",
+   "folder": "zero",
+   "personality": "Cold, patient, amused by everything.",
+   "bio": "An overwhelmingly powerful being connected to the Dragon Ball universe. He fought Nexa's No. 1 hero, absorbed his power, and conquered the planet. His influence reaches across the multiverse.",
+   "powers": [
+    "Power absorption",
+    "Ki manipulation",
+    "???"
+   ],
+   "style": "villain",
+   "skin": "b8c4d8",
+   "hair": "2a1a3a",
+   "eyes": "ff2a4a",
+   "outfit": "140a1e",
+   "hair_style": 3,
+   "aura": "8a1f6a",
+   "name_color": "ff4f7b"
+  },
+  "professor": {
+   "name": "Professor Hale",
+   "age": 52,
+   "role": "Homeroom teacher • Competition organiser",
+   "folder": "teachers",
+   "personality": "Strict but fair. Notices potential others miss.",
+   "bio": "Peter's homeroom teacher and head of the academy's power competitions. One of the few adults who treats Peter with respect.",
+   "powers": [
+    "Analysis Sight"
+   ],
+   "stats": {
+    "intelligence": 90,
+    "power_mastery": 60
+   },
+   "rel_start": {
+    "respect": 20,
+    "familiarity": 30
+   },
+   "skin": "d9a074",
+   "hair": "8a8a8a",
+   "eyes": "5a3a22",
+   "outfit": "5a4a3a",
+   "hair_style": 3,
+   "name_color": "ffd36a"
+  },
+  "nurse": {
+   "name": "Nurse Aiko",
+   "age": 29,
+   "role": "Nexa Central Hospital",
+   "folder": "npcs",
+   "personality": "Calm, kind, very direct.",
+   "bio": "The nurse who looks after Peter whenever he ends up in hospital — which happens more than she'd like.",
+   "powers": [
+    "Healing touch (minor)"
+   ],
+   "skin": "ffe0c4",
+   "hair": "0f0f12",
+   "eyes": "5a3a22",
+   "outfit": "e0e0ea",
+   "hair_style": 2,
+   "name_color": "a8ecff"
+  },
+  "coach_varga": {
+   "name": "Coach Varga",
+   "age": 47,
+   "role": "Training Centre coach",
+   "folder": "npcs",
+   "personality": "Loud, gruff, secretly soft-hearted.",
+   "bio": "Runs the public Training Centre. Doesn't care if you have a power — only if you show up.",
+   "powers": [
+    "Iron Body"
+   ],
+   "stats": {
+    "strength": 85,
+    "durability": 90
+   },
+   "skin": "8a5534",
+   "hair": "1d1d24",
+   "eyes": "5a3a22",
+   "outfit": "c46a1a",
+   "hair_style": 3,
+   "name_color": "ffb27a"
+  },
+  "captain_solaris": {
+   "name": "Captain Solaris",
+   "age": 35,
+   "role": "Current No. 3 hero (regime-approved)",
+   "folder": "heroes",
+   "personality": "Polished smile, tired eyes.",
+   "bio": "A hero who serves under Zero's regime. Respected Peter's parents — and feels guilty about it.",
+   "powers": [
+    "Solar flare",
+    "Flight"
+   ],
+   "stats": {
+    "strength": 150,
+    "energy": 180
+   },
+   "skin": "f2c29b",
+   "hair": "c9a15b",
+   "eyes": "2f6fd6",
+   "outfit": "c9a227",
+   "cape": "e9406c",
+   "hair_style": 1,
+   "name_color": "ffd36a"
+  },
+  "lantern_kyra": {
+   "name": "Lantern Kyra",
+   "age": 30,
+   "role": "Green Lantern instructor",
+   "folder": "heroes",
+   "personality": "Fearless, blunt, laughs at danger.",
+   "bio": "The Green Lantern who found Peter half-dead in a crater on Oa and decided he was worth saving — and training.",
+   "powers": [
+    "Power ring constructs",
+    "Flight",
+    "Willpower"
+   ],
+   "stats": {
+    "strength": 200,
+    "energy": 300
+   },
+   "skin": "8a5534",
+   "hair": "0f0f12",
+   "eyes": "3c9a5c",
+   "outfit": "1f5c3a",
+   "hair_style": 2,
+   "aura": "3ddc97",
+   "emblem": "3ddc97",
+   "name_color": "7affc4"
+  },
+  "guardian_oren": {
+   "name": "Guardian Oren",
+   "age": 9000,
+   "role": "Elder of Oa",
+   "folder": "heroes",
+   "personality": "Ancient, curious, speaks in riddles.",
+   "bio": "An elder of Oa who recognises in Peter something the universe has not seen in a very long time.",
+   "powers": [
+    "Cosmic awareness"
+   ],
+   "skin": "6fa0c8",
+   "hair": "e8e8f0",
+   "eyes": "3ddc97",
+   "outfit": "8a1f2d",
+   "hair_style": 3,
+   "aura": "3ddc97",
+   "name_color": "a8ecff"
+  },
+  "hollow_master": {
+   "name": "The Hollow Master",
+   "role": "Mentor • World of Heroes",
+   "folder": "heroes",
+   "personality": "Bored, deadpan, terrifyingly strong.",
+   "bio": "A hero from an anime-style world who trained so hard he can end any fight with one punch. Teaches Peter that strength is built one ordinary day at a time.",
+   "powers": [
+    "Limitless strength"
+   ],
+   "skin": "ffe0c4",
+   "hair": "ffe0c4",
+   "eyes": "1d1d24",
+   "outfit": "f5c542",
+   "cape": "ffffff",
+   "hair_style": 3,
+   "name_color": "ffe08a"
+  },
+  "crimson_runner": {
+   "name": "The Crimson Runner",
+   "role": "Mentor • Lightning City",
+   "folder": "heroes",
+   "personality": "Fast-talking, generous, always late anyway.",
+   "bio": "The fastest being in a DC-style universe. Teaches Peter to move faster than thought.",
+   "powers": [
+    "Speed Force"
+   ],
+   "skin": "f2c29b",
+   "hair": "b23a2a",
+   "eyes": "2f6fd6",
+   "outfit": "b23a2a",
+   "emblem": "f5c542",
+   "hair_style": 1,
+   "aura": "ffb21f",
+   "name_color": "ff8a6a"
+  },
+  "sanctum_sorcerer": {
+   "name": "The Sanctum Sorcerer",
+   "role": "Mentor • Mystic dimension",
+   "folder": "heroes",
+   "personality": "Precise, proud, secretly fond of students.",
+   "bio": "Master of the mystic arts in a Marvel-style universe. Teaches Peter to fold space and step anywhere.",
+   "powers": [
+    "Mystic arts",
+    "Portals"
+   ],
+   "skin": "e8b48a",
+   "hair": "2b1d14",
+   "eyes": "3c9a5c",
+   "outfit": "2d3a66",
+   "cape": "b23a2a",
+   "hair_style": 1,
+   "aura": "ff8a1f",
+   "name_color": "ffb27a"
+  },
+  "shadow_echo": {
+   "name": "Echo of the Shadow Monarch",
+   "role": "Mentor • Realm of Shadows",
+   "folder": "heroes",
+   "personality": "Quiet, ancient, unreadable.",
+   "bio": "The lingering will of a monarch who commanded the dead. It tests whether Peter can carry the power to say: ARISE.",
+   "powers": [
+    "Shadow extraction",
+    "Shadow army"
+   ],
+   "style": "shadow",
+   "hair_style": 1,
+   "aura": "7a3fd1",
+   "name_color": "c9a8ff"
+  },
+  "rina": {
+   "name": "Rina Vale",
+   "age": 17,
+   "crew": "frostfire_dominion",
+   "folder": "students",
+   "role": "Frostfire Dominion • Vice-leader",
+   "personality": "Cold, clever, loyal to Bruce.",
+   "bio": "Gravity manipulator and Bruce's right hand.",
+   "powers": [
+    "Gravity control"
+   ],
+   "stats": {
+    "strength": 35,
+    "energy": 60,
+    "agility": 40
+   },
+   "rel_start": {
+    "rivalry": 15
+   },
+   "skin": "ffe0c4",
+   "hair": "3b5bd6",
+   "eyes": "9b2bd6",
+   "outfit": "1d1d24",
+   "hair_style": 2,
+   "emblem": "7fd4ff",
+   "name_color": "7fd4ff"
+  },
+  "dex": {
+   "name": "Dex Okoro",
+   "age": 17,
+   "crew": "frostfire_dominion",
+   "folder": "students",
+   "role": "Frostfire Dominion • Enforcer",
+   "personality": "Loud, cruel, insecure.",
+   "bio": "His skin hardens into steel. Bruce's favourite attack dog.",
+   "powers": [
+    "Steel skin"
+   ],
+   "stats": {
+    "strength": 30,
+    "durability": 45
+   },
+   "rel_start": {
+    "rivalry": 20
+   },
+   "skin": "8a5534",
+   "hair": "0f0f12",
+   "eyes": "5a3a22",
+   "outfit": "1d1d24",
+   "hair_style": 3,
+   "emblem": "7fd4ff",
+   "name_color": "7fd4ff"
+  },
+  "gorran": {
+   "name": "Gorran Steel",
+   "age": 18,
+   "crew": "iron_fang",
+   "folder": "students",
+   "role": "Iron Fang • Leader",
+   "personality": "Brutal, proud, honours strength.",
+   "bio": "Super strength and a short temper. Respects only those who can take a hit.",
+   "powers": [
+    "Super strength"
+   ],
+   "stats": {
+    "strength": 70,
+    "durability": 60
+   },
+   "rel_start": {
+    "rivalry": 10
+   },
+   "skin": "d9a074",
+   "hair": "b23a2a",
+   "eyes": "5a3a22",
+   "outfit": "8a1f2d",
+   "hair_style": 4,
+   "emblem": "c0392b",
+   "name_color": "ff8a7a"
+  },
+  "brick": {
+   "name": "Brick",
+   "age": 17,
+   "crew": "iron_fang",
+   "folder": "students",
+   "role": "Iron Fang • Brawler",
+   "personality": "Simple, loyal, surprisingly kind to animals.",
+   "bio": "Density control. Hits like a truck.",
+   "powers": [
+    "Density control"
+   ],
+   "stats": {
+    "strength": 45,
+    "durability": 50
+   },
+   "skin": "b57a4f",
+   "hair": "1d1d24",
+   "eyes": "5a3a22",
+   "outfit": "8a1f2d",
+   "hair_style": 3,
+   "emblem": "c0392b",
+   "name_color": "ff8a7a"
+  },
+  "selene": {
+   "name": "Selene Noir",
+   "age": 17,
+   "crew": "phantom_veil",
+   "folder": "students",
+   "role": "Phantom Veil • Leader",
+   "personality": "Elegant, mocking, impossible to read.",
+   "bio": "Illusion caster. Nobody is sure what she really looks like.",
+   "powers": [
+    "Illusions"
+   ],
+   "stats": {
+    "energy": 70,
+    "agility": 50,
+    "intelligence": 70
+   },
+   "rel_start": {
+    "rivalry": 5
+   },
+   "skin": "ffe0c4",
+   "hair": "7a3fd1",
+   "eyes": "9b2bd6",
+   "outfit": "5a2d8a",
+   "hair_style": 2,
+   "emblem": "9b5cff",
+   "name_color": "c9a8ff"
+  },
+  "ash": {
+   "name": "Ash",
+   "age": 16,
+   "crew": "phantom_veil",
+   "folder": "students",
+   "role": "Phantom Veil • Scout",
+   "personality": "Silent, watchful.",
+   "bio": "Shadow-step: moves between shadows.",
+   "powers": [
+    "Shadow-step"
+   ],
+   "stats": {
+    "agility": 55,
+    "speed": 45
+   },
+   "skin": "f2c29b",
+   "hair": "e8e8f0",
+   "eyes": "8a8a8a",
+   "outfit": "5a2d8a",
+   "hair_style": 0,
+   "emblem": "9b5cff",
+   "name_color": "c9a8ff"
+  },
+  "kade": {
+   "name": "Kade Volt",
+   "age": 17,
+   "crew": "storm_hounds",
+   "folder": "students",
+   "role": "Storm Hounds • Leader",
+   "personality": "Cocky, competitive, hates losing.",
+   "bio": "Lightning speed. Has never lost a race.",
+   "powers": [
+    "Lightning speed"
+   ],
+   "stats": {
+    "speed": 80,
+    "agility": 60
+   },
+   "rel_start": {
+    "rivalry": 10
+   },
+   "skin": "f2c29b",
+   "hair": "c9a15b",
+   "eyes": "b07a1f",
+   "outfit": "c46a1a",
+   "hair_style": 4,
+   "emblem": "f5c542",
+   "name_color": "ffe08a"
+  },
+  "zip": {
+   "name": "Zip",
+   "age": 16,
+   "crew": "storm_hounds",
+   "folder": "students",
+   "role": "Storm Hounds • Runner",
+   "personality": "Hyper, gossipy.",
+   "bio": "Wind manipulation. Knows every rumour in school.",
+   "powers": [
+    "Wind"
+   ],
+   "stats": {
+    "speed": 50
+   },
+   "skin": "ffe0c4",
+   "hair": "3b5bd6",
+   "eyes": "2f6fd6",
+   "outfit": "c46a1a",
+   "hair_style": 0,
+   "emblem": "f5c542",
+   "name_color": "ffe08a"
+  }
+ },
+ "crews": {
+  "frostfire_dominion": {
+   "name": "Frostfire Dominion",
+   "leader": "bruce",
+   "members": [
+    "bruce",
+    "rina",
+    "dex"
+   ],
+   "color": "7fd4ff",
+   "symbol": "A flame and a snowflake split down the middle",
+   "abilities": "Teleportation, fire & ice, gravity, steel skin",
+   "reputation": "The strongest crew. Teachers look the other way.",
+   "rivalries": [
+    "iron_fang"
+   ],
+   "territory": "Combat Arena & the east rooftop",
+   "desc": "Bruce's crew rules the academy through fear.",
+   "secret": "Bruce's father reports student power levels to Zero's regime."
+  },
+  "iron_fang": {
+   "name": "Iron Fang",
+   "leader": "gorran",
+   "members": [
+    "gorran",
+    "brick"
+   ],
+   "color": "c0392b",
+   "symbol": "An iron wolf fang",
+   "abilities": "Super strength, density control",
+   "reputation": "Brutal enforcers who settle everything with fists.",
+   "rivalries": [
+    "frostfire_dominion"
+   ],
+   "territory": "The gym",
+   "desc": "Strength is the only law for Iron Fang.",
+   "secret": "Gorran secretly sends money to a powerless family in the labour district."
+  },
+  "phantom_veil": {
+   "name": "Phantom Veil",
+   "leader": "selene",
+   "members": [
+    "selene",
+    "ash"
+   ],
+   "color": "9b5cff",
+   "symbol": "A masked eye",
+   "abilities": "Illusions, shadow-step",
+   "reputation": "Tricksters. You never know if they're really there.",
+   "rivalries": [
+    "storm_hounds"
+   ],
+   "territory": "Library & the old wing",
+   "desc": "Phantom Veil collects secrets like trophies.",
+   "secret": "Selene's illusions are hiding a serious injury."
+  },
+  "storm_hounds": {
+   "name": "Storm Hounds",
+   "leader": "kade",
+   "members": [
+    "kade",
+    "zip"
+   ],
+   "color": "f5c542",
+   "symbol": "A hound made of lightning",
+   "abilities": "Lightning speed, wind",
+   "reputation": "Fastest crew. Loud, flashy, everywhere.",
+   "rivalries": [
+    "phantom_veil"
+   ],
+   "territory": "The track field",
+   "desc": "The Storm Hounds live for races and rankings.",
+   "secret": "Kade's speed burns his own body — he can't keep it up for long."
+  }
+ }
+}

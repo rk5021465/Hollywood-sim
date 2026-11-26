@@ -1,0 +1,252 @@
+{
+ "scenes": [
+  {
+   "id": "c11_competition",
+   "title": "The Grand Power Competition",
+   "bg": "grand_arena",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 11\nThe Grand Power Competition"
+    },
+    {
+     "cmd": "music",
+     "id": "battle"
+    },
+    {
+     "s": "narrator",
+     "t": "The Grand Arena. Fifty thousand people. Cameras from every network on Nexa."
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "happy",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "happy",
+     "t": "And our final registered competitor — a late entry… Peter Parker!"
+    },
+    {
+     "s": "narrator",
+     "t": "Silence. Then laughter. Then, slowly, whispering."
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "angry",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "angry",
+     "t": "You're joking. The runaway?"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "normal",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "Hello, Bruce. Long time."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "competition",
+     "id": "grand_competition",
+     "win": "c_win",
+     "lose": "c_lose",
+     "place": 1
+    },
+    {
+     "cmd": "label",
+     "name": "c_win"
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "grand_champion"
+     ],
+     "unset": []
+    },
+    {
+     "s": "narrator",
+     "t": "The scoreboard doesn't just put Peter in first place. It runs out of digits."
+    },
+    {
+     "cmd": "goto",
+     "label": "c_after"
+    },
+    {
+     "cmd": "label",
+     "name": "c_lose"
+    },
+    {
+     "s": "narrator",
+     "t": "The results are close — but the crowd saw what happened. Peter held back. Everyone could tell."
+    },
+    {
+     "cmd": "label",
+     "name": "c_after"
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "angry",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "angry",
+     "t": "Scores mean nothing. Fight me. Here. Now."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "serious",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "If that's what you want."
+    },
+    {
+     "cmd": "music",
+     "id": "boss"
+    },
+    {
+     "cmd": "combat",
+     "enemy": "bruce_rematch",
+     "win": "b_win",
+     "lose": "b_lose"
+    },
+    {
+     "cmd": "label",
+     "name": "b_win"
+    },
+    {
+     "s": "narrator",
+     "t": "It's over in seconds. Bruce teleports — Peter is already there. Fire and ice meet a white light and simply… go out."
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "surprised",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "surprised",
+     "t": "What… are you?"
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "Still Peter. Still the kid who kept getting up."
+    },
+    {
+     "cmd": "rep",
+     "add": {
+      "public": 50,
+      "hero": 30,
+      "combat": 40
+     }
+    },
+    {
+     "cmd": "goto",
+     "label": "ending"
+    },
+    {
+     "cmd": "label",
+     "name": "b_lose"
+    },
+    {
+     "s": "narrator",
+     "t": "Bruce lands a lucky blow — but Peter never stopped smiling. The crowd saw it: he was holding back the entire time."
+    },
+    {
+     "cmd": "label",
+     "name": "ending"
+    },
+    {
+     "cmd": "news",
+     "key": "grand_competition_result"
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "TOLD YOU ALL! THAT'S MY BEST FRIEND!"
+    },
+    {
+     "cmd": "show",
+     "c": "mother",
+     "e": "happy",
+     "p": "center"
+    },
+    {
+     "s": "narrator",
+     "t": "In the stands, Elena Parker stands very still, tears on her face, smiling."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "bg",
+     "id": "zero_throne",
+     "tr": "black"
+    },
+    {
+     "cmd": "music",
+     "id": "boss"
+    },
+    {
+     "cmd": "show",
+     "c": "zero",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "narrator",
+     "t": "Far above Nexa, in a throne room that hangs among the stars, someone is watching the broadcast."
+    },
+    {
+     "s": "zero",
+     "e": "happy",
+     "t": "That light. That instinct. So… Richard's son finally came home."
+    },
+    {
+     "s": "zero",
+     "e": "serious",
+     "t": "How wonderful. I was getting bored."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "chapter",
+     "t": "TO BE CONTINUED\nThe Zero Arc — coming in the next update"
+    }
+   ],
+   "next": "",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "school_gate"
+  }
+ ]
+}

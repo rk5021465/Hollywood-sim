@@ -1,0 +1,257 @@
+{
+ "achievements": {
+  "first_quest": {
+   "name": "First Quest",
+   "desc": "Complete your first System quest.",
+   "req": {
+    "quests_done": 1
+   }
+  },
+  "first_card": {
+   "name": "First Card",
+   "desc": "Obtain your first ability card.",
+   "req": {
+    "cards": 1
+   }
+  },
+  "first_special": {
+   "name": "Something Special",
+   "desc": "Obtain your first special card.",
+   "req": {
+    "special_cards": 1
+   }
+  },
+  "first_competition": {
+   "name": "Competitor",
+   "desc": "Enter your first competition.",
+   "req": {
+    "competitions": 1
+   }
+  },
+  "first_victory": {
+   "name": "First Major Victory",
+   "desc": "Win your first battle.",
+   "req": {
+    "battles_won": 1
+   }
+  },
+  "ten_quests": {
+   "name": "Quest Hunter",
+   "desc": "Complete 10 quests.",
+   "req": {
+    "quests_done": 10
+   },
+   "reward": {
+    "coins": 200
+   }
+  },
+  "fifty_quests": {
+   "name": "Living Legend",
+   "desc": "Complete 50 quests.",
+   "req": {
+    "quests_done": 50
+   },
+   "reward": {
+    "coins": 2000
+   }
+  },
+  "collector": {
+   "name": "Card Collector",
+   "desc": "Own 15 cards.",
+   "req": {
+    "cards": 15
+   },
+   "title": "collector"
+  },
+  "level_10": {
+   "name": "Level 10",
+   "desc": "Reach level 10.",
+   "req": {
+    "level": 10
+   }
+  },
+  "level_50": {
+   "name": "Level 50",
+   "desc": "Reach level 50.",
+   "req": {
+    "level": 50
+   }
+  },
+  "multiverse": {
+   "name": "Multiverse Traveller",
+   "desc": "Travel beyond Nexa.",
+   "req": {
+    "flag": "multiverse_open"
+   }
+  },
+  "shadow_creator": {
+   "name": "Shadow Army Creator",
+   "desc": "Extract your first shadow.",
+   "req": {
+    "shadows": 1
+   }
+  },
+  "lantern": {
+   "name": "Bearer of the White Light",
+   "desc": "Bond with the White Lantern ring.",
+   "req": {
+    "flag": "white_lantern"
+   },
+   "title": "lantern_bearer"
+  },
+  "transcendent_being": {
+   "name": "Transcendent Being",
+   "desc": "Reach the Transcendent rank.",
+   "req": {
+    "rank": 10
+   },
+   "title": "transcendent"
+  },
+  "rich": {
+   "name": "Nexa Coin Millionaire",
+   "desc": "Earn 1,000,000 coins in total.",
+   "req": {
+    "coins_earned": 1000000
+   }
+  },
+  "earner": {
+   "name": "Hard Worker",
+   "desc": "Earn 2,000 coins in total.",
+   "req": {
+    "coins_earned": 2000
+   }
+  },
+  "pet_lover": {
+   "name": "Pet Lover",
+   "desc": "Adopt a pet.",
+   "req": {
+    "pets": 1
+   }
+  },
+  "homeowner": {
+   "name": "Homeowner",
+   "desc": "Own a second property.",
+   "req": {
+    "houses": 2
+   }
+  },
+  "survivor": {
+   "name": "Survivor",
+   "desc": "Survive the cave.",
+   "req": {
+    "flag": "picnic_done"
+   },
+   "title": "survivor"
+  },
+  "returned": {
+   "name": "The Return",
+   "desc": "Come home to Nexa after ten years.",
+   "req": {
+    "flag": "returned_home"
+   }
+  },
+  "champion": {
+   "name": "Champion of Nexa",
+   "desc": "Win the Grand Power Competition.",
+   "req": {
+    "flag": "grand_champion"
+   }
+  }
+ },
+ "titles": {
+  "awakened": {
+   "name": "The Awakened",
+   "desc": "Chosen by the Transcendent System.",
+   "bonus": {
+    "power_mastery": 1
+   }
+  },
+  "guardian": {
+   "name": "Friend's Guardian",
+   "desc": "Stood between a friend and danger.",
+   "bonus": {
+    "durability": 2
+   }
+  },
+  "unbreakable": {
+   "name": "Unbreakable",
+   "desc": "Refused to stay down.",
+   "bonus": {
+    "stamina": 3
+   }
+  },
+  "mall_hero": {
+   "name": "Hero of the Mall",
+   "desc": "Saved shoppers from Hex Ripper.",
+   "bonus": {
+    "strength": 2
+   }
+  },
+  "good_son": {
+   "name": "Good Son",
+   "desc": "Your mother is proud of you.",
+   "bonus": {
+    "stamina": 1
+   }
+  },
+  "scholar": {
+   "name": "Scholar",
+   "desc": "A perfect score in class.",
+   "bonus": {
+    "intelligence": 3
+   }
+  },
+  "survivor": {
+   "name": "Cave Survivor",
+   "desc": "Survived the statues.",
+   "bonus": {
+    "durability": 1
+   }
+  },
+  "collector": {
+   "name": "Collector",
+   "desc": "Fifteen cards and counting.",
+   "bonus": {
+    "power_mastery": 2
+   }
+  },
+  "lantern_bearer": {
+   "name": "Lantern Bearer",
+   "desc": "The White Light chose you.",
+   "bonus": {
+    "energy": 5
+   }
+  },
+  "shadow_monarch": {
+   "name": "Heir of Shadows",
+   "desc": "The shadows answer your call.",
+   "bonus": {
+    "power_mastery": 5
+   }
+  },
+  "multiverse_wanderer": {
+   "name": "Multiverse Wanderer",
+   "desc": "Trained across worlds.",
+   "bonus": {
+    "speed": 5,
+    "agility": 5
+   }
+  },
+  "transcendent": {
+   "name": "Transcendent",
+   "desc": "Beyond every rank.",
+   "bonus": {
+    "strength": 10,
+    "speed": 10
+   }
+  },
+  "champion": {
+   "name": "Champion of Nexa",
+   "desc": "Winner of the Grand Power Competition.",
+   "bonus": {
+    "strength": 5,
+    "durability": 5
+   }
+  }
+ }
+}

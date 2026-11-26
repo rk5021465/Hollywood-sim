@@ -1,0 +1,671 @@
+==================================================
+PART 26 — COMPLETE AI IMAGE ASSET INTEGRATION
+
+The game requires original AI-generated artwork for its characters, backgrounds, locations, cards, pets, costumes and other visual elements.
+
+IMPORTANT:
+
+I will generate the artwork separately using an AI image generator such as Meta AI.
+
+Your job is to integrate the images I provide into the Godot project.
+
+Do not assume you can generate image files yourself.
+
+IMAGE REQUIREMENTS:
+
+1. Use the exact images supplied by me.
+2. Do not replace supplied artwork with random placeholder images.
+3. Do not reuse one character image for every character.
+4. Do not use Peter's portrait for John, Bruce or other NPCs.
+5. Support multiple expressions for each important character.
+6. Support multiple backgrounds for different story scenes.
+7. Support separate card artwork for every ability.
+8. Support different costumes and outfits.
+9. Support different pet images.
+10. Support different shop and location illustrations.
+
+IMAGE FOLDER ORGANISATION:
+
+assets/
+characters/
+peter/
+john/
+bruce/
+mother/
+father/
+zero/
+teachers/
+students/
+heroes/
+npcs/
+
+backgrounds/
+    home/
+    school/
+    hospital/
+    jungle/
+    cave/
+    city/
+    shopping/
+    training/
+    planets/
+    multiverse/
+
+cards/
+    common/
+    uncommon/
+    rare/
+    epic/
+    legendary/
+    mythical/
+    transcendent/
+    beyond_transcendent/
+
+pets/
+costumes/
+houses/
+shops/
+vehicles/
+maps/
+smartphone/
+icons/
+effects/
+
+Create an asset registry so that the game can easily locate artwork using IDs.
+
+Example:
+
+peter_normal
+peter_happy
+peter_angry
+john_normal
+bruce_angry
+zero_normal
+nexa_city_background
+school_classroom_background
+ultra_instinct_card
+
+If an image is missing, display a proper fallback image and log the missing asset.
+
+Do not let missing images crash the game.
+
+==================================================
+PART 27 — CHARACTER CONSISTENCY SYSTEM
+
+Every recurring character must maintain a consistent visual appearance.
+
+CHARACTER DATA:
+
+Each character should have:
+
+- Unique character ID.
+- Name.
+- Age.
+- Biography.
+- Main portrait.
+- Expression portraits.
+- Alternate costumes.
+- Character statistics.
+- Abilities.
+- Personality.
+- Relationship values.
+- Story availability.
+- Dialogue history.
+
+CHARACTER PORTRAIT MANAGEMENT:
+
+When a character speaks, display their correct portrait.
+
+When their emotion changes, change their portrait automatically.
+
+For example:
+
+Peter happy → peter_happy.png
+
+Peter angry → peter_angry.png
+
+Peter surprised → peter_surprised.png
+
+John normal → john_normal.png
+
+Bruce angry → bruce_angry.png
+
+If the requested expression is unavailable, use the normal portrait.
+
+Maintain consistent character appearance throughout the story.
+
+==================================================
+PART 28 — DETAILED SCENE TRANSITION SYSTEM
+
+Create cinematic transitions between story scenes.
+
+TRANSITIONS:
+
+- Fade in.
+- Fade out.
+- Black screen transition.
+- White flash transition.
+- Blur transition.
+- Camera zoom.
+- Slow background movement.
+- Character entrance.
+- Character exit.
+- Dialogue panel animation.
+- System notification animation.
+- Portal transition.
+- Time-skip transition.
+
+IMPORTANT SCENES:
+
+Use more impressive transitions during:
+
+- System awakening.
+- First card reveal.
+- First special ability.
+- Four crews attack.
+- Peter's departure.
+- Green Lantern arrival.
+- White Lantern ring acquisition.
+- Ten-year time skip.
+- Peter's return to Nexa.
+- Final confrontation with Zero.
+
+Transitions must be smooth and optimised for Android.
+
+==================================================
+PART 29 — INTERACTIVE LOCATION SYSTEM
+
+Create a location management system.
+
+Every location must have:
+
+- Unique ID.
+- Location name.
+- Illustration.
+- Description.
+- Available activities.
+- NPCs.
+- Shops.
+- Events.
+- Story requirements.
+- Opening conditions.
+
+Example locations:
+
+HOME:
+
+- Bedroom.
+- Living room.
+- Kitchen.
+- Garden.
+
+SCHOOL:
+
+- Classroom.
+- Cafeteria.
+- Library.
+- Corridor.
+- Playground.
+- Combat arena.
+
+CITY:
+
+- Shopping mall.
+- Restaurant.
+- Hospital.
+- Park.
+- Pet shop.
+- Costume shop.
+- Vehicle showroom.
+- Training centre.
+
+OTHER LOCATIONS:
+
+- Jungle.
+- Ancient cave.
+- Hero headquarters.
+- Alien planets.
+- Training worlds.
+- Intergalactic stations.
+
+Selecting a location should open its illustrated environment.
+
+The player can select available activities using buttons.
+
+Do not create unnecessary free-roaming mechanics.
+
+==================================================
+PART 30 — NPC INTERACTION AND MEMORY
+
+Create an interactive NPC system.
+
+NPCs must have:
+
+- Unique identity.
+- Personality.
+- Portrait.
+- Dialogue.
+- Relationship values.
+- Available activities.
+- Daily routines.
+- Memory of important interactions.
+
+NPC BEHAVIOUR:
+
+Examples:
+
+John may message Peter after school.
+
+Peter's mother may ask about his day.
+
+Bruce may react differently depending on Peter's strength and previous choices.
+
+Teachers may invite Peter to competitions.
+
+Friends may invite Peter to restaurants, parks or shopping locations.
+
+NPCs should respond differently depending on:
+
+- Story progress.
+- Player choices.
+- Relationship level.
+- Player's reputation.
+- Unlocked abilities.
+- Completed quests.
+
+Do not make every NPC repeat the same dialogue.
+
+==================================================
+PART 31 — SCHOOL LIFE AND EVENTS
+
+Create a complete school-life simulation.
+
+SCHOOL ACTIVITIES:
+
+- Attend classes.
+- Talk to students.
+- Meet teachers.
+- Visit the library.
+- Participate in school events.
+- Join competitions.
+- Complete assignments.
+- Participate in training activities.
+- Spend time with friends.
+
+SCHOOL EVENTS:
+
+- School picnic.
+- Power competitions.
+- Annual sports event.
+- School festival.
+- Examination.
+- Classroom activities.
+- Special guest visits.
+- Hero demonstrations.
+
+Every event should have its own illustrated background and appropriate characters.
+
+Peter's academic intelligence should matter in the game.
+
+Include occasional academic quests and rewards.
+
+==================================================
+PART 32 — COMBAT AND POWER COMPETITION SYSTEM
+
+Create an interactive turn-based or menu-based combat system.
+
+Do not create free-roaming action combat.
+
+COMBAT FEATURES:
+
+- Player statistics.
+- Opponent statistics.
+- Ability selection.
+- Card-based abilities.
+- Cooldowns.
+- Energy consumption.
+- Defence.
+- Evasion.
+- Victory and defeat screens.
+- EXP rewards.
+- Quest triggers.
+
+POWER COMPETITIONS:
+
+Allow the player to participate in:
+
+- Strength competitions.
+- Speed competitions.
+- Agility competitions.
+- Energy control competitions.
+- Combat tournaments.
+- Special ability challenges.
+
+Results must depend on the player's actual statistics, cards, skills and decisions.
+
+Do not automatically make Peter win every competition.
+
+His early struggles should make his later achievements meaningful.
+
+==================================================
+PART 33 — POWER RANKING AND REPUTATION
+
+Create a ranking system for planet Nexa.
+
+Possible ranks:
+
+- Unranked.
+- Beginner.
+- E Rank.
+- D Rank.
+- C Rank.
+- B Rank.
+- A Rank.
+- S Rank.
+- SS Rank.
+- SSS Rank.
+- Transcendent.
+
+Track:
+
+- Combat reputation.
+- School reputation.
+- Hero reputation.
+- Public reputation.
+- Crew influence.
+- Achievements.
+
+The world should react to Peter's growing reputation.
+
+Students, teachers, heroes and news outlets should gradually change their opinions about him.
+
+==================================================
+PART 34 — SHADOW ARMY MANAGEMENT
+
+After Peter unlocks ARISE, introduce a dedicated Shadow Army interface.
+
+FEATURES:
+
+- Shadow collection.
+- Shadow portraits.
+- Shadow names.
+- Shadow ranks.
+- Shadow levels.
+- Shadow abilities.
+- Shadow EXP.
+- Shadow equipment.
+- Shadow upgrades.
+- Shadow deployment.
+- Shadow formations.
+
+Each shadow should have its own original illustration.
+
+Allow Peter to summon eligible shadows during appropriate story missions and fictional combat encounters.
+
+Create an impressive summoning animation.
+
+Do not unlock the entire army at once.
+
+Introduce shadows through story milestones and progression.
+
+==================================================
+PART 35 — WHITE LANTERN POWER INTERFACE
+
+After Peter obtains the White Lantern ring, introduce a special power interface.
+
+FEATURES:
+
+- Ring status.
+- Energy.
+- Available abilities.
+- Power mastery.
+- Special missions.
+- Ring upgrades.
+- Cosmic energy effects.
+- Special visual transformations.
+
+Create original artwork for the ring and its effects.
+
+The White Lantern power must become an important part of Peter's later progression.
+
+==================================================
+PART 36 — FINAL STORY AND ZERO CONFRONTATION
+
+Preserve the original long-term goal of Peter confronting Zero.
+
+The final storyline should include:
+
+- Peter's return to Nexa.
+- His growing reputation.
+- The reactions of former classmates.
+- His own crew.
+- His multiverse allies.
+- The revelation that his father is imprisoned.
+- The confrontation with Zero.
+- The opportunity to rescue his father.
+- The final outcome.
+
+Build this storyline gradually.
+
+Do not rush the final battle.
+
+Do not change the central relationship between Peter and his parents.
+
+Allow meaningful player decisions during major confrontations.
+
+Use cinematic illustrations, dramatic music and special ability animations.
+
+Keep combat non-graphic.
+
+==================================================
+PART 37 — MAIN MENU AND USER EXPERIENCE
+
+Create a polished main menu.
+
+MAIN MENU BUTTONS:
+
+- New Game.
+- Continue.
+- Load Game.
+- Character Gallery.
+- Card Gallery.
+- Scene Gallery.
+- Settings.
+- Credits.
+- Exit.
+
+MAIN MENU VISUALS:
+
+Use original artwork showing Peter in a dramatic futuristic Nexa environment.
+
+Add subtle animated particles and background movement.
+
+Include the game title:
+
+NEXA — THE TRANSCENDENT SYSTEM.
+
+The menu must be responsive and work properly on Android touchscreens.
+
+==================================================
+PART 38 — ANDROID PERFORMANCE AND COMPATIBILITY
+
+The game is intended primarily for Android smartphones.
+
+REQUIREMENTS:
+
+- Portrait-first interface.
+- Touch-friendly buttons.
+- Responsive layouts.
+- Optimised images.
+- Compressed audio.
+- Efficient resource loading.
+- Smooth scene transitions.
+- Low-memory handling.
+- Proper pause and resume behaviour.
+- Android back-button support.
+- Offline gameplay.
+- Autosave protection.
+
+Avoid unnecessarily large textures.
+
+Use image compression and appropriate texture sizes.
+
+Do not load every image into memory simultaneously.
+
+Load assets when needed and release unused resources.
+
+==================================================
+PART 39 — ERROR HANDLING AND QUALITY CONTROL
+
+The game must be stable.
+
+Check for:
+
+- Missing assets.
+- Invalid image paths.
+- Broken scene transitions.
+- Buttons that do nothing.
+- Incorrect dialogue.
+- Missing character portraits.
+- Incorrect quest rewards.
+- Duplicate rewards.
+- Save corruption.
+- Incorrect relationship updates.
+- Incorrect card inventory.
+- Incorrect date and age progression.
+- Audio playback errors.
+- Android layout problems.
+
+Every button must perform its advertised function.
+
+Every reward must be saved correctly.
+
+Every important choice must persist.
+
+Never claim a feature has been tested unless you actually tested it.
+
+When an error appears, fix it before moving to the next development phase.
+
+==================================================
+PART 40 — DEVELOPMENT WORKFLOW
+
+IMPORTANT: BUILD THE GAME IN PHASES.
+
+Do not attempt to generate the entire game in one enormous code response.
+
+Create a working foundation first.
+
+PHASE 1:
+Project setup, main menu, settings, character creator and save system.
+
+PHASE 2:
+Story engine, dialogue engine, portraits, backgrounds and scene transitions.
+
+PHASE 3:
+System interface, stats, levels, EXP and quest engine.
+
+PHASE 4:
+Card collection, card artwork, card animations and upgrades.
+
+PHASE 5:
+Smartphone, messages, calls, social media, news and maps.
+
+PHASE 6:
+NPCs, relationships, character gallery and scene gallery.
+
+PHASE 7:
+Shops, jobs, pets, housing, vehicles and economy.
+
+PHASE 8:
+Complete Nexa school storyline, jungle, cave, hospital and system awakening.
+
+PHASE 9:
+Four crews, special quests, special cards and major attack.
+
+PHASE 10:
+Green Lantern planet, training, multiverse travel and White Lantern ring.
+
+PHASE 11:
+Ten-year time skip, Peter's return, school competition and Zero storyline.
+
+PHASE 12:
+Shadow army, endgame content, achievements, optimisation and Android export.
+
+For EVERY phase:
+
+1. Explain what will be built.
+2. List every required file.
+3. Give the exact file paths.
+4. Provide complete working code.
+5. Explain how scripts connect.
+6. Explain where images and audio must be placed.
+7. Explain how to test the features.
+8. Fix errors before continuing.
+9. Maintain compatibility with previous phases.
+10. Provide a completion checklist.
+
+Do not replace existing working systems with incomplete versions.
+
+Do not provide pseudocode when working code is required.
+
+If a feature is too large for one response, divide it into smaller sections without silently removing functionality.
+
+==================================================
+PART 41 — FINAL DEVELOPMENT RULES
+
+Follow these rules throughout development:
+
+1. Preserve my original story.
+2. Do not remove important characters.
+3. Do not remove any of the requested systems.
+4. Do not turn the game into a chatbot.
+5. Do not make it 3D.
+6. Do not make free-roaming movement mandatory.
+7. Make every menu and button functional.
+8. Use original AI artwork supplied by me.
+9. Keep the visual style consistent.
+10. Save player progress correctly.
+11. Make the game work offline.
+12. Optimise for Android.
+13. Build the game in manageable phases.
+14. Explain technical steps simply.
+15. Do not claim to have created an APK unless an actual APK has been built.
+16. Do not claim that code has been tested unless it has actually been run.
+17. Preserve continuity between chapters.
+18. Keep the player in control of important story choices.
+19. Make the world feel alive through NPCs, events, messages and news.
+20. Make progression rewarding without making it unnecessarily slow.
+
+==================================================
+PART 42 — FIRST TASK: START DEVELOPMENT
+
+Do not simply explain how you would make this game.
+
+Start building it.
+
+First, inspect the requirements and propose the exact Godot project architecture.
+
+Then begin PHASE 1.
+
+Create:
+
+- Project configuration.
+- Main menu.
+- New Game button.
+- Continue button.
+- Settings screen.
+- Character creator.
+- Save/load system.
+- Initial Peter character data.
+
+Use complete Godot 4.x GDScript.
+
+Tell me exactly where each file goes and how to run the project.
+
+If you cannot directly create project files in my environment, provide them in clearly labelled, copyable sections.
+
+Do not jump ahead to later phases before the foundation works.
+
+The final goal is a complete, polished, illustrated Android RPG called:
+
+NEXA — THE TRANSCENDENT SYSTEM.

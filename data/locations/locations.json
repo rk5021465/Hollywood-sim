@@ -1,0 +1,1902 @@
+{
+ "districts": {
+  "residential": {
+   "name": "Residential",
+   "color": "6fbf73",
+   "desc": "Quiet streets, government housing and your home.",
+   "if": {
+    "not_flag": "offworld"
+   }
+  },
+  "school": {
+   "name": "School District",
+   "color": "ffb27a",
+   "desc": "Nexa Academy — where power decides your rank.",
+   "if": {
+    "not_flag": "offworld"
+   }
+  },
+  "commercial": {
+   "name": "Commercial",
+   "color": "e9406c",
+   "desc": "Shops, the mall, restaurants, jobs and the park.",
+   "if": {
+    "not_flag": "offworld"
+   }
+  },
+  "training": {
+   "name": "Training & Heroes",
+   "color": "3fa9ff",
+   "desc": "The public Training Centre and Hero Headquarters.",
+   "if": {
+    "not_flag": "offworld"
+   }
+  },
+  "civic": {
+   "name": "Civic",
+   "color": "a8ecff",
+   "desc": "Nexa Central Hospital.",
+   "if": {
+    "flag": "in_hospital"
+   }
+  },
+  "wilds": {
+   "name": "Jungle",
+   "color": "2f7a46",
+   "desc": "The jungle outside the city.",
+   "if": {
+    "flags": [
+     "picnic_done"
+    ],
+    "not_flag": "offworld"
+   }
+  },
+  "oa": {
+   "name": "Planet Oa",
+   "color": "3ddc97",
+   "desc": "Home of the Green Lantern Corps.",
+   "offworld": true,
+   "if": {
+    "flag": "oa_unlocked"
+   }
+  },
+  "multiverse": {
+   "name": "Multiverse",
+   "color": "9b5cff",
+   "desc": "Worlds beyond worlds. Each holds a mentor and a trial.",
+   "offworld": true,
+   "if": {
+    "flag": "multiverse_open"
+   }
+  }
+ },
+ "locations": {
+  "home_bedroom": {
+   "name": "Your Bedroom",
+   "district": "residential",
+   "desc": "Posters of heroes. A desk buried in textbooks. An old family photo.",
+   "bg": "home_bedroom",
+   "map": [
+    0.25,
+    0.3
+   ],
+   "music": "home",
+   "home": true,
+   "short": "Home",
+   "activities": [
+    {
+     "id": "study_desk",
+     "label": "Study at your desk",
+     "type": "train",
+     "stats": {
+      "intelligence": 1
+     },
+     "energy": 10,
+     "exp": 5,
+     "event": "study"
+    },
+    {
+     "id": "pushups",
+     "label": "Push-ups & sit-ups",
+     "type": "train",
+     "stats": {
+      "strength": 1,
+      "stamina": 1
+     },
+     "energy": 15,
+     "exp": 5
+    },
+    {
+     "id": "meditate",
+     "label": "Meditate",
+     "type": "train",
+     "stats": {
+      "energy": 1
+     },
+     "energy": 10,
+     "exp": 5,
+     "event": "meditate"
+    },
+    {
+     "id": "go_home_living",
+     "label": "Go to the living room",
+     "type": "travel",
+     "to": "home_living",
+     "slot": 0
+    }
+   ]
+  },
+  "home_living": {
+   "name": "Living Room",
+   "district": "residential",
+   "desc": "Small but warm. Your mother's old hero medals sit behind glass.",
+   "bg": "home_living",
+   "map": [
+    0.32,
+    0.36
+   ],
+   "music": "home",
+   "home": true,
+   "hidden": true,
+   "npcs": [
+    {
+     "id": "mother",
+     "slots": [
+      0,
+      2,
+      3
+     ],
+     "if": {
+      "not_flag": "mother_away"
+     }
+    }
+   ],
+   "activities": [
+    {
+     "id": "watch_tv",
+     "label": "Watch the news on TV",
+     "type": "rest",
+     "slot": 1,
+     "event": "watch_news"
+    },
+    {
+     "id": "go_home_bedroom",
+     "label": "Your bedroom",
+     "type": "travel",
+     "to": "home_bedroom",
+     "slot": 0
+    },
+    {
+     "id": "go_home_kitchen",
+     "label": "Kitchen",
+     "type": "travel",
+     "to": "home_kitchen",
+     "slot": 0
+    },
+    {
+     "id": "go_home_garden",
+     "label": "Garden",
+     "type": "travel",
+     "to": "home_garden",
+     "slot": 0
+    },
+    {
+     "id": "go_residential_street",
+     "label": "Go outside",
+     "type": "travel",
+     "to": "residential_street",
+     "slot": 0
+    }
+   ]
+  },
+  "home_kitchen": {
+   "name": "Kitchen",
+   "district": "residential",
+   "desc": "It smells like your mother's cooking.",
+   "bg": "home_kitchen",
+   "map": [
+    0.3,
+    0.4
+   ],
+   "music": "home",
+   "home": true,
+   "hidden": true,
+   "npcs": [
+    {
+     "id": "mother",
+     "slots": [
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "home_meal",
+     "label": "Eat a home-cooked meal",
+     "type": "eat",
+     "slot": 0,
+     "restore": 50
+    },
+    {
+     "id": "home_chores",
+     "label": "Help with chores",
+     "type": "help",
+     "slot": 1,
+     "rel": {
+      "mother": {
+       "friendship": 2,
+       "trust": 1
+      }
+     },
+     "result": "Your mother smiles. 'Thank you, sweetheart.'",
+     "rep": 0
+    },
+    {
+     "id": "go_home_living",
+     "label": "Living room",
+     "type": "travel",
+     "to": "home_living",
+     "slot": 0
+    }
+   ]
+  },
+  "home_garden": {
+   "name": "Garden",
+   "district": "residential",
+   "desc": "A tiny patch of green between apartment blocks.",
+   "bg": "home_garden",
+   "map": [
+    0.36,
+    0.42
+   ],
+   "music": "home",
+   "home": true,
+   "hidden": true,
+   "activities": [
+    {
+     "id": "garden_drills",
+     "label": "Agility drills",
+     "type": "train",
+     "stats": {
+      "agility": 1
+     },
+     "energy": 15,
+     "exp": 5
+    },
+    {
+     "id": "go_home_living",
+     "label": "Living room",
+     "type": "travel",
+     "to": "home_living",
+     "slot": 0
+    }
+   ]
+  },
+  "residential_street": {
+   "name": "Neighbourhood Street",
+   "district": "residential",
+   "desc": "Government blocks for 'retired' heroes. Labour trucks rumble past at dawn.",
+   "bg": "residential_street",
+   "map": [
+    0.6,
+    0.6
+   ],
+   "music": "city",
+   "short": "Street",
+   "activities": [
+    {
+     "id": "help_neighbour",
+     "label": "Help an elderly neighbour",
+     "type": "help",
+     "slot": 1,
+     "exp": 6,
+     "rep": 1,
+     "result": "Mrs. Tan presses a sweet into your hand."
+    },
+    {
+     "id": "explore_res",
+     "label": "Explore the neighbourhood",
+     "type": "explore",
+     "slot": 1,
+     "exp": 4,
+     "finds": [
+      {
+       "t": "You found 20 Nexa Coins on the pavement!",
+       "r": {
+        "coins": 20
+       }
+      },
+      {
+       "t": "A kid gives you a snack for fixing his bike.",
+       "r": {
+        "items": {
+         "snack": 1
+        }
+       }
+      }
+     ]
+    },
+    {
+     "id": "go_home_living",
+     "label": "Go home",
+     "type": "travel",
+     "to": "home_living",
+     "slot": 0
+    }
+   ]
+  },
+  "school_gate": {
+   "name": "Nexa Academy — Main Gate",
+   "district": "school",
+   "desc": "Rankings glow on a giant screen. Your name is near the bottom.",
+   "bg": "school_gate",
+   "map": [
+    0.5,
+    0.2
+   ],
+   "music": "school",
+   "short": "Gate",
+   "npcs": [
+    {
+     "id": "john",
+     "slots": [
+      0,
+      1
+     ],
+     "if": {
+      "flag": "met_john"
+     }
+    },
+    {
+     "id": "professor",
+     "slots": [
+      0,
+      1
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "go_school_classroom",
+     "label": "Classroom",
+     "type": "travel",
+     "to": "school_classroom",
+     "slot": 0
+    },
+    {
+     "id": "go_school_cafeteria",
+     "label": "Cafeteria",
+     "type": "travel",
+     "to": "school_cafeteria",
+     "slot": 0
+    },
+    {
+     "id": "go_school_library",
+     "label": "Library",
+     "type": "travel",
+     "to": "school_library",
+     "slot": 0
+    },
+    {
+     "id": "go_school_corridor",
+     "label": "Corridor",
+     "type": "travel",
+     "to": "school_corridor",
+     "slot": 0
+    },
+    {
+     "id": "go_school_playground",
+     "label": "Playground",
+     "type": "travel",
+     "to": "school_playground",
+     "slot": 0
+    },
+    {
+     "id": "go_school_arena",
+     "label": "Combat Arena",
+     "type": "travel",
+     "to": "school_arena",
+     "slot": 0
+    },
+    {
+     "id": "go_school_track",
+     "label": "Track Field",
+     "type": "travel",
+     "to": "school_track",
+     "slot": 0
+    }
+   ]
+  },
+  "school_classroom": {
+   "name": "Classroom 2-B",
+   "district": "school",
+   "desc": "Professor Hale's classroom. Your desk has 'POWERLESS' scratched into it.",
+   "bg": "school_classroom",
+   "map": [
+    0.3,
+    0.35
+   ],
+   "music": "school",
+   "short": "Class",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "npcs": [
+    {
+     "id": "john",
+     "slots": [
+      0
+     ],
+     "if": {
+      "flag": "met_john"
+     }
+    },
+    {
+     "id": "professor",
+     "slots": [
+      0,
+      1
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "class_math",
+     "label": "Attend Mathematics",
+     "type": "class",
+     "subject": "mathematics",
+     "energy": 10,
+     "slots": [
+      0,
+      1
+     ],
+     "if": {
+      "weekday": true
+     }
+    },
+    {
+     "id": "class_science",
+     "label": "Attend Science",
+     "type": "class",
+     "subject": "science",
+     "energy": 10,
+     "slots": [
+      0,
+      1
+     ],
+     "if": {
+      "weekday": true
+     }
+    },
+    {
+     "id": "class_history",
+     "label": "Attend Nexa History",
+     "type": "class",
+     "subject": "history",
+     "energy": 10,
+     "slots": [
+      0,
+      1
+     ],
+     "if": {
+      "weekday": true
+     }
+    },
+    {
+     "id": "class_power",
+     "label": "Attend Power Theory",
+     "type": "class",
+     "subject": "power_theory",
+     "energy": 10,
+     "slots": [
+      0,
+      1
+     ],
+     "if": {
+      "weekday": true
+     }
+    },
+    {
+     "id": "go_school_gate",
+     "label": "Main gate",
+     "type": "travel",
+     "to": "school_gate",
+     "slot": 0
+    }
+   ]
+  },
+  "school_cafeteria": {
+   "name": "Cafeteria",
+   "district": "school",
+   "desc": "Crew tables by the windows. Everyone else gets what's left.",
+   "bg": "school_cafeteria",
+   "map": [
+    0.7,
+    0.35
+   ],
+   "music": "school",
+   "short": "Cafeteria",
+   "open": [
+    0,
+    1
+   ],
+   "npcs": [
+    {
+     "id": "john",
+     "slots": [
+      1
+     ],
+     "if": {
+      "flag": "met_john"
+     }
+    },
+    {
+     "id": "zip",
+     "slots": [
+      1
+     ]
+    },
+    {
+     "id": "brick",
+     "slots": [
+      1
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "cafe_lunch",
+     "label": "Buy lunch",
+     "type": "eat",
+     "cost": 10,
+     "slot": 0,
+     "restore": 40
+    },
+    {
+     "id": "go_school_gate",
+     "label": "Main gate",
+     "type": "travel",
+     "to": "school_gate",
+     "slot": 0
+    }
+   ]
+  },
+  "school_library": {
+   "name": "Library",
+   "district": "school",
+   "desc": "Silent, dusty, Phantom Veil territory after lunch.",
+   "bg": "school_library",
+   "map": [
+    0.2,
+    0.55
+   ],
+   "music": "school",
+   "short": "Library",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "npcs": [
+    {
+     "id": "selene",
+     "slots": [
+      1
+     ],
+     "if": {
+      "era": "teen"
+     }
+    },
+    {
+     "id": "ash",
+     "slots": [
+      1,
+      2
+     ],
+     "if": {
+      "era": "teen"
+     }
+    }
+   ],
+   "activities": [
+    {
+     "id": "library_study",
+     "label": "Study in the library",
+     "type": "train",
+     "stats": {
+      "intelligence": 2
+     },
+     "energy": 15,
+     "exp": 6,
+     "event": "study"
+    },
+    {
+     "id": "go_school_gate",
+     "label": "Main gate",
+     "type": "travel",
+     "to": "school_gate",
+     "slot": 0
+    }
+   ]
+  },
+  "school_corridor": {
+   "name": "East Corridor",
+   "district": "school",
+   "desc": "Frostfire Dominion hangs around here between classes.",
+   "bg": "school_corridor",
+   "map": [
+    0.5,
+    0.45
+   ],
+   "music": "school",
+   "short": "Corridor",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "npcs": [
+    {
+     "id": "bruce",
+     "slots": [
+      0,
+      1
+     ],
+     "if": {
+      "flag": "met_bruce"
+     }
+    },
+    {
+     "id": "dex",
+     "slots": [
+      0,
+      1
+     ]
+    },
+    {
+     "id": "rina",
+     "slots": [
+      1,
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "go_school_gate",
+     "label": "Main gate",
+     "type": "travel",
+     "to": "school_gate",
+     "slot": 0
+    }
+   ]
+  },
+  "school_playground": {
+   "name": "Playground",
+   "district": "school",
+   "desc": "Storm Hounds race here at lunch.",
+   "bg": "school_playground",
+   "map": [
+    0.8,
+    0.6
+   ],
+   "music": "school",
+   "short": "Playground",
+   "npcs": [
+    {
+     "id": "kade",
+     "slots": [
+      1
+     ],
+     "if": {
+      "era": "teen"
+     }
+    },
+    {
+     "id": "zip",
+     "slots": [
+      0,
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "playground_run",
+     "label": "Sprint drills",
+     "type": "train",
+     "stats": {
+      "speed": 1,
+      "agility": 1
+     },
+     "energy": 15,
+     "exp": 5
+    },
+    {
+     "id": "go_school_gate",
+     "label": "Main gate",
+     "type": "travel",
+     "to": "school_gate",
+     "slot": 0
+    }
+   ]
+  },
+  "school_arena": {
+   "name": "Combat Arena",
+   "district": "school",
+   "desc": "Scorched floors, cracked walls, a scoreboard that never forgets.",
+   "bg": "school_arena",
+   "map": [
+    0.45,
+    0.75
+   ],
+   "music": "school",
+   "short": "Arena",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "npcs": [
+    {
+     "id": "gorran",
+     "slots": [
+      1,
+      2
+     ],
+     "if": {
+      "era": "teen"
+     }
+    },
+    {
+     "id": "brick",
+     "slots": [
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "comp_strength",
+     "label": "Enter the Strength Challenge",
+     "type": "competition",
+     "comp": "school_strength",
+     "if": {
+      "weekday": true
+     }
+    },
+    {
+     "id": "spar_dex",
+     "label": "Accept a crew challenge (Dex)",
+     "type": "spar",
+     "enemy": "crew_grunt",
+     "energy": 15,
+     "if": {
+      "chapter_gt": 3,
+      "era": "teen"
+     }
+    },
+    {
+     "id": "go_school_gate",
+     "label": "Main gate",
+     "type": "travel",
+     "to": "school_gate",
+     "slot": 0
+    }
+   ]
+  },
+  "school_track": {
+   "name": "Track Field",
+   "district": "school",
+   "desc": "Storm Hounds territory. Kade's record is painted on the wall.",
+   "bg": "school_track",
+   "map": [
+    0.75,
+    0.82
+   ],
+   "music": "school",
+   "short": "Track",
+   "activities": [
+    {
+     "id": "comp_speed",
+     "label": "Enter the Speed Challenge",
+     "type": "competition",
+     "comp": "school_speed",
+     "if": {
+      "weekday": true
+     }
+    },
+    {
+     "id": "track_laps",
+     "label": "Run laps",
+     "type": "train",
+     "stats": {
+      "speed": 2,
+      "stamina": 1
+     },
+     "energy": 20,
+     "exp": 6
+    },
+    {
+     "id": "go_school_gate",
+     "label": "Main gate",
+     "type": "travel",
+     "to": "school_gate",
+     "slot": 0
+    }
+   ]
+  },
+  "city_street": {
+   "name": "Downtown Nexa",
+   "district": "commercial",
+   "desc": "Neon billboards of top-ranked heroes. Zero's emblem hangs over every intersection.",
+   "bg": "city_street",
+   "map": [
+    0.5,
+    0.5
+   ],
+   "music": "city",
+   "short": "Downtown",
+   "bg_night": "city_street_night",
+   "activities": [
+    {
+     "id": "help_city",
+     "label": "Help someone in trouble",
+     "type": "help",
+     "slot": 1,
+     "exp": 6,
+     "rep": 1,
+     "result": "You help a powerless worker carry crates. He looks surprised anyone cared."
+    },
+    {
+     "id": "explore_city",
+     "label": "Explore the streets",
+     "type": "explore",
+     "slot": 1,
+     "exp": 4,
+     "finds": [
+      {
+       "t": "A street vendor gives you a free drink.",
+       "r": {
+        "items": {
+         "energy_drink": 1
+        }
+       }
+      },
+      {
+       "t": "You found 35 Nexa Coins.",
+       "r": {
+        "coins": 35
+       }
+      }
+     ]
+    },
+    {
+     "id": "hunt_hex",
+     "label": "Track down Hex Ripper",
+     "type": "spar",
+     "enemy": "hex_ripper",
+     "energy": 20,
+     "if": {
+      "quest_active": "emergency_mall_rescue"
+     }
+    },
+    {
+     "id": "enforcer",
+     "label": "Confront a regime enforcer",
+     "type": "spar",
+     "enemy": "regime_enforcer",
+     "energy": 20,
+     "slots": [
+      2,
+      3
+     ],
+     "if": {
+      "era": "adult"
+     }
+    },
+    {
+     "id": "go_commercial_mall",
+     "label": "Shopping mall",
+     "type": "travel",
+     "to": "commercial_mall",
+     "slot": 0
+    },
+    {
+     "id": "go_restaurant",
+     "label": "Sakura Bistro",
+     "type": "travel",
+     "to": "restaurant",
+     "slot": 0
+    },
+    {
+     "id": "go_city_park",
+     "label": "Central Park",
+     "type": "travel",
+     "to": "city_park",
+     "slot": 0
+    },
+    {
+     "id": "go_delivery_hub",
+     "label": "Delivery hub",
+     "type": "travel",
+     "to": "delivery_hub",
+     "slot": 0
+    }
+   ]
+  },
+  "commercial_mall": {
+   "name": "Nexa Grand Mall",
+   "district": "commercial",
+   "desc": "Five floors of shops. Top-ranked heroes shop free; everyone else pays double.",
+   "bg": "city_mall",
+   "map": [
+    0.3,
+    0.3
+   ],
+   "music": "city",
+   "short": "Mall",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "activities": [
+    {
+     "id": "shop_clothes",
+     "label": "Clothing store",
+     "type": "shop",
+     "shop": "clothing_store"
+    },
+    {
+     "id": "shop_elec",
+     "label": "Electronics",
+     "type": "shop",
+     "shop": "electronics_store"
+    },
+    {
+     "id": "shop_furn",
+     "label": "Furniture store",
+     "type": "shop",
+     "shop": "furniture_store"
+    },
+    {
+     "id": "shop_groc",
+     "label": "Grocery",
+     "type": "shop",
+     "shop": "grocery"
+    },
+    {
+     "id": "job_shop",
+     "label": "Work: Shop assistant",
+     "type": "job",
+     "job": "shop_assistant"
+    },
+    {
+     "id": "job_comp",
+     "label": "Work: Computer repair desk",
+     "type": "job",
+     "job": "computer_work"
+    },
+    {
+     "id": "go_costume_shop",
+     "label": "Hero Costume Atelier",
+     "type": "travel",
+     "to": "costume_shop",
+     "slot": 0
+    },
+    {
+     "id": "go_pet_shop",
+     "label": "Pet shop",
+     "type": "travel",
+     "to": "pet_shop",
+     "slot": 0
+    },
+    {
+     "id": "go_city_street",
+     "label": "Downtown",
+     "type": "travel",
+     "to": "city_street",
+     "slot": 0
+    }
+   ]
+  },
+  "costume_shop": {
+   "name": "Hero Costume Atelier",
+   "district": "commercial",
+   "desc": "Mannequins in capes and masks.",
+   "bg": "costume_shop",
+   "map": [
+    0.18,
+    0.2
+   ],
+   "music": "city",
+   "short": "Costumes",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "activities": [
+    {
+     "id": "shop_costume",
+     "label": "Browse costumes",
+     "type": "shop",
+     "shop": "costume_shop"
+    },
+    {
+     "id": "go_commercial_mall",
+     "label": "Back to the mall",
+     "type": "travel",
+     "to": "commercial_mall",
+     "slot": 0
+    }
+   ]
+  },
+  "pet_shop": {
+   "name": "Paws & Wings",
+   "district": "commercial",
+   "desc": "Puppies, kittens, parrots — and one very judgemental rabbit.",
+   "bg": "pet_shop",
+   "map": [
+    0.4,
+    0.18
+   ],
+   "music": "city",
+   "short": "Pets",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "activities": [
+    {
+     "id": "shop_pets",
+     "label": "Adopt a pet",
+     "type": "shop",
+     "shop": "pet_shop"
+    },
+    {
+     "id": "shop_petfood",
+     "label": "Buy pet supplies",
+     "type": "shop",
+     "shop": "grocery"
+    },
+    {
+     "id": "go_commercial_mall",
+     "label": "Back to the mall",
+     "type": "travel",
+     "to": "commercial_mall",
+     "slot": 0
+    }
+   ]
+  },
+  "restaurant": {
+   "name": "Sakura Bistro",
+   "district": "commercial",
+   "desc": "John's favourite place. The ramen is famous.",
+   "bg": "restaurant",
+   "map": [
+    0.7,
+    0.3
+   ],
+   "music": "city",
+   "short": "Bistro",
+   "open": [
+    1,
+    2
+   ],
+   "activities": [
+    {
+     "id": "eat_ramen",
+     "label": "Eat ramen",
+     "type": "eat",
+     "cost": 25,
+     "slot": 0,
+     "restore": 80
+    },
+    {
+     "id": "job_rest",
+     "label": "Work: Kitchen shift",
+     "type": "job",
+     "job": "restaurant_work"
+    },
+    {
+     "id": "go_city_street",
+     "label": "Downtown",
+     "type": "travel",
+     "to": "city_street",
+     "slot": 0
+    }
+   ]
+  },
+  "car_showroom": {
+   "name": "Nexa Motors Showroom",
+   "district": "commercial",
+   "desc": "Polished cars under spotlights.",
+   "bg": "car_showroom",
+   "map": [
+    0.85,
+    0.5
+   ],
+   "music": "city",
+   "short": "Showroom",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "activities": [
+    {
+     "id": "shop_cars",
+     "label": "Browse vehicles",
+     "type": "shop",
+     "shop": "showroom"
+    },
+    {
+     "id": "go_garage_shop",
+     "label": "Turbo Garage",
+     "type": "travel",
+     "to": "garage_shop",
+     "slot": 0
+    }
+   ]
+  },
+  "garage_shop": {
+   "name": "Turbo Garage",
+   "district": "commercial",
+   "desc": "Smells of oil and ambition.",
+   "bg": "garage",
+   "map": [
+    0.88,
+    0.65
+   ],
+   "music": "city",
+   "short": "Garage",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "activities": [
+    {
+     "id": "shop_garage",
+     "label": "Garage services",
+     "type": "shop",
+     "shop": "garage"
+    },
+    {
+     "id": "go_car_showroom",
+     "label": "Showroom",
+     "type": "travel",
+     "to": "car_showroom",
+     "slot": 0
+    }
+   ]
+  },
+  "realty_office": {
+   "name": "Nexa Realty",
+   "district": "commercial",
+   "desc": "Property listings from studio flats to hilltop mansions.",
+   "bg": "city_street",
+   "map": [
+    0.62,
+    0.72
+   ],
+   "music": "city",
+   "short": "Realty",
+   "open": [
+    0,
+    1,
+    2
+   ],
+   "activities": [
+    {
+     "id": "shop_realty",
+     "label": "View properties",
+     "type": "shop",
+     "shop": "realty"
+    }
+   ]
+  },
+  "delivery_hub": {
+   "name": "Delivery Hub",
+   "district": "commercial",
+   "desc": "Scooters, parcels, and shouting dispatchers.",
+   "bg": "delivery_hub",
+   "map": [
+    0.2,
+    0.75
+   ],
+   "music": "city",
+   "short": "Delivery",
+   "activities": [
+    {
+     "id": "job_food",
+     "label": "Work: Food delivery",
+     "type": "job",
+     "job": "food_delivery"
+    },
+    {
+     "id": "job_courier",
+     "label": "Work: Courier",
+     "type": "job",
+     "job": "courier"
+    },
+    {
+     "id": "go_city_street",
+     "label": "Downtown",
+     "type": "travel",
+     "to": "city_street",
+     "slot": 0
+    }
+   ]
+  },
+  "city_park": {
+   "name": "Central Park",
+   "district": "commercial",
+   "desc": "Cherry trees, joggers, and a statue of a hero whose name was erased.",
+   "bg": "city_park",
+   "map": [
+    0.45,
+    0.85
+   ],
+   "music": "city",
+   "short": "Park",
+   "npcs": [
+    {
+     "id": "john",
+     "slots": [
+      1
+     ],
+     "if": {
+      "flag": "met_john",
+      "weekend": true
+     }
+    }
+   ],
+   "activities": [
+    {
+     "id": "park_jog",
+     "label": "Jog around the lake",
+     "type": "train",
+     "stats": {
+      "stamina": 1,
+      "speed": 1
+     },
+     "energy": 15,
+     "exp": 5
+    },
+    {
+     "id": "help_park",
+     "label": "Help a lost child",
+     "type": "help",
+     "slot": 1,
+     "exp": 6,
+     "rep": 1,
+     "result": "You reunite a crying child with her father."
+    },
+    {
+     "id": "explore_park",
+     "label": "Explore the park",
+     "type": "explore",
+     "slot": 1,
+     "exp": 4,
+     "finds": [
+      {
+       "t": "You found a lucky coin by the fountain.",
+       "r": {
+        "items": {
+         "lucky_coin": 1
+        }
+       }
+      },
+      {
+       "t": "You found 15 Nexa Coins.",
+       "r": {
+        "coins": 15
+       }
+      }
+     ]
+    },
+    {
+     "id": "go_city_street",
+     "label": "Downtown",
+     "type": "travel",
+     "to": "city_street",
+     "slot": 0
+    }
+   ]
+  },
+  "training_center": {
+   "name": "Public Training Centre",
+   "district": "training",
+   "desc": "Coach Varga's gym. No powers required — just sweat.",
+   "bg": "training_center",
+   "map": [
+    0.35,
+    0.4
+   ],
+   "music": "training",
+   "short": "Gym",
+   "npcs": [
+    {
+     "id": "coach_varga",
+     "slots": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "gym_weights",
+     "label": "Weight training",
+     "type": "train",
+     "stats": {
+      "strength": 1,
+      "stamina": 1
+     },
+     "energy": 20,
+     "exp": 6,
+     "cost": 10
+    },
+    {
+     "id": "gym_endurance",
+     "label": "Endurance circuit",
+     "type": "train",
+     "stats": {
+      "stamina": 1,
+      "durability": 1
+     },
+     "energy": 20,
+     "exp": 6,
+     "cost": 10
+    },
+    {
+     "id": "spar_dummy",
+     "label": "Practise on a dummy",
+     "type": "spar",
+     "enemy": "training_dummy",
+     "energy": 10
+    },
+    {
+     "id": "spar_coach",
+     "label": "Spar with Coach Varga",
+     "type": "spar",
+     "enemy": "sparring_partner",
+     "energy": 20
+    },
+    {
+     "id": "comp_energy",
+     "label": "Energy Control Challenge",
+     "type": "competition",
+     "comp": "energy_control"
+    }
+   ]
+  },
+  "hero_hq": {
+   "name": "Hero Headquarters",
+   "district": "training",
+   "desc": "Glass towers flying Zero's banner beside the old hero crest.",
+   "bg": "hero_hq",
+   "map": [
+    0.7,
+    0.55
+   ],
+   "music": "training",
+   "short": "Hero HQ",
+   "if": {
+    "chapter_gt": 5
+   },
+   "npcs": [
+    {
+     "id": "captain_solaris",
+     "slots": [
+      0,
+      1
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "volunteer_hq",
+     "label": "Volunteer at the hero desk",
+     "type": "help",
+     "slot": 1,
+     "exp": 10,
+     "rep": 2,
+     "rel": {
+      "captain_solaris": {
+       "respect": 2
+      }
+     },
+     "result": "You sort rescue reports. Captain Solaris watches you work."
+    }
+   ]
+  },
+  "hospital_room": {
+   "name": "Nexa Central Hospital — Room 304",
+   "district": "civic",
+   "desc": "White walls, beeping monitors, and a window over the city.",
+   "bg": "hospital_room",
+   "map": [
+    0.5,
+    0.5
+   ],
+   "music": "emotional",
+   "home": true,
+   "short": "Hospital",
+   "if": {
+    "flag": "in_hospital"
+   },
+   "npcs": [
+    {
+     "id": "nurse",
+     "slots": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "hospital_food",
+     "label": "Eat the food Mom left",
+     "type": "eat",
+     "slot": 0,
+     "restore": 40
+    },
+    {
+     "id": "hospital_walk",
+     "label": "Walk the corridor",
+     "type": "train",
+     "stats": {
+      "stamina": 1
+     },
+     "energy": 5,
+     "exp": 5,
+     "event": "hospital_walk"
+    },
+    {
+     "id": "hospital_breath",
+     "label": "Breathing exercises",
+     "type": "train",
+     "stats": {
+      "energy": 1
+     },
+     "energy": 5,
+     "exp": 5,
+     "event": "meditate"
+    }
+   ]
+  },
+  "jungle_trail": {
+   "name": "Jungle Trail",
+   "district": "wilds",
+   "desc": "The picnic site. The path to the cave is overgrown — as if the jungle is hiding it.",
+   "bg": "jungle_picnic",
+   "map": [
+    0.4,
+    0.5
+   ],
+   "music": "emotional",
+   "short": "Jungle",
+   "activities": [
+    {
+     "id": "jungle_climb",
+     "label": "Climb and scramble",
+     "type": "train",
+     "stats": {
+      "agility": 1,
+      "strength": 1
+     },
+     "energy": 20,
+     "exp": 6
+    },
+    {
+     "id": "explore_jungle",
+     "label": "Search near the cave",
+     "type": "explore",
+     "slot": 1,
+     "exp": 8,
+     "finds": [
+      {
+       "t": "You found a fragment of a stone statue. It hums.",
+       "r": {
+        "items": {
+         "statue_fragment": 1
+        }
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "oa_citadel": {
+   "name": "Citadel of Oa",
+   "district": "oa",
+   "desc": "Towers of green light. Lanterns from a thousand worlds walk these halls.",
+   "bg": "oa_citadel",
+   "map": [
+    0.4,
+    0.4
+   ],
+   "music": "multiverse",
+   "short": "Citadel",
+   "npcs": [
+    {
+     "id": "lantern_kyra",
+     "slots": [
+      0,
+      1,
+      2,
+      3
+     ]
+    },
+    {
+     "id": "guardian_oren",
+     "slots": [
+      0,
+      1
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "willpower",
+     "label": "Willpower meditation",
+     "type": "train",
+     "stats": {
+      "energy": 2,
+      "power_mastery": 1
+     },
+     "energy": 20,
+     "exp": 10
+    },
+    {
+     "id": "ring_recharge",
+     "label": "Rest under the Central Battery",
+     "type": "rest",
+     "slot": 1,
+     "full": true
+    },
+    {
+     "id": "spar_pirate",
+     "label": "Patrol Sector 2814",
+     "type": "spar",
+     "enemy": "space_pirate",
+     "energy": 20,
+     "if": {
+      "flag": "white_lantern"
+     }
+    },
+    {
+     "id": "go_oa_training",
+     "label": "Training grounds",
+     "type": "travel",
+     "to": "oa_training",
+     "slot": 0
+    }
+   ]
+  },
+  "oa_training": {
+   "name": "Oan Training Grounds",
+   "district": "oa",
+   "desc": "Floating platforms over a green abyss.",
+   "bg": "oa_training",
+   "map": [
+    0.65,
+    0.65
+   ],
+   "music": "training",
+   "short": "Training",
+   "npcs": [
+    {
+     "id": "lantern_kyra",
+     "slots": [
+      0,
+      1
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "construct_drills",
+     "label": "Construct drills",
+     "type": "train",
+     "stats": {
+      "power_mastery": 2,
+      "agility": 1
+     },
+     "energy": 20,
+     "exp": 10
+    },
+    {
+     "id": "lantern_conditioning",
+     "label": "Lantern conditioning",
+     "type": "train",
+     "stats": {
+      "strength": 2,
+      "durability": 2
+     },
+     "energy": 25,
+     "exp": 10
+    },
+    {
+     "id": "spar_drone",
+     "label": "Fight a construct drone",
+     "type": "spar",
+     "enemy": "construct_drone",
+     "energy": 20
+    },
+    {
+     "id": "spar_fear",
+     "label": "Face the Construct of Fear",
+     "type": "spar",
+     "enemy": "fear_construct",
+     "energy": 25,
+     "if": {
+      "quest_active": "main_lantern_trials"
+     }
+    },
+    {
+     "id": "go_oa_citadel",
+     "label": "Citadel",
+     "type": "travel",
+     "to": "oa_citadel",
+     "slot": 0
+    }
+   ]
+  },
+  "anime_world": {
+   "name": "World of Heroes",
+   "district": "multiverse",
+   "desc": "A bright anime-style city where monsters attack every Tuesday.",
+   "bg": "anime_world",
+   "map": [
+    0.2,
+    0.3
+   ],
+   "music": "multiverse",
+   "short": "Heroes",
+   "npcs": [
+    {
+     "id": "hollow_master",
+     "slots": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "hollow_routine",
+     "label": "The Hollow Master's routine",
+     "type": "train",
+     "stats": {
+      "strength": 3,
+      "durability": 2,
+      "stamina": 2
+     },
+     "energy": 30,
+     "exp": 15
+    },
+    {
+     "id": "trial_punch",
+     "label": "Take the Hollow Master's trial",
+     "type": "spar",
+     "enemy": "trial_punch",
+     "energy": 25
+    }
+   ]
+  },
+  "speed_world": {
+   "name": "Lightning City",
+   "district": "multiverse",
+   "desc": "A world where speed is a force of nature.",
+   "bg": "speed_world",
+   "map": [
+    0.75,
+    0.25
+   ],
+   "music": "multiverse",
+   "short": "Lightning",
+   "npcs": [
+    {
+     "id": "crimson_runner",
+     "slots": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "speed_force",
+     "label": "Run with the Crimson Runner",
+     "type": "train",
+     "stats": {
+      "speed": 4,
+      "agility": 2
+     },
+     "energy": 30,
+     "exp": 15
+    },
+    {
+     "id": "trial_speed",
+     "label": "Race the Crimson Runner",
+     "type": "spar",
+     "enemy": "trial_speed",
+     "energy": 25
+    }
+   ]
+  },
+  "mystic_world": {
+   "name": "Sanctum Dimension",
+   "district": "multiverse",
+   "desc": "Stairs that fold into themselves. Libraries without ends.",
+   "bg": "mystic_world",
+   "map": [
+    0.25,
+    0.7
+   ],
+   "music": "multiverse",
+   "short": "Sanctum",
+   "npcs": [
+    {
+     "id": "sanctum_sorcerer",
+     "slots": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "mystic_study",
+     "label": "Study the mystic arts",
+     "type": "train",
+     "stats": {
+      "energy": 3,
+      "power_mastery": 3,
+      "intelligence": 2
+     },
+     "energy": 30,
+     "exp": 15
+    },
+    {
+     "id": "trial_mystic",
+     "label": "Face the Sorcerer's trial",
+     "type": "spar",
+     "enemy": "trial_mystic",
+     "energy": 25
+    }
+   ]
+  },
+  "shadow_realm": {
+   "name": "Realm of Shadows",
+   "district": "multiverse",
+   "desc": "A grey world of silent soldiers waiting for a king.",
+   "bg": "shadow_realm",
+   "map": [
+    0.75,
+    0.7
+   ],
+   "music": "multiverse",
+   "short": "Shadows",
+   "npcs": [
+    {
+     "id": "shadow_echo",
+     "slots": [
+      0,
+      1,
+      2,
+      3
+     ]
+    }
+   ],
+   "activities": [
+    {
+     "id": "shadow_meditation",
+     "label": "Commune with the shadows",
+     "type": "train",
+     "stats": {
+      "power_mastery": 3,
+      "energy": 2
+     },
+     "energy": 30,
+     "exp": 15
+    },
+    {
+     "id": "trial_shadow",
+     "label": "Challenge Kael, the Fallen Knight",
+     "type": "spar",
+     "enemy": "trial_shadow",
+     "energy": 25
+    },
+    {
+     "id": "hunt_grimm",
+     "label": "Hunt the Abyss Hound",
+     "type": "spar",
+     "enemy": "abyss_hound",
+     "energy": 25,
+     "if": {
+      "card": "arise"
+     }
+    }
+   ]
+  },
+  "beast_world": {
+   "name": "Beast World",
+   "district": "multiverse",
+   "desc": "Jungle continents ruled by warlords.",
+   "bg": "beast_world",
+   "map": [
+    0.5,
+    0.15
+   ],
+   "music": "multiverse",
+   "short": "Beasts",
+   "activities": [
+    {
+     "id": "beast_training",
+     "label": "Survive the wilds",
+     "type": "train",
+     "stats": {
+      "strength": 2,
+      "durability": 3
+     },
+     "energy": 30,
+     "exp": 15
+    },
+    {
+     "id": "fight_tusk",
+     "label": "Challenge Warlord Tusk",
+     "type": "spar",
+     "enemy": "beast_lord",
+     "energy": 25
+    }
+   ]
+  },
+  "mirror_realm": {
+   "name": "Mirror Realm",
+   "district": "multiverse",
+   "desc": "Every surface reflects a different version of you.",
+   "bg": "mirror_realm",
+   "map": [
+    0.5,
+    0.88
+   ],
+   "music": "multiverse",
+   "short": "Mirror",
+   "activities": [
+    {
+     "id": "mirror_training",
+     "label": "Shadow-box your reflection",
+     "type": "train",
+     "stats": {
+      "agility": 3,
+      "speed": 1
+     },
+     "energy": 30,
+     "exp": 15
+    },
+    {
+     "id": "fight_veyra",
+     "label": "Face the Mirror Assassin",
+     "type": "spar",
+     "enemy": "mirror_assassin",
+     "energy": 25
+    }
+   ]
+  }
+ }
+}

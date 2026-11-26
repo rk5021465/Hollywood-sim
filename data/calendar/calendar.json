@@ -1,0 +1,50 @@
+{
+ "events": [
+  {
+   "month": 5,
+   "day": 1,
+   "title": "Nexa Founding Day (holiday)"
+  },
+  {
+   "month": 6,
+   "day": 15,
+   "title": "Academy Sports Festival"
+  },
+  {
+   "month": 6,
+   "day": 21,
+   "title": "John's birthday",
+   "if": {
+    "flag": "met_john"
+   }
+  },
+  {
+   "month": 7,
+   "day": 1,
+   "title": "Mid-year exams"
+  },
+  {
+   "month": 9,
+   "day": 9,
+   "title": "Hero Day"
+  },
+  {
+   "month": 11,
+   "day": 3,
+   "title": "Mom's birthday"
+  },
+  {
+   "month": 12,
+   "day": 20,
+   "title": "Winter Festival"
+  },
+  {
+   "month": 4,
+   "day": 9,
+   "title": "Jungle picnic (Academy)",
+   "if": {
+    "not_flag": "picnic_done"
+   }
+  }
+ ]
+}

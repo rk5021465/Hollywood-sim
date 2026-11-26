@@ -1,0 +1,135 @@
+{
+ "messages": [
+  {
+   "id": "mom_morning_1",
+   "from": "mother",
+   "trigger": "morning",
+   "t": "Good morning! Breakfast is on the table. Don't let anyone push you around today.",
+   "if": {
+    "era": "teen",
+    "not_flag": "in_hospital"
+   }
+  },
+  {
+   "id": "mom_evening",
+   "from": "mother",
+   "trigger": "evening",
+   "t": "How was your day, sweetheart?",
+   "once": false,
+   "chance": 0.35,
+   "if": {
+    "era": "teen",
+    "not_flag": "offworld"
+   }
+  },
+  {
+   "id": "john_after_school",
+   "from": "john",
+   "trigger": "afternoon",
+   "t": "School's finally over!! Ramen? Arcade? Both??",
+   "once": false,
+   "chance": 0.3,
+   "if": {
+    "flag": "met_john",
+    "weekday": true,
+    "not_flag": "offworld"
+   }
+  },
+  {
+   "id": "john_invite",
+   "from": "john",
+   "trigger": "evening",
+   "t": "Hey, want to hang out at Sakura Bistro tomorrow afternoon? My treat (this time).",
+   "once": false,
+   "chance": 0.2,
+   "if": {
+    "flag": "met_john",
+    "rel_gt": [
+     "john",
+     "friendship",
+     30
+    ],
+    "not_flag": "offworld"
+   },
+   "invite": {
+    "location": "restaurant",
+    "title": "Ramen with John",
+    "in_days": 1,
+    "slot": 1
+   }
+  },
+  {
+   "id": "prof_competitions",
+   "from": "professor",
+   "trigger": "morning",
+   "t": "Reminder: weekday challenges are open in the Arena and on the Track. Results go on your record.",
+   "if": {
+    "chapter_gt": 3,
+    "era": "teen"
+   }
+  },
+  {
+   "id": "dex_taunt",
+   "from": "dex",
+   "trigger": "night",
+   "t": "nice try today, powerless. see you tomorrow 😈",
+   "if": {
+    "flag": "met_bruce",
+    "era": "teen",
+    "not_flag": "beat_dex"
+   }
+  },
+  {
+   "id": "zip_gossip",
+   "from": "zip",
+   "trigger": "afternoon",
+   "t": "Psst. The crews are talking about you. Like, a LOT. Be careful.",
+   "if": {
+    "quest_done": "emergency_mall_rescue",
+    "era": "teen"
+   }
+  },
+  {
+   "id": "solaris_note",
+   "from": "captain_solaris",
+   "trigger": "morning",
+   "t": "Saw what you did at the mall. Your father would be proud. Be careful who notices.",
+   "if": {
+    "quest_done": "emergency_mall_rescue",
+    "era": "teen"
+   }
+  },
+  {
+   "id": "john_adult_1",
+   "from": "john",
+   "trigger": "evening",
+   "t": "Is it really you?! Your mom just told me. I'm coming over. Don't you DARE disappear again.",
+   "if": {
+    "flag": "returned_home"
+   }
+  },
+  {
+   "id": "mom_adult_morning",
+   "from": "mother",
+   "trigger": "morning",
+   "t": "Morning! I made too much breakfast again. Old habits.",
+   "once": false,
+   "chance": 0.3,
+   "if": {
+    "era": "adult",
+    "not_flag": "offworld"
+   }
+  },
+  {
+   "id": "kyra_checkin",
+   "from": "lantern_kyra",
+   "trigger": "morning",
+   "t": "Ring check: still glowing? Good. Don't get cocky.",
+   "once": false,
+   "chance": 0.15,
+   "if": {
+    "flag": "white_lantern"
+   }
+  }
+ ]
+}

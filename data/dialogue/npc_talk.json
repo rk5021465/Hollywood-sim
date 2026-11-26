@@ -1,0 +1,746 @@
+{
+ "talk": {
+  "mother": [
+   {
+    "if": {
+     "era": "teen",
+     "not_flag": "system_active"
+    },
+    "lines": [
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "There's my boy. Did you eat? You never eat enough."
+     },
+     {
+      "s": "peter",
+      "e": "normal",
+      "t": "I ate, Mom."
+     },
+     {
+      "s": "mother",
+      "e": "serious",
+      "t": "…You're limping again. Was it those crew kids?"
+     },
+     {
+      "s": "peter",
+      "e": "sad",
+      "t": "It's fine. Really."
+     }
+    ]
+   },
+   {
+    "if": {
+     "era": "teen",
+     "flag": "system_active"
+    },
+    "lines": [
+     {
+      "s": "mother",
+      "e": "normal",
+      "t": "You've been training a lot lately."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "Just trying to get stronger."
+     },
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "Your father used to say that. Every single morning."
+     }
+    ]
+   },
+   {
+    "if": {
+     "era": "teen",
+     "rel_gt": [
+      "mother",
+      "trust",
+      85
+     ]
+    },
+    "priority": 1,
+    "lines": [
+     {
+      "s": "mother",
+      "e": "sad",
+      "t": "Peter… whatever you're carrying, you don't have to carry it alone."
+     },
+     {
+      "s": "peter",
+      "e": "serious",
+      "t": "I know, Mom. One day I'll tell you everything."
+     },
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "I'll hold you to that."
+     }
+    ]
+   },
+   {
+    "if": {
+     "era": "adult"
+    },
+    "lines": [
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "Ten years and you still leave your shoes in the hallway."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "Some things never change."
+     },
+     {
+      "s": "mother",
+      "e": "serious",
+      "t": "And some things do. I see how people step aside when you walk by."
+     }
+    ]
+   }
+  ],
+  "mother_hangout": [
+   {
+    "lines": [
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "It's been so long since we just walked in the park."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "We should do this more often."
+     },
+     {
+      "s": "mother",
+      "e": "normal",
+      "t": "Your father proposed by that fountain, you know."
+     }
+    ]
+   }
+  ],
+  "john": [
+   {
+    "if": {
+     "era": "teen"
+    },
+    "lines": [
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "Peter! Did you see Kade trip during warm-ups? Best day ever."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "You're terrible."
+     },
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "I'm honest!"
+     }
+    ]
+   },
+   {
+    "if": {
+     "era": "teen",
+     "flag": "system_active"
+    },
+    "lines": [
+     {
+      "s": "john",
+      "e": "confused",
+      "t": "You've changed lately. Stronger. Faster. What's your secret?"
+     },
+     {
+      "s": "peter",
+      "e": "normal",
+      "t": "Sleep and vegetables."
+     },
+     {
+      "s": "john",
+      "e": "serious",
+      "t": "…Liar. But fine. Keep your secrets."
+     }
+    ]
+   },
+   {
+    "if": {
+     "era": "teen",
+     "rel_gt": [
+      "john",
+      "friendship",
+      60
+     ]
+    },
+    "priority": 1,
+    "lines": [
+     {
+      "s": "john",
+      "e": "serious",
+      "t": "Hey. Thanks. For that first day. Nobody ever stood up for me before."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "That's what friends are for."
+     },
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "Then I've got your back too. Always."
+     }
+    ],
+    "rel": {
+     "trust": 3
+    }
+   },
+   {
+    "if": {
+     "era": "adult"
+    },
+    "lines": [
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "I still can't believe you're back. Ten years, Peter!"
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "I missed you, man."
+     },
+     {
+      "s": "john",
+      "e": "serious",
+      "t": "…I copied a lot of powers looking for you. None of them could find you."
+     }
+    ]
+   }
+  ],
+  "john_hangout": [
+   {
+    "lines": [
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "Two bowls of the spicy ramen, please! He's paying."
+     },
+     {
+      "s": "peter",
+      "e": "surprised",
+      "t": "I am?"
+     },
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "You are. Friendship tax."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "…Fine."
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "Rematch! Loser buys snacks."
+     },
+     {
+      "s": "peter",
+      "e": "serious",
+      "t": "You've lost six times in a row."
+     },
+     {
+      "s": "john",
+      "e": "confused",
+      "t": "Statistically I'm due a win."
+     }
+    ]
+   }
+  ],
+  "john_replies": [
+   {
+    "t": "Ramen later?",
+    "reply": "ALWAYS. You're buying though.",
+    "rel": {
+     "friendship": 2
+    }
+   },
+   {
+    "t": "You okay? Crews bothering you?",
+    "reply": "A little… but I'm fine. Thanks for asking.",
+    "rel": {
+     "trust": 2
+    },
+    "if": {
+     "era": "teen"
+    }
+   }
+  ],
+  "mother_replies": [
+   {
+    "t": "Love you, Mom.",
+    "reply": "Love you more. Come home safe.",
+    "rel": {
+     "friendship": 2
+    }
+   },
+   {
+    "t": "I'll be home for dinner.",
+    "reply": "I'm making your favourite!",
+    "rel": {
+     "trust": 1
+    }
+   }
+  ],
+  "professor_replies": [
+   {
+    "t": "Thank you, Professor.",
+    "reply": "Keep working hard, Mr. Parker.",
+    "rel": {
+     "respect": 2
+    }
+   }
+  ],
+  "bruce": [
+   {
+    "if": {
+     "era": "teen",
+     "not_flag": "ultra_instinct_awakened"
+    },
+    "lines": [
+     {
+      "s": "bruce",
+      "e": "angry",
+      "t": "Move, powerless. You're blocking the hallway."
+     },
+     {
+      "s": "peter",
+      "e": "serious",
+      "t": "There's plenty of room."
+     },
+     {
+      "s": "bruce",
+      "e": "normal",
+      "t": "Not for you."
+     }
+    ],
+    "rel": {
+     "rivalry": 2
+    }
+   },
+   {
+    "if": {
+     "era": "teen",
+     "flag": "ultra_instinct_awakened"
+    },
+    "priority": 1,
+    "lines": [
+     {
+      "s": "bruce",
+      "e": "serious",
+      "t": "That trick at the trial. What was it?"
+     },
+     {
+      "s": "peter",
+      "e": "normal",
+      "t": "Luck."
+     },
+     {
+      "s": "bruce",
+      "e": "angry",
+      "t": "Nobody gets lucky against me."
+     }
+    ],
+    "rel": {
+     "rivalry": 3
+    }
+   },
+   {
+    "if": {
+     "era": "adult"
+    },
+    "lines": [
+     {
+      "s": "bruce",
+      "e": "serious",
+      "t": "So the runaway returns."
+     },
+     {
+      "s": "peter",
+      "e": "normal",
+      "t": "Hello, Bruce."
+     },
+     {
+      "s": "bruce",
+      "e": "angry",
+      "t": "Don't look at me like that. Like you're… above me."
+     }
+    ],
+    "rel": {
+     "rivalry": 3
+    }
+   }
+  ],
+  "professor": [
+   {
+    "if": {
+     "era": "teen"
+    },
+    "lines": [
+     {
+      "s": "professor",
+      "e": "normal",
+      "t": "Mr. Parker. Your written scores are the best in the year."
+     },
+     {
+      "s": "peter",
+      "e": "sad",
+      "t": "Shame they don't count for much here."
+     },
+     {
+      "s": "professor",
+      "e": "serious",
+      "t": "They count to me."
+     }
+    ],
+    "rel": {
+     "respect": 1
+    }
+   },
+   {
+    "if": {
+     "era": "adult"
+    },
+    "lines": [
+     {
+      "s": "professor",
+      "e": "happy",
+      "t": "Ten years. I always told your mother you'd come back."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "You were one of the few who believed in me."
+     }
+    ]
+   }
+  ],
+  "nurse": [
+   {
+    "lines": [
+     {
+      "s": "nurse",
+      "e": "serious",
+      "t": "You again? I'm starting a loyalty card for you."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "Do I get a free bandage?"
+     },
+     {
+      "s": "nurse",
+      "e": "happy",
+      "t": "You get a lecture. Rest."
+     }
+    ]
+   }
+  ],
+  "coach_varga": [
+   {
+    "lines": [
+     {
+      "s": "coach_varga",
+      "e": "angry",
+      "t": "PARKER! Ten more reps!"
+     },
+     {
+      "s": "peter",
+      "e": "surprised",
+      "t": "I just got here!"
+     },
+     {
+      "s": "coach_varga",
+      "e": "happy",
+      "t": "Then you're already behind!"
+     }
+    ]
+   }
+  ],
+  "captain_solaris": [
+   {
+    "lines": [
+     {
+      "s": "captain_solaris",
+      "e": "serious",
+      "t": "Your parents were real heroes, kid. Better than me."
+     },
+     {
+      "s": "peter",
+      "e": "confused",
+      "t": "Then why do you work for Zero?"
+     },
+     {
+      "s": "captain_solaris",
+      "e": "sad",
+      "t": "…Because I was afraid. Don't grow up like me."
+     }
+    ]
+   }
+  ],
+  "rina": [
+   {
+    "if": {
+     "era": "teen"
+    },
+    "lines": [
+     {
+      "s": "rina",
+      "e": "normal",
+      "t": "Bruce says you're nothing. Prove him right and stay out of our way."
+     }
+    ]
+   }
+  ],
+  "dex": [
+   {
+    "if": {
+     "era": "teen",
+     "not_flag": "beat_dex"
+    },
+    "lines": [
+     {
+      "s": "dex",
+      "e": "happy",
+      "t": "Hey, it's the powerless wonder! Lost any races today?"
+     }
+    ]
+   },
+   {
+    "if": {
+     "flag": "beat_dex"
+    },
+    "priority": 1,
+    "lines": [
+     {
+      "s": "dex",
+      "e": "angry",
+      "t": "Don't look at me. That was a fluke."
+     }
+    ]
+   }
+  ],
+  "gorran": [
+   {
+    "if": {
+     "era": "teen"
+    },
+    "lines": [
+     {
+      "s": "gorran",
+      "e": "serious",
+      "t": "Strength is the only thing that matters. Come back when you have some."
+     }
+    ]
+   },
+   {
+    "if": {
+     "rep_gt": [
+      "combat",
+      20
+     ]
+    },
+    "priority": 1,
+    "lines": [
+     {
+      "s": "gorran",
+      "e": "happy",
+      "t": "Heh. Heard you've been winning fights. Maybe you're not useless after all."
+     }
+    ],
+    "rel": {
+     "respect": 3
+    }
+   }
+  ],
+  "brick": [
+   {
+    "lines": [
+     {
+      "s": "brick",
+      "e": "normal",
+      "t": "…You like dogs? I like dogs."
+     }
+    ]
+   }
+  ],
+  "selene": [
+   {
+    "if": {
+     "era": "teen"
+    },
+    "lines": [
+     {
+      "s": "selene",
+      "e": "happy",
+      "t": "Peter Parker. The hero's son with no power. What a tragic little story."
+     },
+     {
+      "s": "peter",
+      "e": "serious",
+      "t": "It's not over yet."
+     }
+    ]
+   }
+  ],
+  "ash": [
+   {
+    "lines": [
+     {
+      "s": "ash",
+      "e": "normal",
+      "t": "…"
+     },
+     {
+      "s": "peter",
+      "e": "confused",
+      "t": "Hi?"
+     },
+     {
+      "s": "ash",
+      "e": "normal",
+      "t": "…Hi."
+     }
+    ]
+   }
+  ],
+  "kade": [
+   {
+    "if": {
+     "era": "teen"
+    },
+    "lines": [
+     {
+      "s": "kade",
+      "e": "happy",
+      "t": "Race me? Oh wait — you'd need legs that work."
+     }
+    ]
+   }
+  ],
+  "zip": [
+   {
+    "lines": [
+     {
+      "s": "zip",
+      "e": "happy",
+      "t": "Did you hear? Rumour is Selene's illusions are hiding something. Don't tell anyone I told you!"
+     }
+    ]
+   }
+  ],
+  "lantern_kyra": [
+   {
+    "lines": [
+     {
+      "s": "lantern_kyra",
+      "e": "happy",
+      "t": "Back for more, kid? Good. Fear is just a door. Walk through it."
+     },
+     {
+      "s": "peter",
+      "e": "serious",
+      "t": "Again, then."
+     }
+    ]
+   }
+  ],
+  "guardian_oren": [
+   {
+    "lines": [
+     {
+      "s": "guardian_oren",
+      "e": "normal",
+      "t": "All lights are one light, young one. You carry every colour inside you."
+     }
+    ]
+   }
+  ],
+  "hollow_master": [
+   {
+    "lines": [
+     {
+      "s": "hollow_master",
+      "e": "normal",
+      "t": "100 push-ups. 100 sit-ups. 100 squats. 10 kilometres. Every day."
+     },
+     {
+      "s": "peter",
+      "e": "confused",
+      "t": "That's it?"
+     },
+     {
+      "s": "hollow_master",
+      "e": "normal",
+      "t": "That's it. Also, there's a sale at the supermarket. Don't be late."
+     }
+    ]
+   }
+  ],
+  "crimson_runner": [
+   {
+    "lines": [
+     {
+      "s": "crimson_runner",
+      "e": "happy",
+      "t": "Speed's not about legs. It's about letting go of everything that slows you down."
+     },
+     {
+      "s": "peter",
+      "e": "serious",
+      "t": "Even fear?"
+     },
+     {
+      "s": "crimson_runner",
+      "e": "happy",
+      "t": "Especially fear."
+     }
+    ]
+   }
+  ],
+  "sanctum_sorcerer": [
+   {
+    "lines": [
+     {
+      "s": "sanctum_sorcerer",
+      "e": "serious",
+      "t": "Space is a page. Learn to fold it, and you can step anywhere."
+     }
+    ]
+   }
+  ],
+  "shadow_echo": [
+   {
+    "lines": [
+     {
+      "s": "shadow_echo",
+      "e": "normal",
+      "t": "The fallen still have something to give. Command them with respect."
+     }
+    ]
+   }
+  ]
+ }
+}

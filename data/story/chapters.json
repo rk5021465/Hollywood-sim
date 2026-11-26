@@ -1,0 +1,64 @@
+{
+ "chapters": [
+  {
+   "n": 0,
+   "title": "Prologue \u2014 The Planet of Powers",
+   "file": "chapter_00.json"
+  },
+  {
+   "n": 1,
+   "title": "Powerless",
+   "file": "chapter_01.json"
+  },
+  {
+   "n": 2,
+   "title": "The Jungle and the Cave",
+   "file": "chapter_02.json"
+  },
+  {
+   "n": 3,
+   "title": "The System Awakens",
+   "file": "chapter_03.json"
+  },
+  {
+   "n": 4,
+   "title": "First Steps",
+   "file": "chapter_04.json"
+  },
+  {
+   "n": 5,
+   "title": "Surpass Your Limits",
+   "file": "chapter_05.json"
+  },
+  {
+   "n": 6,
+   "title": "The Mall Incident",
+   "file": "chapter_06.json"
+  },
+  {
+   "n": 7,
+   "title": "The Four Crews",
+   "file": "chapter_07.json"
+  },
+  {
+   "n": 8,
+   "title": "The Emerald World",
+   "file": "chapter_08.json"
+  },
+  {
+   "n": 9,
+   "title": "Across the Multiverse",
+   "file": "chapter_09.json"
+  },
+  {
+   "n": 10,
+   "title": "Return to Nexa",
+   "file": "chapter_10.json"
+  },
+  {
+   "n": 11,
+   "title": "The Grand Power Competition",
+   "file": "chapter_11.json"
+  }
+ ]
+}

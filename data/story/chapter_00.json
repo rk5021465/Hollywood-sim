@@ -1,0 +1,285 @@
+{
+ "scenes": [
+  {
+   "id": "c0_intro",
+   "title": "The Planet of Powers",
+   "bg": "nexa_city_panorama",
+   "lines": [
+    {
+     "s": "narrator",
+     "t": "This is Nexa."
+    },
+    {
+     "s": "narrator",
+     "t": "A planet where almost every person awakens a power — a quirk, a gift, a weapon."
+    },
+    {
+     "s": "narrator",
+     "t": "On Nexa, power is everything. The strongest live in luxury houses, receive free premium services, and walk through doors that open only for them."
+    },
+    {
+     "s": "narrator",
+     "t": "The weak are tolerated. The powerless are not. They are sent to the labour districts, to build the towers the strong will live in."
+    },
+    {
+     "cmd": "bg",
+     "id": "father_vs_zero",
+     "tr": "white"
+    },
+    {
+     "cmd": "music",
+     "id": "boss"
+    },
+    {
+     "cmd": "shake"
+    },
+    {
+     "s": "narrator",
+     "t": "Seventeen years ago, Nexa's No. 1 hero — Richard Parker — was the strongest man alive. One punch could end any fight. His body moved on instinct alone."
+    },
+    {
+     "s": "narrator",
+     "t": "Beside him fought Elena Parker, the second-strongest hero, whose barriers could hold back a storm."
+    },
+    {
+     "s": "narrator",
+     "t": "Then came ZERO."
+    },
+    {
+     "cmd": "show",
+     "c": "zero",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "zero",
+     "e": "serious",
+     "t": "Your planet has such interesting power. I think I'll take it."
+    },
+    {
+     "cmd": "hide",
+     "c": "zero"
+    },
+    {
+     "cmd": "flash"
+    },
+    {
+     "s": "narrator",
+     "t": "Richard fought Zero across three continents. In the end, he struck him down — and vanished in the light of the final blow."
+    },
+    {
+     "s": "narrator",
+     "t": "The world mourned its hero. It did not know the truth: Zero had survived, absorbed Richard's power, and sealed him away on a distant planet."
+    },
+    {
+     "cmd": "bg",
+     "id": "zero_conquest",
+     "tr": "black"
+    },
+    {
+     "s": "narrator",
+     "t": "Within a year, Zero ruled Nexa. The heroes who remained learned to kneel — or disappeared."
+    },
+    {
+     "cmd": "bg",
+     "id": "gov_housing_exterior",
+     "tr": "fade"
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "s": "narrator",
+     "t": "Elena was given government housing 'in honour of her service'. A polite cage, with a view of the labour trucks."
+    },
+    {
+     "s": "narrator",
+     "t": "She raised their son alone."
+    },
+    {
+     "cmd": "bg",
+     "id": "school_gate",
+     "tr": "fade"
+    },
+    {
+     "s": "narrator",
+     "t": "His name is Peter Parker. He is sixteen years old."
+    },
+    {
+     "s": "narrator",
+     "t": "He is top of his class in every written exam… and last in every power trial."
+    },
+    {
+     "s": "narrator",
+     "t": "Because Peter Parker — son of the two strongest heroes on Nexa — was born powerless."
+    }
+   ],
+   "next": "c0_morning",
+   "chain": true,
+   "transition": "black",
+   "music": "main_menu"
+  },
+  {
+   "id": "c0_morning",
+   "title": "Morning in the Parker Home",
+   "bg": "home_kitchen",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 1\nPowerless"
+    },
+    {
+     "cmd": "music",
+     "id": "home"
+    },
+    {
+     "cmd": "show",
+     "c": "mother",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "Peter! Breakfast! If you're late again, Professor Hale will call me, and then I will be forced to embarrass you."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "normal",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "I'm up, I'm up. …Is that egg on toast? You never make egg on toast."
+    },
+    {
+     "s": "mother",
+     "e": "normal",
+     "t": "It's the first day of the trial week. I thought you could use something special."
+    },
+    {
+     "s": "peter",
+     "e": "sad",
+     "t": "The trial week. Another week of everyone watching me lose.",
+     "think": true
+    },
+    {
+     "s": "mother",
+     "e": "serious",
+     "t": "Peter. Look at me. Whatever happens today, your power doesn't decide who you are."
+    },
+    {
+     "choice": [
+      {
+       "t": "\"Easy to say when you're the second-strongest hero on the planet.\"",
+       "goto": "m_bitter",
+       "rel": {
+        "mother": {
+         "trust": -2
+        }
+       },
+       "remember": {
+        "mother": "bitter_morning"
+       }
+      },
+      {
+       "t": "\"I know, Mom. I'll do my best.\"",
+       "goto": "m_best",
+       "rel": {
+        "mother": {
+         "friendship": 2,
+         "trust": 2
+        }
+       }
+      },
+      {
+       "t": "\"Did Dad ever lose?\"",
+       "goto": "m_dad",
+       "rel": {
+        "mother": {
+         "familiarity": 2
+        }
+       }
+      }
+     ]
+    },
+    {
+     "cmd": "label",
+     "name": "m_bitter"
+    },
+    {
+     "s": "mother",
+     "e": "sad",
+     "t": "…Was. Was the second-strongest. Now I'm just your mother. Which is a much harder job."
+    },
+    {
+     "s": "peter",
+     "e": "sad",
+     "t": "Sorry. I didn't mean it."
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "I know. Eat."
+    },
+    {
+     "cmd": "goto",
+     "label": "m_end"
+    },
+    {
+     "cmd": "label",
+     "name": "m_best"
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "That's all anyone can ask. Your father used to say the same thing before every fight."
+    },
+    {
+     "cmd": "goto",
+     "label": "m_end"
+    },
+    {
+     "cmd": "label",
+     "name": "m_dad"
+    },
+    {
+     "s": "mother",
+     "e": "surprised",
+     "t": "Your father? …All the time, when he was young. He'd get up, dust himself off, and try again the next morning."
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "That was his real power, if you ask me."
+    },
+    {
+     "cmd": "label",
+     "name": "m_end"
+    },
+    {
+     "s": "mother",
+     "e": "normal",
+     "t": "Now go. And Peter — if those crew kids touch you, you tell me."
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "And then what? You'll put them in a barrier bubble?"
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "Don't tempt me."
+    }
+   ],
+   "next": "c1_trial",
+   "chain": true,
+   "transition": "fade",
+   "location": "home_kitchen"
+  }
+ ]
+}

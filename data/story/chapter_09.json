@@ -1,0 +1,294 @@
+{
+ "scenes": [
+  {
+   "id": "c9_multiverse",
+   "title": "Worlds Beyond Worlds",
+   "bg": "multiverse_gate",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 9\nAcross the Multiverse"
+    },
+    {
+     "cmd": "music",
+     "id": "multiverse"
+    },
+    {
+     "s": "narrator",
+     "t": "The ring opens doors that were never meant to open. Beyond each door, a different universe."
+    },
+    {
+     "s": "narrator",
+     "t": "A bright world of heroes, where a bored bald man ends battles with a single punch."
+    },
+    {
+     "s": "narrator",
+     "t": "A city of lightning, where the fastest runner alive waits at the finish line."
+    },
+    {
+     "s": "narrator",
+     "t": "A dimension of folding libraries, ruled by a sorcerer in a red cloak."
+    },
+    {
+     "s": "narrator",
+     "t": "And a grey realm of silent soldiers, waiting for a king."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "serious",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Every world has someone who can teach me. I'll learn from all of them.",
+     "think": true
+    },
+    {
+     "cmd": "quest",
+     "id": "main_multiverse_trials",
+     "accept": true
+    },
+    {
+     "s": "narrator",
+     "t": "TRAINING: Open the Map → Multiverse. Visit each world, train with its mentor, and pass its trial. After unlocking ARISE, defeat eligible enemies and extract their shadows."
+    }
+   ],
+   "next": "c9_timeskip",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "anime_world"
+  },
+  {
+   "id": "c9_timeskip",
+   "title": "Ten Years",
+   "bg": "multiverse_gate",
+   "lines": [
+    {
+     "cmd": "music",
+     "id": "training"
+    },
+    {
+     "s": "narrator",
+     "t": "Peter does not go home."
+    },
+    {
+     "s": "narrator",
+     "t": "He trains. A hundred push-ups, a hundred sit-ups, a hundred squats, ten kilometres — every day, in every world."
+    },
+    {
+     "s": "narrator",
+     "t": "He races lightning until he is lightning. He folds space until distance means nothing."
+    },
+    {
+     "s": "narrator",
+     "t": "He stands before an army of the fallen and speaks a single word."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "ARISE."
+    },
+    {
+     "cmd": "shadow",
+     "id": "morrow"
+    },
+    {
+     "cmd": "shadow",
+     "id": "ashka"
+    },
+    {
+     "s": "narrator",
+     "t": "He learns the colours of every aura — green will, blue hope, violet love, golden courage, crimson rage, orange desire, indigo compassion — and the white light that holds them all."
+    },
+    {
+     "cmd": "aura",
+     "id": "blue"
+    },
+    {
+     "cmd": "aura",
+     "id": "violet"
+    },
+    {
+     "cmd": "aura",
+     "id": "gold"
+    },
+    {
+     "cmd": "aura",
+     "id": "crimson"
+    },
+    {
+     "cmd": "aura",
+     "id": "orange"
+    },
+    {
+     "cmd": "aura",
+     "id": "indigo"
+    },
+    {
+     "cmd": "card_exp_all",
+     "n": 2500
+    },
+    {
+     "cmd": "stat",
+     "add": {
+      "strength": 180,
+      "speed": 170,
+      "durability": 160,
+      "agility": 170,
+      "energy": 200,
+      "stamina": 150,
+      "power_mastery": 220,
+      "intelligence": 40
+     },
+     "why": "ten years of multiversal training"
+    },
+    {
+     "cmd": "reward",
+     "r": {
+      "exp": 30000,
+      "coins": 250000
+     },
+     "why": "ten years of missions across the multiverse"
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "timeskip",
+     "t": "TEN YEARS LATER",
+     "years": 10
+    },
+    {
+     "cmd": "bg",
+     "id": "nexa_city_10_years",
+     "tr": "black"
+    },
+    {
+     "cmd": "music",
+     "id": "city"
+    },
+    {
+     "s": "narrator",
+     "t": "Nexa. Ten years later."
+    },
+    {
+     "s": "narrator",
+     "t": "The four crews are pro hero agencies now — richer, stronger, more influential than ever. Bruce Kaizer is the No. 4 hero on the planet."
+    },
+    {
+     "cmd": "news",
+     "key": "crews_mock_peter"
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "happy",
+     "t": "Peter Parker? The powerless kid? He ran away. Weak people always do."
+    },
+    {
+     "cmd": "hide",
+     "c": "bruce"
+    },
+    {
+     "s": "narrator",
+     "t": "Most of Nexa has forgotten him. But not everyone."
+    },
+    {
+     "cmd": "show",
+     "c": "mother",
+     "e": "sad",
+     "p": "right"
+    },
+    {
+     "s": "narrator",
+     "t": "Every evening, Elena Parker still sets an extra plate on the table."
+    },
+    {
+     "cmd": "hide",
+     "c": "mother"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "serious",
+     "p": "right"
+    },
+    {
+     "s": "narrator",
+     "t": "And John Reyes, now a hero himself, still checks every missing-person report that comes in."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "bg",
+     "id": "multiverse_gate",
+     "tr": "fade"
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "narrator",
+     "t": "Somewhere far away, a man of twenty-six looks at an old family photo."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Ten years. It's time to go home.",
+     "think": true
+    },
+    {
+     "cmd": "bg",
+     "id": "space_portal",
+     "tr": "portal"
+    },
+    {
+     "cmd": "flag",
+     "set": [],
+     "unset": [
+      "offworld"
+     ]
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "returned_home"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "location",
+     "id": "home_living"
+    }
+   ],
+   "next": "c10_return",
+   "chain": true,
+   "transition": "fade",
+   "requires": {
+    "quest_done": "main_multiverse_trials"
+   },
+   "hint": "Complete 'Across the Multiverse': pass the four trials and build a Shadow Army of 3."
+  }
+ ]
+}

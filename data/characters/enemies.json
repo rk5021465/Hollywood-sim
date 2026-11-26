@@ -1,0 +1,372 @@
+{
+ "enemies": {
+  "stone_statues": {
+   "name": "Awakened Stone Statues",
+   "desc": "Dozens of statues grind towards you. The exit is sealed.",
+   "style": "statue",
+   "color": "6a6a64",
+   "hp": 9999,
+   "atk": 55,
+   "def": 25,
+   "spd": 40,
+   "agi": 10,
+   "bg": "cave_statues",
+   "music": "boss",
+   "exp": 0,
+   "coins": 0
+  },
+  "crew_grunt": {
+   "name": "Dex (Frostfire Dominion)",
+   "portrait": "dex",
+   "desc": "Dex's skin turns to steel. 'Stay out of this, powerless.'",
+   "hp": 90,
+   "atk": 11,
+   "def": 3,
+   "spd": 6,
+   "agi": 5,
+   "bg": "school_corridor",
+   "exp": 60,
+   "coins": 30,
+   "rep": 2,
+   "skills": [
+    {
+     "name": "Steel Slam",
+     "power": 1.5,
+     "chance": 0.25
+    }
+   ]
+  },
+  "street_thug": {
+   "name": "Street Thug",
+   "desc": "A powered thug shaking down a shopkeeper.",
+   "color": "553344",
+   "hp": 70,
+   "atk": 9,
+   "def": 2,
+   "spd": 5,
+   "agi": 4,
+   "bg": "city_street",
+   "exp": 40,
+   "coins": 40,
+   "rep": 1
+  },
+  "training_dummy": {
+   "name": "Training Dummy",
+   "desc": "It does not fight back. Much.",
+   "style": "statue",
+   "color": "8a7a6a",
+   "hp": 60,
+   "atk": 3,
+   "def": 0,
+   "spd": 1,
+   "agi": 0,
+   "bg": "training_center",
+   "exp": 8,
+   "coins": 0
+  },
+  "sparring_partner": {
+   "name": "Coach Varga (sparring)",
+   "portrait": "coach_varga",
+   "desc": "'Hit me like you mean it!'",
+   "hp": 140,
+   "atk": 10,
+   "def": 5,
+   "spd": 6,
+   "agi": 5,
+   "bg": "training_center",
+   "exp": 35,
+   "coins": 0
+  },
+  "hex_ripper": {
+   "name": "Hex Ripper",
+   "desc": "A villain draining shoppers' powers with crackling hexes.",
+   "color": "5a2d8a",
+   "aura": "9b5cff",
+   "hp": 230,
+   "atk": 15,
+   "def": 4,
+   "spd": 9,
+   "agi": 7,
+   "bg": "city_mall",
+   "music": "boss",
+   "exp": 220,
+   "coins": 150,
+   "rep": 6,
+   "skills": [
+    {
+     "name": "Hex Bolt",
+     "power": 1.6,
+     "chance": 0.3
+    }
+   ]
+  },
+  "four_crews": {
+   "name": "The Four Crews",
+   "desc": "Bruce, Gorran, Selene, Kade and their crews surround you and John.",
+   "portrait": "bruce",
+   "hp": 6000,
+   "atk": 40,
+   "def": 25,
+   "spd": 60,
+   "agi": 30,
+   "bg": "city_street_night",
+   "music": "boss",
+   "exp": 50,
+   "coins": 0
+  },
+  "construct_drone": {
+   "name": "Construct Drone",
+   "desc": "A training construct made of green light.",
+   "color": "1f5c3a",
+   "aura": "3ddc97",
+   "hp": 220,
+   "atk": 22,
+   "def": 8,
+   "spd": 18,
+   "agi": 12,
+   "bg": "oa_training",
+   "exp": 180,
+   "coins": 0
+  },
+  "fear_construct": {
+   "name": "Construct of Fear",
+   "desc": "Your worst memories, given shape.",
+   "style": "shadow",
+   "color": "2a1a3a",
+   "aura": "e9a21f",
+   "hp": 420,
+   "atk": 28,
+   "def": 10,
+   "spd": 22,
+   "agi": 15,
+   "bg": "oa_training",
+   "music": "boss",
+   "exp": 400,
+   "coins": 0,
+   "skills": [
+    {
+     "name": "Dread Wave",
+     "power": 1.7,
+     "chance": 0.3
+    }
+   ]
+  },
+  "space_pirate": {
+   "name": "Space Pirate",
+   "desc": "Raider in Sector 2814.",
+   "color": "6a3a1a",
+   "hp": 320,
+   "atk": 26,
+   "def": 10,
+   "spd": 20,
+   "agi": 15,
+   "bg": "space_sector",
+   "exp": 160,
+   "coins": 120
+  },
+  "trial_punch": {
+   "name": "The Hollow Master's Trial",
+   "portrait": "hollow_master",
+   "desc": "'Just hit me. Seriously.'",
+   "hp": 650,
+   "atk": 36,
+   "def": 15,
+   "spd": 40,
+   "agi": 30,
+   "bg": "anime_world",
+   "music": "boss",
+   "exp": 600,
+   "coins": 200
+  },
+  "trial_speed": {
+   "name": "Race of the Crimson Runner",
+   "portrait": "crimson_runner",
+   "desc": "'Catch me — if you can see me.'",
+   "hp": 520,
+   "atk": 32,
+   "def": 10,
+   "spd": 90,
+   "agi": 55,
+   "bg": "speed_world",
+   "music": "boss",
+   "exp": 600,
+   "coins": 200
+  },
+  "trial_mystic": {
+   "name": "The Sorcerer's Trial",
+   "portrait": "sanctum_sorcerer",
+   "desc": "Space folds around you.",
+   "hp": 560,
+   "atk": 34,
+   "def": 14,
+   "spd": 45,
+   "agi": 40,
+   "bg": "mystic_world",
+   "music": "boss",
+   "exp": 600,
+   "coins": 200,
+   "skills": [
+    {
+     "name": "Mirror Dimension",
+     "power": 1.5,
+     "chance": 0.3
+    }
+   ]
+  },
+  "trial_shadow": {
+   "name": "Kael, the Fallen Knight",
+   "desc": "A knight who swore to guard the shadow throne forever.",
+   "style": "shadow",
+   "color": "1a0e2a",
+   "aura": "7a3fd1",
+   "hp": 650,
+   "atk": 38,
+   "def": 16,
+   "spd": 40,
+   "agi": 35,
+   "bg": "shadow_realm",
+   "music": "boss",
+   "exp": 650,
+   "coins": 0,
+   "shadow": "kael"
+  },
+  "abyss_hound": {
+   "name": "Grimm, the Abyss Hound",
+   "desc": "A beast of the shadow realm.",
+   "style": "shadow",
+   "color": "1a0e2a",
+   "hp": 460,
+   "atk": 32,
+   "def": 12,
+   "spd": 50,
+   "agi": 40,
+   "bg": "shadow_realm",
+   "exp": 400,
+   "coins": 0,
+   "shadow": "grimm"
+  },
+  "beast_lord": {
+   "name": "Tusk, Warlord of the Beast World",
+   "desc": "A tusked warlord who rules by strength.",
+   "color": "5a4a2a",
+   "hp": 520,
+   "atk": 35,
+   "def": 15,
+   "spd": 30,
+   "agi": 20,
+   "bg": "beast_world",
+   "music": "boss",
+   "exp": 500,
+   "coins": 150,
+   "shadow": "tusk"
+  },
+  "mirror_assassin": {
+   "name": "Veyra, the Mirror Assassin",
+   "desc": "She copies your every move.",
+   "color": "c0c8d8",
+   "aura": "a8ecff",
+   "hp": 600,
+   "atk": 36,
+   "def": 12,
+   "spd": 55,
+   "agi": 50,
+   "bg": "mirror_realm",
+   "music": "boss",
+   "exp": 550,
+   "coins": 150,
+   "shadow": "veyra"
+  },
+  "regime_enforcer": {
+   "name": "Regime Enforcer",
+   "desc": "One of Zero's enforcers, bullying powerless workers.",
+   "color": "2a1a3a",
+   "aura": "8a1f6a",
+   "hp": 900,
+   "atk": 60,
+   "def": 30,
+   "spd": 50,
+   "agi": 40,
+   "bg": "city_street_night",
+   "exp": 900,
+   "coins": 500,
+   "rep": 10
+  },
+  "bruce_rematch": {
+   "name": "Bruce Kaizer",
+   "portrait": "bruce",
+   "desc": "Ten years stronger. Fire in one hand, ice in the other.",
+   "hp": 1600,
+   "atk": 70,
+   "def": 30,
+   "spd": 85,
+   "agi": 70,
+   "bg": "school_arena",
+   "music": "boss",
+   "exp": 2000,
+   "coins": 1000,
+   "rep": 25,
+   "skills": [
+    {
+     "name": "Teleport Strike",
+     "power": 1.6,
+     "chance": 0.3
+    },
+    {
+     "name": "Frostfire Burst",
+     "power": 2.0,
+     "chance": 0.15
+    }
+   ]
+  }
+ },
+ "shadows": {
+  "kael": {
+   "name": "Kael",
+   "rank": "Knight",
+   "power": 60,
+   "growth": 8,
+   "ability": "Abyssal Sword — cleaves through armour.",
+   "hair_style": 1
+  },
+  "grimm": {
+   "name": "Grimm",
+   "rank": "Beast",
+   "power": 45,
+   "growth": 6,
+   "ability": "Pack Hunt — strikes from the shadows.",
+   "hair_style": 4
+  },
+  "tusk": {
+   "name": "Tusk",
+   "rank": "General",
+   "power": 70,
+   "growth": 9,
+   "ability": "Warlord's Roar — shatters defences.",
+   "hair_style": 3
+  },
+  "veyra": {
+   "name": "Veyra",
+   "rank": "Elite",
+   "power": 55,
+   "growth": 8,
+   "ability": "Mirror Step — attacks twice.",
+   "hair_style": 2
+  },
+  "morrow": {
+   "name": "Morrow",
+   "rank": "Grand Marshal",
+   "power": 120,
+   "growth": 12,
+   "ability": "Command — empowers every shadow.",
+   "hair_style": 1
+  },
+  "ashka": {
+   "name": "Ashka",
+   "rank": "Dragon",
+   "power": 150,
+   "growth": 14,
+   "ability": "Night Flame — burns everything in its path.",
+   "hair_style": 4
+  }
+ }
+}

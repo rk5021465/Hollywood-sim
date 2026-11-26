@@ -1,0 +1,222 @@
+{
+ "scenes": [
+  {
+   "id": "c4_corridor",
+   "title": "Protect John",
+   "bg": "school_corridor",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 4\nFirst Steps"
+    },
+    {
+     "cmd": "music",
+     "id": "school"
+    },
+    {
+     "s": "narrator",
+     "t": "Between classes. Peter hears the laughter before he sees the circle of students."
+    },
+    {
+     "cmd": "show",
+     "c": "dex",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "dex",
+     "e": "happy",
+     "t": "Copy my steel skin, new kid. Go on! Oh wait — you can't hold it for more than a minute. Useless."
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "sad",
+     "p": "center"
+    },
+    {
+     "s": "john",
+     "e": "sad",
+     "t": "Give it back, Dex. That's my phone—"
+    },
+    {
+     "cmd": "sfx",
+     "id": "system"
+    },
+    {
+     "cmd": "system",
+     "t": "SPECIAL QUEST: PROTECT JOHN\nReward: ??? (Special card)",
+     "buttons": [
+      "ACCEPT"
+     ]
+    },
+    {
+     "cmd": "quest",
+     "id": "special_protect_john",
+     "accept": true
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "serious",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Give it back, Dex."
+    },
+    {
+     "s": "dex",
+     "e": "surprised",
+     "t": "The cave kid? Didn't the statues finish the job?"
+    },
+    {
+     "s": "dex",
+     "e": "angry",
+     "t": "Fine. I'll finish it."
+    },
+    {
+     "cmd": "music",
+     "id": "battle"
+    },
+    {
+     "cmd": "combat",
+     "enemy": "crew_grunt",
+     "win": "won",
+     "lose": "lost"
+    },
+    {
+     "cmd": "label",
+     "name": "won"
+    },
+    {
+     "s": "narrator",
+     "t": "Dex crashes into the lockers. The steel drains from his skin. The corridor goes silent."
+    },
+    {
+     "s": "dex",
+     "e": "surprised",
+     "t": "How… you don't have a power!"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Maybe I just trained harder than you."
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "beat_dex"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "rep",
+     "add": {
+      "school": 5,
+      "combat": 3
+     }
+    },
+    {
+     "cmd": "goto",
+     "label": "after"
+    },
+    {
+     "cmd": "label",
+     "name": "lost"
+    },
+    {
+     "s": "narrator",
+     "t": "Peter goes down — but not before landing a blow that leaves Dex staggering. The crowd stares. Nobody has ever made Dex stagger."
+    },
+    {
+     "s": "dex",
+     "e": "angry",
+     "t": "Lucky hit, powerless."
+    },
+    {
+     "cmd": "label",
+     "name": "after"
+    },
+    {
+     "cmd": "event",
+     "name": "story:protect_john"
+    },
+    {
+     "cmd": "hide",
+     "c": "dex"
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "serious",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "serious",
+     "t": "Interesting. You got up last time too."
+    },
+    {
+     "s": "bruce",
+     "e": "normal",
+     "t": "Keep getting up, Parker. It'll make it more fun when you stay down."
+    },
+    {
+     "cmd": "hide",
+     "c": "bruce"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "You were amazing! Since when can you fight like that?!"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Since… recently."
+    },
+    {
+     "cmd": "rel",
+     "npc": "john",
+     "add": {
+      "friendship": 5,
+      "trust": 5
+     },
+     "remember": "protected_again"
+    },
+    {
+     "cmd": "rel",
+     "npc": "bruce",
+     "add": {
+      "rivalry": 8
+     }
+    },
+    {
+     "s": "system",
+     "t": "New main quest: the Inter-Class Trial approaches."
+    },
+    {
+     "cmd": "quest",
+     "id": "main_train_for_trial",
+     "accept": true
+    }
+   ],
+   "next": "c5_trial",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "school_gate",
+   "requires": {
+    "quest_done": "main_school_return"
+   },
+   "hint": "Complete 'Back to School' (attend a class, talk to John)."
+  }
+ ]
+}

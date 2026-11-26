@@ -1,0 +1,394 @@
+{
+ "scenes": [
+  {
+   "id": "c3_wake",
+   "title": "DO YOU WANT TO START THE SYSTEM?",
+   "bg": "hospital_room",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 3\nThe System Awakens"
+    },
+    {
+     "cmd": "days",
+     "n": 1
+    },
+    {
+     "cmd": "slot",
+     "n": 0
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "s": "narrator",
+     "t": "Beeping. White light. The smell of antiseptic."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "confused",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "confused",
+     "t": "Hospital… I'm alive?",
+     "think": true
+    },
+    {
+     "cmd": "sfx",
+     "id": "system"
+    },
+    {
+     "s": "narrator",
+     "t": "A translucent blue window flickers into existence in front of his eyes. It floats there, perfectly still, no matter where he looks."
+    },
+    {
+     "s": "peter",
+     "e": "surprised",
+     "t": "What… is that?",
+     "think": true
+    },
+    {
+     "s": "narrator",
+     "t": "Footsteps in the corridor. Someone is coming."
+    },
+    {
+     "s": "peter",
+     "e": "surprised",
+     "t": "Hide it — how do I hide it?! Close— go away—",
+     "think": true
+    },
+    {
+     "s": "narrator",
+     "t": "His hand jerks up in panic and brushes straight through the glowing panel."
+    },
+    {
+     "cmd": "system",
+     "t": "DO YOU WANT TO START THE SYSTEM?",
+     "buttons": [
+      "YES",
+      "NO"
+     ],
+     "force": 0
+    },
+    {
+     "cmd": "sfx",
+     "id": "card_open"
+    },
+    {
+     "cmd": "flash"
+    },
+    {
+     "s": "system",
+     "t": "Confirmed. The Transcendent System is initialising… Host synchronisation: 4%."
+    },
+    {
+     "s": "peter",
+     "e": "surprised",
+     "t": "I… pressed YES?",
+     "think": true
+    },
+    {
+     "s": "narrator",
+     "t": "The window vanishes just as the door opens."
+    },
+    {
+     "cmd": "show",
+     "c": "mother",
+     "e": "sad",
+     "p": "right"
+    },
+    {
+     "s": "mother",
+     "e": "sad",
+     "t": "Peter! Oh, thank goodness—"
+    },
+    {
+     "s": "narrator",
+     "t": "She hugs him so tightly it hurts. He doesn't complain."
+    },
+    {
+     "s": "mother",
+     "e": "serious",
+     "t": "What happened in that jungle? The teachers said they found you in sealed ruins. Who did this to you?"
+    },
+    {
+     "choice": [
+      {
+       "t": "\"I don't remember. I just… woke up here.\"",
+       "goto": "lie_a",
+       "rel": {
+        "mother": {
+         "trust": -1
+        }
+       }
+      },
+      {
+       "t": "\"I got lost and fell. It's a blur.\"",
+       "goto": "lie_b",
+       "rel": {
+        "mother": {
+         "trust": -1
+        }
+       }
+      }
+     ]
+    },
+    {
+     "cmd": "label",
+     "name": "lie_a"
+    },
+    {
+     "cmd": "label",
+     "name": "lie_b"
+    },
+    {
+     "s": "peter",
+     "e": "sad",
+     "t": "I really don't remember, Mom."
+    },
+    {
+     "s": "narrator",
+     "t": "Elena studies his face for a long moment — the way she used to study villains."
+    },
+    {
+     "s": "mother",
+     "e": "normal",
+     "t": "…Okay. Okay. You're safe. That's what matters."
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "I brought your favourites. Nurse Aiko says you have to eat everything. I said I'd check."
+    },
+    {
+     "cmd": "rel",
+     "npc": "mother",
+     "add": {
+      "familiarity": 2
+     },
+     "remember": "hospital_lie"
+    },
+    {
+     "cmd": "hide",
+     "c": "mother"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "sad",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "sad",
+     "t": "Hey. You look terrible. I brought the emergency sandwich. It's a little squashed."
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Thanks, John."
+    },
+    {
+     "s": "john",
+     "e": "serious",
+     "t": "What happened in there? The teachers won't tell us anything. Bruce is saying you went in to cry."
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "I don't really remember. Honestly."
+    },
+    {
+     "s": "john",
+     "e": "confused",
+     "t": "…Okay. But when you do remember, I'm the first to know. Deal?"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Deal."
+    },
+    {
+     "cmd": "hide",
+     "c": "john"
+    },
+    {
+     "s": "narrator",
+     "t": "Evening. The ward is quiet."
+    },
+    {
+     "cmd": "sfx",
+     "id": "system"
+    },
+    {
+     "cmd": "system",
+     "t": "WOULD YOU LIKE TO ACCEPT YOUR FIRST QUEST?",
+     "buttons": [
+      "ACCEPT",
+      "DECLINE"
+     ],
+     "on": [
+      {},
+      {
+       "goto": "decline"
+      }
+     ]
+    },
+    {
+     "cmd": "goto",
+     "label": "accepted"
+    },
+    {
+     "cmd": "label",
+     "name": "decline"
+    },
+    {
+     "s": "system",
+     "t": "The System will wait. The System is patient. The host's heart rate suggests curiosity."
+    },
+    {
+     "cmd": "system",
+     "t": "WOULD YOU LIKE TO ACCEPT YOUR FIRST QUEST?",
+     "buttons": [
+      "ACCEPT"
+     ]
+    },
+    {
+     "cmd": "label",
+     "name": "accepted"
+    },
+    {
+     "cmd": "flash"
+    },
+    {
+     "cmd": "sfx",
+     "id": "levelup"
+    },
+    {
+     "s": "system",
+     "t": "Quest accepted. THE TRANSCENDENT SYSTEM IS NOW ACTIVE."
+    },
+    {
+     "s": "system",
+     "t": "Only you can see this interface. Nobody else can detect it."
+    },
+    {
+     "s": "system",
+     "t": "Status, Quests, Cards and more are available from the SYSTEM button."
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "system_active"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "quest",
+     "id": "main_first_quest",
+     "accept": true
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "A system. Quests. Like a game…",
+     "think": true
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Okay. Let's play.",
+     "think": true
+    }
+   ],
+   "next": "c3_discharge",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "hospital_room"
+  },
+  {
+   "id": "c3_discharge",
+   "title": "Going Home",
+   "bg": "hospital_room",
+   "lines": [
+    {
+     "cmd": "music",
+     "id": "home"
+    },
+    {
+     "cmd": "show",
+     "c": "nurse",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "nurse",
+     "e": "happy",
+     "t": "Your recovery is… honestly ridiculous. Two days ago you were in pieces. Go home before the doctors start writing papers about you."
+    },
+    {
+     "cmd": "show",
+     "c": "mother",
+     "e": "happy",
+     "p": "center"
+    },
+    {
+     "s": "mother",
+     "e": "happy",
+     "t": "Come on, you. Home."
+    },
+    {
+     "cmd": "bg",
+     "id": "home_bedroom",
+     "tr": "fade"
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "s": "narrator",
+     "t": "Home. His own bed. His own posters. And the blue glow only he can see."
+    },
+    {
+     "s": "system",
+     "t": "Tip: Open SYSTEM → Status to allocate stat points. Open Cards to view abilities. Daily quests arrive every morning."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Back to school tomorrow. And this time… I'm not the same.",
+     "think": true
+    },
+    {
+     "cmd": "flag",
+     "set": [],
+     "unset": [
+      "in_hospital"
+     ]
+    },
+    {
+     "cmd": "location",
+     "id": "home_bedroom"
+    },
+    {
+     "cmd": "quest",
+     "id": "main_school_return",
+     "accept": true
+    }
+   ],
+   "next": "c4_corridor",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "home_bedroom",
+   "requires": {
+    "quest_done": "main_first_quest",
+    "min_day": 4
+   },
+   "hint": "Complete 'Rise Again' in the hospital (eat, walk the corridor, breathing exercises), then sleep."
+  }
+ ]
+}

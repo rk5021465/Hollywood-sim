@@ -1,0 +1,136 @@
+{
+ "shops": {
+  "system_shop": {
+   "name": "System Shop",
+   "items": [
+    "potion_small",
+    "potion_large",
+    "energy_drink",
+    "exp_scroll",
+    "card_pack_basic",
+    "card_pack_uncommon",
+    "card_pack_rare",
+    "elixir_strength",
+    "elixir_speed",
+    "elixir_agility",
+    "elixir_durability",
+    "elixir_energy",
+    "shadow_blade",
+    "shadow_armor"
+   ]
+  },
+  "clothing_store": {
+   "name": "Urban Threads (Clothing)",
+   "bg": "city_mall",
+   "items": [
+    "casual_hoodie",
+    "school_blazer",
+    "cool_jacket",
+    "sneakers",
+    "boots",
+    "watch",
+    "headphones",
+    "glasses"
+   ]
+  },
+  "costume_shop": {
+   "name": "Hero Costume Atelier",
+   "bg": "city_mall",
+   "desc": "Masks, capes, gloves, boots and full suits.",
+   "items": [
+    "hero_mask",
+    "hero_cape",
+    "hero_gloves",
+    "hero_helmet",
+    "costume_starter",
+    "training_staff",
+    "costume_white_lantern",
+    "costume_shadow_monarch",
+    "costume_father_tribute"
+   ]
+  },
+  "electronics_store": {
+   "name": "Nexa Electronics",
+   "bg": "city_mall",
+   "items": [
+    "new_phone",
+    "laptop",
+    "gaming_console",
+    "smart_watch_x"
+   ]
+  },
+  "furniture_store": {
+   "name": "Home & Hearth Furniture",
+   "bg": "city_mall",
+   "items": [
+    "bed_basic",
+    "bed_luxury",
+    "desk",
+    "sofa",
+    "tv",
+    "bookshelf",
+    "plant",
+    "gym_rack",
+    "kitchen_set",
+    "painting",
+    "aquarium",
+    "trophy_case"
+   ]
+  },
+  "grocery": {
+   "name": "FreshMart Grocery",
+   "bg": "city_mall",
+   "items": [
+    "snack",
+    "energy_drink",
+    "pet_food",
+    "potion_small"
+   ]
+  },
+  "pet_shop": {
+   "name": "Paws & Wings Pet Shop",
+   "type": "pets",
+   "bg": "pet_shop",
+   "items": [
+    "cat_tabby",
+    "dog_shiba",
+    "parrot_sky",
+    "rabbit_snow",
+    "cat_void",
+    "dragon_ember"
+   ]
+  },
+  "showroom": {
+   "name": "Nexa Motors Showroom",
+   "bg": "car_showroom",
+   "items": [
+    "bicycle",
+    "scooter",
+    "motorbike",
+    "city_car",
+    "sports_car",
+    "hover_car"
+   ]
+  },
+  "garage": {
+   "name": "Turbo Garage",
+   "bg": "garage",
+   "items": [
+    "tuning_kit"
+   ]
+  },
+  "realty": {
+   "name": "Nexa Realty",
+   "type": "houses",
+   "bg": "city_street",
+   "desc": "Apartments, houses, villas and mansions.",
+   "items": [
+    "small_apartment",
+    "family_house",
+    "luxury_apartment",
+    "villa",
+    "mansion"
+   ]
+  }
+ }
+}

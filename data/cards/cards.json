@@ -1,0 +1,613 @@
+{
+ "cards": {
+  "stat_inspection": {
+   "name": "Stat Inspection",
+   "rarity": "common",
+   "category": "Mind",
+   "desc": "Reveal the stats and estimated rank of people around you.",
+   "unlock": "First System quest",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "intelligence": 1
+   }
+  },
+  "boxing_mastery": {
+   "name": "Boxing Mastery",
+   "rarity": "common",
+   "category": "Combat",
+   "desc": "Footwork, guard and a sharp jab.",
+   "unlock": "Main quest: Back to School",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "strength": 2
+   },
+   "active": {
+    "name": "Jab Combo",
+    "power": 1.3,
+    "energy": 6,
+    "cooldown": 1,
+    "effect": "none"
+   }
+  },
+  "recovery": {
+   "name": "Recovery",
+   "rarity": "common",
+   "category": "Body",
+   "desc": "Your body heals faster than normal.",
+   "unlock": "First System quest",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "durability": 1,
+    "stamina": 1
+   },
+   "active": {
+    "name": "Second Wind",
+    "power": 0,
+    "energy": 10,
+    "cooldown": 3,
+    "effect": "heal",
+    "value": 0.25
+   }
+  },
+  "confidence": {
+   "name": "Confidence",
+   "rarity": "common",
+   "category": "Mind",
+   "desc": "Stand tall. Speak up. Others start to notice.",
+   "unlock": "Spend time with friends",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "power_mastery": 1,
+    "stamina": 2
+   }
+  },
+  "enhanced_learning": {
+   "name": "Enhanced Learning",
+   "rarity": "common",
+   "category": "Mind",
+   "desc": "You absorb lessons twice as fast. Study gives +1 extra Intelligence.",
+   "unlock": "Study in the library",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "intelligence": 3
+   },
+   "training_bonus": {
+    "mind": 1
+   }
+  },
+  "physical_training": {
+   "name": "Physical Training Mastery",
+   "rarity": "common",
+   "category": "Body",
+   "desc": "Your workouts are perfectly efficient. Training gives +1 extra stat.",
+   "unlock": "Train at the Training Centre",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "stamina": 2
+   },
+   "training_bonus": {
+    "body": 1
+   }
+  },
+  "martial_arts": {
+   "name": "Martial Arts Fundamentals",
+   "rarity": "uncommon",
+   "category": "Combat",
+   "desc": "Kicks, throws and balance.",
+   "unlock": "Win a crew challenge",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "agility": 2,
+    "strength": 1
+   },
+   "active": {
+    "name": "Roundhouse",
+    "power": 1.6,
+    "energy": 10,
+    "cooldown": 2,
+    "effect": "stun",
+    "value": 0.2
+   }
+  },
+  "advanced_reflexes": {
+   "name": "Advanced Reflexes",
+   "rarity": "uncommon",
+   "category": "Speed",
+   "desc": "You react before you think.",
+   "unlock": "Main quest: Prepare for the trial",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "agility": 3,
+    "speed": 1
+   },
+   "active": {
+    "name": "Slip",
+    "power": 1.0,
+    "energy": 8,
+    "cooldown": 2,
+    "effect": "evade"
+   }
+  },
+  "combat_awareness": {
+   "name": "Combat Awareness",
+   "rarity": "uncommon",
+   "category": "Mind",
+   "desc": "You read an opponent's intent in their shoulders and eyes.",
+   "unlock": "Stop a street thug",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "agility": 2,
+    "durability": 1
+   }
+  },
+  "height_enhancement": {
+   "name": "Height Enhancement",
+   "rarity": "uncommon",
+   "category": "Body",
+   "desc": "Your body finally grows into itself — taller, broader, stronger.",
+   "unlock": "Help your mother at home",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "strength": 1,
+    "durability": 1,
+    "speed": 1
+   }
+  },
+  "physical_enhancement": {
+   "name": "Physical Enhancement",
+   "rarity": "uncommon",
+   "category": "Body",
+   "desc": "Muscles and bones reinforced by the System.",
+   "unlock": "Random reward",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "strength": 2,
+    "durability": 2,
+    "speed": 1
+   },
+   "training_bonus": {
+    "body": 1
+   }
+  },
+  "tactical_intelligence": {
+   "name": "Tactical Intelligence",
+   "rarity": "uncommon",
+   "category": "Mind",
+   "desc": "Turn your intelligence into a weapon.",
+   "unlock": "Get a perfect score in class",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "intelligence": 4
+   },
+   "active": {
+    "name": "Battle Plan",
+    "power": 0,
+    "energy": 8,
+    "cooldown": 4,
+    "effect": "buff"
+   }
+  },
+  "regeneration": {
+   "name": "Regeneration",
+   "rarity": "rare",
+   "category": "Body",
+   "desc": "Wounds close in seconds.",
+   "unlock": "Random rare reward / System Shop pack",
+   "max_level": 10,
+   "basic": true,
+   "passive": {
+    "durability": 3
+   },
+   "active": {
+    "name": "Regenerate",
+    "power": 0,
+    "energy": 14,
+    "cooldown": 3,
+    "effect": "heal",
+    "value": 0.4
+   }
+  },
+  "fighting_spirit": {
+   "name": "Fighting Spirit",
+   "rarity": "rare",
+   "category": "Combat",
+   "desc": "Boxing and martial arts fused into your own style.",
+   "unlock": "Combine Boxing Mastery + Martial Arts (Lv.5)",
+   "max_level": 10,
+   "passive": {
+    "strength": 3,
+    "agility": 2
+   },
+   "active": {
+    "name": "Spirit Rush",
+    "power": 2.0,
+    "energy": 14,
+    "cooldown": 2,
+    "effect": "none"
+   }
+  },
+  "master_martial_artist": {
+   "name": "Master Martial Artist",
+   "rarity": "epic",
+   "category": "Combat",
+   "desc": "Generations of technique flood into your body.",
+   "unlock": "Special quest: Protect John",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "strength": 4,
+    "agility": 4
+   },
+   "active": {
+    "name": "Thousand Strikes",
+    "power": 1.2,
+    "energy": 18,
+    "cooldown": 3,
+    "effect": "multi"
+   }
+  },
+  "sixth_sense": {
+   "name": "Sixth Sense",
+   "rarity": "epic",
+   "category": "Mind",
+   "desc": "Danger feels like a sound only you can hear.",
+   "unlock": "Combine Advanced Reflexes + Combat Awareness (Lv.5)",
+   "max_level": 10,
+   "passive": {
+    "agility": 5,
+    "intelligence": 3
+   },
+   "active": {
+    "name": "Foresight",
+    "power": 1.4,
+    "energy": 12,
+    "cooldown": 3,
+    "effect": "evade"
+   }
+  },
+  "mana_drain": {
+   "name": "Mana Drain",
+   "rarity": "legendary",
+   "category": "Mind",
+   "desc": "Absorb an opponent's energy and turn it into your own.",
+   "unlock": "Emergency quest: the mall attack",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "energy": 4
+   },
+   "active": {
+    "name": "Mana Drain",
+    "power": 1.4,
+    "energy": 15,
+    "cooldown": 2,
+    "effect": "drain",
+    "value": 0.6
+   }
+  },
+  "damage_reflection": {
+   "name": "Damage Reflection",
+   "rarity": "legendary",
+   "category": "Body",
+   "desc": "Return the force of a blow to its source.",
+   "unlock": "Green Lantern training",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "durability": 5
+   },
+   "active": {
+    "name": "Rebound",
+    "power": 0,
+    "energy": 15,
+    "cooldown": 3,
+    "effect": "reflect",
+    "value": 0.6
+   }
+  },
+  "copy_ability": {
+   "name": "Copy Ability",
+   "rarity": "legendary",
+   "category": "Mind",
+   "desc": "Like John — you can briefly copy a power you've seen.",
+   "unlock": "Special quest: The Mirror Realm",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "power_mastery": 5
+   },
+   "active": {
+    "name": "Mimic",
+    "power": 1.8,
+    "energy": 20,
+    "cooldown": 3,
+    "effect": "pierce"
+   }
+  },
+  "ultra_instinct": {
+   "name": "Ultra Instinct",
+   "rarity": "mythical",
+   "category": "Speed",
+   "desc": "Your father's legendary state: the body moves on its own.",
+   "unlock": "Special quest: Don't give up",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "agility": 8,
+    "speed": 6
+   },
+   "active": {
+    "name": "Silver Sign",
+    "power": 2.0,
+    "energy": 25,
+    "cooldown": 3,
+    "effect": "evade"
+   },
+   "evolves_to": "ultra_instinct_mastered",
+   "evolve_req": {
+    "era": "adult"
+   },
+   "evolve_hint": "ten years of training (adult era)"
+  },
+  "light_speed": {
+   "name": "Light-Speed Movement",
+   "rarity": "mythical",
+   "category": "Speed",
+   "desc": "Move faster than light itself.",
+   "unlock": "Trial of the Crimson Runner",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "speed": 15,
+    "agility": 4
+   },
+   "active": {
+    "name": "Lightspeed Barrage",
+    "power": 1.6,
+    "energy": 25,
+    "cooldown": 3,
+    "effect": "multi"
+   }
+  },
+  "instant_teleport": {
+   "name": "Instant Teleportation",
+   "rarity": "mythical",
+   "category": "Speed",
+   "desc": "Step anywhere you can imagine.",
+   "unlock": "Trial of the Sanctum Sorcerer",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "agility": 8
+   },
+   "active": {
+    "name": "Blink Strike",
+    "power": 2.2,
+    "energy": 20,
+    "cooldown": 2,
+    "effect": "pierce"
+   }
+  },
+  "omni_step": {
+   "name": "Omnipresence Step",
+   "rarity": "mythical",
+   "category": "Speed",
+   "desc": "Light-speed and teleportation fused: you are everywhere at once.",
+   "unlock": "Combine Light-Speed + Teleportation (Lv.5)",
+   "max_level": 10,
+   "passive": {
+    "speed": 20,
+    "agility": 12
+   },
+   "active": {
+    "name": "Everywhere Strike",
+    "power": 1.4,
+    "energy": 30,
+    "cooldown": 3,
+    "effect": "multi"
+   }
+  },
+  "transcendent_strength": {
+   "name": "Transcendent Strength",
+   "rarity": "transcendent",
+   "category": "Body",
+   "desc": "Strength without limits. One punch.",
+   "unlock": "Trial of the Hollow Master",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "strength": 30,
+    "durability": 15
+   },
+   "active": {
+    "name": "Transcendent Fist",
+    "power": 3.5,
+    "energy": 35,
+    "cooldown": 4,
+    "effect": "pierce"
+   },
+   "evolves_to": "limitless_strength",
+   "evolve_req": {
+    "era": "adult"
+   },
+   "evolve_hint": "ten years of training (adult era)"
+  },
+  "arise": {
+   "name": "ARISE",
+   "rarity": "transcendent",
+   "category": "Shadow",
+   "desc": "Extract the shadows of fallen foes and command them forever.",
+   "unlock": "Trial of the Shadow Monarch",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "power_mastery": 10
+   },
+   "active": {
+    "name": "ARISE",
+    "power": 1.5,
+    "energy": 30,
+    "cooldown": 4,
+    "effect": "summon"
+   },
+   "evolves_to": "monarchs_domain",
+   "evolve_req": {
+    "era": "adult"
+   },
+   "evolve_hint": "command a full army (adult era)"
+  },
+  "shadow_army": {
+   "name": "Shadow Army",
+   "rarity": "transcendent",
+   "category": "Shadow",
+   "desc": "Your shadows grow stronger with every soldier you command.",
+   "unlock": "Extract 3 shadows",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "power_mastery": 15,
+    "energy": 10
+   }
+  },
+  "white_lantern": {
+   "name": "White Lantern Power",
+   "rarity": "transcendent",
+   "category": "Cosmic",
+   "desc": "The light of all emotions and of life itself, bound to your ring.",
+   "unlock": "Green Lantern trials",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "energy": 20,
+    "power_mastery": 10,
+    "durability": 10
+   },
+   "active": {
+    "name": "Light of Creation",
+    "power": 3.0,
+    "energy": 30,
+    "cooldown": 3,
+    "effect": "drain",
+    "value": 0.5
+   },
+   "evolves_to": "white_lantern_entity",
+   "evolve_req": {
+    "era": "adult"
+   },
+   "evolve_hint": "master the ring (adult era)"
+  },
+  "ultra_instinct_mastered": {
+   "name": "Mastered Ultra Instinct",
+   "rarity": "beyond_transcendent",
+   "category": "Speed",
+   "desc": "Instinct and will become one. Nothing touches you.",
+   "unlock": "Evolve Ultra Instinct",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "agility": 40,
+    "speed": 30
+   },
+   "active": {
+    "name": "Silver Storm",
+    "power": 4.0,
+    "energy": 40,
+    "cooldown": 3,
+    "effect": "evade"
+   }
+  },
+  "limitless_strength": {
+   "name": "Limitless Strength",
+   "rarity": "beyond_transcendent",
+   "category": "Body",
+   "desc": "There is no ceiling. There never was.",
+   "unlock": "Evolve Transcendent Strength",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "strength": 80,
+    "durability": 40
+   },
+   "active": {
+    "name": "Final Punch",
+    "power": 6.0,
+    "energy": 50,
+    "cooldown": 5,
+    "effect": "pierce"
+   }
+  },
+  "monarchs_domain": {
+   "name": "Monarch's Domain",
+   "rarity": "beyond_transcendent",
+   "category": "Shadow",
+   "desc": "Your army fights at full strength anywhere you stand.",
+   "unlock": "Evolve ARISE",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "power_mastery": 40
+   },
+   "active": {
+    "name": "Domain of Shadows",
+    "power": 3.0,
+    "energy": 45,
+    "cooldown": 4,
+    "effect": "summon"
+   }
+  },
+  "white_lantern_entity": {
+   "name": "Entity of Life",
+   "rarity": "beyond_transcendent",
+   "category": "Cosmic",
+   "desc": "The White Light chooses you as its champion.",
+   "unlock": "Evolve White Lantern Power",
+   "max_level": 10,
+   "special": true,
+   "passive": {
+    "energy": 60,
+    "power_mastery": 30,
+    "durability": 30
+   },
+   "active": {
+    "name": "Genesis Light",
+    "power": 5.0,
+    "energy": 50,
+    "cooldown": 4,
+    "effect": "drain",
+    "value": 0.8
+   }
+  }
+ },
+ "combos": [
+  {
+   "a": "boxing_mastery",
+   "b": "martial_arts",
+   "result": "fighting_spirit",
+   "req_level": 5
+  },
+  {
+   "a": "advanced_reflexes",
+   "b": "combat_awareness",
+   "result": "sixth_sense",
+   "req_level": 5
+  },
+  {
+   "a": "light_speed",
+   "b": "instant_teleport",
+   "result": "omni_step",
+   "req_level": 5
+  }
+ ]
+}

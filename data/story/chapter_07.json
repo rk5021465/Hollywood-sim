@@ -1,0 +1,271 @@
+{
+ "scenes": [
+  {
+   "id": "c7_attack",
+   "title": "Ambush",
+   "bg": "city_street_night",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 7\nThe Four Crews"
+    },
+    {
+     "cmd": "slot",
+     "n": 2
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "…and then the ramen guy said 'second bowl's free for heroes' and I said 'he's a hero, I'm his manager'—"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "You're not my manager."
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "Not yet."
+    },
+    {
+     "cmd": "music",
+     "id": "boss"
+    },
+    {
+     "cmd": "shake"
+    },
+    {
+     "s": "narrator",
+     "t": "The streetlights go out one by one. Frost spreads across the pavement. Lightning crackles on a rooftop."
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "bruce",
+     "e": "serious",
+     "t": "Evening, Parker."
+    },
+    {
+     "s": "narrator",
+     "t": "From the shadows step the four crews. Frostfire Dominion. Iron Fang. Phantom Veil. Storm Hounds. All of them."
+    },
+    {
+     "cmd": "show",
+     "c": "gorran",
+     "e": "serious",
+     "p": "right"
+    },
+    {
+     "s": "gorran",
+     "e": "serious",
+     "t": "Nothing personal. You beat Dex. You stopped a villain. People are starting to say your name."
+    },
+    {
+     "cmd": "show",
+     "c": "selene",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "selene",
+     "e": "happy",
+     "t": "And names are dangerous. The crews decide who rises in this school."
+    },
+    {
+     "cmd": "show",
+     "c": "kade",
+     "e": "angry",
+     "p": "right"
+    },
+    {
+     "s": "kade",
+     "e": "angry",
+     "t": "We're not waiting until you're too strong to stop."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "serious",
+     "p": "left"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "serious",
+     "p": "right"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "John. Run."
+    },
+    {
+     "s": "john",
+     "e": "angry",
+     "t": "Not a chance. I copied Gorran's strength when he walked past. I've got one minute. Let's make it count."
+    },
+    {
+     "cmd": "combat",
+     "enemy": "four_crews",
+     "win": "fight_end",
+     "lose": "fight_end",
+     "allies": [
+      "john"
+     ],
+     "replay": "fight_end"
+    },
+    {
+     "cmd": "label",
+     "name": "fight_end"
+    },
+    {
+     "s": "narrator",
+     "t": "It was never a fair fight."
+    },
+    {
+     "s": "narrator",
+     "t": "Peter stood in front of John until he couldn't stand. John stood in front of Peter until his copied strength ran out."
+    },
+    {
+     "s": "narrator",
+     "t": "When the sirens finally came, the crews were long gone."
+    },
+    {
+     "cmd": "news",
+     "key": "crews_attack_rumor"
+    },
+    {
+     "cmd": "bg",
+     "id": "hospital_night",
+     "tr": "black"
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "s": "narrator",
+     "t": "Nexa Central Hospital. Two beds side by side. John sleeps, bandaged, breathing slowly."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "sad",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "sad",
+     "t": "He got hurt because of me. Because I'm not strong enough.",
+     "think": true
+    },
+    {
+     "s": "peter",
+     "e": "angry",
+     "t": "Three special cards. A System. And I still couldn't protect my best friend.",
+     "think": true
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "I need more. Much more. And I can't get it here.",
+     "think": true
+    },
+    {
+     "s": "narrator",
+     "t": "Peter takes out his phone. His hands shake as he types."
+    },
+    {
+     "cmd": "send_message",
+     "to": "mother",
+     "t": "Mom, I'm okay. Please don't worry. I have to go away for a while to become stronger. I can't tell you where. I love you more than anything. I'll come home. I promise."
+    },
+    {
+     "cmd": "send_message",
+     "to": "john",
+     "t": "John — thank you for standing with me. You're the bravest person I know. I'm going away to get strong enough that nobody can ever hurt you again. Don't look for me. I'll be back. Save me a bowl of ramen."
+    },
+    {
+     "s": "narrator",
+     "t": "He doesn't say where he's going. He doesn't know himself."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "System. Can you take me somewhere I can train? Somewhere far away?",
+     "think": true
+    },
+    {
+     "cmd": "system",
+     "t": "REQUEST: TELEPORT HOST TO A DISTANT PLANET\nWarning: destination selected by the System.",
+     "buttons": [
+      "TELEPORT"
+     ]
+    },
+    {
+     "cmd": "bg",
+     "id": "space_portal",
+     "tr": "portal"
+    },
+    {
+     "s": "narrator",
+     "t": "Light swallows the hospital room. When the nurse checks at dawn, Peter's bed is empty."
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "offworld",
+      "oa_unlocked",
+      "crews_attack_done"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "news",
+     "key": "peter_missing"
+    },
+    {
+     "cmd": "location",
+     "id": "oa_citadel"
+    }
+   ],
+   "next": "c8_oa",
+   "chain": true,
+   "transition": "fade",
+   "requires": {
+    "quest_done": "emergency_mall_rescue",
+    "flags": [
+     "ordinary_done"
+    ]
+   },
+   "hint": "Defeat Hex Ripper (if he escaped), then complete 'Ordinary Days'."
+  }
+ ]
+}

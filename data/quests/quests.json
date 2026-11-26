@@ -1,0 +1,1385 @@
+{
+ "quests": {
+  "main_first_quest": {
+   "type": "main",
+   "name": "Rise Again",
+   "desc": "Your body is broken but the System says: begin.",
+   "objectives": [
+    {
+     "event": "eat_meal",
+     "target": 1,
+     "text": "Eat the food your mother left"
+    },
+    {
+     "event": "hospital_walk",
+     "target": 1,
+     "text": "Walk the hospital corridor"
+    },
+    {
+     "event": "meditate",
+     "target": 1,
+     "text": "Do breathing exercises"
+    }
+   ],
+   "rewards": {
+    "exp": 60,
+    "coins": 50,
+    "cards": [
+     "stat_inspection",
+     "recovery"
+    ],
+    "title": "awakened"
+   },
+   "difficulty": "E",
+   "auto_accept": true
+  },
+  "main_school_return": {
+   "type": "main",
+   "name": "Back to School",
+   "desc": "Face the academy again — and find John.",
+   "objectives": [
+    {
+     "event": "attend_class",
+     "target": 1,
+     "text": "Attend a class"
+    },
+    {
+     "event": "talk:john",
+     "target": 1,
+     "text": "Talk to John"
+    }
+   ],
+   "rewards": {
+    "exp": 50,
+    "coins": 40,
+    "cards": [
+     "boxing_mastery"
+    ]
+   },
+   "difficulty": "E",
+   "auto_accept": true
+  },
+  "special_protect_john": {
+   "type": "special",
+   "name": "Protect John",
+   "desc": "Bruce's crew has cornered your friend. Stand between them.",
+   "objectives": [
+    {
+     "event": "story:protect_john",
+     "target": 1,
+     "text": "Protect John"
+    }
+   ],
+   "rewards": {
+    "exp": 150,
+    "coins": 80,
+    "cards": [
+     "master_martial_artist"
+    ],
+    "title": "guardian",
+    "rel": {
+     "john": {
+      "friendship": 10,
+      "trust": 10
+     }
+    }
+   },
+   "difficulty": "C",
+   "auto_accept": true
+  },
+  "main_train_for_trial": {
+   "type": "main",
+   "name": "Prepare for the Inter-Class Trial",
+   "desc": "The Inter-Class Trial is coming. Get ready.",
+   "objectives": [
+    {
+     "event": "train",
+     "target": 3,
+     "text": "Train (any training activity)"
+    },
+    {
+     "event": "attend_class",
+     "target": 1,
+     "text": "Attend a class"
+    }
+   ],
+   "rewards": {
+    "exp": 80,
+    "cards": [
+     "advanced_reflexes"
+    ]
+   },
+   "difficulty": "D",
+   "auto_accept": true
+  },
+  "special_dont_give_up": {
+   "type": "special",
+   "name": "DON'T GIVE UP",
+   "desc": "Stand up.",
+   "objectives": [
+    {
+     "event": "story:dont_give_up",
+     "target": 1,
+     "text": "Stand up"
+    }
+   ],
+   "rewards": {
+    "exp": 300,
+    "cards": [
+     "ultra_instinct"
+    ],
+    "title": "unbreakable"
+   },
+   "difficulty": "B",
+   "auto_accept": true
+  },
+  "main_weekend_mall": {
+   "type": "main",
+   "name": "A Day Out",
+   "desc": "John wants to celebrate at the mall. You've earned a break.",
+   "objectives": [
+    {
+     "event": "visit:commercial_mall",
+     "target": 1,
+     "text": "Visit the Nexa Grand Mall"
+    }
+   ],
+   "rewards": {
+    "exp": 30
+   },
+   "difficulty": "E",
+   "auto_accept": true
+  },
+  "emergency_mall_rescue": {
+   "type": "emergency",
+   "name": "EMERGENCY: Stop Hex Ripper",
+   "desc": "A villain is draining shoppers' powers. Stop him.",
+   "objectives": [
+    {
+     "event": "win:hex_ripper",
+     "target": 1,
+     "text": "Defeat Hex Ripper"
+    }
+   ],
+   "rewards": {
+    "exp": 250,
+    "coins": 200,
+    "cards": [
+     "mana_drain"
+    ],
+    "rep": {
+     "hero": 10,
+     "public": 8
+    },
+    "title": "mall_hero"
+   },
+   "difficulty": "B",
+   "auto_accept": true
+  },
+  "main_ordinary_days": {
+   "type": "main",
+   "name": "Ordinary Days",
+   "desc": "Life goes on. Earn some money and keep training.",
+   "objectives": [
+    {
+     "event": "work_job",
+     "target": 1,
+     "text": "Work a part-time shift"
+    },
+    {
+     "event": "train",
+     "target": 2,
+     "text": "Train twice"
+    }
+   ],
+   "rewards": {
+    "exp": 80,
+    "coins": 150,
+    "card_random": "uncommon",
+    "flags": [
+     "ordinary_done"
+    ]
+   },
+   "difficulty": "D",
+   "auto_accept": true
+  },
+  "main_lantern_trials": {
+   "type": "main",
+   "name": "Trials of Will",
+   "desc": "Lantern Kyra will train you. Prove your will.",
+   "objectives": [
+    {
+     "event": "win:construct_drone",
+     "target": 1,
+     "text": "Defeat a construct drone"
+    },
+    {
+     "event": "win:fear_construct",
+     "target": 1,
+     "text": "Defeat the Construct of Fear"
+    }
+   ],
+   "rewards": {
+    "exp": 600,
+    "cards": [
+     "damage_reflection"
+    ],
+    "items": {
+     "oa_crystal": 1
+    }
+   },
+   "difficulty": "A",
+   "auto_accept": true
+  },
+  "main_multiverse_trials": {
+   "type": "main",
+   "name": "Across the Multiverse",
+   "desc": "Train with mentors across the multiverse and master new powers.",
+   "objectives": [
+    {
+     "event": "quest_done:special_trial_punch",
+     "target": 1,
+     "text": "Complete the Hollow Master's trial"
+    },
+    {
+     "event": "quest_done:special_trial_speed",
+     "target": 1,
+     "text": "Complete the Crimson Runner's race"
+    },
+    {
+     "event": "quest_done:special_trial_mystic",
+     "target": 1,
+     "text": "Complete the Sorcerer's trial"
+    },
+    {
+     "event": "quest_done:special_trial_shadow",
+     "target": 1,
+     "text": "Complete the Shadow Monarch's trial"
+    },
+    {
+     "event": "quest_done:special_shadow_legion",
+     "target": 1,
+     "text": "Build a Shadow Army (3 shadows)"
+    }
+   ],
+   "rewards": {
+    "exp": 2000,
+    "title": "multiverse_wanderer"
+   },
+   "difficulty": "S",
+   "auto_accept": true
+  },
+  "special_trial_punch": {
+   "type": "special",
+   "name": "Trial: One Ordinary Punch",
+   "desc": "The Hollow Master wants you to land a real hit.",
+   "objectives": [
+    {
+     "event": "win:trial_punch",
+     "target": 1,
+     "text": "Defeat the Hollow Master's trial"
+    }
+   ],
+   "rewards": {
+    "exp": 800,
+    "cards": [
+     "transcendent_strength"
+    ]
+   },
+   "difficulty": "S",
+   "auto_accept": true,
+   "trigger": {
+    "event": "visit:anime_world"
+   }
+  },
+  "special_trial_speed": {
+   "type": "special",
+   "name": "Trial: Faster Than Light",
+   "desc": "Catch the Crimson Runner.",
+   "objectives": [
+    {
+     "event": "win:trial_speed",
+     "target": 1,
+     "text": "Win the race"
+    }
+   ],
+   "rewards": {
+    "exp": 800,
+    "cards": [
+     "light_speed"
+    ]
+   },
+   "difficulty": "S",
+   "auto_accept": true,
+   "trigger": {
+    "event": "visit:speed_world"
+   }
+  },
+  "special_trial_mystic": {
+   "type": "special",
+   "name": "Trial: Fold the World",
+   "desc": "Escape the Sorcerer's folding space.",
+   "objectives": [
+    {
+     "event": "win:trial_mystic",
+     "target": 1,
+     "text": "Pass the Sorcerer's trial"
+    }
+   ],
+   "rewards": {
+    "exp": 800,
+    "cards": [
+     "instant_teleport"
+    ]
+   },
+   "difficulty": "S",
+   "auto_accept": true,
+   "trigger": {
+    "event": "visit:mystic_world"
+   }
+  },
+  "special_trial_shadow": {
+   "type": "special",
+   "name": "Trial: The Monarch's Heir",
+   "desc": "Defeat the knight who guards the shadow throne.",
+   "objectives": [
+    {
+     "event": "win:trial_shadow",
+     "target": 1,
+     "text": "Defeat Kael"
+    }
+   ],
+   "rewards": {
+    "exp": 900,
+    "cards": [
+     "arise"
+    ],
+    "title": "shadow_monarch"
+   },
+   "difficulty": "S",
+   "auto_accept": true,
+   "trigger": {
+    "event": "visit:shadow_realm"
+   }
+  },
+  "special_shadow_legion": {
+   "type": "special",
+   "name": "Shadow Legion",
+   "desc": "An army begins with three soldiers.",
+   "objectives": [
+    {
+     "event": "shadow_extracted",
+     "target": 3,
+     "text": "Extract shadows (ARISE after victories)"
+    }
+   ],
+   "rewards": {
+    "exp": 1000,
+    "cards": [
+     "shadow_army"
+    ]
+   },
+   "difficulty": "S",
+   "auto_accept": true,
+   "trigger": {
+    "event": "card:arise"
+   }
+  },
+  "special_mirror": {
+   "type": "special",
+   "name": "Trial: The Mirror Realm",
+   "desc": "Defeat the assassin who copies everything you do — and learn to copy back.",
+   "objectives": [
+    {
+     "event": "win:mirror_assassin",
+     "target": 1,
+     "text": "Defeat Veyra"
+    }
+   ],
+   "rewards": {
+    "exp": 700,
+    "cards": [
+     "copy_ability"
+    ]
+   },
+   "difficulty": "A",
+   "auto_accept": true,
+   "trigger": {
+    "event": "visit:mirror_realm"
+   }
+  },
+  "main_register": {
+   "type": "main",
+   "name": "The Power Competition",
+   "desc": "A new power competition was announced. Register in secret.",
+   "objectives": [
+    {
+     "event": "story:registered",
+     "target": 1,
+     "text": "Call Professor Hale to register"
+    }
+   ],
+   "rewards": {
+    "exp": 100
+   },
+   "difficulty": "E",
+   "auto_accept": true
+  },
+  "lantern_patrol": {
+   "type": "side",
+   "name": "Lantern Mission: Sector Patrol",
+   "desc": "Clear pirates from Sector 2814.",
+   "objectives": [
+    {
+     "event": "win:space_pirate",
+     "target": 2,
+     "text": "Defeat space pirates"
+    }
+   ],
+   "rewards": {
+    "exp": 300,
+    "coins": 300,
+    "ring_mastery": 15
+   },
+   "difficulty": "A",
+   "lantern": true,
+   "repeatable": true,
+   "cooldown_days": 1,
+   "if": {
+    "flag": "white_lantern"
+   }
+  },
+  "lantern_meditation": {
+   "type": "side",
+   "name": "Lantern Mission: Still the Mind",
+   "desc": "Meditate under the Central Battery.",
+   "objectives": [
+    {
+     "event": "act:willpower",
+     "target": 3,
+     "text": "Willpower meditation ×3"
+    }
+   ],
+   "rewards": {
+    "exp": 200,
+    "ring_mastery": 10
+   },
+   "difficulty": "B",
+   "lantern": true,
+   "repeatable": true,
+   "cooldown_days": 1,
+   "if": {
+    "flag": "white_lantern"
+   }
+  },
+  "lantern_guardian": {
+   "type": "side",
+   "name": "Lantern Mission: Guardian of Nexa",
+   "desc": "Protect Nexa's people from regime enforcers.",
+   "objectives": [
+    {
+     "event": "win:regime_enforcer",
+     "target": 1,
+     "text": "Defeat a regime enforcer"
+    }
+   ],
+   "rewards": {
+    "exp": 800,
+    "coins": 800,
+    "ring_mastery": 20,
+    "rep": {
+     "hero": 15,
+     "public": 10
+    }
+   },
+   "difficulty": "S",
+   "lantern": true,
+   "repeatable": true,
+   "cooldown_days": 2,
+   "if": {
+    "era": "adult"
+   }
+  },
+  "daily_class": {
+   "type": "daily",
+   "name": "Attend Class",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "attend_class",
+     "target": 1,
+     "text": "Attend a class"
+    }
+   ],
+   "rewards": {
+    "exp": 20,
+    "coins": 20
+   },
+   "difficulty": "E",
+   "if": {
+    "weekday": true
+   }
+  },
+  "daily_train": {
+   "type": "daily",
+   "name": "Daily Training",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "train",
+     "target": 2,
+     "text": "Train twice"
+    }
+   ],
+   "rewards": {
+    "exp": 25,
+    "coins": 15,
+    "card_random": "common"
+   },
+   "difficulty": "E"
+  },
+  "daily_help": {
+   "type": "daily",
+   "name": "Help Someone",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "help_someone",
+     "target": 1,
+     "text": "Help someone in need"
+    }
+   ],
+   "rewards": {
+    "exp": 20,
+    "rep": {
+     "public": 1
+    }
+   },
+   "difficulty": "E"
+  },
+  "daily_study": {
+   "type": "daily",
+   "name": "Study Session",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "study",
+     "target": 1,
+     "text": "Study (desk or library)"
+    }
+   ],
+   "rewards": {
+    "exp": 20,
+    "stats": {
+     "intelligence": 1
+    }
+   },
+   "difficulty": "E"
+  },
+  "daily_talk": {
+   "type": "daily",
+   "name": "Stay Connected",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "talk_any",
+     "target": 2,
+     "text": "Talk to two people"
+    }
+   ],
+   "rewards": {
+    "exp": 15,
+    "coins": 10
+   },
+   "difficulty": "E"
+  },
+  "daily_park": {
+   "type": "daily",
+   "name": "Fresh Air",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "visit:city_park",
+     "target": 1,
+     "text": "Visit Central Park"
+    }
+   ],
+   "rewards": {
+    "exp": 15,
+    "coins": 10
+   },
+   "difficulty": "E",
+   "if": {
+    "not_flag": "offworld"
+   }
+  },
+  "daily_work": {
+   "type": "daily",
+   "name": "Earn Your Keep",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "work_job",
+     "target": 1,
+     "text": "Work a part-time shift"
+    }
+   ],
+   "rewards": {
+    "exp": 20,
+    "coins": 30
+   },
+   "difficulty": "E",
+   "if": {
+    "chapter_gt": 3,
+    "not_flag": "offworld"
+   }
+  },
+  "daily_pet": {
+   "type": "daily",
+   "name": "Pet Care",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "pet_care",
+     "target": 1,
+     "text": "Care for your pet"
+    }
+   ],
+   "rewards": {
+    "exp": 15,
+    "coins": 10
+   },
+   "difficulty": "E",
+   "if": {
+    "flag": "has_pet"
+   }
+  },
+  "daily_explore": {
+   "type": "daily",
+   "name": "Explorer",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "explore",
+     "target": 1,
+     "text": "Explore somewhere"
+    }
+   ],
+   "rewards": {
+    "exp": 15,
+    "card_random": "common"
+   },
+   "difficulty": "E"
+  },
+  "daily_meditate": {
+   "type": "daily",
+   "name": "Inner Focus",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "meditate",
+     "target": 1,
+     "text": "Meditate"
+    }
+   ],
+   "rewards": {
+    "exp": 15,
+    "stats": {
+     "energy": 1
+    }
+   },
+   "difficulty": "E"
+  },
+  "daily_eat": {
+   "type": "daily",
+   "name": "Fuel Up",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "eat_meal",
+     "target": 1,
+     "text": "Eat a proper meal"
+    }
+   ],
+   "rewards": {
+    "exp": 10
+   },
+   "difficulty": "E"
+  },
+  "daily_social": {
+   "type": "daily",
+   "name": "Post on PulseNet",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "social_post",
+     "target": 1,
+     "text": "Make a post on PulseNet"
+    }
+   ],
+   "rewards": {
+    "exp": 10,
+    "rep": {
+     "public": 1
+    }
+   },
+   "difficulty": "E"
+  },
+  "daily_battle": {
+   "type": "daily",
+   "name": "Battle Practice",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "win_battle",
+     "target": 1,
+     "text": "Win a battle or spar"
+    }
+   ],
+   "rewards": {
+    "exp": 40,
+    "coins": 40
+   },
+   "difficulty": "E",
+   "if": {
+    "chapter_gt": 3
+   }
+  },
+  "daily_competition": {
+   "type": "daily",
+   "name": "Test Yourself",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "competition_done",
+     "target": 1,
+     "text": "Enter any competition"
+    }
+   ],
+   "rewards": {
+    "exp": 30,
+    "card_random": "uncommon"
+   },
+   "difficulty": "E",
+   "if": {
+    "weekday": true,
+    "not_flag": "offworld"
+   }
+  },
+  "daily_hero": {
+   "type": "daily",
+   "name": "Hero Patrol",
+   "desc": "Daily quest from the System.",
+   "objectives": [
+    {
+     "event": "win_battle",
+     "target": 2,
+     "text": "Win two battles"
+    }
+   ],
+   "rewards": {
+    "exp": 300,
+    "coins": 400
+   },
+   "difficulty": "A",
+   "if": {
+    "era": "adult"
+   }
+  },
+  "side_lost_kid": {
+   "type": "side",
+   "name": "A Lost Child",
+   "desc": "A child is crying by the lake.",
+   "objectives": [
+    {
+     "event": "help_someone",
+     "target": 1,
+     "text": "Help the lost child"
+    }
+   ],
+   "rewards": {
+    "exp": 30,
+    "card_random": "common",
+    "rep": {
+     "public": 2
+    }
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "visit:city_park",
+    "chance": 0.5
+   },
+   "repeatable": true,
+   "cooldown_days": 4
+  },
+  "side_scholar": {
+   "type": "side",
+   "name": "The Scholar's Path",
+   "desc": "The library feels different today. Study hard.",
+   "objectives": [
+    {
+     "event": "study",
+     "target": 2,
+     "text": "Study twice"
+    }
+   ],
+   "rewards": {
+    "exp": 40,
+    "cards": [
+     "enhanced_learning"
+    ]
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "visit:school_library",
+    "chance": 0.7
+   }
+  },
+  "side_gym": {
+   "type": "side",
+   "name": "Iron Will",
+   "desc": "Coach Varga dares you to finish three sessions.",
+   "objectives": [
+    {
+     "event": "train",
+     "target": 3,
+     "text": "Train three times"
+    }
+   ],
+   "rewards": {
+    "exp": 45,
+    "cards": [
+     "physical_training"
+    ]
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "visit:training_center",
+    "chance": 0.8
+   }
+  },
+  "side_bargain": {
+   "type": "side",
+   "name": "Smart Shopper",
+   "desc": "Buy something useful at the mall.",
+   "objectives": [
+    {
+     "event": "purchase",
+     "target": 1,
+     "text": "Buy any item"
+    }
+   ],
+   "rewards": {
+    "coins": 60,
+    "exp": 15
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "visit:commercial_mall",
+    "chance": 0.4
+   },
+   "repeatable": true,
+   "cooldown_days": 5
+  },
+  "side_crew_challenge": {
+   "type": "side",
+   "name": "Crew Challenge",
+   "desc": "Dex is mocking you in the arena. Shut him up.",
+   "objectives": [
+    {
+     "event": "win:crew_grunt",
+     "target": 1,
+     "text": "Defeat Dex in a spar"
+    }
+   ],
+   "rewards": {
+    "exp": 70,
+    "cards": [
+     "martial_arts"
+    ],
+    "rep": {
+     "combat": 3
+    }
+   },
+   "difficulty": "D",
+   "trigger": {
+    "event": "visit:school_arena",
+    "chance": 0.8
+   },
+   "if": {
+    "chapter_gt": 3,
+    "era": "teen"
+   }
+  },
+  "emergency_thug": {
+   "type": "emergency",
+   "name": "EMERGENCY: Street Thug",
+   "desc": "A powered thug is robbing a shop. You have one day.",
+   "objectives": [
+    {
+     "event": "win:street_thug",
+     "target": 1,
+     "text": "Defeat the thug"
+    }
+   ],
+   "rewards": {
+    "exp": 60,
+    "coins": 50,
+    "cards": [
+     "combat_awareness"
+    ],
+    "rep": {
+     "hero": 2
+    }
+   },
+   "difficulty": "D",
+   "auto_accept": true,
+   "trigger": {
+    "event": "visit:city_street",
+    "chance": 0.5
+   },
+   "days": 1,
+   "fail": {
+    "coins": 20
+   }
+  },
+  "side_mother_help": {
+   "type": "side",
+   "name": "A Helping Hand",
+   "desc": "Your mother looks tired. Help around the house.",
+   "objectives": [
+    {
+     "event": "act:home_chores",
+     "target": 1,
+     "text": "Help with chores"
+    }
+   ],
+   "rewards": {
+    "exp": 30,
+    "cards": [
+     "height_enhancement"
+    ],
+    "title": "good_son",
+    "rel": {
+     "mother": {
+      "friendship": 5,
+      "trust": 3
+     }
+    }
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "talk:mother",
+    "chance": 1.0
+   },
+   "if": {
+    "era": "teen"
+   }
+  },
+  "side_perfect": {
+   "type": "side",
+   "name": "Perfect Score",
+   "desc": "The System noticed your perfect lesson.",
+   "objectives": [
+    {
+     "event": "class_perfect",
+     "target": 1,
+     "text": "Score 3/3 in a class"
+    }
+   ],
+   "rewards": {
+    "exp": 50,
+    "cards": [
+     "tactical_intelligence"
+    ],
+    "title": "scholar"
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "attend_class",
+    "chance": 1.0
+   }
+  },
+  "side_friendship": {
+   "type": "side",
+   "name": "True Friends",
+   "desc": "Spend real time with John.",
+   "objectives": [
+    {
+     "event": "hangout",
+     "target": 1,
+     "text": "Hang out with someone (invite via Messages)"
+    }
+   ],
+   "rewards": {
+    "exp": 50,
+    "cards": [
+     "confidence"
+    ],
+    "rel": {
+     "john": {
+      "friendship": 5
+     }
+    }
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "talk:john",
+    "chance": 1.0
+   },
+   "if": {
+    "rel_gt": [
+     "john",
+     "friendship",
+     25
+    ]
+   }
+  },
+  "side_pet": {
+   "type": "side",
+   "name": "A New Family Member",
+   "desc": "Adopt a pet and care for it.",
+   "objectives": [
+    {
+     "event": "adopt_pet",
+     "target": 1,
+     "text": "Adopt a pet"
+    },
+    {
+     "event": "pet_care",
+     "target": 2,
+     "text": "Care for your pet twice"
+    }
+   ],
+   "rewards": {
+    "exp": 40,
+    "coins": 100
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "visit:pet_shop",
+    "chance": 1.0
+   }
+  },
+  "side_jungle": {
+   "type": "side",
+   "name": "Return to the Jungle",
+   "desc": "The cave still calls to you.",
+   "objectives": [
+    {
+     "event": "explore:jungle_trail",
+     "target": 2,
+     "text": "Search near the cave twice"
+    }
+   ],
+   "rewards": {
+    "exp": 60,
+    "card_random": "uncommon"
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "visit:jungle_trail",
+    "chance": 1.0
+   }
+  },
+  "side_hero_hq": {
+   "type": "side",
+   "name": "Hero Desk",
+   "desc": "Help out at Hero HQ.",
+   "objectives": [
+    {
+     "event": "help_someone",
+     "target": 2,
+     "text": "Help two people"
+    }
+   ],
+   "rewards": {
+    "exp": 60,
+    "rep": {
+     "hero": 3
+    },
+    "rel": {
+     "captain_solaris": {
+      "respect": 5
+     }
+    }
+   },
+   "difficulty": "E",
+   "trigger": {
+    "event": "visit:hero_hq",
+    "chance": 1.0
+   }
+  }
+ },
+ "competitions": {
+  "agility_trial": {
+   "name": "First-Year Agility Trial",
+   "desc": "Weave through the obstacle course while crews watch from the stands.",
+   "stats": {
+    "agility": 1.0,
+    "speed": 1.0
+   },
+   "bg": "school_arena",
+   "energy": 0,
+   "rounds": 3,
+   "rivals": [
+    {
+     "id": "kade",
+     "score": 70
+    },
+    {
+     "id": "bruce",
+     "score": 65
+    },
+    {
+     "id": "selene",
+     "score": 45
+    },
+    {
+     "name": "Classmate Tomo",
+     "score": 18
+    },
+    {
+     "name": "Classmate Rei",
+     "score": 14
+    }
+   ],
+   "participation": {}
+  },
+  "inter_class_trial": {
+   "name": "Inter-Class Trial",
+   "desc": "Endurance, agility and nerve. Crews are ranked by the results.",
+   "stats": {
+    "agility": 1.0,
+    "speed": 0.8,
+    "stamina": 0.6
+   },
+   "bg": "school_arena",
+   "energy": 0,
+   "rounds": 3,
+   "rivals": [
+    {
+     "id": "kade",
+     "score": 80
+    },
+    {
+     "id": "bruce",
+     "score": 75
+    },
+    {
+     "id": "zip",
+     "score": 45
+    },
+    {
+     "id": "ash",
+     "score": 40
+    },
+    {
+     "name": "Classmate Tomo",
+     "score": 18
+    }
+   ],
+   "participation": {
+    "exp": 40
+   }
+  },
+  "school_strength": {
+   "name": "Strength Challenge",
+   "desc": "Lift, push and break. Iron Fang always enters.",
+   "stats": {
+    "strength": 1.2,
+    "stamina": 0.5
+   },
+   "bg": "school_arena",
+   "energy": 25,
+   "rounds": 3,
+   "rivals": [
+    {
+     "id": "gorran",
+     "score": 80
+    },
+    {
+     "id": "brick",
+     "score": 55
+    },
+    {
+     "name": "Classmate Daichi",
+     "score": 22
+    },
+    {
+     "name": "Classmate Mina",
+     "score": 14
+    }
+   ],
+   "rewards_by_place": {
+    "1": {
+     "coins": 200,
+     "exp": 120,
+     "card_random": "uncommon"
+    },
+    "2": {
+     "coins": 100,
+     "exp": 60
+    },
+    "3": {
+     "coins": 50,
+     "exp": 40
+    }
+   },
+   "participation": {
+    "exp": 15
+   },
+   "news_win": "school_competition_win"
+  },
+  "school_speed": {
+   "name": "Speed Challenge",
+   "desc": "100 metres. Kade has never lost.",
+   "stats": {
+    "speed": 1.0,
+    "agility": 0.6
+   },
+   "bg": "school_track",
+   "energy": 25,
+   "rounds": 3,
+   "rivals": [
+    {
+     "id": "kade",
+     "score": 85
+    },
+    {
+     "id": "zip",
+     "score": 50
+    },
+    {
+     "name": "Classmate Haru",
+     "score": 20
+    },
+    {
+     "name": "Classmate Sora",
+     "score": 15
+    }
+   ],
+   "rewards_by_place": {
+    "1": {
+     "coins": 200,
+     "exp": 120,
+     "card_random": "uncommon"
+    },
+    "2": {
+     "coins": 100,
+     "exp": 60
+    },
+    "3": {
+     "coins": 50,
+     "exp": 40
+    }
+   },
+   "participation": {
+    "exp": 15
+   },
+   "news_win": "school_competition_win"
+  },
+  "energy_control": {
+   "name": "Energy Control Challenge",
+   "desc": "Hold a stable output under pressure.",
+   "stats": {
+    "energy": 1.0,
+    "power_mastery": 1.2,
+    "intelligence": 0.2
+   },
+   "bg": "training_center",
+   "energy": 20,
+   "rounds": 3,
+   "entry_fee": 20,
+   "rivals": [
+    {
+     "name": "Gym regular Bo",
+     "score": 20
+    },
+    {
+     "name": "Retired hero Kaz",
+     "score": 45
+    },
+    {
+     "id": "selene",
+     "score": 70
+    }
+   ],
+   "rewards_by_place": {
+    "1": {
+     "coins": 250,
+     "exp": 120
+    },
+    "2": {
+     "coins": 120,
+     "exp": 60
+    },
+    "3": {
+     "coins": 60,
+     "exp": 40
+    }
+   },
+   "participation": {
+    "exp": 10
+   },
+   "card_categories": [
+    "Cosmic"
+   ]
+  },
+  "grand_competition": {
+   "name": "Grand Power Competition",
+   "desc": "All of Nexa is watching. The four crew leaders, now pro heroes, enter too.",
+   "stats": {
+    "strength": 0.5,
+    "speed": 0.5,
+    "agility": 0.5,
+    "energy": 0.5,
+    "power_mastery": 0.5
+   },
+   "bg": "grand_arena",
+   "energy": 0,
+   "rounds": 3,
+   "rivals": [
+    {
+     "id": "bruce",
+     "score": 420
+    },
+    {
+     "id": "kade",
+     "score": 330
+    },
+    {
+     "id": "selene",
+     "score": 300
+    },
+    {
+     "id": "gorran",
+     "score": 320
+    },
+    {
+     "id": "john",
+     "score": 310
+    }
+   ],
+   "rewards_by_place": {
+    "1": {
+     "coins": 50000,
+     "exp": 3000,
+     "title": "champion"
+    },
+    "2": {
+     "coins": 20000,
+     "exp": 1500
+    },
+    "3": {
+     "coins": 10000,
+     "exp": 1000
+    }
+   },
+   "participation": {
+    "exp": 500
+   },
+   "news_win": "grand_competition_result"
+  }
+ }
+}

@@ -1,0 +1,4 @@
+{
+ "_comment": "Optional overrides: \"image_id\": \"res://path/to/file.png\". Normally just name files by convention (see ASSET_LIST.md).",
+ "assets": {}
+}

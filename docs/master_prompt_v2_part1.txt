@@ -1,0 +1,1056 @@
+NEXA — THE TRANSCENDENT SYSTEM
+
+COMPLETE ANDROID GAME DEVELOPMENT MASTER PROMPT
+
+You are my professional game development team, senior Godot developer, RPG architect, UI designer, story designer, database engineer and technical director.
+
+Your mission is to create a complete, polished, playable Android game based on my original story.
+
+This game is called:
+
+NEXA — THE TRANSCENDENT SYSTEM.
+
+IMPORTANT: I want an interactive 2D anime story RPG and life simulator.
+
+I DO NOT want:
+
+- A 3D game.
+- A free-roaming character game.
+- A basic chatbot.
+- A plain text-only story.
+- A simple visual novel without functional gameplay systems.
+
+I WANT:
+
+A beautiful illustrated interactive anime RPG where the player reads story scenes, sees character portraits and backgrounds, interacts with NPCs, makes choices, manages a smartphone, completes quests, collects ability cards, improves stats, purchases properties, builds relationships and progresses through a massive multiverse storyline.
+
+Use Godot 4.x and GDScript.
+
+==================================================
+PART 1 — VISUAL GAME DESIGN
+
+GAME FORMAT:
+
+2D illustrated interactive story RPG.
+
+DEFAULT SCREEN ORIENTATION:
+Portrait mode.
+
+Allow optional landscape mode if practical.
+
+VISUAL STYLE:
+High-quality anime illustrations.
+
+Every scene should display:
+
+1. Background image.
+2. Character portraits.
+3. Character names.
+4. Dialogue box.
+5. Story text.
+6. Interactive choices.
+7. Scene controls.
+8. Music and sound effects.
+
+Use smooth animations.
+
+SCENE PRESENTATION:
+
+- Background image fills most of the screen.
+- Character portraits appear over the background.
+- Dialogue appears in a beautiful bottom dialogue panel.
+- Character expressions change during conversations.
+- Important scenes use cinematic transitions.
+- Story text uses a typewriter effect.
+- Players can tap to reveal the next sentence.
+- Provide a skip and auto-read option.
+- Provide dialogue history.
+
+CHARACTER EXPRESSIONS:
+
+Every important character should have:
+
+- Normal expression.
+- Happy expression.
+- Angry expression.
+- Sad expression.
+- Surprised expression.
+- Serious expression.
+- Confused expression.
+
+Use different character poses and costumes where appropriate.
+
+Do not reuse one portrait for every emotional situation.
+
+==================================================
+PART 2 — ORIGINAL NEXA STORY
+
+IMPORTANT STORY RULE:
+
+Preserve my original storyline.
+
+Do not change the main events, character relationships, important characters, powers, or planned outcomes.
+
+You may add side stories, conversations, school activities, missions and additional characters, but these additions must support the original storyline.
+
+Do not turn the entire game into an investigation about Peter's father.
+
+Do not unnecessarily delay major story events.
+
+The protagonist is PETER PARKER.
+
+He is 16 years old at the beginning.
+
+The story begins on a planet called NEXA.
+
+Almost everyone on this planet possesses powers or quirks.
+
+The strongest people receive:
+
+- Luxury houses.
+- Free premium services.
+- Respect.
+- Special privileges.
+- Better treatment.
+- Access to exclusive facilities.
+
+Weak people and powerless individuals are treated badly and often forced to work as labourers.
+
+Peter is powerless.
+
+His father was the No. 1 superhero of Nexa and one of the strongest heroes.
+
+His father possessed incredible physical power comparable to Saitama and Ultra Instinct.
+
+His mother was the second-strongest superhero.
+
+The main enemy is ZERO, an overwhelmingly powerful villain connected to the Dragon Ball universe.
+
+Zero fought Peter's father.
+
+Peter's father defeated Zero at the cost of his own apparent death.
+
+However, Zero absorbed his power and imprisoned him on another planet.
+
+Zero conquered Nexa.
+
+Peter's mother was provided government housing because of her former position.
+
+Peter grows up being bullied at school.
+
+He is academically intelligent but loses physical and power competitions.
+
+Peter is initially skinny, powerless and insecure about his appearance.
+
+==================================================
+PART 3 — JOHN AND BRUCE
+
+JOHN:
+
+A new student at Peter's school.
+
+He is being bullied by Bruce.
+
+Peter saves him.
+
+John has a copying ability that allows him to copy other people's powers.
+
+Peter and John become good friends.
+
+John must have:
+
+- His own portrait.
+- Expressions.
+- Stats.
+- Personality.
+- Dialogue.
+- Relationship system.
+- Story missions.
+
+BRUCE:
+
+The strongest student at school.
+
+Abilities:
+
+- Teleportation.
+- Fire and ice abilities.
+- Advanced martial arts.
+- Combat training from Garou.
+
+His father has connections to Zero.
+
+Bruce becomes an important school rival.
+
+==================================================
+PART 4 — FOUR SCHOOL CREWS
+
+Create four powerful student crews.
+
+Each crew must have:
+
+- Unique name.
+- Leader.
+- Members.
+- Individual portraits.
+- Unique abilities.
+- Crew logo.
+- Reputation.
+- Rivalries.
+- School influence.
+
+Bruce must belong to the strongest crew or lead it.
+
+Peter initially faces disrespect and bullying from these crews.
+
+His increasing strength gradually changes their attitudes.
+
+Much later, Peter will establish his own crew.
+
+==================================================
+PART 5 — THE PICNIC AND MYSTERIOUS CAVE
+
+The school organises a picnic in a jungle area.
+
+Students receive tracking watches.
+
+Peter tells John he will return in a minute and goes exploring.
+
+He discovers a mysterious cave.
+
+Inside:
+
+- Numerous strange statues.
+- An ancient mysterious structure.
+- A sealed entrance.
+- An unusual atmosphere.
+
+The cave locks itself.
+
+The statues begin moving towards Peter.
+
+Peter is overwhelmed and critically injured.
+
+The teachers notice that Peter is missing.
+
+They track his watch and find him.
+
+He is immediately transported to the hospital.
+
+Keep this event faithful to my original storyline.
+
+==================================================
+PART 6 — SYSTEM AWAKENING
+
+Peter wakes up in the hospital the next day.
+
+A mysterious blue interface appears.
+
+It says:
+
+"DO YOU WANT TO START THE SYSTEM?"
+
+Peter is shocked.
+
+He hears someone approaching.
+
+He accidentally selects YES.
+
+His mother arrives.
+
+She hugs him and asks what happened in the jungle.
+
+Peter lies and says he does not remember.
+
+She leaves food for him.
+
+John visits and asks similar questions.
+
+Peter hides the truth from John too.
+
+After John leaves, another interface appears:
+
+"WOULD YOU LIKE TO ACCEPT YOUR FIRST QUEST?"
+
+Peter accepts.
+
+The Transcendent System activates.
+
+Keep the hospital section around 2–3 in-game days, not many weeks or months.
+
+==================================================
+PART 7 — COMPLETE SYSTEM INTERFACE
+
+Build a beautiful futuristic holographic interface.
+
+Main menu:
+
+- Status.
+- Quests.
+- Cards.
+- Skills.
+- Inventory.
+- Achievements.
+- Titles.
+- Shop.
+- Notifications.
+- System history.
+
+SYSTEM STATUS:
+
+Name: Peter Parker.
+Age: 16 initially.
+Level.
+EXP.
+Coins.
+Rank.
+Strength.
+Speed.
+Durability.
+Agility.
+Intelligence.
+Stamina.
+Energy.
+Power Mastery.
+
+All values must update dynamically.
+
+Include stat inspection.
+
+Peter can eventually inspect other characters' stats using an appropriate card.
+
+==================================================
+PART 8 — DYNAMIC QUEST SYSTEM
+
+This is one of the most important features.
+
+Create a quest engine inspired by Solo Leveling and Questism.
+
+The player must regularly receive quests.
+
+DAILY QUESTS:
+
+Examples:
+
+- Complete lessons.
+- Attend school.
+- Help someone.
+- Train.
+- Finish a small task.
+- Visit a particular location.
+
+BASIC QUEST REWARDS:
+
+- EXP.
+- Coins.
+- Common cards.
+- Uncommon cards.
+- Basic abilities.
+- Skill points.
+
+SPECIAL QUESTS:
+
+Examples:
+
+- Save someone.
+- Protect John.
+- Face a powerful enemy.
+- Complete a dangerous mission.
+- Discover a secret.
+- Win an important competition.
+
+SPECIAL REWARDS:
+
+- Rare cards.
+- Epic cards.
+- Legendary cards.
+- Mythical cards.
+- Transcendent cards.
+- Exclusive powers.
+
+QUEST RULES:
+
+1. Quests must be context-aware.
+2. Give basic quests frequently.
+3. Give special quests during meaningful events.
+4. Do not make the player wait through dozens of chapters for a special card.
+5. The player should regularly feel progression.
+6. Quests must have objectives and rewards.
+7. Show completion notifications.
+8. Include optional time limits.
+9. Store quest progress.
+10. Add emergency quests when appropriate.
+
+Do not make every quest a physical exercise.
+
+Use school, social life, exploration, competitions, rescue events and other story situations.
+
+==================================================
+PART 9 — CARD COLLECTION SYSTEM
+
+Create illustrated collectible ability cards.
+
+RARITIES:
+
+- Common.
+- Uncommon.
+- Rare.
+- Epic.
+- Legendary.
+- Mythical.
+- Transcendent.
+- Beyond Transcendent.
+
+Every card needs:
+
+- Artwork.
+- Name.
+- Rarity.
+- Ability.
+- Description.
+- Category.
+- Level.
+- EXP.
+- Upgrade system.
+- Unlock requirements.
+- Cooldown if appropriate.
+
+BASIC CARDS:
+
+- Boxing Mastery.
+- Martial Arts.
+- Height Enhancement.
+- Physical Enhancement.
+- Stat Inspection.
+- Enhanced Learning.
+- Regeneration.
+- Confidence.
+- Recovery.
+- Combat Awareness.
+
+SPECIAL CARDS:
+
+- Ultra Instinct.
+- Copy Ability.
+- Mana Drain.
+- Light-Speed Movement.
+- Master Martial Artist.
+- Transcendent Strength.
+- Damage Reflection.
+- Instant Teleportation.
+- ARISE.
+- Shadow Army.
+- White Lantern Power.
+
+The powers must be unlocked gradually through quests.
+
+Do not give every ability at the beginning.
+
+Do not make special card progression excessively slow.
+
+CARD REVEAL ANIMATION:
+
+This is a very important visual feature.
+
+When a player receives a card:
+
+1. Dim the background.
+2. Play an opening sound.
+3. Display particles.
+4. Show a glowing card silhouette.
+5. Slowly reveal the artwork.
+6. Display the rarity.
+7. Play a rarity-specific sound.
+8. Show the card name.
+9. Display the ability description.
+10. Add the card to inventory.
+11. Update the player's status when necessary.
+
+Each rarity must have a different animation.
+
+Transcendent cards should have especially impressive reveal effects.
+
+==================================================
+PART 10 — FOUR CREWS ATTACK
+
+After Peter has obtained approximately two or three special cards, introduce a major event.
+
+Peter and John are returning home.
+
+The four crews suddenly attack Peter.
+
+They are afraid that Peter is becoming stronger.
+
+Peter attempts to defend himself and John.
+
+John also tries to protect Peter.
+
+The enemies overpower both of them.
+
+They are seriously injured and hospitalised.
+
+Keep the scene dramatic without graphic injury descriptions.
+
+Peter realises that he needs much greater strength to protect his friend.
+
+He decides to disappear from Nexa temporarily.
+
+He writes goodbye messages to his mother and John.
+
+He expresses his love for them.
+
+He does not tell them his destination.
+
+He asks the System to teleport him to another planet.
+
+==================================================
+PART 11 — GREEN LANTERN TRAINING
+
+The System teleports Peter to the Green Lantern planet.
+
+Green Lanterns discover him.
+
+They use their rings and advanced technology to restore him.
+
+Peter trains with them.
+
+He obtains a White Lantern ring.
+
+He says goodbye and travels to different universes.
+
+He trains under characters from anime, DC and Marvel universes.
+
+He masters existing abilities and unlocks further cards.
+
+He learns ARISE.
+
+He can summon eligible defeated characters as shadows.
+
+He builds a shadow army.
+
+He masters different aura colours and powers.
+
+Show training through cinematic scenes, missions and important progression milestones.
+
+==================================================
+PART 12 — TEN-YEAR TIME SKIP
+
+Ten years pass after Peter disappears.
+
+On Nexa, people believe Peter was weak and disappeared out of fear.
+
+The four school crews joke about him.
+
+Peter has become incredibly powerful.
+
+His appearance, abilities and equipment reflect the passage of time.
+
+He returns to Nexa.
+
+He meets his mother.
+
+She senses that he has changed.
+
+Peter tells her he survived in a jungle and hides the truth about his multiversal training.
+
+The next day, he prepares for school.
+
+A power competition is announced.
+
+Peter secretly registers by calling the professor using his smartphone.
+
+Do not skip this scene.
+
+This is an important continuation point.
+
+==================================================
+PART 13 — SMARTPHONE SYSTEM
+
+Create a fully interactive in-game smartphone.
+
+Applications:
+
+1. Messages.
+2. Contacts.
+3. Calls.
+4. Social Media.
+5. Daily News.
+6. Maps.
+7. Banking.
+8. Calendar.
+9. Jobs.
+10. Gallery.
+11. Settings.
+12. Notifications.
+
+MESSAGES:
+
+NPCs can message Peter.
+
+Allow conversations with:
+
+- Mother.
+- John.
+- Classmates.
+- Teachers.
+- Heroes.
+- Other characters.
+
+CALLS:
+
+Include interactive phone-call scenes with portraits and dialogue.
+
+SOCIAL MEDIA:
+
+Create a fictional social media application.
+
+Include:
+
+- Posts.
+- Likes.
+- Comments.
+- Followers.
+- Notifications.
+- Trending news.
+
+NEWS:
+
+Daily news must change according to actual story events.
+
+Examples:
+
+- A hero saves a city.
+- A new shopping mall opens.
+- A villain appears.
+- A tournament is announced.
+- A superhero competition takes place.
+
+MAPS:
+
+Create a beautiful illustrated interactive city map.
+
+Show:
+
+- Shops.
+- Garages.
+- Car showrooms.
+- Parks.
+- Training centres.
+- Restaurants.
+- School.
+- Hospital.
+- Hero headquarters.
+- Apartments.
+- Houses.
+- Job locations.
+
+Selecting a map location opens its corresponding scene and activities.
+
+==================================================
+PART 14 — RELATIONSHIP SYSTEM
+
+Create relationship bars for:
+
+- Mother.
+- John.
+- Friends.
+- Classmates.
+- Teachers.
+- Heroes.
+- Rivals.
+- Other NPCs.
+
+Track:
+
+- Friendship.
+- Trust.
+- Respect.
+- Familiarity.
+- Rivalry.
+
+NPCs must remember important player choices.
+
+Relationship levels must affect dialogue, invitations, missions and character reactions.
+
+==================================================
+PART 15 — LIFE SIMULATION
+
+Create a living world through interactive menus and illustrated locations.
+
+PART-TIME JOBS:
+
+- Food delivery.
+- Computer work.
+- Shop assistant.
+- Courier.
+- Restaurant work.
+- Other fictional jobs.
+
+Players receive in-game salaries and EXP.
+
+PETS:
+
+- Cats.
+- Dogs.
+- Parrots.
+- Rabbits.
+- Special pets.
+
+Include:
+
+- Pet portraits.
+- Names.
+- Happiness.
+- Needs.
+- Pet interactions.
+- Pet collection.
+
+HOUSING:
+
+- Small apartments.
+- Normal houses.
+- Luxury apartments.
+- Villas.
+- Mansions.
+
+Include:
+
+- Illustrated interiors.
+- Furniture.
+- Bedrooms.
+- Kitchens.
+- Living rooms.
+- Garages.
+- Customisation.
+
+All pet and property purchases must use the game's fictional currency.
+
+No real-money purchases should be required for story progression.
+
+==================================================
+PART 16 — SHOPS AND ECONOMY
+
+Create an in-game currency called Nexa Coins.
+
+Include:
+
+- Clothing shops.
+- Superhero costume shops.
+- Pet shops.
+- Furniture shops.
+- Electronics shops.
+- Grocery shops.
+- Garages.
+- Car showrooms.
+
+Superhero costume shop:
+
+- Hero outfits.
+- Masks.
+- Helmets.
+- Capes.
+- Gloves.
+- Boots.
+- Special costumes.
+- Outfit collection.
+
+Players can purchase items using Nexa Coins.
+
+==================================================
+PART 17 — CHARACTER CUSTOMISATION
+
+At the beginning, allow customisation of Peter.
+
+Options:
+
+- Hair style.
+- Hair colour.
+- Eye colour.
+- Skin tone.
+- Beard options.
+- Clothes.
+- Shoes.
+- Accessories.
+
+Show a live character preview.
+
+Allow additional cosmetics to be unlocked later.
+
+==================================================
+PART 18 — DATE, AGE AND EXPERIENCE
+
+Implement:
+
+- In-game date.
+- Day.
+- Month.
+- Year.
+- Weekdays.
+- Weekends.
+- Birthdays.
+- Events.
+- Age progression.
+- EXP progression.
+- Time skips.
+
+The ten-year time skip must update Peter's age correctly.
+
+==================================================
+PART 19 — MUSIC AND SOUND
+
+Music must change according to the scene.
+
+Include:
+
+- Main menu music.
+- School atmosphere.
+- Home music.
+- City atmosphere.
+- Emotional music.
+- Battle music.
+- Boss music.
+- Card reveal music.
+- Multiverse music.
+- Training music.
+
+Sound effects:
+
+- Buttons.
+- Notifications.
+- Messages.
+- Phone calls.
+- Quest completion.
+- Level-up.
+- Card reveals.
+- Scene transitions.
+
+Use original or properly licensed audio.
+
+Allow separate volume controls.
+
+==================================================
+PART 20 — SETTINGS
+
+Create a complete settings menu.
+
+Include:
+
+- Text size.
+- Text colour.
+- Font selection.
+- UI colour themes.
+- Dark mode.
+- Light mode.
+- Music volume.
+- Sound-effect volume.
+- Animation speed.
+- Typewriter speed.
+- Auto-read.
+- Skip controls.
+- Language.
+- Screen orientation.
+- Save and load.
+
+==================================================
+PART 21 — CHARACTER AND SCENE GALLERIES
+
+CHARACTER GALLERY:
+
+Every character has:
+
+- Portrait.
+- Name.
+- Biography.
+- Age.
+- Powers.
+- Stats.
+- Relationship.
+- Unlock status.
+
+SCENE GALLERY:
+
+Store important completed scenes.
+
+Allow players to replay unlocked story scenes.
+
+CARD GALLERY:
+
+Display all collected cards with artwork, rarity and ability descriptions.
+
+==================================================
+PART 22 — INVENTORY AND ACHIEVEMENTS
+
+Inventory:
+
+- Cards.
+- Skills.
+- Clothes.
+- Costumes.
+- Weapons.
+- Accessories.
+- Materials.
+- Consumables.
+- Pets.
+- Collectibles.
+
+Achievements:
+
+- First quest.
+- First card.
+- First special card.
+- First competition.
+- First major victory.
+- Multiverse traveller.
+- Shadow army creator.
+- Transcendent being.
+
+Create collectible titles and rewards.
+
+==================================================
+PART 23 — STORY AND CONTENT ENGINE
+
+Build a flexible story system.
+
+Use structured story data rather than hardcoding every scene.
+
+Each story scene should support:
+
+- Scene ID.
+- Chapter ID.
+- Background.
+- Characters.
+- Character expressions.
+- Dialogue.
+- Dialogue choices.
+- Sound effects.
+- Background music.
+- Rewards.
+- Quest triggers.
+- Story flags.
+- Scene transitions.
+
+Support conditional dialogue.
+
+Example:
+
+If relationship_with_John is greater than 70:
+Display special friendship dialogue.
+
+If card_ultra_instinct is unlocked:
+Display the appropriate System notification.
+
+If the player completed a particular quest:
+Unlock the next story scene.
+
+Keep story continuity across all chapters.
+
+==================================================
+PART 24 — SAVE SYSTEM
+
+Implement:
+
+- Automatic saving.
+- Manual saving.
+- Multiple save slots.
+- Story progress.
+- Character stats.
+- Cards.
+- Inventory.
+- Coins.
+- Relationships.
+- Quest progress.
+- Housing.
+- Pets.
+- Calendar.
+- Settings.
+- Unlocked galleries.
+
+Use a versioned save format.
+
+Core gameplay must work offline.
+
+Optional online features:
+
+- Cloud saves.
+- Leaderboards.
+- Community events.
+
+Do not require internet for the main story.
+
+==================================================
+PART 25 — TECHNICAL ARCHITECTURE
+
+Use Godot 4.x.
+
+Recommended project organisation:
+
+res://
+scenes/
+main_menu/
+story/
+dialogue/
+system/
+cards/
+smartphone/
+characters/
+galleries/
+shops/
+housing/
+pets/
+jobs/
+settings/
+
+scripts/
+    story_manager/
+    dialogue_manager/
+    quest_manager/
+    card_manager/
+    stats_manager/
+    relationship_manager/
+    smartphone_manager/
+    economy_manager/
+    inventory_manager/
+    save_manager/
+    audio_manager/
+    time_manager/
+
+data/
+    characters/
+    quests/
+    cards/
+    locations/
+    dialogue/
+    items/
+    story/
+    shops/
+    news/
+
+assets/
+    characters/
+    portraits/
+    backgrounds/
+    cards/
+    icons/
+    animations/
+    music/
+    sound/
+    fonts/
+
+Use reusable scenes and scripts.
+
+Use JSON or Godot Resources for editable game content.
+
+Use Control nodes for the UI.
+
+Use TextureRect for illustrations.
+
+Use RichTextLabel for dialogue and story text.
+
+Use AnimationPlayer and Tween animations.
+
+Use AudioStreamPlayer for music and sound effects.
+
+Avoid one giant script.
+
+==================================================
+PART 26 — AN

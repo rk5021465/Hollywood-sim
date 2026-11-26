@@ -1,0 +1,291 @@
+{
+ "scenes": [
+  {
+   "id": "c2_announce",
+   "title": "The Field Trip",
+   "bg": "school_classroom",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 2\nThe Jungle and the Cave"
+    },
+    {
+     "cmd": "music",
+     "id": "school"
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "normal",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "normal",
+     "t": "Tomorrow, the first-years will visit the jungle reserve for a field picnic and survival exercise."
+    },
+    {
+     "s": "professor",
+     "e": "serious",
+     "t": "Each of you will wear one of these tracking watches. Do not remove them. The jungle is not a playground."
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "A picnic! In the jungle! Peter, we're sitting together. I'm bringing three kinds of sandwiches."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Three?"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "One for me, one for you, one for emergencies."
+    },
+    {
+     "cmd": "news",
+     "key": "picnic_announced"
+    }
+   ],
+   "next": "c2_picnic",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "school_classroom",
+   "requires": {
+    "min_day": 1
+   },
+   "hint": "Sleep at home to end the day. Something will be announced at school tomorrow."
+  },
+  {
+   "id": "c2_picnic",
+   "title": "The Cave",
+   "bg": "jungle_picnic",
+   "lines": [
+    {
+     "cmd": "music",
+     "id": "city"
+    },
+    {
+     "s": "narrator",
+     "t": "The jungle reserve. Sunlight through giant leaves. Students sprawl across blankets while the crews claim the shade."
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "Emergency sandwich?"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "normal",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "Hold that thought. I'll be back in a minute — I want to look around."
+    },
+    {
+     "s": "john",
+     "e": "confused",
+     "t": "Don't get lost. Your watch beeps if you go too far."
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "One minute. Promise."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "bg",
+     "id": "jungle_path",
+     "tr": "fade"
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "s": "narrator",
+     "t": "The path narrows. The sounds of the picnic fade. Something pulls Peter forward — like a word on the tip of his tongue."
+    },
+    {
+     "cmd": "bg",
+     "id": "cave_entrance",
+     "tr": "fade"
+    },
+    {
+     "s": "narrator",
+     "t": "A cave mouth, half-hidden by roots. Carved symbols around its edge. They look… older than Nexa."
+    },
+    {
+     "s": "peter",
+     "e": "confused",
+     "t": "This isn't on any map I've studied.",
+     "think": true
+    },
+    {
+     "cmd": "bg",
+     "id": "cave_statues",
+     "tr": "black"
+    },
+    {
+     "cmd": "music",
+     "id": "boss"
+    },
+    {
+     "s": "narrator",
+     "t": "Inside: dozens of stone statues. Warriors, beasts, things with too many arms. All facing a sealed door covered in light-lines."
+    },
+    {
+     "s": "narrator",
+     "t": "An ancient structure rises at the centre. The air hums."
+    },
+    {
+     "s": "peter",
+     "e": "surprised",
+     "t": "What is this place…?",
+     "think": true
+    },
+    {
+     "cmd": "sfx",
+     "id": "hit"
+    },
+    {
+     "cmd": "shake"
+    },
+    {
+     "s": "narrator",
+     "t": "Behind him, the entrance grinds shut."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "surprised",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "surprised",
+     "t": "No — no, no, no!"
+    },
+    {
+     "s": "narrator",
+     "t": "Stone cracks. One by one, the statues turn their heads."
+    },
+    {
+     "s": "narrator",
+     "t": "And begin to move."
+    },
+    {
+     "cmd": "combat",
+     "enemy": "stone_statues",
+     "win": "cave_after",
+     "lose": "cave_after",
+     "replay": "cave_after"
+    },
+    {
+     "cmd": "label",
+     "name": "cave_after"
+    },
+    {
+     "cmd": "bg",
+     "id": "cave_statues",
+     "tr": "black"
+    },
+    {
+     "s": "narrator",
+     "t": "There were too many. Peter fought anyway — until the stone fists stopped feeling like pain and started feeling like nothing at all."
+    },
+    {
+     "s": "narrator",
+     "t": "Somewhere far away, a watch beeps. And beeps. And beeps."
+    },
+    {
+     "cmd": "bg",
+     "id": "jungle_path",
+     "tr": "black"
+    },
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "serious",
+     "t": "Parker's signal is off the trail! Over here — the ruins!"
+    },
+    {
+     "s": "narrator",
+     "t": "The teachers tear through the sealed entrance. They find Peter on the stone floor, barely breathing. The statues stand perfectly still, as if they never moved."
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "sad",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "sad",
+     "t": "Peter! PETER! You said one minute!"
+    },
+    {
+     "s": "narrator",
+     "t": "He is carried out of the jungle and rushed to Nexa Central Hospital."
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "picnic_done",
+      "in_hospital"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "news",
+     "key": "boy_found_in_cave"
+    },
+    {
+     "cmd": "location",
+     "id": "hospital_room"
+    }
+   ],
+   "next": "c3_wake",
+   "chain": true,
+   "transition": "fade",
+   "requires": {
+    "min_day": 2
+   },
+   "hint": "Rest. The jungle picnic is tomorrow."
+  }
+ ]
+}

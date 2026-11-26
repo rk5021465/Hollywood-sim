@@ -1,0 +1,435 @@
+{
+ "scenes": [
+  {
+   "id": "c1_trial",
+   "title": "The Agility Trial",
+   "bg": "school_arena",
+   "lines": [
+    {
+     "cmd": "music",
+     "id": "school"
+    },
+    {
+     "s": "narrator",
+     "t": "Nexa Academy's combat arena. The stands are full. The rankings screen glows above the floor."
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "normal",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "normal",
+     "t": "First-years! Today's trial measures agility and speed. Results are recorded on your permanent rank."
+    },
+    {
+     "cmd": "hide",
+     "c": "professor"
+    },
+    {
+     "cmd": "show",
+     "c": "kade",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "kade",
+     "e": "happy",
+     "t": "Hey, Parker! Want a head start? Like… a ten-minute head start?"
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "normal",
+     "p": "left"
+    },
+    {
+     "s": "bruce",
+     "e": "normal",
+     "t": "Leave him, Kade. Watching him try is funnier."
+    },
+    {
+     "s": "narrator",
+     "t": "Bruce Kaizer. The strongest student in the academy. Leader of Frostfire Dominion. When he smiles, people step back."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Breathe. Just finish the course. That's all.",
+     "think": true
+    },
+    {
+     "cmd": "competition",
+     "id": "agility_trial",
+     "win": "trial_done",
+     "lose": "trial_done",
+     "place": 1
+    },
+    {
+     "cmd": "label",
+     "name": "trial_done"
+    },
+    {
+     "cmd": "bg",
+     "id": "school_arena",
+     "tr": "none"
+    },
+    {
+     "s": "narrator",
+     "t": "The results flash on the screen. Kade first. Bruce second. And at the very bottom, as always—"
+    },
+    {
+     "cmd": "show",
+     "c": "zip",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "zip",
+     "e": "happy",
+     "t": "PARKER, LAST PLACE! AGAIN! Somebody frame it!"
+    },
+    {
+     "s": "narrator",
+     "t": "Laughter rolls down from the stands."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "sad",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "sad",
+     "t": "Son of the No. 1 hero. Last again.",
+     "think": true
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "serious",
+     "t": "Settle down. Mr. Parker — your time was better than last term."
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "…Thank you, Professor."
+    }
+   ],
+   "next": "c1_john",
+   "chain": true,
+   "transition": "fade",
+   "location": "school_arena"
+  },
+  {
+   "id": "c1_john",
+   "title": "The New Student",
+   "bg": "school_corridor",
+   "lines": [
+    {
+     "cmd": "slot",
+     "n": 1
+    },
+    {
+     "s": "narrator",
+     "t": "After class. The east corridor — Frostfire Dominion territory."
+    },
+    {
+     "cmd": "show",
+     "c": "dex",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "dex",
+     "e": "happy",
+     "t": "So you're the new kid with the copy power? Go on. Copy me. I dare you."
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "surprised",
+     "p": "center"
+    },
+    {
+     "s": "john",
+     "e": "surprised",
+     "t": "I-I can't copy unless I touch— I mean, it only lasts a minute—"
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "normal",
+     "p": "left"
+    },
+    {
+     "s": "bruce",
+     "e": "normal",
+     "t": "A copier. Useful. You'll copy for us from now on, new kid. Starting with your lunch money."
+    },
+    {
+     "s": "john",
+     "e": "sad",
+     "t": "Please, I just want to get to class…"
+    },
+    {
+     "cmd": "hide",
+     "c": "bruce"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Walk away. Everyone walks away. It's what you always do.",
+     "think": true
+    },
+    {
+     "s": "peter",
+     "e": "angry",
+     "t": "…No. Not this time.",
+     "think": true
+    },
+    {
+     "choice": [
+      {
+       "t": "Step between Bruce and John.",
+       "goto": "j_step",
+       "rel": {
+        "john": {
+         "respect": 5
+        }
+       },
+       "remember": {
+        "john": "peter_stepped_in"
+       }
+      },
+      {
+       "t": "Shout \"Professor Hale is coming!\" — then step in.",
+       "goto": "j_shout",
+       "rel": {
+        "john": {
+         "trust": 3
+        }
+       }
+      },
+      {
+       "t": "\"Hey Bruce — didn't you fail the history test? Need a tutor?\"",
+       "goto": "j_tease",
+       "rel": {
+        "bruce": {
+         "rivalry": 8
+        },
+        "john": {
+         "friendship": 3
+        }
+       }
+      }
+     ]
+    },
+    {
+     "cmd": "label",
+     "name": "j_shout"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Professor Hale's coming this way!"
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "serious",
+     "p": "left"
+    },
+    {
+     "s": "bruce",
+     "e": "serious",
+     "t": "Nice try. Hale's in the staff room. I can sense where everyone is before I teleport, Parker."
+    },
+    {
+     "cmd": "goto",
+     "label": "j_step"
+    },
+    {
+     "cmd": "label",
+     "name": "j_tease"
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "angry",
+     "p": "left"
+    },
+    {
+     "s": "bruce",
+     "e": "angry",
+     "t": "What did you just say?"
+    },
+    {
+     "cmd": "label",
+     "name": "j_step"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "serious",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Leave him alone, Bruce."
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "surprised",
+     "p": "right"
+    },
+    {
+     "cmd": "hide",
+     "c": "dex"
+    },
+    {
+     "s": "bruce",
+     "e": "surprised",
+     "t": "…The powerless kid has a voice? I almost respect it."
+    },
+    {
+     "s": "bruce",
+     "e": "angry",
+     "t": "Almost."
+    },
+    {
+     "cmd": "sfx",
+     "id": "hit"
+    },
+    {
+     "cmd": "shake"
+    },
+    {
+     "s": "narrator",
+     "t": "Bruce vanishes — and reappears behind Peter. A frozen palm hits his back. The floor rushes up."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "hurt",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "angry",
+     "t": "Leave… him… alone."
+    },
+    {
+     "s": "narrator",
+     "t": "Peter gets up. Bruce hits him again. Peter gets up again."
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "angry",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "angry",
+     "t": "KAIZER! Office. Now."
+    },
+    {
+     "s": "bruce",
+     "e": "normal",
+     "t": "Relax, Professor. We were just welcoming the new student. See you around, Parker."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "sad",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "sad",
+     "t": "You didn't have to do that. You're bleeding…"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "I'm used to it. I'm Peter."
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "John. John Reyes. I… nobody's ever stood up for me before."
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "Okay. That's it. We're friends now. You can't take it back."
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "I wasn't going to."
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "met_john",
+      "met_bruce"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "contact",
+     "npc": "john"
+    },
+    {
+     "cmd": "rel",
+     "npc": "john",
+     "add": {
+      "friendship": 15,
+      "trust": 10,
+      "familiarity": 10
+     },
+     "remember": "peter_saved_me"
+    },
+    {
+     "cmd": "rel",
+     "npc": "bruce",
+     "add": {
+      "rivalry": 10
+     }
+    },
+    {
+     "s": "narrator",
+     "t": "FREE TIME: Use the Map to travel around Nexa, talk to people, train, work and shop. Time passes as you do activities. When the story is ready to continue, a gold button appears."
+    }
+   ],
+   "next": "c2_announce",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "school_gate"
+  }
+ ]
+}

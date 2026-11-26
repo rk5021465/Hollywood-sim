@@ -1,0 +1,292 @@
+{
+ "scenes": [
+  {
+   "id": "c5_trial",
+   "title": "Don't Give Up",
+   "bg": "school_arena",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 5\nSurpass Your Limits"
+    },
+    {
+     "cmd": "bg",
+     "id": "home_kitchen",
+     "tr": "none"
+    },
+    {
+     "cmd": "music",
+     "id": "home"
+    },
+    {
+     "cmd": "show",
+     "c": "mother",
+     "e": "normal",
+     "p": "right"
+    },
+    {
+     "s": "mother",
+     "e": "normal",
+     "t": "You've been getting up at five every morning. And you finished your vegetables. Who are you and what have you done with my son?"
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Inter-Class Trial today. I want to do well."
+    },
+    {
+     "s": "mother",
+     "e": "serious",
+     "t": "…You will. Just promise me you won't do anything reckless."
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "bg",
+     "id": "school_arena",
+     "tr": "fade"
+    },
+    {
+     "cmd": "music",
+     "id": "battle"
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "normal",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "normal",
+     "t": "The Inter-Class Trial! Crews — your rankings depend on today. Begin!"
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "competition",
+     "id": "inter_class_trial",
+     "win": "t_good",
+     "lose": "t_bad",
+     "place": 3
+    },
+    {
+     "cmd": "label",
+     "name": "t_good"
+    },
+    {
+     "s": "narrator",
+     "t": "The scoreboard flickers: PARKER — TOP THREE. The stands go quiet, then explode in noise."
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "angry",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "angry",
+     "t": "No. Not you."
+    },
+    {
+     "cmd": "goto",
+     "label": "t_next"
+    },
+    {
+     "cmd": "label",
+     "name": "t_bad"
+    },
+    {
+     "s": "narrator",
+     "t": "Peter finishes mid-table. Not last. For the first time in his life — not last. People notice."
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "serious",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "serious",
+     "t": "Mid-table. The powerless kid is climbing. That's a problem."
+    },
+    {
+     "cmd": "label",
+     "name": "t_next"
+    },
+    {
+     "s": "narrator",
+     "t": "During the cool-down, Bruce disappears from the stands—"
+    },
+    {
+     "cmd": "sfx",
+     "id": "hit"
+    },
+    {
+     "cmd": "shake"
+    },
+    {
+     "cmd": "flash"
+    },
+    {
+     "s": "narrator",
+     "t": "—and reappears in front of Peter. Fire and ice explode across the arena floor. Peter is thrown into the wall."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "hurt",
+     "p": "left"
+    },
+    {
+     "s": "bruce",
+     "e": "normal",
+     "t": "Oops. My hand slipped. Stay down, Parker."
+    },
+    {
+     "s": "narrator",
+     "t": "His ears ring. His legs won't work. Everyone is watching."
+    },
+    {
+     "cmd": "sfx",
+     "id": "system"
+    },
+    {
+     "cmd": "system",
+     "t": "SPECIAL QUEST: DON'T GIVE UP\nObjective: Stand up.",
+     "buttons": [
+      "STAND UP"
+     ]
+    },
+    {
+     "cmd": "quest",
+     "id": "special_dont_give_up",
+     "accept": true
+    },
+    {
+     "s": "peter",
+     "e": "angry",
+     "t": "Get… up.",
+     "think": true
+    },
+    {
+     "cmd": "event",
+     "name": "story:dont_give_up"
+    },
+    {
+     "cmd": "music",
+     "id": "boss"
+    },
+    {
+     "s": "narrator",
+     "t": "Peter rises. Something silver flickers in his eyes. The world goes quiet and slow."
+    },
+    {
+     "s": "bruce",
+     "e": "angry",
+     "t": "I said STAY DOWN!"
+    },
+    {
+     "s": "narrator",
+     "t": "Bruce teleports. Fire, ice, a strike from behind—"
+    },
+    {
+     "s": "narrator",
+     "t": "—and Peter's body moves on its own. He doesn't decide to dodge. He simply isn't there when the blow lands."
+    },
+    {
+     "cmd": "show",
+     "c": "bruce",
+     "e": "surprised",
+     "p": "right"
+    },
+    {
+     "s": "bruce",
+     "e": "surprised",
+     "t": "What… was that?"
+    },
+    {
+     "cmd": "show",
+     "c": "professor",
+     "e": "surprised",
+     "p": "center"
+    },
+    {
+     "s": "professor",
+     "e": "surprised",
+     "t": "ENOUGH! Kaizer, off my field!"
+    },
+    {
+     "s": "professor",
+     "e": "serious",
+     "t": "That movement… I've seen it once before. Richard Parker moved exactly like that.",
+     "think": true
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "ultra_instinct_awakened"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "rep",
+     "add": {
+      "school": 8
+     }
+    },
+    {
+     "cmd": "news",
+     "key": "trial_silver"
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "PETER! What WAS that?! You were like — whoosh — silver — whoosh!"
+    },
+    {
+     "s": "peter",
+     "e": "confused",
+     "t": "I… honestly don't know."
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "Okay. You're buying me ramen this weekend and explaining everything. We're going to the mall."
+    },
+    {
+     "cmd": "quest",
+     "id": "main_weekend_mall",
+     "accept": true
+    }
+   ],
+   "next": "c6_mall",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "school_gate",
+   "requires": {
+    "quest_done": "main_train_for_trial"
+   },
+   "hint": "Complete 'Prepare for the Inter-Class Trial' (train 3 times, attend a class)."
+  }
+ ]
+}

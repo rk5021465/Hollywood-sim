@@ -1,0 +1,214 @@
+{
+ "scenes": [
+  {
+   "id": "c6_mall",
+   "title": "Hex Ripper",
+   "bg": "city_mall",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 6\nThe Mall Incident"
+    },
+    {
+     "cmd": "music",
+     "id": "city"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "This place is amazing. Look, that jacket costs more than my house."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "happy",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "Top-ranked heroes get it for free."
+    },
+    {
+     "s": "john",
+     "e": "serious",
+     "t": "Doesn't seem fair."
+    },
+    {
+     "cmd": "sfx",
+     "id": "hit"
+    },
+    {
+     "cmd": "shake"
+    },
+    {
+     "cmd": "music",
+     "id": "boss"
+    },
+    {
+     "s": "narrator",
+     "t": "The skylight shatters. Purple lightning crackles across the atrium. Shoppers collapse as glowing threads pull light from their bodies."
+    },
+    {
+     "s": "john",
+     "e": "surprised",
+     "t": "He's draining their powers!"
+    },
+    {
+     "cmd": "sfx",
+     "id": "system"
+    },
+    {
+     "cmd": "system",
+     "t": "EMERGENCY QUEST: STOP HEX RIPPER\nCivilians in danger.",
+     "buttons": [
+      "ACCEPT"
+     ]
+    },
+    {
+     "cmd": "quest",
+     "id": "emergency_mall_rescue",
+     "accept": true
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "John, get people to the exits. I'll keep him busy."
+    },
+    {
+     "s": "john",
+     "e": "serious",
+     "t": "Are you crazy?! …Okay. Okay! Be careful!"
+    },
+    {
+     "cmd": "hide",
+     "c": "john"
+    },
+    {
+     "cmd": "combat",
+     "enemy": "hex_ripper",
+     "win": "won",
+     "lose": "lost"
+    },
+    {
+     "cmd": "label",
+     "name": "won"
+    },
+    {
+     "s": "narrator",
+     "t": "Hex Ripper slams into a fountain and doesn't get up. The stolen light flows back into the shoppers like a sigh."
+    },
+    {
+     "cmd": "news",
+     "key": "mall_attack_stopped"
+    },
+    {
+     "cmd": "rep",
+     "add": {
+      "hero": 5,
+      "public": 5
+     }
+    },
+    {
+     "cmd": "show",
+     "c": "captain_solaris",
+     "e": "surprised",
+     "p": "right"
+    },
+    {
+     "s": "captain_solaris",
+     "e": "surprised",
+     "t": "You did this? You're… Elena's boy. The powerless one."
+    },
+    {
+     "s": "peter",
+     "e": "normal",
+     "t": "Not anymore, I think."
+    },
+    {
+     "s": "captain_solaris",
+     "e": "serious",
+     "t": "Be careful, kid. In this city, the people who notice strength aren't always friends."
+    },
+    {
+     "cmd": "goto",
+     "label": "end"
+    },
+    {
+     "cmd": "label",
+     "name": "lost"
+    },
+    {
+     "s": "narrator",
+     "t": "Hex Ripper hurls Peter aside — but the delay was enough. Captain Solaris arrives and the villain flees into the city."
+    },
+    {
+     "cmd": "news",
+     "key": "mall_attack_solaris"
+    },
+    {
+     "cmd": "show",
+     "c": "captain_solaris",
+     "e": "serious",
+     "p": "right"
+    },
+    {
+     "s": "captain_solaris",
+     "e": "serious",
+     "t": "You held him off long enough for everyone to escape. That was brave. And stupid. Mostly brave."
+    },
+    {
+     "s": "system",
+     "t": "Hex Ripper escaped. Emergency quest still active — track him down in Downtown Nexa."
+    },
+    {
+     "cmd": "label",
+     "name": "end"
+    },
+    {
+     "cmd": "contact",
+     "npc": "captain_solaris"
+    },
+    {
+     "cmd": "hide_all"
+    },
+    {
+     "cmd": "show",
+     "c": "john",
+     "e": "happy",
+     "p": "right"
+    },
+    {
+     "s": "john",
+     "e": "happy",
+     "t": "You're a hero. An actual hero. Wait till everyone sees the news!"
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Everyone… including the crews.",
+     "think": true
+    },
+    {
+     "cmd": "quest",
+     "id": "main_ordinary_days",
+     "accept": true
+    }
+   ],
+   "next": "c7_attack",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "commercial_mall",
+   "requires": {
+    "quest_done": "main_weekend_mall"
+   },
+   "hint": "Visit the Nexa Grand Mall (Commercial District) with John."
+  }
+ ]
+}

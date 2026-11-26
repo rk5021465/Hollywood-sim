@@ -1,0 +1,259 @@
+{
+ "events": {
+  "intro_day": {
+   "headline": "Zero's Regime Marks Another Year of 'Order'",
+   "body": "Celebrations in the Upper District. Labour quotas for the powerless rise again.",
+   "social": [
+    {
+     "author": "nexa_daily",
+     "t": "Another year under the new order. Top-ranked heroes receive free mansions this season.",
+     "likes": 4200
+    }
+   ]
+  },
+  "picnic_announced": {
+   "headline": "Nexa Academy Plans Jungle Field Trip",
+   "body": "Students will wear tracking watches for safety.",
+   "social": [
+    {
+     "author": "zip_storm",
+     "t": "JUNGLE PICNIC LET'S GOOO ⚡",
+     "likes": 210
+    }
+   ]
+  },
+  "boy_found_in_cave": {
+   "headline": "Student Found Critically Injured Near Jungle Ruins",
+   "body": "Teachers located the boy using his tracking watch. The ruins have been sealed.",
+   "social": [
+    {
+     "author": "dex_steel",
+     "t": "lol the powerless kid got lost in a cave",
+     "likes": 90
+    }
+   ]
+  },
+  "trial_silver": {
+   "headline": "Strange Movement at Academy Trial",
+   "body": "Witnesses describe a 'silver blur'. The academy declined to comment.",
+   "social": [
+    {
+     "author": "zip_storm",
+     "t": "did anyone else see Parker DODGE Bruce?? like actually??",
+     "likes": 1300
+    }
+   ]
+  },
+  "mall_attack_stopped": {
+   "headline": "Teen Stops Villain at Nexa Grand Mall",
+   "body": "Shoppers say an unranked student defeated the power-draining villain 'Hex Ripper'.",
+   "social": [
+    {
+     "author": "nexa_daily",
+     "t": "Who is the unranked student who stopped Hex Ripper?",
+     "likes": 8800
+    },
+    {
+     "author": "kade_volt",
+     "t": "lucky shot.",
+     "likes": 400
+    }
+   ]
+  },
+  "mall_attack_solaris": {
+   "headline": "Captain Solaris Drives Off Mall Attacker",
+   "body": "A student was seen fighting the villain before heroes arrived.",
+   "social": [
+    {
+     "author": "nexa_daily",
+     "t": "Captain Solaris saves the day again.",
+     "likes": 5200
+    }
+   ]
+  },
+  "crews_attack_rumor": {
+   "headline": "Two Students Hospitalised After Street 'Accident'",
+   "body": "Police say there are no suspects.",
+   "social": [
+    {
+     "author": "selene_noir",
+     "t": "Some people should know their place.",
+     "likes": 620
+    }
+   ]
+  },
+  "peter_missing": {
+   "headline": "Academy Student Missing",
+   "body": "Peter Parker, 16, left hospital without a trace. His mother asks anyone with information to come forward.",
+   "social": [
+    {
+     "author": "john_reyes",
+     "t": "If anyone sees Peter, please message me. Please.",
+     "likes": 3100
+    }
+   ]
+  },
+  "crews_mock_peter": {
+   "headline": "Pro Hero Crews Dominate the Rankings",
+   "body": "Frostfire Dominion's Bruce Kaizer is now the No. 4 hero. Asked about old classmates, he laughed: 'The powerless kid? He ran away.'",
+   "social": [
+    {
+     "author": "bruce_kaizer",
+     "t": "Ten years. Some of us got stronger. Some of us ran.",
+     "likes": 52000
+    }
+   ]
+  },
+  "competition_announced": {
+   "headline": "Grand Power Competition Announced",
+   "body": "Professor Hale will host the largest competition in a decade. Registration closes in three days.",
+   "social": [
+    {
+     "author": "nexa_daily",
+     "t": "Who will enter the Grand Power Competition?",
+     "likes": 30000
+    }
+   ]
+  },
+  "grand_competition_result": {
+   "headline": "UNKNOWN CHALLENGER WINS GRAND COMPETITION",
+   "body": "Peter Parker — once mocked as powerless — has stunned all of Nexa.",
+   "social": [
+    {
+     "author": "nexa_daily",
+     "t": "PETER PARKER. Remember the name.",
+     "likes": 990000
+    },
+    {
+     "author": "john_reyes",
+     "t": "Told you all. TOLD YOU.",
+     "likes": 120000
+    }
+   ]
+  },
+  "school_competition_win": {
+   "headline": "Upset at Academy Challenge",
+   "body": "An underdog took first place.",
+   "social": [
+    {
+     "author": "zip_storm",
+     "t": "WHAT just happened at the challenge??",
+     "likes": 700
+    }
+   ]
+  },
+  "player_bought_property": {
+   "headline": "Property Market Booms",
+   "body": "Nexa Realty reports record sales.",
+   "social": []
+  },
+  "white_lantern_rumor": {
+   "headline": "Astronomers Detect White Light Over Distant Sector",
+   "body": "A flare of unknown energy lit up a far star system.",
+   "social": []
+  }
+ },
+ "daily": [
+  {
+   "headline": "Labour quotas for the powerless raised by 5%",
+   "body": "Workers protest quietly outside the Bureau.",
+   "if": {
+    "era": "teen"
+   }
+  },
+  {
+   "headline": "Frostfire Dominion tops Academy crew rankings again",
+   "if": {
+    "era": "teen"
+   }
+  },
+  {
+   "headline": "New shopping wing opens at Nexa Grand Mall",
+   "body": "Top-ranked heroes shop free on opening day."
+  },
+  {
+   "headline": "Captain Solaris rescues 40 from a collapsing tower",
+   "if": {
+    "era": "teen"
+   }
+  },
+  {
+   "headline": "Villain sighting in the Commercial District",
+   "body": "Citizens advised to stay alert."
+  },
+  {
+   "headline": "Tournament season approaches",
+   "body": "Academies prepare their top students."
+  },
+  {
+   "headline": "Zero's emblem now required on all public buildings"
+  },
+  {
+   "headline": "Pro hero Kade Volt sets new speed record",
+   "if": {
+    "era": "adult"
+   }
+  },
+  {
+   "headline": "Phantom Veil agency accused of using illusions in court",
+   "if": {
+    "era": "adult"
+   }
+  },
+  {
+   "headline": "Iron Fang hero team stops runaway train",
+   "if": {
+    "era": "adult"
+   }
+  },
+  {
+   "headline": "Pet adoption hits record high",
+   "body": "Paws & Wings opens a second store."
+  },
+  {
+   "headline": "Weather: clear skies over Nexa all week"
+  }
+ ],
+ "player_posts": [
+  {
+   "t": "Studying for exams. Wish me luck.",
+   "if": {
+    "era": "teen"
+   }
+  },
+  {
+   "t": "Morning run done. Small steps.",
+   "if": {}
+  },
+  {
+   "t": "Ramen with my best friend. 10/10.",
+   "if": {
+    "flag": "met_john"
+   }
+  },
+  {
+   "t": "Never give up. Ever.",
+   "if": {
+    "flag": "ultra_instinct_awakened"
+   }
+  },
+  {
+   "t": "Thank you to everyone who stayed safe at the mall today.",
+   "if": {
+    "quest_done": "emergency_mall_rescue"
+   }
+  },
+  {
+   "t": "Home.",
+   "if": {
+    "flag": "returned_home"
+   }
+  },
+  {
+   "t": "New pet, who dis.",
+   "if": {
+    "flag": "has_pet"
+   }
+  }
+ ]
+}

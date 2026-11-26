@@ -1,0 +1,697 @@
+{
+ "items": {
+  "potion_small": {
+   "name": "Health Potion",
+   "cat": "consumable",
+   "price": 60,
+   "desc": "Restores 80 HP.",
+   "use": {
+    "hp": 80
+   },
+   "color": "e9406c"
+  },
+  "potion_large": {
+   "name": "Greater Potion",
+   "cat": "consumable",
+   "price": 300,
+   "desc": "Restores 400 HP and 40 Energy.",
+   "use": {
+    "hp": 400,
+    "energy": 40
+   },
+   "color": "ff4f7b"
+  },
+  "energy_drink": {
+   "name": "Volt Energy Drink",
+   "cat": "consumable",
+   "price": 40,
+   "desc": "Restores 50 Energy.",
+   "use": {
+    "energy": 50
+   },
+   "color": "3ddc97"
+  },
+  "snack": {
+   "name": "Onigiri Snack",
+   "cat": "consumable",
+   "price": 15,
+   "desc": "Restores 30 Energy.",
+   "use": {
+    "energy": 30
+   },
+   "color": "f5efe6"
+  },
+  "card_pack_basic": {
+   "name": "Basic Card Pack",
+   "cat": "consumable",
+   "price": 500,
+   "desc": "Contains one random Common card.",
+   "use": {
+    "card_random": "common"
+   },
+   "color": "b8c0cc"
+  },
+  "card_pack_uncommon": {
+   "name": "Uncommon Card Pack",
+   "cat": "consumable",
+   "price": 1500,
+   "desc": "Contains one random Uncommon card.",
+   "use": {
+    "card_random": "uncommon"
+   },
+   "color": "4cd07d"
+  },
+  "card_pack_rare": {
+   "name": "Rare Card Pack",
+   "cat": "consumable",
+   "price": 6000,
+   "desc": "Contains one random Rare card.",
+   "use": {
+    "card_random": "rare"
+   },
+   "color": "3fa9ff",
+   "if": {
+    "chapter_gt": 4
+   }
+  },
+  "elixir_strength": {
+   "name": "Strength Elixir",
+   "cat": "consumable",
+   "price": 2500,
+   "desc": "Permanently +1 Strength (recorded by the System).",
+   "use": {
+    "stats": {
+     "strength": 1
+    }
+   },
+   "color": "f5c542"
+  },
+  "elixir_speed": {
+   "name": "Speed Elixir",
+   "cat": "consumable",
+   "price": 2500,
+   "desc": "Permanently +1 Speed (recorded by the System).",
+   "use": {
+    "stats": {
+     "speed": 1
+    }
+   },
+   "color": "f5c542"
+  },
+  "elixir_agility": {
+   "name": "Agility Elixir",
+   "cat": "consumable",
+   "price": 2500,
+   "desc": "Permanently +1 Agility (recorded by the System).",
+   "use": {
+    "stats": {
+     "agility": 1
+    }
+   },
+   "color": "f5c542"
+  },
+  "elixir_durability": {
+   "name": "Durability Elixir",
+   "cat": "consumable",
+   "price": 2500,
+   "desc": "Permanently +1 Durability (recorded by the System).",
+   "use": {
+    "stats": {
+     "durability": 1
+    }
+   },
+   "color": "f5c542"
+  },
+  "elixir_energy": {
+   "name": "Energy Elixir",
+   "cat": "consumable",
+   "price": 2500,
+   "desc": "Permanently +1 Energy (recorded by the System).",
+   "use": {
+    "stats": {
+     "energy": 1
+    }
+   },
+   "color": "f5c542"
+  },
+  "exp_scroll": {
+   "name": "Scroll of Insight",
+   "cat": "consumable",
+   "price": 800,
+   "desc": "Grants 150 EXP.",
+   "use": {
+    "exp": 150
+   },
+   "color": "9b5cff"
+  },
+  "pet_food": {
+   "name": "Premium Pet Food",
+   "cat": "consumable",
+   "price": 20,
+   "desc": "Your pet's favourite. Use from My Home → Pets.",
+   "color": "c08040"
+  },
+  "casual_hoodie": {
+   "name": "Casual Hoodie",
+   "cat": "clothes",
+   "price": 120,
+   "desc": "Comfortable and low-key.",
+   "slot": "outfit",
+   "stats": {
+    "stamina": 1
+   }
+  },
+  "school_blazer": {
+   "name": "Academy Blazer (premium)",
+   "cat": "clothes",
+   "price": 250,
+   "desc": "Sharp and respectable.",
+   "slot": "outfit",
+   "stats": {
+    "intelligence": 1
+   }
+  },
+  "cool_jacket": {
+   "name": "Street Leather Jacket",
+   "cat": "clothes",
+   "price": 600,
+   "desc": "Confidence you can wear.",
+   "slot": "outfit",
+   "stats": {
+    "durability": 1,
+    "power_mastery": 1
+   }
+  },
+  "sneakers": {
+   "name": "Sprint Sneakers",
+   "cat": "clothes",
+   "price": 180,
+   "desc": "Light and fast.",
+   "slot": "shoes",
+   "stats": {
+    "speed": 1
+   }
+  },
+  "boots": {
+   "name": "Combat Boots",
+   "cat": "clothes",
+   "price": 300,
+   "desc": "Solid footing.",
+   "slot": "shoes",
+   "stats": {
+    "durability": 1
+   }
+  },
+  "watch": {
+   "name": "Smart Fitness Watch",
+   "cat": "accessory",
+   "price": 400,
+   "desc": "Tracks every rep.",
+   "slot": "accessory",
+   "stats": {
+    "stamina": 2
+   }
+  },
+  "headphones": {
+   "name": "Noise-Cancel Headphones",
+   "cat": "accessory",
+   "price": 350,
+   "desc": "Focus mode.",
+   "slot": "accessory",
+   "stats": {
+    "intelligence": 1
+   }
+  },
+  "glasses": {
+   "name": "Reading Glasses",
+   "cat": "accessory",
+   "price": 90,
+   "desc": "Classic look.",
+   "slot": "accessory",
+   "stats": {
+    "intelligence": 1
+   }
+  },
+  "hero_mask": {
+   "name": "Hero Mask",
+   "cat": "costume",
+   "price": 300,
+   "desc": "Hide your identity.",
+   "slot": "costume",
+   "stats": {
+    "agility": 1
+   }
+  },
+  "hero_cape": {
+   "name": "Hero Cape",
+   "cat": "costume",
+   "price": 500,
+   "desc": "Dramatic entrances guaranteed.",
+   "slot": "costume",
+   "stats": {
+    "power_mastery": 1
+   }
+  },
+  "hero_gloves": {
+   "name": "Reinforced Gloves",
+   "cat": "weapon",
+   "price": 450,
+   "desc": "Knuckles reinforced with alloy.",
+   "slot": "weapon",
+   "stats": {
+    "strength": 2
+   }
+  },
+  "hero_helmet": {
+   "name": "Tactical Helmet",
+   "cat": "costume",
+   "price": 700,
+   "desc": "Protects and intimidates.",
+   "slot": "costume",
+   "stats": {
+    "durability": 2
+   }
+  },
+  "costume_starter": {
+   "name": "Rookie Hero Suit",
+   "cat": "costume",
+   "price": 1200,
+   "desc": "Your first real hero suit.",
+   "slot": "costume",
+   "stats": {
+    "durability": 2,
+    "agility": 1
+   }
+  },
+  "costume_white_lantern": {
+   "name": "White Lantern Uniform",
+   "cat": "costume",
+   "price": 8000,
+   "desc": "The uniform of the White Light.",
+   "slot": "costume",
+   "stats": {
+    "energy": 10,
+    "durability": 8
+   },
+   "if": {
+    "flag": "white_lantern"
+   }
+  },
+  "costume_shadow_monarch": {
+   "name": "Shadow Monarch Coat",
+   "cat": "costume",
+   "price": 12000,
+   "desc": "A coat woven from shadow.",
+   "slot": "costume",
+   "stats": {
+    "power_mastery": 10,
+    "agility": 6
+   },
+   "if": {
+    "card": "arise"
+   }
+  },
+  "costume_father_tribute": {
+   "name": "Apex Tribute Suit",
+   "cat": "costume",
+   "price": 20000,
+   "desc": "Crimson and gold — your father's colours.",
+   "slot": "costume",
+   "stats": {
+    "strength": 10,
+    "speed": 5
+   },
+   "if": {
+    "era": "adult"
+   }
+  },
+  "training_staff": {
+   "name": "Training Staff",
+   "cat": "weapon",
+   "price": 350,
+   "desc": "Reach and control.",
+   "slot": "weapon",
+   "stats": {
+    "strength": 1,
+    "agility": 1
+   }
+  },
+  "new_phone": {
+   "name": "NexaPhone Pro",
+   "cat": "collectible",
+   "price": 900,
+   "desc": "Faster apps, better camera.",
+   "unique": true
+  },
+  "laptop": {
+   "name": "Laptop",
+   "cat": "collectible",
+   "price": 1500,
+   "desc": "Needed for advanced computer jobs.",
+   "unique": true
+  },
+  "gaming_console": {
+   "name": "Gaming Console",
+   "cat": "collectible",
+   "price": 700,
+   "desc": "John wants to play.",
+   "unique": true
+  },
+  "smart_watch_x": {
+   "name": "Holo Watch X",
+   "cat": "accessory",
+   "price": 2500,
+   "desc": "A holographic smartwatch.",
+   "slot": "accessory",
+   "stats": {
+    "intelligence": 2,
+    "speed": 1
+   }
+  },
+  "bed_basic": {
+   "name": "Simple Bed",
+   "cat": "furniture",
+   "price": 300,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 1
+  },
+  "bed_luxury": {
+   "name": "Luxury Bed",
+   "cat": "furniture",
+   "price": 3000,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 4
+  },
+  "desk": {
+   "name": "Study Desk",
+   "cat": "furniture",
+   "price": 400,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 1
+  },
+  "sofa": {
+   "name": "Comfy Sofa",
+   "cat": "furniture",
+   "price": 900,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 2
+  },
+  "tv": {
+   "name": "Wall TV",
+   "cat": "furniture",
+   "price": 1500,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 2
+  },
+  "bookshelf": {
+   "name": "Bookshelf",
+   "cat": "furniture",
+   "price": 350,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 1
+  },
+  "plant": {
+   "name": "House Plant",
+   "cat": "furniture",
+   "price": 80,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 1
+  },
+  "gym_rack": {
+   "name": "Home Gym Rack",
+   "cat": "furniture",
+   "price": 2500,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 2
+  },
+  "kitchen_set": {
+   "name": "Chef's Kitchen Set",
+   "cat": "furniture",
+   "price": 2000,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 2
+  },
+  "painting": {
+   "name": "Night City Painting",
+   "cat": "furniture",
+   "price": 600,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 1
+  },
+  "aquarium": {
+   "name": "Aquarium",
+   "cat": "furniture",
+   "price": 1800,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 2
+  },
+  "trophy_case": {
+   "name": "Trophy Case",
+   "cat": "furniture",
+   "price": 1200,
+   "desc": "Furniture. Place it in a room of your home.",
+   "comfort": 1
+  },
+  "bicycle": {
+   "name": "City Bicycle",
+   "cat": "vehicles",
+   "price": 400,
+   "desc": "Vehicle. Shown in your garage."
+  },
+  "scooter": {
+   "name": "Electric Scooter",
+   "cat": "vehicles",
+   "price": 1500,
+   "desc": "Vehicle. Shown in your garage."
+  },
+  "motorbike": {
+   "name": "Street Motorbike",
+   "cat": "vehicles",
+   "price": 9000,
+   "desc": "Vehicle. Shown in your garage.",
+   "if": {
+    "era": "adult"
+   }
+  },
+  "city_car": {
+   "name": "City Car",
+   "cat": "vehicles",
+   "price": 25000,
+   "desc": "Vehicle. Shown in your garage.",
+   "if": {
+    "era": "adult"
+   }
+  },
+  "sports_car": {
+   "name": "Nexa GT Sports Car",
+   "cat": "vehicles",
+   "price": 120000,
+   "desc": "Vehicle. Shown in your garage.",
+   "if": {
+    "era": "adult"
+   }
+  },
+  "hover_car": {
+   "name": "Hover Car",
+   "cat": "vehicles",
+   "price": 400000,
+   "desc": "Vehicle. Shown in your garage.",
+   "if": {
+    "era": "adult"
+   }
+  },
+  "tuning_kit": {
+   "name": "Performance Tuning Kit",
+   "cat": "collectible",
+   "price": 3000,
+   "desc": "Garage upgrade for car fans."
+  },
+  "shadow_blade": {
+   "name": "Shadow Blade",
+   "cat": "shadow_gear",
+   "price": 3000,
+   "desc": "+25 power for one shadow.",
+   "shadow_power": 25,
+   "if": {
+    "card": "arise"
+   }
+  },
+  "shadow_armor": {
+   "name": "Abyssal Armour",
+   "cat": "shadow_gear",
+   "price": 5000,
+   "desc": "+40 power for one shadow.",
+   "shadow_power": 40,
+   "if": {
+    "card": "arise"
+   }
+  },
+  "statue_fragment": {
+   "name": "Strange Statue Fragment",
+   "cat": "material",
+   "price": 0,
+   "desc": "A shard from the cave. It hums faintly."
+  },
+  "oa_crystal": {
+   "name": "Oan Crystal",
+   "cat": "material",
+   "price": 0,
+   "desc": "A crystal charged with willpower."
+  },
+  "father_photo": {
+   "name": "Old Family Photo",
+   "cat": "collectible",
+   "price": 0,
+   "desc": "Your father, mother and a baby you. Everyone is smiling."
+  },
+  "lucky_coin": {
+   "name": "Lucky Coin",
+   "cat": "collectible",
+   "price": 0,
+   "desc": "Found in the park. Probably not magic."
+  }
+ },
+ "pets": {
+  "cat_tabby": {
+   "name": "Tabby Cat",
+   "species": "cat",
+   "color": "d08a3a",
+   "price": 800,
+   "desc": "Independent, affectionate on its own terms.",
+   "default_name": "Mochi"
+  },
+  "dog_shiba": {
+   "name": "Shiba Dog",
+   "species": "dog",
+   "color": "d9883f",
+   "price": 1200,
+   "desc": "Loyal and energetic. Loves walks.",
+   "default_name": "Hachi"
+  },
+  "parrot_sky": {
+   "name": "Sky Parrot",
+   "species": "parrot",
+   "color": "3ddc97",
+   "price": 900,
+   "desc": "Learns words. Mostly rude ones.",
+   "default_name": "Kiwi"
+  },
+  "rabbit_snow": {
+   "name": "Snow Rabbit",
+   "species": "rabbit",
+   "color": "eeeeee",
+   "price": 600,
+   "desc": "Soft, curious, easily startled.",
+   "default_name": "Yuki"
+  },
+  "dragon_ember": {
+   "name": "Ember Drake (fantasy)",
+   "species": "dragon",
+   "color": "e9406c",
+   "price": 50000,
+   "desc": "A tiny dragon from another world. Warm to hold.",
+   "default_name": "Ember",
+   "if": {
+    "era": "adult"
+   }
+  },
+  "cat_void": {
+   "name": "Void Cat (fantasy)",
+   "species": "cat",
+   "color": "2a1a3a",
+   "price": 30000,
+   "desc": "A cat that occasionally isn't there.",
+   "default_name": "Nyx",
+   "if": {
+    "flag": "multiverse_open"
+   }
+  }
+ },
+ "houses": {
+  "gov_apartment": {
+   "name": "Government Apartment",
+   "type": "Apartment",
+   "price": 0,
+   "for_sale": false,
+   "comfort": 2,
+   "rooms": [
+    "bedroom",
+    "living",
+    "kitchen"
+   ],
+   "desc": "Your mother's government housing. Small, a little shabby, full of memories.",
+   "color": "8a7a6a"
+  },
+  "small_apartment": {
+   "name": "Studio Apartment",
+   "type": "Apartment",
+   "price": 5000,
+   "comfort": 2,
+   "rooms": [
+    "bedroom",
+    "kitchen"
+   ],
+   "desc": "A tiny place of your own.",
+   "color": "7a8aa0"
+  },
+  "family_house": {
+   "name": "Family House",
+   "type": "House",
+   "price": 20000,
+   "comfort": 4,
+   "rooms": [
+    "bedroom",
+    "living",
+    "kitchen",
+    "garden",
+    "garage"
+   ],
+   "desc": "A real house with a garden and garage.",
+   "color": "a08a6a"
+  },
+  "luxury_apartment": {
+   "name": "Skyline Luxury Apartment",
+   "type": "Luxury apartment",
+   "price": 60000,
+   "comfort": 6,
+   "rooms": [
+    "bedroom",
+    "living",
+    "kitchen",
+    "garage"
+   ],
+   "desc": "Floor-to-ceiling windows over Nexa City.",
+   "color": "3a4a6a"
+  },
+  "villa": {
+   "name": "Seaside Villa",
+   "type": "Villa",
+   "price": 150000,
+   "comfort": 8,
+   "rooms": [
+    "bedroom",
+    "living",
+    "kitchen",
+    "garden",
+    "garage"
+   ],
+   "desc": "Ocean views and a private beach.",
+   "color": "e0d0b0"
+  },
+  "mansion": {
+   "name": "Hilltop Mansion",
+   "type": "Mansion",
+   "price": 500000,
+   "comfort": 12,
+   "rooms": [
+    "bedroom",
+    "living",
+    "kitchen",
+    "garden",
+    "garage"
+   ],
+   "desc": "The kind of home Nexa gives its strongest heroes. This time you earned it.",
+   "color": "c9a227"
+  }
+ }
+}

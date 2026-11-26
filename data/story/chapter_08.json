@@ -1,0 +1,250 @@
+{
+ "scenes": [
+  {
+   "id": "c8_oa",
+   "title": "Planet Oa",
+   "bg": "oa_crater",
+   "lines": [
+    {
+     "cmd": "chapter",
+     "t": "CHAPTER 8\nThe Emerald World"
+    },
+    {
+     "cmd": "music",
+     "id": "multiverse"
+    },
+    {
+     "s": "narrator",
+     "t": "A crater on a planet with a green sky. Peter lies at its centre, bruised and barely conscious."
+    },
+    {
+     "cmd": "show",
+     "c": "lantern_kyra",
+     "e": "surprised",
+     "p": "right"
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "surprised",
+     "t": "Guardians, are you seeing this? A kid. A human kid, falling out of a hole in space."
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "serious",
+     "t": "Hang on, kid. We've got you."
+    },
+    {
+     "cmd": "bg",
+     "id": "oa_citadel",
+     "tr": "white"
+    },
+    {
+     "s": "narrator",
+     "t": "Green light wraps around him. Bones knit. Bruises fade. Machines older than Nexa itself hum softly as they repair him cell by cell."
+    },
+    {
+     "cmd": "show",
+     "c": "guardian_oren",
+     "e": "normal",
+     "p": "center"
+    },
+    {
+     "s": "guardian_oren",
+     "e": "normal",
+     "t": "Curious. He carries something we have not seen in a very long time. A system of… becoming."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "confused",
+     "p": "left"
+    },
+    {
+     "s": "peter",
+     "e": "confused",
+     "t": "Where… am I?"
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "happy",
+     "t": "Oa. Home of the Green Lantern Corps. You're welcome, by the way."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "Thank you. I… I came to get stronger. Strong enough to protect the people I love."
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "happy",
+     "t": "Ha! I like him. Fine, kid. I'll train you. But Lantern training isn't about muscles — it's about will."
+    },
+    {
+     "cmd": "stat",
+     "add": {
+      "strength": 8,
+      "durability": 8,
+      "speed": 6,
+      "agility": 6,
+      "energy": 10,
+      "stamina": 6
+     },
+     "why": "Oan restoration & conditioning"
+    },
+    {
+     "cmd": "quest",
+     "id": "main_lantern_trials",
+     "accept": true
+    },
+    {
+     "s": "narrator",
+     "t": "TRAINING: Go to the Oan Training Grounds. Train, then defeat a construct drone and the Construct of Fear."
+    }
+   ],
+   "next": "c8_ring",
+   "chain": false,
+   "transition": "fade",
+   "location_after": "oa_training"
+  },
+  {
+   "id": "c8_ring",
+   "title": "The White Light",
+   "bg": "oa_central_battery",
+   "lines": [
+    {
+     "cmd": "music",
+     "id": "emotional"
+    },
+    {
+     "s": "narrator",
+     "t": "The Central Battery of Oa. Rings from every Lantern corps orbit it like moons."
+    },
+    {
+     "cmd": "show",
+     "c": "guardian_oren",
+     "e": "serious",
+     "p": "center"
+    },
+    {
+     "s": "guardian_oren",
+     "e": "serious",
+     "t": "A ring chooses its bearer. Hold out your hand, Peter Parker."
+    },
+    {
+     "s": "narrator",
+     "t": "A green ring drifts towards him — then stops. A yellow one. A blue. A violet. Each one hesitates."
+    },
+    {
+     "cmd": "show",
+     "c": "lantern_kyra",
+     "e": "confused",
+     "p": "right"
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "confused",
+     "t": "They're… arguing?"
+    },
+    {
+     "cmd": "flash"
+    },
+    {
+     "s": "narrator",
+     "t": "All the rings flare at once. Their light braids together into a single, blinding white."
+    },
+    {
+     "s": "guardian_oren",
+     "e": "surprised",
+     "t": "Willpower, hope, compassion, love… and life itself. A White Lantern."
+    },
+    {
+     "cmd": "show",
+     "c": "peter",
+     "e": "surprised",
+     "p": "left"
+    },
+    {
+     "cmd": "unlock_ring"
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "white_lantern"
+     ],
+     "unset": []
+    },
+    {
+     "cmd": "card",
+     "id": "white_lantern",
+     "why": "the White Light chose you"
+    },
+    {
+     "cmd": "aura",
+     "id": "white"
+    },
+    {
+     "cmd": "aura",
+     "id": "green"
+    },
+    {
+     "cmd": "news",
+     "key": "white_lantern_rumor"
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "happy",
+     "t": "Well. That's new."
+    },
+    {
+     "s": "peter",
+     "e": "serious",
+     "t": "What do I do with it?"
+    },
+    {
+     "s": "guardian_oren",
+     "e": "normal",
+     "t": "Whatever you have the courage to become. But Oa cannot teach you everything. The multiverse is wide, and full of teachers."
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "sad",
+     "t": "So this is goodbye, huh? Don't you dare die out there, kid."
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "I'll come back and visit. I'll bring ramen."
+    },
+    {
+     "s": "lantern_kyra",
+     "e": "confused",
+     "t": "What's ramen?"
+    },
+    {
+     "s": "peter",
+     "e": "happy",
+     "t": "You'll love it."
+    },
+    {
+     "s": "system",
+     "t": "White Lantern interface unlocked (SYSTEM → White Lantern). MULTIVERSE TRAVEL UNLOCKED."
+    },
+    {
+     "cmd": "flag",
+     "set": [
+      "multiverse_open"
+     ],
+     "unset": []
+    }
+   ],
+   "next": "c9_multiverse",
+   "chain": true,
+   "transition": "fade",
+   "location_after": "oa_citadel",
+   "requires": {
+    "quest_done": "main_lantern_trials"
+   },
+   "hint": "Complete 'Trials of Will' at the Oan Training Grounds."
+  }
+ ]
+}

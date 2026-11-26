@@ -1,0 +1,46 @@
+; Engine configuration file.
+; NEXA - The Transcendent System (Godot 4.3+)
+
+config_version=5
+
+[application]
+
+config/name="NEXA - The Transcendent System"
+config/description="2D illustrated anime story RPG and life simulator."
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.svg"
+config/quit_on_go_back=false
+run/low_processor_mode=true
+
+[autoload]
+
+Events="*res://scripts/autoload/events.gd"
+Settings="*res://scripts/autoload/settings.gd"
+Data="*res://scripts/autoload/data.gd"
+Assets="*res://scripts/autoload/assets.gd"
+Audio="*res://scripts/autoload/audio_manager.gd"
+Game="*res://scripts/autoload/game.gd"
+Quests="*res://scripts/autoload/quest_manager.gd"
+Cards="*res://scripts/autoload/card_manager.gd"
+Story="*res://scripts/autoload/story_manager.gd"
+SaveManager="*res://scripts/autoload/save_manager.gd"
+
+[display]
+
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=1
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+pointing/emulate_mouse_from_touch=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

@@ -1,0 +1,148 @@
+{
+ "calls": {
+  "mother": [
+   {
+    "id": "mom_casual",
+    "if": {
+     "era": "teen"
+    },
+    "lines": [
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "Hi sweetheart! Is everything okay?"
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "Just wanted to hear your voice."
+     },
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "…You're going to make me cry at work. Come home safe."
+     }
+    ]
+   },
+   {
+    "id": "mom_adult",
+    "if": {
+     "era": "adult"
+    },
+    "lines": [
+     {
+      "s": "mother",
+      "e": "happy",
+      "t": "My son calls me now? Who are you and what have you done with Peter?"
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "Very funny, Mom."
+     },
+     {
+      "s": "mother",
+      "e": "normal",
+      "t": "Dinner at seven. Don't be late — I don't care how strong you are."
+     }
+    ]
+   }
+  ],
+  "john": [
+   {
+    "id": "john_casual",
+    "if": {},
+    "lines": [
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "Yo! I was literally about to call you."
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "Liar."
+     },
+     {
+      "s": "john",
+      "e": "happy",
+      "t": "Okay, I was eating. But I was THINKING about calling you."
+     }
+    ]
+   }
+  ],
+  "professor": [
+   {
+    "id": "call_professor_register",
+    "lines": [
+     {
+      "s": "professor",
+      "e": "normal",
+      "t": "Hale speaking."
+     },
+     {
+      "s": "peter",
+      "e": "normal",
+      "t": "Professor. It's Peter Parker."
+     },
+     {
+      "s": "professor",
+      "e": "surprised",
+      "t": "…Peter? Peter Parker? Your mother told me you were back, but I—"
+     },
+     {
+      "s": "peter",
+      "e": "serious",
+      "t": "I'd like to register for the Grand Power Competition. Quietly."
+     },
+     {
+      "s": "professor",
+      "e": "serious",
+      "t": "You understand who's entering? Bruce. The crew leaders. Pro heroes."
+     },
+     {
+      "s": "peter",
+      "e": "normal",
+      "t": "I understand."
+     },
+     {
+      "s": "professor",
+      "e": "happy",
+      "t": "…Your father had that same tone. Very well. You're registered. Nobody will know until the day."
+     },
+     {
+      "cmd": "flag",
+      "set": [
+       "registered_competition"
+      ]
+     },
+     {
+      "cmd": "event",
+      "name": "story:registered"
+     }
+    ]
+   },
+   {
+    "id": "prof_casual",
+    "if": {},
+    "lines": [
+     {
+      "s": "professor",
+      "e": "normal",
+      "t": "Mr. Parker. Is this about homework?"
+     },
+     {
+      "s": "peter",
+      "e": "happy",
+      "t": "No, Professor. Just checking in."
+     },
+     {
+      "s": "professor",
+      "e": "happy",
+      "t": "Then check in on your reading list too."
+     }
+    ]
+   }
+  ]
+ }
+}
