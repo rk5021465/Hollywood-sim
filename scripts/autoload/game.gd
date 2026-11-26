@@ -419,7 +419,7 @@ func advance_slot(n: int = 1) -> void:
 			new_day()
 		else:
 			s.time_slot = int(s.time_slot) + 1
-			check_npc_messages(["afternoon", "evening", "night"][int(s.time_slot) - 1])
+			check_npc_messages([["afternoon", "evening", "night"][int(s.time_slot) - 1]])
 	Events.time_changed.emit()
 
 
