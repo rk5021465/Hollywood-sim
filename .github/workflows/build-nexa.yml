@@ -32,6 +32,11 @@ jobs:
           godot --headless --path . --quit-after 600 2>&1 | tee run.log || true
           echo "===== ERRORS ====="
           grep -E "SCRIPT ERROR|Parse Error|ERROR:|Invalid|Cannot|Identifier" import.log run.log | grep -v "missing image" | head -150 || true
+      - name: Full smoke test (every screen)
+        run: |
+          timeout 600 godot --headless --path . -- --smoke 2>&1 | tee smoke.log || true
+          echo "===== SMOKE RESULT ====="
+          grep -E "SMOKE|SCRIPT ERROR|ERROR:|at: " smoke.log | grep -v "missing image" | head -200 || true
       - name: Export APK
         env:
           GODOT_ANDROID_KEYSTORE_DEBUG_PATH: ${{ github.workspace }}/debug.keystore
@@ -49,6 +54,7 @@ jobs:
             build/NEXA.apk
             import.log
             run.log
+            smoke.log
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:

@@ -49,6 +49,11 @@ func _ready() -> void:
 	Events.settings_changed.connect(_on_settings)
 	get_tree().set_auto_accept_quit(false)
 	go("menu")
+	if "--smoke" in OS.get_cmdline_user_args():
+		var t = load("res://scripts/smoke_test.gd").new()
+		t.main = self
+		add_child(t)
+		t.run.call_deferred()
 
 
 func _on_settings() -> void:
